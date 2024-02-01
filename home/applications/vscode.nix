@@ -11,16 +11,19 @@
       twxs.cmake
       ms-python.vscode-pylance
 
-      ms-vscode-remote.remote-ssh
-      usernamehw.errorlens
-      eamodio.gitlens
       ms-vscode.hexeditor
       shd101wyy.markdown-preview-enhanced
       mechatroner.rainbow-csv
 
+      ms-vscode-remote.remote-ssh
       # vscodevim.vim
       github.copilot
       # github.copilot-chat
+      eamodio.gitlens
+
+      catppuccin.catppuccin-vsc
+      catppuccin.catppuccin-vsc-icons
+      usernamehw.errorlens
     ];
   };
 }

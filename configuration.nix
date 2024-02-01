@@ -93,11 +93,18 @@
     gcc
     gnumake
     
-    man-pages man-pages-posix
+    man-pages linux-manual man-pages-posix
 
     vim 
     wget
   ];
+
+  documentation = {
+    enable = true;
+    man.enable = true;
+    man.man-db.enable = true;
+    dev.enable = true;
+  };
 
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [
     # plasma-browser-integration
@@ -107,7 +114,7 @@
 
   programs.nix-ld = {
     enable = true;
-    libraries = with pkgs; [];
+    # libraries = with pkgs; [];
   };
 
   programs.zsh = {

@@ -37,7 +37,8 @@
     discord
     thunderbird
     spotify
-    xorg.xrandr
+    gimp
+    # xorg.xrandr
 
     # Meme stuff
     neofetch

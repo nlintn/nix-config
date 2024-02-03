@@ -1,8 +1,9 @@
-local user='%{$fg[green]%}%n@%{$fg[green]%}%m%{$reset_color%}'
-local pwd='%{$fg[blue]%}%~%{$reset_color%}'
-local return_code='%(?..%{$fg[red]%}%? ↵%{$reset_color%})'
+local user='%{$fg[cyan]%}[%{$fg[green]%}%n@%m%{$reset_color%}%{$fg[cyan]%}]'
+local pwd='%{$fg_bold[blue]%}%~%{$reset_color%}'
+local arrow_top='%{$fg[cyan]%}╭─%{$reset_color%}'
+local arrow_bot='%{$fg[cyan]%}╰─➤%{$reset_color%}'
+local return_code='%(?.%{$fg[green]%}.%{$fg[red]%}%? )↵%{$reset_color%}'
 local git_branch='$(git_prompt_status)%{$reset_color%}$(git_prompt_info)%{$reset_color%}'
-local time='[%*]'
 
 ZSH_THEME_RVM_PROMPT_OPTIONS="i v g"
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
@@ -20,5 +21,6 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%} ✭"
 ZSH_THEME_RUBY_PROMPT_PREFIX="%{$fg[green]%}‹"
 ZSH_THEME_RUBY_PROMPT_SUFFIX="›%{$reset_color%}"
 
-PROMPT="${user} ${pwd}$ "
-RPROMPT="${return_code} ${git_branch} $(ruby_prompt_info) ${time}"
+PROMPT="${arrow_top}${user} ${pwd}
+${arrow_bot}$ "
+RPROMPT="${return_code} ${git_branch} $(ruby_prompt_info)"

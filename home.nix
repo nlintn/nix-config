@@ -36,8 +36,10 @@
     firefox-wayland
     discord
     thunderbird
-    spotify
+    spotify-tui
     gimp
+    libqalculate
+    scanmem
     # xorg.xrandr
 
     # Meme stuff
@@ -48,6 +50,15 @@
 
   services.kdeconnect.enable = true;
   services.kdeconnect.indicator = true;
+
+  services.spotifyd = {
+    enable = true;
+    settings = {
+      device_name = "meoww";
+    };
+  };
+
+  programs.lf.enable = true;
 
   home.file.".gdbinit".source = pkgs.fetchurl {
     url = "https://aengelke.net/.gdbinit";

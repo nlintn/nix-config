@@ -42,7 +42,7 @@
     LC_NUMERIC = "de_DE.UTF-8";
     LC_PAPER = "de_DE.UTF-8";
     LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "de_DE.UTF-8";
+    LC_TIME = "en_DK.UTF-8";
   };
 
   # Configure keymap in X11
@@ -72,7 +72,12 @@
   console.keyMap = "de";
 
   # Sound
-  hardware.pulseaudio.enable = true;
+  sound.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    # package = pkgs.pulseaudioFull;
+    # extraModules = [ pkgs.pulseaudio-modules-bt ];
+  };
   nixpkgs.config.pulseaudio = true;
 
   hardware.bluetooth.enable = true;
@@ -87,7 +92,6 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-
   environment.systemPackages = with pkgs; [
     git
     gcc
@@ -99,31 +103,29 @@
     wget
   ];
 
-  documentation = {
-    enable = true;
-    man.enable = true;
-    man.man-db.enable = true;
-    dev.enable = true;
-  };
-
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [
     # plasma-browser-integration
     konsole
     # oxygen
   ];
 
-  programs.nix-ld = {
-    enable = true;
-    # libraries = with pkgs; [];
-  };
-
-  programs.zsh = {
-    enable = true;
-    # loginShellInit = "neofetch";
+  programs = {
+    zsh.enable = true;
+    # zsh.loginShellInit = "neofetch";
+    nix-ld.enable = true;
+    # nix-ld.libraries = with pkgs; [];
+    java.enable = true;
+    steam.enable = true;
   };
 
   virtualisation.docker = {
     enable = true;
+  };
+
+  documentation = {
+    enable = true;
+    man.enable = true;
+    dev.enable = true;
   };
 
   networking.firewall = { 

@@ -21,6 +21,10 @@ in {
       # cursor.style.blinking = "On";
       keyboard.bindings = [
         { key = "N"; mods = "Control"; action = "CreateNewWindow"; }
+        { key = "ArrowLeft"; mods = "Alt"; chars = "cd ..\n"; }
+        { key = "ArrowRight"; mods = "Alt"; chars = "cd - > /dev/null\n"; }
+        { key = "ArrowUp"; mods = "Alt"; chars = "cd ~\n"; }
+        { key = "ArrowDown"; mods = "Alt"; chars = "cd /\n"; }
       ];
     };
   };

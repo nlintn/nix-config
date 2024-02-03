@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [ 
@@ -60,10 +60,7 @@
 
   programs.lf.enable = true;
 
-  home.file.".gdbinit".source = pkgs.fetchurl {
-    url = "https://aengelke.net/.gdbinit";
-    hash = "sha256-m+gaIUShS/edvrnftJZAzXQgtoux9BHok630PursCLA=";
-  };
+  home.file.".gdbinit".source = inputs.aengelke-gdbinit;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

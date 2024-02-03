@@ -21,6 +21,10 @@
       url = "github:catppuccin/alacritty";
       flake = false;
     };
+    aengelke-gdbinit = {
+      url = "https://aengelke.net/.gdbinit";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:

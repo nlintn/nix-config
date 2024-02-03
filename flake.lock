@@ -1,5 +1,17 @@
 {
   "nodes": {
+    "aengelke-gdbinit": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-lDaa2YwMkK9RfetpSSmLVQfz0x1B+Qd7keTq/NSI1OA=",
+        "type": "file",
+        "url": "https://aengelke.net/.gdbinit"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://aengelke.net/.gdbinit"
+      }
+    },
     "catppuccin-alacritty": {
       "flake": false,
       "locked": {
@@ -86,6 +98,7 @@
     },
     "root": {
       "inputs": {
+        "aengelke-gdbinit": "aengelke-gdbinit",
         "catppuccin-alacritty": "catppuccin-alacritty",
         "catppuccin-grub": "catppuccin-grub",
         "catppuccin-zsh-syntax-highlighting": "catppuccin-zsh-syntax-highlighting",

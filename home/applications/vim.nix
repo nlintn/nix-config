@@ -17,6 +17,7 @@
     extraConfig = ''
       set termguicolors
       colorscheme catppuccin_${userSettings.catppuccin-flavour}
+      autocmd vimenter * hi Normal guibg=NONE
       if $XTERM == 'xterm-256color'
         set ttymouse=sgr
       endif

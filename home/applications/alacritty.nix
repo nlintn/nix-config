@@ -1,4 +1,4 @@
-{ pkgs, inputs, userSettings, ... }:
+{ /*pkgs,*/ inputs, userSettings, ... }:
 
 let 
   theme_location = ".config/alacritty/theme.toml";

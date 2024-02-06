@@ -39,10 +39,10 @@
     LC_MEASUREMENT = "de_DE.UTF-8";
     LC_MONETARY = "de_DE.UTF-8";
     LC_NAME = "de_DE.UTF-8";
-    LC_NUMERIC = "de_DE.UTF-8";
+    LC_NUMERIC = "en_DK.UTF-8";
     LC_PAPER = "de_DE.UTF-8";
     LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "en_DK.UTF-8";
+    LC_TIME = "en_IE.UTF-8";
   };
 
   # Configure keymap in X11
@@ -96,6 +96,7 @@
     git
     gcc
     gnumake
+    # llvmPackages_17.libcxxClang clang-tools_17 llvmPackages_17.libcxx llvmPackages_17.stdenv
     
     man-pages linux-manual man-pages-posix
 

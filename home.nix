@@ -1,10 +1,11 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   imports = [ 
     ./home/applications/zsh/zsh.nix
     ./home/applications/alacritty.nix
     ./home/applications/tmux.nix
+    ./home/applications/fzf.nix
 
     ./home/applications/vim.nix
     ./home/applications/vscode.nix
@@ -39,7 +40,7 @@
     spotify-tui
     gimp
     libqalculate
-    scanmem
+    tree
     # xorg.xrandr
 
     # Meme stuff
@@ -58,7 +59,7 @@
     };
   };
 
-  programs.lf.enable = true;
+  programs.nnn.enable = true;
 
   home.file.".gdbinit".source = inputs.aengelke-gdbinit;
 

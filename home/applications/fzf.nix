@@ -8,18 +8,21 @@ let
     "mocha"     = "bg+:#313244,spinner:#f5e0dc,hl:#f38ba8,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8";
   };
 in {
-  programs.zsh.initExtra = ''
-    export FZF_DEFAULT_OPTS="--height 60% --border --color=${color.${userSettings.catppuccin-flavour}}"
-    export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-    export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
-  '';
-  
   programs.fzf = {
     enable = true;
     defaultOptions = [
       "--height 60%"
       "--border"
+      "--layout=reverse"
       "--color=${color.${userSettings.catppuccin-flavour}}"
+    ];
+    fileWidgetOptions = [       # CTRL-T Options
+      "--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+    ];
+    historyWidgetOptions = [    # CTRL-R Options
+    ];
+    changeDirWidgetOptions = [  #  ALT-C Options
+      "--preview 'tree -C {}'"
     ];
   };
 }

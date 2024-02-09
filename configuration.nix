@@ -32,7 +32,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
     LC_IDENTIFICATION = "de_DE.UTF-8";
@@ -54,8 +53,8 @@
     displayManager.sddm.enable = true;
     desktopManager.plasma5.enable = true;
     displayManager.defaultSession = "plasmawayland";
-    layout = "de";
-    xkbVariant = "";
+    xkb.layout = "de";
+    xkb.variant = "";
     ## -------------------------------------
 
     ## -------------------------------------
@@ -75,8 +74,6 @@
   sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
-    # package = pkgs.pulseaudioFull;
-    # extraModules = [ pkgs.pulseaudio-modules-bt ];
   };
   nixpkgs.config.pulseaudio = true;
 

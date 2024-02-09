@@ -88,7 +88,6 @@
     description = "nico UwU";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
-    packages = with pkgs; [ ];
   };
 
   nixpkgs.config.allowUnfree = true;

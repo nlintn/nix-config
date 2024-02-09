@@ -10,6 +10,7 @@
       mouse = "a";
       expandtab = true;
       tabstop = 4;
+      shiftwidth = 4;
     };
     plugins = with pkgs.vimPlugins; [
       catppuccin-vim
@@ -24,3 +25,4 @@
     ''; 
   };
 }
+

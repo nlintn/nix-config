@@ -18,6 +18,10 @@
 
   home.username = "nico";
   home.homeDirectory = "/home/nico";
+  
+  home.sessionVariables = {
+    DOT_DIR = "$HOME/dotfiles";
+  };
 
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
@@ -27,7 +31,9 @@
     gdb pwndbg
     doctest
     cargo
-    python3
+    (python3.withPackages ( python-pkgs: [
+      python311Packages.pwntools
+    ]))
     jetbrains.idea-ultimate
     gitkraken # github-desktop
     nil
@@ -41,7 +47,7 @@
     gimp
     libqalculate
     tree
-    # xorg.xrandr
+    wl-clipboard
 
     # Meme stuff
     neofetch
@@ -60,6 +66,22 @@
   };
 
   programs.nnn.enable = true;
+  programs.feh.enable = true;
+  programs.feh.buttons = {
+    zoom_in = "C-4";
+    zoom_out = "C-5";
+    scroll_up = "4";
+    scroll_down = "5";
+    scroll_left = "6";
+    scroll_right = "7";
+    prev_img = null;
+    next_img = null;
+  };
+  programs.feh.keybindings = {
+    prev_img = "Left";
+    next_img = "Right";
+  };
+  
 
   home.file.".gdbinit".source = inputs.aengelke-gdbinit;
 

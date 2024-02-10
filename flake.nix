@@ -1,32 +1,6 @@
 {
   description = "UwU";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager/";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    catppuccin-grub = {
-      url = "github:catppuccin/grub";
-      flake = false;
-    };
-
-    catppuccin-zsh-syntax-highlighting = {
-      url = "github:catppuccin/zsh-syntax-highlighting";
-      flake = false;
-    };  
-    catppuccin-alacritty = {
-      url = "github:catppuccin/alacritty";
-      flake = false;
-    };
-    aengelke-gdbinit = {
-      url = "https://aengelke.net/.gdbinit";
-      flake = false;
-    };
-  };
-
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     let
       system = "x86_64-linux";
@@ -56,4 +30,34 @@
         };
       };
     };
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager/";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    catppuccin-grub = {
+      url = "github:catppuccin/grub";
+      flake = false;
+    };
+
+    catppuccin-zsh-syntax-highlighting = {
+      url = "github:catppuccin/zsh-syntax-highlighting";
+      flake = false;
+    };  
+    catppuccin-alacritty = {
+      url = "github:catppuccin/alacritty";
+      flake = false;
+    };
+    aengelke-gdbinit = {
+      url = "https://aengelke.net/.gdbinit";
+      flake = false;
+    };
+    zsh-nix-shell = {
+      url = "https://github.com/chisui/zsh-nix-shell.git";
+      flake = false;
+    };
+  };
 }

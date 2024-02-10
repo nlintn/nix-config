@@ -103,7 +103,20 @@
         "catppuccin-grub": "catppuccin-grub",
         "catppuccin-zsh-syntax-highlighting": "catppuccin-zsh-syntax-highlighting",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "zsh-nix-shell": "zsh-nix-shell"
+      }
+    },
+    "zsh-nix-shell": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-bZqAogeUiOViPaYRDGA438fODj8UMOoSafOzkX7rM6A=",
+        "type": "file",
+        "url": "https://github.com/chisui/zsh-nix-shell.git"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/chisui/zsh-nix-shell.git"
       }
     }
   },

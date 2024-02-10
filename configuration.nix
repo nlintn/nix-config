@@ -44,12 +44,11 @@
     LC_TIME = "en_IE.UTF-8";
   };
 
-  # Configure keymap in X11
   services.xserver = {
     enable = true;
 
     ## -------------------------------------
-    ## KDE Plasma
+    # KDE Plasma
     displayManager.sddm.enable = true;
     desktopManager.plasma5.enable = true;
     displayManager.defaultSession = "plasmawayland";
@@ -58,7 +57,7 @@
     ## -------------------------------------
 
     ## -------------------------------------
-    ## GNOME
+    # GNOME
     # displayManager.gdm.enable = true;
     # desktopManager.gnome.enable = true;
     ## -------------------------------------
@@ -101,14 +100,12 @@
   ];
 
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [
-    # plasma-browser-integration
     konsole
-    # oxygen
+    oxygen
   ];
 
   programs = {
     zsh.enable = true;
-    # zsh.loginShellInit = "neofetch";
     nix-ld.enable = true;
     # nix-ld.libraries = with pkgs; [];
     java.enable = true;
@@ -134,6 +131,12 @@
       { from = 1714; to = 1764; } # KDE Connect
     ];  
   };
+
+  # Power Management
+  powerManagement.enable = true;
+  powerManagement.powertop.enable = true;
+  services.thermald.enable = true;
+  # services.tlp.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

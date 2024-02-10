@@ -9,13 +9,18 @@
         file = "themes/catppuccin_${userSettings.catppuccin-flavour}-zsh-syntax-highlighting.zsh";
         src = inputs.catppuccin-zsh-syntax-highlighting;
       }
+      {
+        name = "zsh-nix-shell";
+        file = "nix-shell.plugin.zsh";
+        src = inputs.zsh-nix-shell;
+      }
     ];
     enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
-      custom = builtins.toString ./custom;
-      plugins = [ "git" "sudo" "colored-man-pages" "per-directory-history" "themes"];
+      custom = builtins.toString ./oh-my-zsh;
+      plugins = [ "git" "sudo" "colored-man-pages" "per-directory-history" "themes" ];
       theme = "meoww";
     };
     shellAliases = {

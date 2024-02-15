@@ -51,12 +51,12 @@
       url = "github:catppuccin/alacritty";
       flake = false;
     };
-    aengelke-gdbinit = {
-      url = "https://aengelke.net/.gdbinit";
+    zsh-nix-shell = {
+      url = "github:chisui/zsh-nix-shell";
       flake = false;
     };
-    zsh-nix-shell = {
-      url = "https://github.com/chisui/zsh-nix-shell.git";
+    gdb-ptrfind = {
+      url = "github:ChaChaNop-Slide/ptrfind";
       flake = false;
     };
   };

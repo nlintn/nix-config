@@ -1,17 +1,5 @@
 {
   "nodes": {
-    "aengelke-gdbinit": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-lDaa2YwMkK9RfetpSSmLVQfz0x1B+Qd7keTq/NSI1OA=",
-        "type": "file",
-        "url": "https://aengelke.net/.gdbinit"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://aengelke.net/.gdbinit"
-      }
-    },
     "catppuccin-alacritty": {
       "flake": false,
       "locked": {
@@ -60,6 +48,22 @@
         "type": "github"
       }
     },
+    "gdb-ptrfind": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1707592156,
+        "narHash": "sha256-xdhZc3btHfEU2+fIF8aaiHcwa8SRT6D1W8pVq7fsnnA=",
+        "owner": "ChaChaNop-Slide",
+        "repo": "ptrfind",
+        "rev": "44fb1fcee69591c141e287685859942871e433c3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ChaChaNop-Slide",
+        "repo": "ptrfind",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -98,10 +102,10 @@
     },
     "root": {
       "inputs": {
-        "aengelke-gdbinit": "aengelke-gdbinit",
         "catppuccin-alacritty": "catppuccin-alacritty",
         "catppuccin-grub": "catppuccin-grub",
         "catppuccin-zsh-syntax-highlighting": "catppuccin-zsh-syntax-highlighting",
+        "gdb-ptrfind": "gdb-ptrfind",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "zsh-nix-shell": "zsh-nix-shell"
@@ -110,13 +114,17 @@
     "zsh-nix-shell": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-bZqAogeUiOViPaYRDGA438fODj8UMOoSafOzkX7rM6A=",
-        "type": "file",
-        "url": "https://github.com/chisui/zsh-nix-shell.git"
+        "lastModified": 1704028593,
+        "narHash": "sha256-Rtg8kWVLhXRuD2/Ctbtgz9MQCtKZOLpAIdommZhXKdE=",
+        "owner": "chisui",
+        "repo": "zsh-nix-shell",
+        "rev": "82ca15e638cc208e6d8368e34a1625ed75e08f90",
+        "type": "github"
       },
       "original": {
-        "type": "file",
-        "url": "https://github.com/chisui/zsh-nix-shell.git"
+        "owner": "chisui",
+        "repo": "zsh-nix-shell",
+        "type": "github"
       }
     }
   },

@@ -4,6 +4,8 @@
   imports = [ 
     ./home/applications.nix
 
+    ./home/fonts.nix
+
     # ./home/wm/hyprland.nix
   ];
 
@@ -12,6 +14,7 @@
   
   home.sessionVariables = {
     DOT_DIR = "$HOME/dotfiles";
+    NIXOS_OZONE_WL = "1";
   };
 
 

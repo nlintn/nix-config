@@ -20,9 +20,7 @@
   home.packages = with pkgs; [
     # Coding stuff
     clang_17 clang-tools_17
-    cmake
     gdb pwndbg
-    doctest
     cargo
     (python3.withPackages ( python-pkgs: [
       python311Packages.pwntools

@@ -4,6 +4,8 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "Cascadia Mono" ]; })
+    noto-fonts
+    noto-fonts-emoji
+    (nerdfonts.override { fonts = [ "CascadiaMono" ]; })
   ];
 }

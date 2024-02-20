@@ -65,7 +65,7 @@
     # libinput.enable = false;
     # synaptics.enable = true;
   };
-
+  
   # Configure console keymap
   console.keyMap = "de";
 
@@ -79,6 +79,7 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  # User Managment
   users.users.nico = {
     isNormalUser = true;
     description = "nico UwU";
@@ -94,7 +95,8 @@
     # llvmPackages_17.libcxxClang clang-tools_17 llvmPackages_17.libcxx llvmPackages_17.stdenv
     
     man-pages linux-manual man-pages-posix
-
+    
+    powertop
     vim 
     wget
   ];
@@ -132,11 +134,13 @@
     ];  
   };
 
+  hardware.enableAllFirmware = true;
   # Power Management
-  powerManagement.enable = true;
-  powerManagement.powertop.enable = true;
+  # powerManagement.enable = true;
+  # powerManagement.powertop.enable = true;
   services.thermald.enable = true;
   # services.tlp.enable = true;
+  # services.power-profiles-daemon.enable = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

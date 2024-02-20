@@ -28,6 +28,7 @@
       dotdir = "builtin cd $DOT_DIR";
       hms = "home-manager switch --flake $DOT_DIR";
       nrs = "sudo nixos-rebuild switch --flake $DOT_DIR";
+      nrb = "sudo nixos-rebuild boot --flake $DOT_DIR";
     };
     # cdpath = [ "HOME/dotfiles" "$HOME/TUM" ];
     # Opam env

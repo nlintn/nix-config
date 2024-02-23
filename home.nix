@@ -6,7 +6,7 @@
 
     ./home/fonts.nix
 
-    # ./home/wm/hyprland.nix
+    ./home/wm.nix
   ];
 
   home.username = "nico";

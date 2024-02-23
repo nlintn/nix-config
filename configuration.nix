@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, userSettings, ... }:
 
 {
   imports =
@@ -13,7 +13,7 @@
     grub.efiSupport = true;
     grub.device = "nodev";
     grub.useOSProber = true;
-    grub.theme = inputs.catppuccin-grub + "/src/catppuccin-macchiato-grub-theme/";
+    grub.theme = inputs.catppuccin-grub + "/src/catppuccin-${userSettings.catppuccin-flavour}-grub-theme/";
     efi.canTouchEfiVariables = true;
   };
 
@@ -44,7 +44,17 @@
     LC_TIME = "en_IE.UTF-8";
   };
 
-  services.xserver = {
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; if userSettings.wm == "hyprland" then [
+      xdg-desktop-portal-hyprland
+    ] else [
+
+    ];
+    config.common.default = "*";
+  };
+
+  services.xserver = if userSettings.enable-kde == true then {
     enable = true;
 
     ## -------------------------------------
@@ -64,17 +74,29 @@
  
     # libinput.enable = false;
     # synaptics.enable = true;
+  } else {
+    enable = false;
   };
   
   # Configure console keymap
   console.keyMap = "de";
 
   # Sound
-  sound.enable = true;
+  /*sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
   };
-  nixpkgs.config.pulseaudio = true;
+  nixpkgs.config.pulseaudio = true;*/
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+  };
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
@@ -90,8 +112,8 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     git
-    gcc
-    gnumake
+    # gcc
+    # gnumake
     # llvmPackages_17.libcxxClang clang-tools_17 llvmPackages_17.libcxx llvmPackages_17.stdenv
     
     man-pages linux-manual man-pages-posix
@@ -134,6 +156,11 @@
     ];  
   };
 
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6ep";
+  };
+
   hardware.enableAllFirmware = true;
   # Power Management
   # powerManagement.enable = true;
@@ -149,7 +176,7 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-  
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.

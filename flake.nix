@@ -8,6 +8,8 @@
       pkgs = nixpkgs.legacyPackages.${system};
       userSettings = {
         catppuccin-flavour = "macchiato";
+        enable-kde = true;
+        wm = "hyprland";
       };
     in {
       nixosConfigurations = {
@@ -16,6 +18,7 @@
           modules = [ ./configuration.nix ];
           specialArgs = {
             inherit inputs;
+            inherit userSettings;
           };
         };
       };
@@ -24,6 +27,7 @@
           inherit pkgs;
           modules = [ ./home.nix ];
           extraSpecialArgs = {
+            inherit lib;
             inherit inputs;
             inherit userSettings;
           };

@@ -15,6 +15,8 @@
       shd101wyy.markdown-preview-enhanced
       mechatroner.rainbow-csv
 
+      vscodevim.vim
+      arrterian.nix-env-selector
       ms-vscode-remote.remote-ssh
       # vscodevim.vim
       github.copilot

@@ -14,9 +14,26 @@
     };
     plugins = with pkgs.vimPlugins; [
       catppuccin-vim
-      vim-wayland-clipboard
     ];
     extraConfig = ''
+      " Cursor Settings
+      let &t_SI = "\e[5 q"
+      let &t_EI = "\e[1 q"
+      augroup myCmds
+      au!
+      autocmd VimEnter * silent !echo -ne "\e[2 q"
+      augroup END
+      autocmd InsertEnter * set cursorline
+      autocmd InsertLeave * set nocursorline
+
+
+      " Ctrl-C to copy to wayland clipboard
+      xnoremap <silent> <C-C> :w !wl-copy<CR><CR>
+
+      " Wraparound lines while navigating
+      set whichwrap+=<,>,h,l
+
+      " Visual Stuff
       set termguicolors
       colorscheme catppuccin_${userSettings.catppuccin-flavour}
       autocmd vimenter * hi Normal guibg=NONE

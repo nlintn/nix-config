@@ -14,6 +14,8 @@
       next_img = null;
     };
     keybindings = {
+      zoom_in = "+";
+      zoom_out = "-";
       prev_img = "Left";
       next_img = "Right";
     };

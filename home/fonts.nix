@@ -6,6 +6,9 @@
   home.packages = with pkgs; [
     noto-fonts
     noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "CascadiaMono" ]; })
+    noto-fonts-extra
+    noto-fonts-cjk
+    (nerdfonts.override { fonts = [ "CascadiaMono" "JetBrainsMono" ]; })
+    font-awesome
   ];
 }

@@ -1,18 +1,83 @@
-# CURRENTLY NOT IN USE!!!
+{ config, pkgs, lib, inputs, userSettings, ... }:
 
-{ config, pkgs, inputs, userSettings, ... }:
 
-{
+let
+  evalBind = mainMod: modifiers: bind: (
+    mainMod + (
+      if (lib.foldl (acc: mod: acc || (lib.hasPrefix mod bind)) false modifiers) then " " else ", "
+    ) + bind
+  );
+in {
   home.packages = with pkgs; [
     grim
     slurp
+    gwenview
+    swaynotificationcenter
+    xdg-utils
+    networkmanagerapplet
+    pavucontrol
+    polkit_gnome
+  ] ++ (with pkgs.gnome; [
+    nautilus
+    eog
+    gnome-keyring
+  ]);
+
+  /*home.pointerCursor = {
+    gtk.enable = true;
+    # x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 16;
+  };
+  
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.flat-remix-gtk;
+      name = "Flat-Remix-GTK-Grey-Darkest";
+    };
+  
+    iconTheme = {
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+  
+    font = {
+      name = "Sans";
+      size = 11;
+    };#
+  };*/
+
+  qt = {
+    enable = true;
+    style.name = "adwaita-dark";
+    style.package = pkgs.adwaita-qt;
+    platformTheme = "qtct";
+  };
+
+  imports =  [
+    ./hyprland/waybar.nix
   ];
 
   programs.rofi.enable = true;
   programs.rofi.terminal = "${pkgs.alacritty}/bin/alacritty";
-
-  programs.waybar.enable = true;
-  programs.waybar.style = ''@import "${inputs.catppuccin-waybar}/themes/${userSettings.catppuccin-flavour}.css";'';
+  programs.rofi.package = pkgs.rofi-wayland;
+  programs.rofi.theme = inputs.catppuccin-rofi + "/basic/.local/share/rofi/themes/catppuccin-${userSettings.catppuccin-flavour}.rasi";
+  programs.rofi.extraConfig = {
+    modi = "run,drun";
+    icon-theme = "Oranchelo";
+    show-icons = true;
+    drun-display-format = "{icon} {name}";
+    location = 0;
+    disable-history = false;
+    hide-scrollbar = true;
+    display-drun = "   Apps ";
+    display-run = "   Run ";
+    display-window = " 﩯  Window";
+    display-Network = " 󰤨  Network";
+    sidebar-mode = true;
+  };
 
   # programs.swaylock.enable = true;
   # programs.swaylock.settings = inputs.catppuccin-swaylock + "/themes/${userSettings.catppuccin-flavour}.conf";
@@ -22,194 +87,199 @@
     xwayland.enable = true;
     systemd.enable = true;
 
-    extraConfig = ''
-      # This is an example Hyprland config file.
-      #
-      # Refer to the wiki for more information.
+    settings = {
+      "$terminal" =     "${pkgs.alacritty}/bin/alacritty";
+      "$fileManager" =  "${pkgs.gnome.nautilus}/bin/nautilus";
+      "$menu" =         "${pkgs.rofi-wayland}/bin/rofi -show drun";
+      "$windows" =      "${./hyprland/scripts/windows.sh}";
 
-      #
-      # Please note not all available settings / options are set here.
-      # For a full list, see the wiki
-      #
+      /*env = [
+        "XDG_CURRENT_DESKTOP,Hyprland"
+        "XDG_SESSION_TYPE,wayland"
+        "XDG_SESSION_DESKTOP,Hyprland"
 
-      # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor=,preferred,auto,auto
+        # GDK_BACKEND,wayland
+        "QT_QPA_PLATFORM,wayland"
+        "QT_QPA_PLATFORMTHEME,qt5ct" #env = QT_STYLE_OVERRIDE,kvantum
+        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+        "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+
+        "SDL_VIDEODRIVER,wayland"
+        "_JAVA_AWT_WM_NONREPARENTING,1"
+        "WLR_NO_HARDWARE_CURSORS,1"
+
+        "MOZ_DISABLE_RDD_SANDBOX,1"
+        "MOZ_ENABLE_WAYLAND,1"
+
+        "OZONE_PLATFORM,wayland"
+
+        "XCURSOR_SIZE,24"
+      ];*/
+
+      exec-once = [
+        "${pkgs.swaynotificationcenter}/bin/swaync"
+        "${pkgs.waybar}/bin/waybar"
+      ];
+
+      monitor = [
+        "eDP-1, 2560x1440, 0x0, 1.5"
+        ", preferred, auto, 1"
+      ];
+      "debug:disable_scale_checks" = true;
+
+      workspace = [
+        "eDP-1, 1"
+        ",6"
+        "1, monitor:eDP-1"
+        "2, monitor:eDP-1"
+        "3, monitor:eDP-1"
+        "4, monitor:eDP-1"
+        "5, monitor:eDP-1"
+      ];
+
+      bind = builtins.map (evalBind "SUPER" [ "SHIFT" ]) [
+        "SHIFT, A, exec, ${./hyprland/scripts/captureArea.sh}"
+        "Q, exec, $terminal"
+        "C, killactive,"
+        "SHIFT, M, exit,"
+        "E, exec, $fileManager"
+        "V, togglefloating,"
+        "R, exec, $menu"
+        "P, pseudo,"# dwindle
+        "J, togglesplit,"# dwindle
+        "tab, exec, $windows"
+
+        "left, movefocus, l"
+        "right, movefocus, r"
+        "up, movefocus, u"
+        "down, movefocus, d"
+        "SHIFT, left, movewindow, l"
+        "SHIFT, right, movewindow, r"
+        "SHIFT, up, movewindow, u"
+        "SHIFT, down, movewindow, d"
 
 
-      # See https://wiki.hyprland.org/Configuring/Keywords/ for more
+        "1, workspace, 1"
+        "2, workspace, 2"
+        "3, workspace, 3"
+        "4, workspace, 4"
+        "5, workspace, 5"
+        "6, workspace, 6"
+        "7, workspace, 7"
+        "8, workspace, 8"
+        "9, workspace, 9"
+        "0, workspace, 10"
+        
+        "SHIFT, 1, movetoworkspace, 1"
+        "SHIFT, 2, movetoworkspace, 2"
+        "SHIFT, 3, movetoworkspace, 3"
+        "SHIFT, 4, movetoworkspace, 4"
+        "SHIFT, 5, movetoworkspace, 5"
+        "SHIFT, 6, movetoworkspace, 6"
+        "SHIFT, 7, movetoworkspace, 7"
+        "SHIFT, 8, movetoworkspace, 8"
+        "SHIFT, 9, movetoworkspace, 9"
+        "SHIFT, 0, movetoworkspace, 10"
 
-      # Execute your favorite apps at launch
-      # exec-once = waybar & hyprpaper & firefox
+        "S, togglespecialworkspace, magic"
+        "SHIFT, S, movetoworkspace, special:magic"
 
-      # Source a file (multi-file configs)
-      source = ${inputs.catppuccin-hyprland}/themes/${userSettings.catppuccin-flavour}.conf
+        "mouse_down, workspace, e+1"
+        "mouse_up, workspace, e-1"
 
-      # Set programs that you use
-      $terminal = alacritty
-      $fileManager = dolphin
-      $menu = rofi -show drun
-      $windows = rofi -show windows
+        "F, fullscreen, 0"
+        "SHIFT, F, fullscreen, 1"
+      ];
 
-      # Some default env vars.
-      env = XCURSOR_SIZE,24
-      env = QT_QPA_PLATFORMTHEME,qt5ct # change to qt6ct if you have that
+      bindm = builtins.map (evalBind "SUPER" []) [
+        "mouse:272, movewindow"
+        "mouse:273, resizewindow"
+      ];
 
-      # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
-      input {
-          kb_layout = de
-          kb_variant =
-          kb_model =
-          kb_options =
-          kb_rules =
+      input = {
+        kb_layout = "de";
+        follow_mouse = 1;
 
-          follow_mouse = 1
+        touchpad = {
+            natural_scroll = true;
+            tap-to-click = true;
+        };
 
-          touchpad {
-              natural_scroll = true
-          }
+        sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+      };
 
-          sensitivity = -0.25 # -1.0 - 1.0, 0 means no modification.
-      }
+      gestures = {
+        workspace_swipe = true;
+      };
 
-      general {
+      misc = {
+        force_default_wallpaper = 3;
+      };
+
+      general = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
-          gaps_in = 5
-          gaps_out = 15
-          border_size = 1
-          col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-          col.inactive_border = rgba(595959aa)
+          gaps_in = 5;
+          gaps_out = 15;
+          border_size = 1;
+          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+          "col.inactive_border" = "rgba(595959aa)";
 
-          layout = dwindle
+          layout = "dwindle";
 
           # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
-          allow_tearing = false
-      }
+          allow_tearing = false;
+      };
 
-      decoration {
+      decoration = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
-          rounding = 10
+          rounding = 10;
 
-          blur {
-              enabled = true
-              size = 3
-              passes = 1
+          blur = {
+              enabled = true;
+              size = 3;
+              passes = 1;
               
-              vibrancy = 0.1696
-          }
+              vibrancy = 0.1696;
+          };
 
-          drop_shadow = true
-          shadow_range = 4
-          shadow_render_power = 3
-          col.shadow = rgba(1a1a1aee)
-      }
+          drop_shadow = true;
+          shadow_range = 4;
+          shadow_render_power = 3;
+          "col.shadow" = "rgba(1a1a1aee)";
+      };
 
-      animations {
-          enabled = true
+      animations = {
+          enabled = true;
 
           # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
 
-          bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+          bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
 
-          animation = windows, 1, 7, myBezier
-          animation = windowsOut, 1, 7, default, popin 80%
-          animation = border, 1, 10, default
-          animation = borderangle, 1, 8, default
-          animation = fade, 1, 7, default
-          animation = workspaces, 1, 6, default
-      }
+          animation = [
+            "windows, 1, 7, myBezier"
+            "windowsOut, 1, 7, default, popin 80%"
+            "border, 1, 10, default"
+            "borderangle, 1, 8, default"
+            "fade, 1, 7, default"
+            "workspaces, 1, 6, default"
+          ];
+      };
 
-      dwindle {
+      dwindle = {
           # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-          pseudotile = true # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-          preserve_split = true # you probably want this
-      }
+          pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+          preserve_split = true; # you probably want this
+      };
 
-      master {
+      master = {
           # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-          new_is_master = true
-      }
+          new_is_master = true;
+      };
 
-      gestures {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          workspace_swipe = true
-      }
-
-      misc {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          force_default_wallpaper = -1 # Set to 0 or 1 to disable the anime mascot wallpapers
-      }
-
-      # Example per-device config
-      # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more
-      device:epic-mouse-v1 {
-          sensitivity = -0.5
-      }
-
-      # Example windowrule v1
-      # windowrule = float, ^(kitty)$
-      # Example windowrule v2
-      # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-      # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
-      # windowrulev2 = suppressevent maximize, class:.* # You'll probably like this.
-
-
-      # See https://wiki.hyprland.org/Configuring/Keywords/ for more
-      $mainMod = SUPER
-
-      # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-      bind = $mainMod, Q, exec, $terminal
-      bind = $mainMod, C, killactive,
-      bind = $mainMod, M, exit,
-      bind = $mainMod, E, exec, $fileManager
-      bind = $mainMod, V, togglefloating,
-      bind = $mainMod, R, exec, $menu
-      bind = $mainMod, P, pseudo, # dwindle
-      bind = $mainMod, J, togglesplit, # dwindle
-      bind = $mainMod, tab, exec, $windows
-
-      # Move focus with mainMod + arrow keys
-      bind = $mainMod, left, movefocus, l
-      bind = $mainMod, right, movefocus, r
-      bind = $mainMod, up, movefocus, u
-      bind = $mainMod, down, movefocus, d
-
-      # Switch workspaces with mainMod + [0-9]
-      bind = $mainMod, 1, workspace, 1
-      bind = $mainMod, 2, workspace, 2
-      bind = $mainMod, 3, workspace, 3
-      bind = $mainMod, 4, workspace, 4
-      bind = $mainMod, 5, workspace, 5
-      bind = $mainMod, 6, workspace, 6
-      bind = $mainMod, 7, workspace, 7
-      bind = $mainMod, 8, workspace, 8
-      bind = $mainMod, 9, workspace, 9
-      bind = $mainMod, 0, workspace, 10
-
-      # Move active window to a workspace with mainMod + SHIFT + [0-9]
-      bind = $mainMod SHIFT, 1, movetoworkspace, 1
-      bind = $mainMod SHIFT, 2, movetoworkspace, 2
-      bind = $mainMod SHIFT, 3, movetoworkspace, 3
-      bind = $mainMod SHIFT, 4, movetoworkspace, 4
-      bind = $mainMod SHIFT, 5, movetoworkspace, 5
-      bind = $mainMod SHIFT, 6, movetoworkspace, 6
-      bind = $mainMod SHIFT, 7, movetoworkspace, 7
-      bind = $mainMod SHIFT, 8, movetoworkspace, 8
-      bind = $mainMod SHIFT, 9, movetoworkspace, 9
-      bind = $mainMod SHIFT, 0, movetoworkspace, 10
-
-      # Example special workspace (scratchpad)
-      bind = $mainMod, S, togglespecialworkspace, magic
-      bind = $mainMod SHIFT, S, movetoworkspace, special:magic
-
-      # Scroll through existing workspaces with mainMod + scroll
-      bind = $mainMod, mouse_down, workspace, e+1
-      bind = $mainMod, mouse_up, workspace, e-1
-
-      # Move/resize windows with mainMod + LMB/RMB and dragging
-      bindm = $mainMod, mouse:272, movewindow
-      bindm = $mainMod, mouse:273, resizewindow
-    '';
+      windowrulev2 = "nomaximizerequest, class:.*"; # You'll probably like this.
+    };
   };
 }

@@ -3,7 +3,7 @@
 let 
   wmConfig = {
     "" = [];
-    "hyprland" = [ import ./wm/hyprland.nix ];
+    "hyprland" = [ ./wm/hyprland.nix ];
   };
 in {
   imports = wmConfig.${userSettings.wm};

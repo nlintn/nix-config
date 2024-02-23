@@ -23,8 +23,8 @@
       au!
       autocmd VimEnter * silent !echo -ne "\e[2 q"
       augroup END
-      autocmd InsertEnter * set cursorline
-      autocmd InsertLeave * set nocursorline
+      " autocmd InsertEnter * set cursorline
+      " autocmd InsertLeave * set nocursorline
 
 
       " Ctrl-C to copy to wayland clipboard
@@ -36,7 +36,7 @@
       " Visual Stuff
       set termguicolors
       colorscheme catppuccin_${userSettings.catppuccin-flavour}
-      autocmd vimenter * hi Normal guibg=NONE
+      autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
       if $XTERM == 'xterm-256color'
         set ttymouse=sgr
       endif

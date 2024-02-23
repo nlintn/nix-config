@@ -82,13 +82,13 @@
   console.keyMap = "de";
 
   # Sound
-  /*sound.enable = true;
+  sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
   };
-  nixpkgs.config.pulseaudio = true;*/
+  nixpkgs.config.pulseaudio = true;
 
-  security.rtkit.enable = true;
+  /*security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -96,7 +96,7 @@
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
-  };
+  };*/
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
@@ -108,6 +108,8 @@
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
   };
+
+  security.polkit.enable = true;
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [

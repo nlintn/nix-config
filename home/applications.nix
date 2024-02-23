@@ -39,6 +39,7 @@
     libqalculate
     tree
     wl-clipboard
+    playerctl
 
     # Meme stuff
     neofetch

@@ -31,7 +31,7 @@
       xnoremap <silent> <C-C> :w !wl-copy<CR><CR>
 
       " Wraparound lines while navigating
-      set whichwrap+=<,>,h,l
+      set whichwrap+=<,>,h,l,[,]
 
       " Visual Stuff
       set termguicolors

@@ -14,7 +14,7 @@
     ./applications/git.nix
     ./applications/ssh.nix
     ./applications/opam.nix
-    ./applications/feh.nix
+    # ./applications/feh.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -34,12 +34,16 @@
     htop
     discord
     thunderbird
-    spotify-tui
+    spotify
+    spotify-tray
+    # spotify-tui
     gimp
     libqalculate
     tree
     wl-clipboard
     playerctl
+    anki
+    copyq
 
     # Meme stuff
     neofetch
@@ -49,17 +53,26 @@
 
   programs.zathura.enable = true;
 
+  programs.imv = {
+    enable = true;
+    settings = {
+
+    };
+  };
+
   services.kdeconnect.enable = true;
   services.kdeconnect.indicator = true;
 
   services.playerctld.enable = true;
 
+  /*
   services.spotifyd = {
     enable = true;
     settings = {
       device_name = "meoww";
     };
-  };  
+  };
+  */  
 
   home.file.".gdbinit".text = ''
     source ${inputs.gdb-ptrfind + "/ptrfind.py"}

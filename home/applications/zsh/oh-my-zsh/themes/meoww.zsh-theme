@@ -33,5 +33,5 @@ ZSH_THEME_RUBY_PROMPT_PREFIX="%{$fg[green]%}‹"
 ZSH_THEME_RUBY_PROMPT_SUFFIX="›%{$reset_color%}"
 
 PROMPT="${arrow_top}${user} ${pwd}${env_status}
-${arrow_bot}$ "
+${arrow_bot} "
 RPROMPT="${return_code} ${git_branch} $(ruby_prompt_info)"

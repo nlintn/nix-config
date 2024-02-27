@@ -8,6 +8,12 @@
         program = "${pkgs.zsh}/bin/zsh";
         args = [ "-c" "tmux" ];
       }; */
+      font = {
+        normal = {
+          family = "JetBrainsMono Nerd Font"; 
+          style = "Regular";
+        };
+      };
       env.XTERM = "xterm-256color";
       import = [ (inputs.catppuccin-alacritty + "/catppuccin-${userSettings.catppuccin-flavour}.toml") ];
       window = {

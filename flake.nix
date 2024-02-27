@@ -8,7 +8,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
       userSettings = {
         catppuccin-flavour = "macchiato";
-        enable-kde = true;
+        enable-kde = false;
         wm = "hyprland";
       };
     in {
@@ -25,9 +25,12 @@
       homeConfigurations = {
         nico = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home.nix ];
+          modules = [
+            ./home.nix
+          ] ++ (if userSettings.wm == "hyprland" then [
+            inputs.hyprland.homeManagerModules.default { wayland.windowManager.hyprland.enable = true; }
+          ] else []);
           extraSpecialArgs = {
-            inherit lib;
             inherit inputs;
             inherit userSettings;
           };
@@ -42,27 +45,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland.url = "github:hyprwm/Hyprland";
+    hycov = {
+      url = "github:DreamMaoMao/hycov";
+      inputs.hyprland.follows = "hyprland";
+    };
+    split-monitor-workspaces = {
+      url = "github:Duckonaut/split-monitor-workspaces";
+      inputs.hyprland.follows = "hyprland";
+    };
+
     catppuccin-grub = {
       url = "github:catppuccin/grub";
       flake = false;
     };
 
-    catppuccin-hyprland = {
-      url = "github:catppuccin/hyprland";
-      flake = false;
-    };
-    catppuccin-waybar = {
-      url = "github:catppuccin/waybar";
-      flake = false;
-    };
-    catppuccin-rofi = {
-      url = "github:catppuccin/rofi";
-      flake = false;
-    };
-    catppuccin-swaylock = {
-      url = "github:catppuccin/swaylock";
-      flake = false;
-    };
     catppuccin-zsh-syntax-highlighting = {
       url = "github:catppuccin/zsh-syntax-highlighting";
       flake = false;

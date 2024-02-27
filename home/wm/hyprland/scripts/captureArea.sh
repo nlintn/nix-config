@@ -1,1 +1,0 @@
-grim -g "$(slurp -d)" - | wl-copy -t image/png && wl-paste > $HOME/Pictures/Screenshots/$(date +'%s_grim.png')

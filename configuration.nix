@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, userSettings, ... }:
+{ config, pkgs, lib, inputs, userSettings, ... }:
 
 {
   imports =
@@ -77,7 +77,8 @@
   } else {
     enable = false;
   };
-  
+
+
   # Configure console keymap
   console.keyMap = "de";
 
@@ -123,7 +124,20 @@
     powertop
     vim 
     wget
+    psmisc
   ];
+
+  programs.dconf.enable = userSettings.wm == "hyprland";
+  services.blueman.enable = userSettings.wm == "hyprland";
+  services.gnome.gnome-keyring.enable = userSettings.wm == "hyprland";
+  services.upower.enable = userSettings.wm == "hyprland";
+  programs.gnome-disks.enable = userSettings.wm == "hyprland";
+  programs.thunar.enable = userSettings.wm == "hyprland";
+  services.gvfs.enable = userSettings.wm == "hyprland";
+  services.tumbler.enable = userSettings.wm == "hyprland";
+  security.pam.services.swaylock = {};
+  services.gnome.evolution-data-server.enable = userSettings.wm == "hyprland";
+  services.gnome.gnome-online-accounts.enable = userSettings.wm == "hyprland";
 
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [
     konsole
@@ -158,18 +172,29 @@
     ];  
   };
 
+  /*
   hardware.ipu6 = {
     enable = true;
     platform = "ipu6ep";
   };
+  */
 
   hardware.enableAllFirmware = true;
   # Power Management
   # powerManagement.enable = true;
-  # powerManagement.powertop.enable = true;
+  powerManagement.powertop.enable = true;
   services.thermald.enable = true;
-  # services.tlp.enable = true;
   # services.power-profiles-daemon.enable = false;
+  services.tlp = {
+    enable = true;
+    settings = {
+      USB_AUTOSUSPEND = 0;
+      CPU_BOOST_ON_AC = 1;
+      CPU_BOOST_ON_BAT = 0;
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+    };
+};
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -1,0 +1,130 @@
+* {
+    bg-col:  #1E1D2Fff;
+    bg-col-light: #24273a;
+    border-col: #96CDFB;
+    selected-col: #24273a;
+    blue: #8aadf4;
+    fg-col: #cad3f5;
+    fg-col2: #ed8796;
+    grey: #6e738d;
+
+    width: 500;
+}
+
+element-text, element-icon , mode-switcher {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+window {
+    height: 360px;
+    border: 1px;
+    border-color: @border-col;
+    background-color: @bg-col;
+    border-radius: 10px;
+
+}
+
+mainbox {
+    background-color: @bg-col;
+}
+
+inputbar {
+    children: [prompt,entry];
+    background-color: @bg-col;
+    border-radius: 0px;
+    padding: 0px;
+    position: center;
+}
+
+prompt {
+    background-color: @blue;
+    padding: 6px;
+    text-color: @bg-col;
+    border-radius: 3px;
+    margin: 20px 0px 0px 20px;
+}
+
+textbox-prompt-colon {
+    expand: 			            false;
+    str: 			                "";
+    border-radius:                  100%;
+    background-color:               @selected-col;
+    text-color:                     @fg-col;
+    padding:                        8px 12px 8px 12px;
+    font:			                "JetBrainsMono Nerd Font 10";
+}
+
+entry {
+    background-color:               @bg-col;
+    text-color:                     @fg-col;
+    placeholder-color:              @fg-col;
+    expand:                         true;
+    horizontal-align:               0;
+    placeholder:                    "Search...";
+    blink:                          true;
+    border:                  	    0px 0px 2px 0px;
+    border-color:                   @border-col;
+    border-radius:                  10px;
+    padding:                        8px;
+}
+
+listview {
+    border: 0px 0px 0px;
+    padding: 0px 6px 0px;
+    margin: 20px 0px 0px 20px;
+    columns: 1;
+    lines: 7;
+    background-color: @bg-col;
+}
+
+element {
+    padding: 5px;
+    background-color: @bg-col;
+    text-color: @fg-col  ;
+}
+
+element-icon {
+    size: 25px;
+}
+
+element selected {
+    background-color:  @selected-col ;
+    text-color: @fg-col2  ;
+    border-radius: 10px;
+    border-color: @border-col;
+}
+
+mode-switcher {
+    spacing: 0;
+  }
+
+button {
+    padding: 10px;
+    background-color: @bg-col-light;
+    text-color: @grey;
+    vertical-align: 0.5; 
+    horizontal-align: 0.5;
+}
+
+button selected {
+  background-color: @bg-col;
+  text-color: @blue;
+  border: 0px 0px 0px 0px;
+  border-radius: 10px;
+  border-color: @border-col;
+}
+
+message {
+    background-color: @bg-col-light;
+    margin: 2px;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+textbox {
+    padding: 6px;
+    margin: 20px 0px 0px 20px;
+    text-color: @blue;
+    background-color: @bg-col-light;
+}

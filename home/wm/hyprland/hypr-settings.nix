@@ -20,7 +20,7 @@ in
 
   env = [
     "XDG_SESSION_DESKTOP, Hyprland"
-    "XCURSOR_SIZE, 24"
+    "XCURSOR_SIZE, 16"
   ];
 
   exec-once = [

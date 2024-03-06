@@ -17,6 +17,7 @@
     NIXOS_OZONE_WL = "1";
   };
 
+  systemd.user.startServices = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

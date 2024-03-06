@@ -19,7 +19,7 @@
       window = {
         dimensions = { columns = 80; lines = 25; };
         # startup_mode = "Maximized";
-        opacity = 0.70;
+        opacity = 0.85;
         blur = true;
       };
       # cursor.style.blinking = "On";

@@ -13,8 +13,8 @@ in
     "$HOME/.config/hypr/workspaces.conf"
   ];
 
-  "$terminal" = "${pkgs.alacritty}/bin/alacritty";
-  "$fileManager" = "${pkgs.xfce.thunar}/bin/thunar";
+  "$terminal" = "${config.programs.alacritty.package}/bin/alacritty";
+  "$fileManager" = "thunar";
   "$menu" = "${config.programs.rofi.package}/bin/rofi -show drun";
   "$windows" = "${import ./scripts/rofi-windows.nix { inherit pkgs; }}";
 
@@ -25,11 +25,11 @@ in
 
   exec-once = [
     "${pkgs.swaynotificationcenter}/bin/swaync"
-    "${pkgs.waybar}/bin/waybar"
+    "${config.programs.waybar.package}/bin/waybar"
     "${pkgs.networkmanagerapplet}/bin/nm-applet"
     "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
     "${pkgs.swaybg}/bin/swaybg -i ${./wallpaper.jpg}"
-    "env QT_QPA_PLATFORM=xcb ${pkgs.copyq}/bin/copyq"
+    "sleep 5; ${pkgs.copyq}/bin/copyq --start-server"
   ];
 
   # "debug:disable_scale_checks" = true;
@@ -98,6 +98,9 @@ in
       "S, togglespecialworkspace, magic"
       "SHIFT, S, movetoworkspace, special:magic"
 
+      "D, exec, scratchpad"
+      "SHIFT, D, exec, scratchpad -g"
+
       "CTRL, RIGHT, split-workspace, r+1"
       "CTRL, LEFT,  split-workspace, r-1"
       "CTRL SHIFT, RIGHT, split-movetoworkspace, r+1"
@@ -105,11 +108,6 @@ in
 
       "F, fullscreen, 0"
       "SHIFT, F, fullscreen, 1"
-
-      "XF86AudioNext,   exec, playerctl next"
-      "XF86AudioPrev,   exec, playerctl previous"
-      "XF86AudioPlay,   exec, playerctl play"
-      "XF86AudioPause,  exec, playerctl pause"
     ]
     ++
     # hycov binds
@@ -119,6 +117,18 @@ in
       "right, hycov:movefocus,r"
       "up, hycov:movefocus,u"
       "down, hycov:movefocus,d"
+    ]
+    ++
+    builtins.map (evalBind "CTRL" [ "SHIFT" ]) [
+      "SHIFT, M, pass, ^vesktop$"
+    ]
+    ++
+    builtins.map (evalBind "" []) [
+      "XF86AudioNext,   exec, playerctl next"
+      "XF86AudioPrev,   exec, playerctl previous"
+      "XF86AudioPlay,   exec, playerctl play-pause"
+      "XF86AudioPause,  exec, playerctl play-pause"
+      
     ];
 
   bindm = builtins.map (evalBind "SUPER" [ ]) [
@@ -127,15 +137,15 @@ in
   ];
 
   binde = builtins.map (evalBind "" [ ]) [
-    "XF86AudioRaiseVolume, exec, ${pkgs.swayosd}/bin/swayosd-client --output-volume raise"
-    "XF86AudioLowerVolume, exec, ${pkgs.swayosd}/bin/swayosd-client --output-volume lower"
-    "XF86MonBrightnessUp,   exec, ${pkgs.brightnessctl}/bin/brightnessctl set +960 && ${pkgs.swayosd}/bin/swayosd-client --brightness -50"
-    "XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 960- && ${pkgs.swayosd}/bin/swayosd-client --brightness -50"
+    "XF86AudioRaiseVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -u -p up"
+    "XF86AudioLowerVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -u -p down"
+    "XF86MonBrightnessUp,   exec, ${config.services.avizo.package}/bin/lightctl -d up"
+    "XF86MonBrightnessDown, exec, ${config.services.avizo.package}/bin/lightctl -d down"
   ];
 
   bindle = builtins.map (evalBind "" [ ]) [
-    "XF86AudioMute, exec, ${pkgs.swayosd}/bin/swayosd-client --output-volume mute-toggle"
-    "XF86AudioMicMute, exec, ${pkgs.swayosd}/bin/swayosd-client --input-volume mute-toggle"
+    "XF86AudioMute, exec,     ${config.services.avizo.package}/bin/volumectl -d -p toggle-mute"
+    "XF86AudioMicMute, exec,  ${config.services.avizo.package}/bin/volumectl -d -m -p toogle-mute"
   ];
 
   binds = {
@@ -201,6 +211,16 @@ in
     "float, class:(copyq)"
     "move onscreen cursor, class:(copyq)"
     "pin, class:(copyq)"
+
+    "opacity 0.0 override 0.0 override,class:^(xwaylandvideobridge)$"
+    "noanim,class:^(xwaylandvideobridge)$"
+    "noinitialfocus,class:^(xwaylandvideobridge)$"
+    "maxsize 1 1,class:^(xwaylandvideobridge)$"
+    "noblur,class:^(xwaylandvideobridge)$"
+  ];
+
+  layerrule = [
+    "noanim, selection"
   ];
 
   general = {

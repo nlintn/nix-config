@@ -54,6 +54,11 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
+    hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    xdph.url = "github:hyprwm/xdg-desktop-portal-hyprland";
 
     catppuccin-grub = {
       url = "github:catppuccin/grub";

@@ -45,11 +45,9 @@
   };
 
   xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; if userSettings.wm == "hyprland" then [
-      xdg-desktop-portal-hyprland
-    ] else [
-
+    # enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk  
     ];
     config.common.default = "*";
   };
@@ -75,7 +73,13 @@
     # libinput.enable = false;
     # synaptics.enable = true;
   } else {
-    enable = false;
+    /* enable = true;
+    displayManager = { 
+      defaultSession = "hyprland"; 
+      lightdm = { 
+        enable = true; 
+      }; 
+    };*/
   };
 
 
@@ -83,22 +87,23 @@
   console.keyMap = "de";
 
   # Sound
-  sound.enable = true;
+  /* sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
   };
-  nixpkgs.config.pulseaudio = true;
+  nixpkgs.config.pulseaudio = true; */
 
-  /*security.rtkit.enable = true;
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
-    alsa.support32Bit = true;
+    # alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
-  };*/
-
+    wireplumber.enable = true;
+  };
+  
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
@@ -114,7 +119,7 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    git
+    # git
     # gcc
     # gnumake
     # llvmPackages_17.libcxxClang clang-tools_17 llvmPackages_17.libcxx llvmPackages_17.stdenv
@@ -127,12 +132,16 @@
     psmisc
   ];
 
-  programs.dconf.enable = userSettings.wm == "hyprland";
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    portalPackage = inputs.xdph.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
+  };
+  # programs.dconf.enable = userSettings.wm == "hyprland";
   services.blueman.enable = userSettings.wm == "hyprland";
   services.gnome.gnome-keyring.enable = userSettings.wm == "hyprland";
   services.upower.enable = userSettings.wm == "hyprland";
   programs.gnome-disks.enable = userSettings.wm == "hyprland";
-  programs.thunar.enable = userSettings.wm == "hyprland";
   services.gvfs.enable = userSettings.wm == "hyprland";
   services.tumbler.enable = userSettings.wm == "hyprland";
   security.pam.services.swaylock = {};
@@ -152,9 +161,9 @@
     steam.enable = true;
   };
 
-  virtualisation.docker = {
+  /* virtualisation.docker = {
     enable = true;
-  };
+  }; */
 
   documentation = {
     enable = true;
@@ -194,21 +203,13 @@
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
     };
-};
+  };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    substituters = ["https://hyprland.cachix.org"];
+    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -217,6 +218,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

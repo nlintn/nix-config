@@ -8,6 +8,7 @@
     ./applications/fzf.nix
 
     ./applications/vim.nix
+    ./applications/neovim.nix
     ./applications/vscode.nix
 
     ./applications/firefox.nix
@@ -32,7 +33,7 @@
 
     # Misc
     htop
-    discord
+    vesktop # discord
     thunderbird
     spotify
     spotify-tray

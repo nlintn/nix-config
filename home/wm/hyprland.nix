@@ -1,6 +1,10 @@
 { config, pkgs, lib, inputs, userSettings, ... }:
 
-{
+let thunar_pkg = with pkgs.xfce; 
+  thunar.override {
+    thunarPlugins = [ thunar-archive-plugin thunar-media-tags-plugin ];
+  };
+in {
   imports =  [
     ./hyprland/avizo.nix
     ./hyprland/waybar.nix
@@ -11,6 +15,7 @@
 
   home.packages = with pkgs; [
     inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad
+    thunar_pkg
     
     swayimg
     evince
@@ -34,10 +39,6 @@
     gnome-clocks
     totem
     file-roller
-  ]) ++ (with pkgs.xfce; [
-    (thunar.override {
-      thunarPlugins = [ thunar-archive-plugin thunar-media-tags-plugin ];
-    })
   ]);
   
   services.gnome-keyring.enable = true;
@@ -63,6 +64,6 @@
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
 
-    settings = import ./hyprland/hypr-settings.nix { inherit pkgs lib config; };
+    settings = import ./hyprland/hypr-settings.nix { inherit pkgs lib config thunar_pkg; };
   };
 }

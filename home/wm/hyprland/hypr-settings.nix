@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, thunar_pkg, ... }:
 
 let
   evalBind = mainMod: modifiers: bind: (
@@ -14,7 +14,7 @@ in
   ];
 
   "$terminal" = "${config.programs.alacritty.package}/bin/alacritty";
-  "$fileManager" = "thunar";
+  "$fileManager" = "${thunar_pkg}/bin/thunar";
   "$menu" = "${config.programs.rofi.package}/bin/rofi -show drun";
   "$windows" = "${import ./scripts/rofi-windows.nix { inherit pkgs; }}";
 

@@ -47,7 +47,7 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
     hycov = {
-      url = "github:DreamMaoMao/hycov";
+      url = "github:nlintn/hycov";
       inputs.hyprland.follows = "hyprland";
     };
     split-monitor-workspaces = {

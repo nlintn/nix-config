@@ -1,4 +1,4 @@
-{ inputs, userSettings, ... }:
+{ pkgs, config, inputs, userSettings, ... }:
 
 {
   programs.zsh = {
@@ -29,6 +29,13 @@
       hms = "home-manager switch --flake $DOT_DIR";
       nrs = "sudo nixos-rebuild switch --flake $DOT_DIR";
       nrb = "sudo nixos-rebuild boot --flake $DOT_DIR";
+      n = builtins.toString (pkgs.writeShellScript "n" ''
+        if [[ $# -gt 0 ]] then
+          ${config.programs.neovim.package}/bin/nvim $@
+        else
+          ${config.programs.neovim.package}/bin/nvim .
+        fi
+      '');
     };
     # cdpath = [ "HOME/dotfiles" "$HOME/TUM" ];
     # Opam env

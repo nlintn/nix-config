@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   imports = [ 
@@ -13,7 +13,7 @@
   home.homeDirectory = "/home/nico";
   
   home.sessionVariables = {
-    DOT_DIR = "$HOME/dotfiles";
+    DOT_DIR = "${config.home.homeDirectory}/dotfiles";
     NIXOS_OZONE_WL = "1";
   };
 

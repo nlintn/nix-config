@@ -7,6 +7,7 @@
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
       userSettings = {
+        default-font = "JetBrainsMono Nerd Font";
         catppuccin-flavour = "macchiato";
         enable-kde = false;
         wm = "hyprland";

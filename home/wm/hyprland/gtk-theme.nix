@@ -36,7 +36,7 @@ in {
     };
   
     font = {
-      name = "JetBrainsMono Nerd Font";
+      name = userSettings.default-font;
       size = 10;
     };
   };

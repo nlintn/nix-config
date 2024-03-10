@@ -78,6 +78,7 @@
         type = "lua";
         config = ''
           require("nvim-tree").setup()
+          -- vim.keymap.set('n', '<leader>e', )
         '';
       }
       cmp_luasnip

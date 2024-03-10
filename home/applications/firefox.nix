@@ -8,6 +8,7 @@
       settings = {
         "browser.fullscreen.autohide" = false;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "media.ffmpeg.vaapi.enabled" = true;
       };
       userChrome = ''
         :root[inFullscreen] #PersonalToolbar {

@@ -2,11 +2,11 @@
 
 {
   imports = [ 
-    ./home/applications.nix
+    ./applications
 
-    ./home/fonts.nix
+    ./fonts.nix
 
-    ./home/wm.nix
+    ./wm
   ];
 
   home.username = "nico";

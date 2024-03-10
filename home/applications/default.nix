@@ -2,20 +2,20 @@
 
 {
   imports = [ 
-    ./applications/zsh/zsh.nix
-    ./applications/alacritty.nix
-    # ./applications/tmux.nix
-    ./applications/fzf.nix
+    ./zsh
+    ./alacritty.nix
+    # ./tmux.nix
+    ./fzf.nix
 
-    ./applications/vim.nix
-    ./applications/neovim.nix
-    ./applications/vscode.nix
+    ./vim.nix
+    ./neovim
+    ./vscode.nix
 
-    ./applications/firefox.nix
-    ./applications/git.nix
-    ./applications/ssh.nix
-    ./applications/opam.nix
-    # ./applications/feh.nix
+    ./firefox.nix
+    ./git.nix
+    ./ssh.nix
+    ./opam.nix
+    # ./feh.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

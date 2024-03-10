@@ -27,7 +27,7 @@
         nico = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
-            ./home.nix
+            ./home
           ] ++ (if userSettings.wm == "hyprland" then [
             inputs.hyprland.homeManagerModules.default { wayland.windowManager.hyprland.enable = true; }
           ] else []);

@@ -50,12 +50,12 @@
       {
         plugin = nvim-cmp;
 	    type = "lua";
-        config = builtins.readFile ./neovim/cmp.lua;
+        config = builtins.readFile ./cmp.lua;
       }
       {
         plugin = nvim-lspconfig;
         # type = "lua";
-        # config = builtins.readFile ./neovim/lsp.lua;
+        # config = builtins.readFile ./lsp.lua;
       }
       {
         plugin = lsp-zero-nvim;

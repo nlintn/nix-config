@@ -6,12 +6,12 @@ let thunar_pkg = with pkgs.xfce;
   };
 in {
   imports =  [
-    ./hyprland/avizo.nix
-    ./hyprland/waybar.nix
-    ./hyprland/rofi.nix
-    ./hyprland/swayidle.nix
-    ./hyprland/swaylock.nix
-    ./hyprland/gtk-theme.nix
+    ./avizo.nix
+    ./waybar
+    ./rofi.nix
+    ./swayidle.nix
+    ./swaylock.nix
+    ./gtk-theme.nix
   ];
 
   home.packages = with pkgs; [
@@ -31,9 +31,9 @@ in {
     slurp
     xwaylandvideobridge
 
-    (import ./hyprland/scripts/xdg-terminal-exec.nix { inherit pkgs config; })
+    (import ./scripts/xdg-terminal-exec.nix { inherit pkgs config; })
 
-    (import ./hyprland/scripts/rofi-powermenu.nix { inherit pkgs; })
+    (import ./scripts/rofi-powermenu.nix { inherit pkgs; })
   ] ++ (with pkgs.gnome; [
     gnome-calendar
     eog
@@ -45,7 +45,7 @@ in {
   services.gnome-keyring.enable = true;
   services.blueman-applet.enable = true;
 
-  home.file.".config/swaync/style.css".source = ./hyprland/swaync + "/${userSettings.catppuccin-flavour}.css";  
+  home.file.".config/swaync/style.css".source = ./swaync + "/${userSettings.catppuccin-flavour}.css";  
 
   home.file.".config/swappy/config".text = ''
     [Default]
@@ -65,6 +65,6 @@ in {
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
 
-    settings = import ./hyprland/hypr-settings.nix { inherit pkgs lib config inputs thunar_pkg; };
+    settings = import ./hypr-settings.nix { inherit pkgs lib config inputs thunar_pkg; };
   };
 }

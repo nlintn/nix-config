@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, userSettings, ... }:
+{ pkgs, lib, config, inputs, userSettings, ... }:
 
 let thunar_pkg = with pkgs.xfce; 
   thunar.override {
@@ -7,49 +7,48 @@ let thunar_pkg = with pkgs.xfce;
 in {
   imports =  [
     ./avizo.nix
-    ./waybar
+    ./gtk-theme.nix
     ./rofi.nix
     ./swayidle.nix
     ./swaylock.nix
-    ./gtk-theme.nix
+    ./waybar
   ];
 
-  home.packages = with pkgs; [
+  home.packages = [
+    config.services.playerctld.package
+
     inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad
     thunar_pkg
-    
-    swayimg
-    evince
-    hyprpicker
-
-    xdg-utils
-    swaynotificationcenter
-    networkmanagerapplet
-    pavucontrol
-    nwg-displays
-    wlr-randr
-    slurp
-    xwaylandvideobridge
-
-    (import ./scripts/xdg-terminal-exec.nix { inherit pkgs config; })
 
     (import ./scripts/rofi-powermenu.nix { inherit pkgs; })
-  ] ++ (with pkgs.gnome; [
-    gnome-calendar
+    (import ./scripts/xdg-terminal-exec.nix { inherit pkgs config; })    
+  ] ++ (with pkgs; [  
+    evince
+    hyprpicker
+    networkmanagerapplet
+    nwg-displays
+    pavucontrol
+    swayimg
+    swaynotificationcenter
+    wlr-randr
+    xdg-utils
+    # xwaylandvideobridge
+  ]) ++ (with pkgs.gnome; [
     eog
+    file-roller
+    gnome-calendar
     gnome-clocks
     totem
-    file-roller
   ]);
   
   services.gnome-keyring.enable = true;
   services.blueman-applet.enable = true;
 
-  home.file.".config/swaync/style.css".source = ./swaync + "/${userSettings.catppuccin-flavour}.css";  
+  xdg.configFile."swaync/style.css".source = ./swaync + "/${userSettings.catppuccin-flavour}.css";  
 
-  home.file.".config/swappy/config".text = ''
+  xdg.configFile."swappy/config".text = ''
     [Default]
-    save_dir=$HOME/Pictures/Screenshots
+    save_dir=${config.home.homeDirectory}/Pictures/Screenshots
     save_filename_format=screen-%Y%m%d-%H%M%S.png
   '';
 
@@ -65,6 +64,6 @@ in {
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
 
-    settings = import ./hypr-settings.nix { inherit pkgs lib config inputs thunar_pkg; };
+    settings = import ./hypr-settings.nix { inherit pkgs lib config inputs userSettings thunar_pkg; };
   };
 }

@@ -10,6 +10,7 @@
         default-font = "JetBrainsMono Nerd Font";
         catppuccin-flavour = "macchiato";
         enable-kde = false;
+        wallpaper = "nix-black-4k.png";
         wm = "hyprland";
       };
     in {

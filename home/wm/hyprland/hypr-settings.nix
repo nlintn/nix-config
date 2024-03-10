@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, thunar_pkg, ... }:
+{ pkgs, lib, config, inputs, userSettings, thunar_pkg, ... }:
 
 let
   evalBind = mainMod: modifiers: bind: (
@@ -29,7 +29,7 @@ in
     "${config.programs.waybar.package}/bin/waybar"
     "${pkgs.networkmanagerapplet}/bin/nm-applet"
     "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
-    "${pkgs.swaybg}/bin/swaybg -i ${./wallpaper.jpg}"
+    "${pkgs.swaybg}/bin/swaybg -i ${config.home.homeDirectory}/Pictures/Wallpapers/${userSettings.wallpaper}"
     "sleep 5; ${pkgs.copyq}/bin/copyq --start-server"
   ];
 
@@ -125,11 +125,10 @@ in
     ]
     ++
     builtins.map (evalBind "" []) [
-      "XF86AudioNext,   exec, playerctl next"
-      "XF86AudioPrev,   exec, playerctl previous"
-      "XF86AudioPlay,   exec, playerctl play-pause"
-      "XF86AudioPause,  exec, playerctl play-pause"
-      
+      "XF86AudioNext,   exec, ${config.services.playerctld.package}/bin/playerctl next"
+      "XF86AudioPrev,   exec, ${config.services.playerctld.package}/bin/playerctl previous"
+      "XF86AudioPlay,   exec, ${config.services.playerctld.package}/bin/playerctl play-pause"
+      "XF86AudioPause,  exec, ${config.services.playerctld.package}/bin/playerctl play-pause"
     ];
 
   bindm = builtins.map (evalBind "SUPER" [ ]) [

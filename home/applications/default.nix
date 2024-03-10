@@ -21,35 +21,32 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     # Coding stuff
-    # clang_17 clang-tools_17
-    gdb pwndbg
     cargo
+    # clang_17 clang-tools_17
+    gdb
+    # github-desktop
+    gitkraken
     (python3.withPackages ( python-pkgs: [
       python311Packages.pwntools
     ]))
     jetbrains.idea-ultimate
-    gitkraken # github-desktop
     nil
+    pwndbg
 
     # Misc
-    htop
-    vesktop # discord
-    thunderbird
-    spotify
-    spotify-tray
-    # spotify-tui
-    gimp
-    libqalculate
-    tree
-    wl-clipboard
-    playerctl
     anki
     copyq
-
-    # Meme stuff
-    neofetch
-    # uwufetch curr not working :(( 
+    gimp
+    htop
+    libqalculate
     lolcat
+    neofetch
+    spotify
+    spotify-tray
+    thunderbird
+    tree
+    vesktop
+    wl-clipboard
   ];
 
   programs.zathura.enable = true;

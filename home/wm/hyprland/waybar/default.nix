@@ -5,5 +5,5 @@
     enable = true;
     style = builtins.readFile ./style.css;
   };
-  home.file.".config/waybar/config".source = ./config.json;
+  xdg.configFile."waybar/config".source = ./config.json;
 }

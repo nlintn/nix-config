@@ -8,7 +8,6 @@
 
   # Bootloader
   boot.loader = {
-    # systemd-boot.enable = true;
     grub.enable = true;
     grub.efiSupport = true;
     grub.device = "nodev";
@@ -18,11 +17,6 @@
   };
 
   networking.hostName = "meoww";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -87,12 +81,6 @@
   console.keyMap = "de";
 
   # Sound
-  /* sound.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-  };
-  nixpkgs.config.pulseaudio = true; */
-
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -119,11 +107,6 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    # git
-    # gcc
-    # gnumake
-    # llvmPackages_17.libcxxClang clang-tools_17 llvmPackages_17.libcxx llvmPackages_17.stdenv
-    
     man-pages linux-manual man-pages-posix
     
     powertop
@@ -180,13 +163,6 @@
       { from = 1714; to = 1764; } # KDE Connect
     ];  
   };
-
-  /*
-  hardware.ipu6 = {
-    enable = true;
-    platform = "ipu6ep";
-  };
-  */
 
   hardware.enableAllFirmware = true;
   # Power Management

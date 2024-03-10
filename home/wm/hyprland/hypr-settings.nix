@@ -1,4 +1,4 @@
-{ pkgs, lib, config, thunar_pkg, ... }:
+{ pkgs, lib, config, inputs, thunar_pkg, ... }:
 
 let
   evalBind = mainMod: modifiers: bind: (
@@ -6,6 +6,7 @@ let
       if (lib.foldl (acc: mod: acc || (lib.hasPrefix mod bind)) false modifiers) then " " else ", "
     ) + bind
   );
+  grimblast = inputs.hyprland-contrib.packages.${pkgs.system}.grimblast;
 in
 {
   source = [
@@ -50,8 +51,8 @@ in
   bind =
     # SUPER binds
     builtins.map (evalBind "SUPER" [ "CTRL" "SHIFT" ]) [
-      "A, exec, ${import ./scripts/screenshot-area.nix { inherit pkgs; }}"
-      "SHIFT, A, exec, ${import ./scripts/screenshot-screen.nix { inherit pkgs; }}"
+      "A, exec, ${grimblast}/bin/grimblast --freeze save area - | ${pkgs.swappy}/bin/swappy -f -"
+      "SHIFT, A, exec, ${grimblast}/bin/grimblast --freeze save output - | ${pkgs.swappy}/bin/swappy -f -"
       "Q, exec, $terminal"
       "C, killactive,"
       "V, exec, ${pkgs.copyq}/bin/copyq show"
@@ -192,6 +193,8 @@ in
 
   misc = {
     focus_on_activate = true;
+    mouse_move_enables_dpms = true;
+    key_press_enables_dpms = true;
     disable_hyprland_logo = true;
     disable_splash_rendering = true;
   };
@@ -224,8 +227,8 @@ in
   ];
 
   general = {
-    gaps_in = 5;
-    gaps_out = 10;
+    gaps_in = 3;
+    gaps_out = 5;
     border_size = 1;
     # "col.active_border" = "rgba(c6a0f6ee) rgba(8bd5caee) 45deg";
     # "col.active_border" = "rgba(f5bde6ee) rgba(ee99a0ee) 45deg";
@@ -240,7 +243,7 @@ in
   };
 
   decoration = {
-    rounding = 10;
+    rounding = 5;
 
     blur = {
       enabled = true;

@@ -9,6 +9,7 @@ in {
     ./hyprland/avizo.nix
     ./hyprland/waybar.nix
     ./hyprland/rofi.nix
+    ./hyprland/swayidle.nix
     ./hyprland/swaylock.nix
     ./hyprland/gtk-theme.nix
   ];
@@ -32,7 +33,7 @@ in {
 
     (import ./hyprland/scripts/xdg-terminal-exec.nix { inherit pkgs config; })
 
-    (import ./hyprland/scripts/rofi-powermenu.nix { inherit pkgs; }) 
+    (import ./hyprland/scripts/rofi-powermenu.nix { inherit pkgs; })
   ] ++ (with pkgs.gnome; [
     gnome-calendar
     eog
@@ -64,6 +65,6 @@ in {
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
 
-    settings = import ./hyprland/hypr-settings.nix { inherit pkgs lib config thunar_pkg; };
+    settings = import ./hyprland/hypr-settings.nix { inherit pkgs lib config inputs thunar_pkg; };
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, userSettings, ... }:
+{ pkgs, config, ... }:
 
 {
   programs.neovim = {
@@ -32,11 +32,13 @@
       cmp-nvim-lsp
       luasnip
       neodev-nvim
+      markdown-preview-nvim
       nvim-web-devicons
 
       {
-        plugin = catppuccin-nvim;
-        config = ''colorscheme catppuccin-${userSettings.catppuccin-flavour}'';
+        plugin = base16-nvim;
+        type = "lua";
+        config = import ./base16-nvim.nix { inherit config; };
       }
 
       {
@@ -89,6 +91,7 @@
           p.tree-sitter-json
           p.tree-sitter-lua
           p.tree-sitter-nix
+          p.tree-sitter-ocaml
           p.tree-sitter-python
           p.tree-sitter-rust
           p.tree-sitter-vim

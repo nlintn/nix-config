@@ -1,7 +1,9 @@
-{ config, ... }:
+{ config, inputs, ... }:
 
 {
-  imports = [ 
+  imports = [
+    inputs.nix-colors.homeManagerModules.default
+
     ./applications
 
     ./fonts.nix
@@ -11,6 +13,8 @@
 
   home.username = "nico";
   home.homeDirectory = "/home/nico";
+
+  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;
   
   home.sessionVariables = {
     DOT_DIR = "${config.home.homeDirectory}/dotfiles";

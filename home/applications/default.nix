@@ -3,7 +3,7 @@
 {
   imports = [ 
     ./zsh
-    ./alacritty.nix
+    ./alacritty
     # ./tmux.nix
     ./fzf.nix
 
@@ -43,10 +43,12 @@
     neofetch
     spotify
     spotify-tray
+    telegram-desktop
     thunderbird
     tree
     vesktop
     wl-clipboard
+    zoom-us
   ];
 
   programs.zathura.enable = true;

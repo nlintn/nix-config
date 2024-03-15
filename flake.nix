@@ -10,7 +10,7 @@
         default-font = "JetBrainsMono Nerd Font";
         catppuccin-flavour = "macchiato";
         enable-kde = false;
-        wallpaper = "nix-black-4k.png";
+        wallpaper = "nix-black-4k.png"; #filename in $HOME/Wallpapers
         wm = "hyprland";
       };
     in {
@@ -62,6 +62,8 @@
     };
     xdph.url = "github:hyprwm/xdg-desktop-portal-hyprland";
 
+    nix-colors.url = "github:misterio77/nix-colors";
+
     catppuccin-grub = {
       url = "github:catppuccin/grub";
       flake = false;
@@ -71,10 +73,6 @@
       url = "github:catppuccin/zsh-syntax-highlighting";
       flake = false;
     };  
-    catppuccin-alacritty = {
-      url = "github:catppuccin/alacritty";
-      flake = false;
-    };
     zsh-nix-shell = {
       url = "github:chisui/zsh-nix-shell";
       flake = false;

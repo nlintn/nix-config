@@ -1,13 +1,10 @@
-{ /*pkgs,*/ inputs, userSettings, ... }:
+{ inputs, config, ... }:
 
 { 
   programs.alacritty = {
     enable = true;
     settings = {
-      /* shell = {
-        program = "${pkgs.zsh}/bin/zsh";
-        args = [ "-c" "tmux" ];
-      }; */
+      colors = import ./base16-colors.nix { inherit config; }; 
       font = {
         normal = {
           family = "JetBrainsMono Nerd Font"; 
@@ -15,7 +12,6 @@
         };
       };
       env.XTERM = "xterm-256color";
-      import = [ (inputs.catppuccin-alacritty + "/catppuccin-${userSettings.catppuccin-flavour}.toml") ];
       window = {
         dimensions = { columns = 80; lines = 25; };
         # startup_mode = "Maximized";

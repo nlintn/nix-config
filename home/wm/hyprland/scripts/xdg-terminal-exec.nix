@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config }:
 
 pkgs.writeShellScriptBin "xdg-terminal-exec" ''
   if [[ $# -gt 0 ]] then

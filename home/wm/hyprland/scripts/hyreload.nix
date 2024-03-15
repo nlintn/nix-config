@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs }:
 
 pkgs.writeShellScript "hyreload" ''
   kill $(pidof waybar);

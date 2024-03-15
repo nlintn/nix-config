@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs }:
 
 pkgs.writeShellScript "rofi-windows" ''
   hyprctl clients \

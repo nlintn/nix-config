@@ -36,9 +36,9 @@
       nvim-web-devicons
 
       {
-        plugin = base16-nvim;
+        plugin = import ./base16-nvim/package-patched.nix { inherit pkgs; };
         type = "lua";
-        config = import ./base16-nvim.nix { inherit config; };
+        config = import ./base16-nvim/lua-config.nix { inherit config; };
       }
 
       {

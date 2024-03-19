@@ -19,16 +19,16 @@
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
-      custom = builtins.toString ./oh-my-zsh;
-      plugins = [ "git" "sudo" "colored-man-pages" "per-directory-history" "themes" ];
+      custom = config.home.homeDirectory + "/.zsh/oh-my-zsh";
+      plugins = [ "git" "sudo" "colored-man-pages" "themes" ];
       theme = "meoww";
     };
     shellAliases = {
       c = "clear";
-      dotdir = "builtin cd $DOT_DIR";
-      hms = "home-manager switch --flake $DOT_DIR";
-      nrs = "sudo nixos-rebuild switch --flake $DOT_DIR";
-      nrb = "sudo nixos-rebuild boot --flake $DOT_DIR";
+      dotdir = "builtin cd ${config.home.homeDirectory}/dotfiles";
+      hms = "home-manager switch --flake ${config.home.homeDirectory}/dotfiles";
+      nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
+      nrb = "sudo nixos-rebuild boot --flake ${config.home.homeDirectory}/dotfiles";
       n = builtins.toString (pkgs.writeShellScript "n" ''
         if [[ $# -gt 0 ]] then
           ${config.programs.neovim.package}/bin/nvim $@
@@ -42,5 +42,9 @@
     # initExtra = ''
     #   [[ ! -r /home/nico/.opam/opam-init/init.zsh ]] || source /home/nico/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
     # '';
+  };
+  home.file.".zsh/oh-my-zsh" = {
+    source = ./oh-my-zsh;
+    recursive = true;
   };
 }

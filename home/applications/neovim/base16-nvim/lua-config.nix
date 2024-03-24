@@ -9,6 +9,7 @@ with config.colorScheme.palette; ''
     cmp = true,
     illuminate = true,
     dapui = true,
+    lsp_semantic = true,
   }
   require("base16-colorscheme").setup {
     base00 = "#${base00}",

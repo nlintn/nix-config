@@ -1,10 +1,12 @@
 { pkgs, lib, config, inputs, userSettings, thunar_pkg, ... }:
 
 let
-  evalBind = mainMod: modifiers: bind: (
-    mainMod + (
-      if (lib.foldl (acc: mod: acc || (lib.hasPrefix mod bind)) false modifiers) then " " else ", "
-    ) + bind
+  evalBinds = mainMod: modifiers: binds: (
+    builtins.map (bind: (
+      mainMod + (
+        if (lib.foldl (acc: mod: acc || (lib.hasPrefix mod bind)) false modifiers) then " " else ", "
+      ) + bind)
+    ) binds
   );
   grimblast = inputs.hyprland-contrib.packages.${pkgs.system}.grimblast;
 in
@@ -50,7 +52,7 @@ in
 
   bind =
     # SUPER binds
-    builtins.map (evalBind "SUPER" [ "CTRL" "SHIFT" ]) [
+    evalBinds "SUPER" [ "CTRL" "SHIFT" "ALT" ] [
       "A, exec, ${grimblast}/bin/grimblast --freeze save area - | ${pkgs.swappy}/bin/swappy -f -"
       "SHIFT, A, exec, ${grimblast}/bin/grimblast --freeze save output - | ${pkgs.swappy}/bin/swappy -f -"
       "Q, exec, $terminal"
@@ -70,10 +72,14 @@ in
       "right, movefocus, r"
       "up,    movefocus, u"
       "down,  movefocus, d"
-      "SHIFT, left,   movewindow, l"
-      "SHIFT, right,  movewindow, r"
-      "SHIFT, up,     movewindow, u"
-      "SHIFT, down,   movewindow, d"
+      "SHIFT, left,  movewindow, l"
+      "SHIFT, right, movewindow, r"
+      "SHIFT, up,    movewindow, u"
+      "SHIFT, down,  movewindow, d"
+      "ALT, left,  resizeactive, -10 0"
+      "ALT, right, resizeactive,  10 0"
+      "ALT, up,    resizeactive, 0 -10"
+      "ALT, down,  resizeactive,  0 10"
 
       "h, movefocus, l"
       "l, movefocus, r"
@@ -83,6 +89,10 @@ in
       "SHIFT, l, movewindow, r"
       "SHIFT, k, movewindow, u"
       "SHIFT, j, movewindow, d"
+      "ALT, h, resizeactive, -10 0"
+      "ALT, l, resizeactive,  10 0"
+      "ALT, k, resizeactive, 0 -10"
+      "ALT, j, resizeactive,  0 10"
 
       "1, split-workspace, 1"
       "2, split-workspace, 2"
@@ -99,8 +109,8 @@ in
       "S, togglespecialworkspace, magic"
       "SHIFT, S, movetoworkspace, special:magic"
 
-      "D, exec, scratchpad"
-      "SHIFT, D, exec, scratchpad -g"
+      "D,        exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -l"
+      "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g"
 
       "CTRL, RIGHT, split-workspace, r+1"
       "CTRL, LEFT,  split-workspace, r-1"
@@ -112,7 +122,7 @@ in
     ]
     ++
     # hycov binds
-    builtins.map (evalBind "ALT" [ ]) [
+    evalBinds "ALT" [ ] [
       "tab, hycov:toggleoverview"
       "left, hycov:movefocus,l"
       "right, hycov:movefocus,r"
@@ -120,30 +130,30 @@ in
       "down, hycov:movefocus,d"
     ]
     ++
-    builtins.map (evalBind "CTRL" [ "SHIFT" ]) [
+    evalBinds "CTRL" [ "SHIFT" ] [
       "SHIFT, M, pass, ^vesktop$"
     ]
     ++
-    builtins.map (evalBind "" []) [
+    evalBinds "" [] [
       "XF86AudioNext,   exec, ${config.services.playerctld.package}/bin/playerctl next"
       "XF86AudioPrev,   exec, ${config.services.playerctld.package}/bin/playerctl previous"
       "XF86AudioPlay,   exec, ${config.services.playerctld.package}/bin/playerctl play-pause"
       "XF86AudioPause,  exec, ${config.services.playerctld.package}/bin/playerctl play-pause"
     ];
 
-  bindm = builtins.map (evalBind "SUPER" [ ]) [
+  bindm = evalBinds "SUPER" [ ] [
     "mouse:272, movewindow"
     "mouse:273, resizewindow"
   ];
 
-  binde = builtins.map (evalBind "" [ ]) [
+  binde = evalBinds "" [ ] [
     "XF86AudioRaiseVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -u -p up"
     "XF86AudioLowerVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -u -p down"
     "XF86MonBrightnessUp,   exec, ${config.services.avizo.package}/bin/lightctl -d up"
     "XF86MonBrightnessDown, exec, ${config.services.avizo.package}/bin/lightctl -d down"
   ];
 
-  bindle = builtins.map (evalBind "" [ ]) [
+  bindle = evalBinds "" [ ] [
     "XF86AudioMute, exec,     ${config.services.avizo.package}/bin/volumectl -d -p toggle-mute"
     "XF86AudioMicMute, exec,  ${config.services.avizo.package}/bin/volumectl -d -m -p toogle-mute"
   ];
@@ -174,16 +184,16 @@ in
     overview_gappo = 60; #gaps width from screen
     overview_gappi = 24; #gaps width from clients
 
-    enable_hotarea = 0;
+    enable_hotarea = false;
 
-    enable_gesture = 1;
+    enable_gesture = true;
     swipe_fingers = 4;
 
-    disable_workspace_change = 1;
-    disable_spawn = 1;
+    disable_workspace_change = true;
+    disable_spawn = true;
 
-    enable_alt_release_exit = 1;
-    alt_toggle_auto_next = 1;
+    enable_alt_release_exit = true;
+    alt_toggle_auto_next = true;
   };
 
   plugin.split-monitor-workspaces = {
@@ -205,20 +215,16 @@ in
     "float, class:nm-connection-editor"
     "float, class:.blueman-manager-wrapped"
 
+    "float, class:firefox, title:(Password Required - Mozilla Firefox)"
+
     "fullscreen, class:swayimg"
     "noborder, class:swayimg"
     "noblur, class:swayimg"
     "noshadow, class:swayimg"
 
-    "float, class:(copyq)"
-    "move onscreen cursor, class:(copyq)"
-    "pin, class:(copyq)"
-
-    "opacity 0.0 override 0.0 override,class:^(xwaylandvideobridge)$"
-    "noanim,class:^(xwaylandvideobridge)$"
-    "noinitialfocus,class:^(xwaylandvideobridge)$"
-    "maxsize 1 1,class:^(xwaylandvideobridge)$"
-    "noblur,class:^(xwaylandvideobridge)$"
+    "float, class:copyq"
+    "move onscreen cursor, class:copyq"
+    "pin, class:copyq"
   ];
 
   layerrule = [
@@ -229,13 +235,11 @@ in
     gaps_in = 3;
     gaps_out = 5;
     border_size = 1;
-    # "col.active_border" = "rgba(c6a0f6ee) rgba(8bd5caee) 45deg";
-    # "col.active_border" = "rgba(f5bde6ee) rgba(ee99a0ee) 45deg";
-    "col.active_border" = "rgba(f5bde6ee)";
-    # "col.inactive_border" = "rgba(595959aa)";
-    "col.inactive_border" = "rgba(5b6078aa)";
+    # "col.active_border" = "rgba(f5bde6ee)";    
+    "col.active_border" = "rgba(${config.colorScheme.palette.base0F}ee) rgba(${config.colorScheme.palette.base06}ee) 45deg";
+    "col.inactive_border" = "rgba(${config.colorScheme.palette.base04}aa)";
 
-    layout = "dwindle";
+    layout = "master";
 
     # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
     allow_tearing = false;
@@ -272,15 +276,15 @@ in
   };
 
   dwindle = {
-    # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-    pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-    preserve_split = true; # you probably want this
+    pseudotile = true;
+    preserve_split = true;
   };
 
   master = {
-    # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-    new_is_master = true;
-    # new_on_top = true;
+    new_is_master = false;
+    new_on_top = true;
+    mfact = 0.65;
+    no_gaps_when_only = 1;
   };
 
   xwayland.force_zero_scaling = true;

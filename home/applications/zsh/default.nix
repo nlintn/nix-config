@@ -15,7 +15,7 @@
         src = inputs.zsh-nix-shell;
       }
     ];
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
@@ -31,9 +31,9 @@
       nrb = "sudo nixos-rebuild boot --flake ${config.home.homeDirectory}/dotfiles";
       n = builtins.toString (pkgs.writeShellScript "n" ''
         if [[ $# -gt 0 ]] then
-          ${config.programs.neovim.package}/bin/nvim $@
+          nvim $@
         else
-          ${config.programs.neovim.package}/bin/nvim .
+          nvim .
         fi
       '');
     };

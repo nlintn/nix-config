@@ -77,6 +77,6 @@
   */  
 
   home.file.".gdbinit".text = ''
-    source ${inputs.gdb-ptrfind + "/ptrfind.py"}
+    source ${inputs.gdb-ptrfind}/ptrfind.py
   '';
 }

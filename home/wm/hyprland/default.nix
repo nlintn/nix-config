@@ -16,8 +16,7 @@ in {
 
   home.packages = [
     config.services.playerctld.package
-
-    inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad
+ 
     thunar_pkg
 
     (import ./scripts/rofi-powermenu.nix { inherit pkgs; })

@@ -25,6 +25,7 @@
 
     extraConfig = ''
       set whichwrap+=<,>,h,l,[,]
+      autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -34,6 +35,7 @@
       neodev-nvim
       markdown-preview-nvim
       nvim-web-devicons
+      playground
 
       {
         plugin = import ./base16-nvim/package-patched.nix { inherit pkgs; };
@@ -105,7 +107,7 @@
         type = "lua";
         config = ''require("nvim-autopairs").setup {}'';
       }
-      
+
       {
         plugin = rainbow-delimiters-nvim;
         type = "lua";

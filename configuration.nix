@@ -16,6 +16,8 @@
     efi.canTouchEfiVariables = true;
   };
 
+  # boot.kernelParams = [ "i915.force_probe=46a6" ];
+
   networking.hostName = "meoww";
 
   # Enable networking
@@ -95,6 +97,11 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6ep";
+  };
+
   # User Managment
   users.users.nico = {
     isNormalUser = true;
@@ -144,9 +151,9 @@
     steam.enable = true;
   };
 
-  /* virtualisation.docker = {
+  virtualisation.docker = {
     enable = true;
-  }; */
+  };
 
   documentation = {
     enable = true;
@@ -154,14 +161,12 @@
     dev.enable = true;
   };
 
+  programs.kdeconnect = {
+    enable = true;
+  };
+
   networking.firewall = { 
     enable = true;
-    allowedTCPPortRanges = [ 
-      { from = 1714; to = 1764; } # KDE Connect
-    ];  
-    allowedUDPPortRanges = [ 
-      { from = 1714; to = 1764; } # KDE Connect
-    ];  
   };
 
   hardware.enableAllFirmware = true;
@@ -194,6 +199,8 @@
     ];
   };
   environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; }; # Force intel-media-driver
+
+  environment.etc.hosts.mode = "0644";
 
   nix.optimise = {
     automatic = true;

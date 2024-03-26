@@ -2,29 +2,28 @@
 
 {
   imports = [ 
-    ./zsh
     ./alacritty
-    # ./tmux.nix
-    ./fzf.nix
-
-    ./vim.nix
-    ./neovim
-    ./vscode.nix
-
     ./firefox.nix
+    ./fzf.nix
     ./git.nix
-    ./ssh.nix
+    ./neovim
+    ./obs-studio.nix
     ./opam.nix
-    # ./feh.nix
+    ./ssh.nix
+    # ./tmux.nix
+    ./vim.nix
+    ./vscode.nix
+    ./zellij.nix
+    ./zsh
   ];
 
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     # Coding stuff
     cargo
-    # clang_17 clang-tools_17
+    # clang-tools_17
     gdb
-    # github-desktop
+    github-desktop
     gitkraken
     (python3.withPackages ( python-pkgs: [
       python311Packages.pwntools
@@ -36,8 +35,9 @@
     # Misc
     anki
     copyq
+    desmume
     gimp
-    htop
+    btop
     libqalculate
     lolcat
     neofetch
@@ -54,6 +54,8 @@
   programs.zathura.enable = true;
   programs.gpg.enable = true;
   services.gpg-agent.enable = true;
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   programs.imv = {
     enable = true;

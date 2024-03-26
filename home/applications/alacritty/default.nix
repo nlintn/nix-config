@@ -19,14 +19,14 @@
         blur = true;
       };
       # cursor.style.blinking = "On";
-      keyboard.bindings = [
+      /* keyboard.bindings = [
         { key = "N"; mods = "Control"; action = "CreateNewWindow"; }
         { key = "F"; mods = "Control"; chars = "**\t"; }
         { key = "ArrowLeft"; mods = "Alt"; chars = "cd ..\n"; }
         { key = "ArrowRight"; mods = "Alt"; chars = "cd - > /dev/null\n"; }
         { key = "ArrowUp"; mods = "Alt"; chars = "cd ~\n"; }
         { key = "ArrowDown"; mods = "Alt"; chars = "cd /\n"; }
-      ];
+      ]; */
     };
   };
 }

@@ -10,7 +10,7 @@
         default-font = "JetBrainsMono Nerd Font";
         catppuccin-flavour = "macchiato";
         enable-kde = false;
-        wallpaper = "nix-black-4k.png"; #filename in $HOME/Wallpapers
+        wallpaper = "$HOME/Pictures/Wallpapers/cat_peek_purple.jpg";
         wm = "hyprland";
       };
     in {
@@ -53,7 +53,7 @@
       inputs.hyprland.follows = "hyprland";
     };
     split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces";
+      url = "github:nlintn/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
     hyprland-contrib = {

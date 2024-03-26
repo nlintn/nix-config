@@ -31,11 +31,12 @@ in
     "${config.programs.waybar.package}/bin/waybar"
     "${pkgs.networkmanagerapplet}/bin/nm-applet"
     "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
-    "${pkgs.swaybg}/bin/swaybg -i ${config.home.homeDirectory}/Pictures/Wallpapers/${userSettings.wallpaper}"
+    "${pkgs.swaybg}/bin/swaybg -i ${userSettings.wallpaper}"
     "sleep 5; ${pkgs.copyq}/bin/copyq --start-server"
   ];
 
   # "debug:disable_scale_checks" = true;
+  "debug:disable_logs" = false;
 
   /* workspace = [
     "1, persistent:true" 
@@ -76,11 +77,6 @@ in
       "SHIFT, right, movewindow, r"
       "SHIFT, up,    movewindow, u"
       "SHIFT, down,  movewindow, d"
-      "ALT, left,  resizeactive, -10 0"
-      "ALT, right, resizeactive,  10 0"
-      "ALT, up,    resizeactive, 0 -10"
-      "ALT, down,  resizeactive,  0 10"
-
       "h, movefocus, l"
       "l, movefocus, r"
       "k, movefocus, u"
@@ -89,10 +85,6 @@ in
       "SHIFT, l, movewindow, r"
       "SHIFT, k, movewindow, u"
       "SHIFT, j, movewindow, d"
-      "ALT, h, resizeactive, -10 0"
-      "ALT, l, resizeactive,  10 0"
-      "ALT, k, resizeactive, 0 -10"
-      "ALT, j, resizeactive,  0 10"
 
       "1, split-workspace, 1"
       "2, split-workspace, 2"
@@ -112,10 +104,10 @@ in
       "D,        exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -l"
       "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g"
 
-      "CTRL, RIGHT, split-workspace, r+1"
-      "CTRL, LEFT,  split-workspace, r-1"
-      "CTRL SHIFT, RIGHT, split-movetoworkspace, r+1"
-      "CTRL SHIFT, LEFT,  split-movetoworkspace, r-1"
+      "CTRL, RIGHT, split-workspace, w+1"
+      "CTRL, LEFT,  split-workspace, w-1"
+      "CTRL SHIFT, RIGHT, split-movetoworkspace, w+1"
+      "CTRL SHIFT, LEFT,  split-movetoworkspace, w-1"
 
       "F, fullscreen, 0"
       "SHIFT, F, fullscreen, 1"
@@ -124,10 +116,14 @@ in
     # hycov binds
     evalBinds "ALT" [ ] [
       "tab, hycov:toggleoverview"
-      "left, hycov:movefocus,l"
+      "left,  hycov:movefocus,l"
       "right, hycov:movefocus,r"
-      "up, hycov:movefocus,u"
-      "down, hycov:movefocus,d"
+      "up,    hycov:movefocus,u"
+      "down,  hycov:movefocus,d"
+      "h, hycov:movefocus,l"
+      "l, hycov:movefocus,r"
+      "j, hycov:movefocus,u"
+      "k, hycov:movefocus,d"
     ]
     ++
     evalBinds "CTRL" [ "SHIFT" ] [
@@ -141,22 +137,36 @@ in
       "XF86AudioPause,  exec, ${config.services.playerctld.package}/bin/playerctl play-pause"
     ];
 
-  bindm = evalBinds "SUPER" [ ] [
-    "mouse:272, movewindow"
-    "mouse:273, resizewindow"
-  ];
+  bindm =
+    evalBinds "SUPER" [ ] [
+      "mouse:272, movewindow"
+      "mouse:273, resizewindow"
+    ];
 
-  binde = evalBinds "" [ ] [
-    "XF86AudioRaiseVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -u -p up"
-    "XF86AudioLowerVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -u -p down"
-    "XF86MonBrightnessUp,   exec, ${config.services.avizo.package}/bin/lightctl -d up"
-    "XF86MonBrightnessDown, exec, ${config.services.avizo.package}/bin/lightctl -d down"
-  ];
+  binde =
+    evalBinds "" [ ] [
+      "XF86AudioRaiseVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -p up"
+      "XF86AudioLowerVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -p down"
+      "XF86MonBrightnessUp,   exec, ${config.services.avizo.package}/bin/lightctl -d up"
+      "XF86MonBrightnessDown, exec, ${config.services.avizo.package}/bin/lightctl -d down"
+    ] ++
+    evalBinds "SUPER" [ "ALT" ] [
+      "ALT, left,  resizeactive, -10 0"
+      "ALT, right, resizeactive,  10 0"
+      "ALT, up,    resizeactive, 0 -10"
+      "ALT, down,  resizeactive,  0 10"
+        
+      "ALT, h, resizeactive, -10 0"
+      "ALT, l, resizeactive,  10 0"
+      "ALT, k, resizeactive, 0 -10"
+      "ALT, j, resizeactive,  0 10"
+    ];
 
-  bindle = evalBinds "" [ ] [
-    "XF86AudioMute, exec,     ${config.services.avizo.package}/bin/volumectl -d -p toggle-mute"
-    "XF86AudioMicMute, exec,  ${config.services.avizo.package}/bin/volumectl -d -m -p toogle-mute"
-  ];
+  bindl =
+    evalBinds "" [ ] [
+      "XF86AudioMute, exec,     ${config.services.avizo.package}/bin/volumectl -d -p toggle-mute"
+      "XF86AudioMicMute, exec,  ${config.services.avizo.package}/bin/volumectl -d -m -p toogle-mute"
+    ];
 
   binds = {
     workspace_back_and_forth = true;
@@ -169,6 +179,7 @@ in
     touchpad = {
       natural_scroll = true;
       tap-to-click = true;
+      drag_lock = true;
     };
 
     sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
@@ -236,17 +247,16 @@ in
     gaps_out = 5;
     border_size = 1;
     # "col.active_border" = "rgba(f5bde6ee)";    
-    "col.active_border" = "rgba(${config.colorScheme.palette.base0F}ee) rgba(${config.colorScheme.palette.base06}ee) 45deg";
+    "col.active_border" = "rgba(${config.colorScheme.palette.base0F}cc) rgba(${config.colorScheme.palette.base06}cc) 45deg";
     "col.inactive_border" = "rgba(${config.colorScheme.palette.base04}aa)";
 
     layout = "master";
 
-    # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
     allow_tearing = false;
   };
 
   decoration = {
-    rounding = 5;
+    rounding = 0;
 
     blur = {
       enabled = true;
@@ -256,22 +266,22 @@ in
       vibrancy = 0.1696;
     };
 
-    drop_shadow = true;
+    /* drop_shadow = true;
     shadow_range = 4;
     shadow_render_power = 3;
-    "col.shadow" = "rgba(1a1a1aee)";
+    "col.shadow" = "rgba(1a1a1aee)"; */
   };
 
   animations = {
     enabled = true;
-    bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+    bezier = "myBezier, 0.05, 0.9, 0.1, 1.0";
     animation = [
-      "windows, 1, 7, myBezier"
-      "windowsOut, 1, 7, default, popin 80%"
+      "windows, 1, 5, myBezier"
+      "windowsOut, 1, 5, default, popin 80%"
       "border, 1, 10, default"
       "borderangle, 1, 8, default"
       "fade, 1, 7, default"
-      "workspaces, 1, 6, default"
+      "workspaces, 1, 5, default"
     ];
   };
 

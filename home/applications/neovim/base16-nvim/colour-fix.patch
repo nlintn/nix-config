@@ -1,8 +1,8 @@
 diff --git a/lua/base16-colorscheme.lua b/lua/base16-colorscheme.lua
-index e09da6d..9b4e810 100644
+index e09da6d..f78bf21 100644
 --- a/lua/base16-colorscheme.lua
 +++ b/lua/base16-colorscheme.lua
-@@ -193,16 +193,16 @@ function M.setup(colors, config)
+@@ -193,26 +193,26 @@ function M.setup(colors, config)
  
      -- Standard syntax highlighting
      hi.Boolean                            = { guifg = M.colors.base09, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm09, ctermbg = nil }
@@ -23,16 +23,17 @@ index e09da6d..9b4e810 100644
      hi.Keyword                            = { guifg = M.colors.base0E, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
      hi.Label                              = { guifg = M.colors.base0A, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
      hi.Number                             = { guifg = M.colors.base09, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm09, ctermbg = nil }
-@@ -210,9 +210,9 @@ function M.setup(colors, config)
+     hi.Operator                           = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
      hi.PreProc                            = { guifg = M.colors.base0A, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
-     hi.Repeat                             = { guifg = M.colors.base0A, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
+-    hi.Repeat                             = { guifg = M.colors.base0A, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
++    hi.Repeat                             = { guifg = M.colors.base0E, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
      hi.Special                            = { guifg = M.colors.base0C, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0C, ctermbg = nil }
 -    hi.SpecialChar                        = { guifg = M.colors.base0F, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0F, ctermbg = nil }
 -    hi.Statement                          = { guifg = M.colors.base08, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
 -    hi.StorageClass                       = { guifg = M.colors.base0A, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
-+    hi.SpecialChar                        = { guifg = M.colors.base0C, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0F, ctermbg = nil }
-+    hi.Statement                          = { guifg = M.colors.base05, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
-+    hi.StorageClass                       = { guifg = M.colors.base0E, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
++    hi.SpecialChar                        = { guifg = M.colors.base0C, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0C, ctermbg = nil }
++    hi.Statement                          = { guifg = M.colors.base05, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
++    hi.StorageClass                       = { guifg = M.colors.base0E, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
      hi.String                             = { guifg = M.colors.base0B, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0B, ctermbg = nil }
      hi.Structure                          = { guifg = M.colors.base0E, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
      hi.Tag                                = { guifg = M.colors.base0A, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
@@ -54,7 +55,7 @@ index e09da6d..9b4e810 100644
      hi.TSComment                          = { guifg = M.colors.base03, guibg = nil, gui = 'italic', guisp = nil, ctermfg = M.colors.cterm03, ctermbg = nil }
      hi.TSConstructor                      = { guifg = M.colors.base0D, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0D, ctermbg = nil }
      hi.TSConditional                      = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
-@@ -294,25 +294,26 @@ function M.setup(colors, config)
+@@ -294,26 +294,27 @@ function M.setup(colors, config)
      hi.TSConstMacro                       = { guifg = M.colors.base08, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
      hi.TSError                            = { guifg = M.colors.base08, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
      hi.TSException                        = { guifg = M.colors.base08, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
@@ -69,8 +70,7 @@ index e09da6d..9b4e810 100644
 +    hi.TSInclude                          = { guifg = M.colors.base0A, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0D, ctermbg = nil }
      hi.TSKeyword                          = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
      hi.TSKeywordFunction                  = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
--    hi.TSKeywordOperator                  = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
-+    hi.TSKeywordOperator                  = { guifg = M.colors.base0C, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
+     hi.TSKeywordOperator                  = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
 +    hi.TSModifier                         = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
      hi.TSLabel                            = { guifg = M.colors.base0A, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
      hi.TSMethod                           = { guifg = M.colors.base0D, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0D, ctermbg = nil }
@@ -83,14 +83,16 @@ index e09da6d..9b4e810 100644
 -    hi.TSParameterReference               = { guifg = M.colors.base05, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
 -    hi.TSProperty                         = { guifg = M.colors.base05, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
 -    hi.TSPunctDelimiter                   = { guifg = M.colors.base0F, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0F, ctermbg = nil }
+-    hi.TSPunctBracket                     = { guifg = M.colors.base05, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
 +    hi.TSOperator                         = { guifg = M.colors.base0C, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0C, ctermbg = nil }
 +    hi.TSParameter                        = { guifg = M.colors.base08, guibg = nil, gui = 'italic', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
 +    hi.TSParameterReference               = { guifg = M.colors.base08, guibg = nil, gui = 'italic', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
 +    hi.TSProperty                         = { guifg = M.colors.base0F, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
-+    hi.TSPunctDelimiter                   = { guifg = M.colors.base04, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0F, ctermbg = nil }
-     hi.TSPunctBracket                     = { guifg = M.colors.base05, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
++    hi.TSPunctDelimiter                   = { guifg = M.colors.base04, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm04, ctermbg = nil }
++    hi.TSPunctBracket                     = { guifg = nil, guibg = nil, gui = 'none', guisp = nil, ctermfg = nil, ctermbg = nil }
      hi.TSPunctSpecial                     = { guifg = M.colors.base0F, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0F, ctermbg = nil }
      hi.TSRepeat                           = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
+     hi.TSString                           = { guifg = M.colors.base0B, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0B, ctermbg = nil }
 @@ -328,11 +329,11 @@ function M.setup(colors, config)
      hi.TSUnderline                        = { guifg = M.colors.base00, guibg = nil, gui = 'underline', guisp = nil, ctermfg = M.colors.cterm00, ctermbg = nil }
      hi.TSStrike                           = { guifg = M.colors.base00, guibg = nil, gui = 'strikethrough', guisp = nil, ctermfg = M.colors.cterm00, ctermbg = nil }

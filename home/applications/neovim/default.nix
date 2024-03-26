@@ -26,6 +26,7 @@
     extraConfig = ''
       set whichwrap+=<,>,h,l,[,]
       autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
+      autocmd vimenter * hi NormalNC guibg=NONE ctermbg=NONE
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -47,6 +48,12 @@
         plugin = comment-nvim;
         type = "lua";
         config = ''require("Comment").setup {}'';
+      }
+
+      {
+        plugin = copilot-lua;
+        type = "lua";
+        config = ''require("copilot").setup {}'';
       }
 
       {
@@ -86,20 +93,9 @@
       }
       
       {
-        plugin = (nvim-treesitter.withPlugins (p: [
-          p.tree-sitter-bash
-          p.tree-sitter-c
-          p.tree-sitter-cpp
-          p.tree-sitter-json
-          p.tree-sitter-lua
-          p.tree-sitter-nix
-          p.tree-sitter-ocaml
-          p.tree-sitter-python
-          p.tree-sitter-rust
-          p.tree-sitter-vim
-        ]));
+        plugin = import ./nvim-treesitter/package-withPlugins.nix { inherit pkgs; };
         type = "lua";
-        config = builtins.readFile ./nvim-treesitter.lua;
+        config = builtins.readFile ./nvim-treesitter/lua-config.lua;
       }
       
       {
@@ -111,7 +107,7 @@
       {
         plugin = rainbow-delimiters-nvim;
         type = "lua";
-        config = ''require("rainbow-delimiters.setup").setup {}'';
+        config = builtins.readFile ./rainbow-delimiters-nvim.lua;
       }
 
       {
@@ -119,12 +115,18 @@
         type = "lua";
         config = builtins.readFile ./telescope-nvim.lua;
       }
+
+      {
+        plugin = vimtex;
+      }
     ];
 
     extraPackages = with pkgs; [
       fd
+      jdt-language-server
       lua-language-server
       nil
+      nodePackages.nodejs
       ripgrep
       rust-analyzer
     ];

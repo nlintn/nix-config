@@ -25,12 +25,12 @@
     gdb
     github-desktop
     gitkraken
-    (python3.withPackages ( python-pkgs: [
+    /* (python3.withPackages ( python-pkgs: [
       python311Packages.pwntools
-    ]))
+    ])) */
     jetbrains.idea-ultimate
     nil
-    pwndbg
+    # pwndbg
 
     # Misc
     anki

@@ -134,7 +134,6 @@
   programs.gnome-disks.enable = userSettings.wm == "hyprland";
   services.gvfs.enable = userSettings.wm == "hyprland";
   services.tumbler.enable = userSettings.wm == "hyprland";
-  security.pam.services.swaylock = {};
   services.gnome.evolution-data-server.enable = userSettings.wm == "hyprland";
   services.gnome.gnome-online-accounts.enable = userSettings.wm == "hyprland";
 

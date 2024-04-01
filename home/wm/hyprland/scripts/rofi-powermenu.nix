@@ -53,7 +53,7 @@ pkgs.writeShellScriptBin "rofi-powermenu" ''
           fi
           ;;
       $lock)
-          swaylock
+         hyprlock --immediate 
           ;;
       $suspend)
   		ans=$(rdialog &)

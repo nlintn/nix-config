@@ -8,9 +8,9 @@ in {
   imports =  [
     ./avizo.nix
     ./gtk-theme.nix
+    ./hypridle.nix
+    ./hyprlock.nix
     ./rofi.nix
-    ./swayidle.nix
-    ./swaylock.nix
     ./waybar
   ];
 

@@ -67,7 +67,7 @@ in
       "G, togglesplit,"
       "tab, exec, $windows"
       "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs; }}"
-      "BACKSPACE, exec, ${config.programs.swaylock.package}/bin/swaylock"
+      "BACKSPACE, exec, loginctl lock-session"
 
       "left,  movefocus, l"
       "right, movefocus, r"

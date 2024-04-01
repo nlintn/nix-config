@@ -11,6 +11,7 @@
         catppuccin-flavour = "macchiato";
         enable-kde = false;
         wallpaper = "$HOME/Pictures/Wallpapers/cat_peek_purple.jpg";
+        lockscreen = "~/Pictures/Wallpapers/landscape-anime-digital-art-fantasy-art-wallpaper.png";
         wm = "hyprland";
       };
     in {
@@ -61,6 +62,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xdph.url = "github:hyprwm/xdg-desktop-portal-hyprland";
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hyprlang.follows = "hyprland/hyprlang";
+      inputs.systems.follows = "hyprland/systems";
+    };
+    hypridle = {
+      url = "github:hyprwm/hypridle";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hyprlang.follows = "hyprland/hyprlang";
+      inputs.systems.follows = "hyprland/systems";
+    };
 
     nix-colors.url = "github:misterio77/nix-colors";
 

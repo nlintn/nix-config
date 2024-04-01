@@ -10,8 +10,8 @@
         default-font = "JetBrainsMono Nerd Font";
         catppuccin-flavour = "macchiato";
         enable-kde = false;
-        wallpaper = "~/Pictures/Wallpapers/cat_peek_purple_full.jpg";
-        lockscreen = "~/Pictures/Wallpapers/landscape-anime-digital-art-fantasy-art-wallpaper.png";
+        wallpaper = builtins.toString ./etc/wallpaper.jpg;
+        lockscreen = builtins.toString ./etc/lockscreen.png;
         wm = "hyprland";
       };
     in {

@@ -7,7 +7,7 @@
     package = pkgs.rofi-wayland;
     theme = ./rofi/launcher2.rasi;
     extraConfig = {
-      modi = "run,drun,ssh";
+      modi = "run,drun,ssh,window";
       icon-theme = "Oranchelo";
       show-icons = true;
       drun-display-format = "{icon} {name}";
@@ -22,7 +22,6 @@
       display-ssh = "   ssh";
       sidebar-mode = true;
       click-to-exit = true;
-
     };
   };
 }

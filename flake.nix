@@ -10,7 +10,7 @@
         default-font = "JetBrainsMono Nerd Font";
         catppuccin-flavour = "macchiato";
         enable-kde = false;
-        wallpaper = "$HOME/Pictures/Wallpapers/cat_peek_purple.jpg";
+        wallpaper = "~/Pictures/Wallpapers/cat_peek_purple_full.jpg";
         lockscreen = "~/Pictures/Wallpapers/landscape-anime-digital-art-fantasy-art-wallpaper.png";
         wm = "hyprland";
       };
@@ -30,9 +30,7 @@
           inherit pkgs;
           modules = [
             ./home
-          ] ++ (if userSettings.wm == "hyprland" then [
-            inputs.hyprland.homeManagerModules.default { wayland.windowManager.hyprland.enable = true; }
-          ] else []);
+          ];
           extraSpecialArgs = {
             inherit inputs;
             inherit userSettings;
@@ -48,7 +46,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hycov = {
       url = "github:nlintn/hycov";
       inputs.hyprland.follows = "hyprland";
@@ -61,7 +62,6 @@
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    xdph.url = "github:hyprwm/xdg-desktop-portal-hyprland";
     hyprlock = {
       url = "github:hyprwm/hyprlock";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -86,10 +86,6 @@
       url = "github:catppuccin/zsh-syntax-highlighting";
       flake = false;
     };  
-    zsh-nix-shell = {
-      url = "github:chisui/zsh-nix-shell";
-      flake = false;
-    };
     gdb-ptrfind = {
       url = "github:ChaChaNop-Slide/ptrfind";
       flake = false;

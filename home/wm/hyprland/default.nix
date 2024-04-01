@@ -6,11 +6,14 @@ let thunar_pkg = with pkgs.xfce;
   };
 in {
   imports =  [
+    inputs.hyprland.homeManagerModules.default
+
     ./avizo.nix
     ./gtk-theme.nix
     ./hypridle.nix
     ./hyprlock.nix
     ./rofi.nix
+    ./swaync
     ./waybar
   ];
 
@@ -43,12 +46,16 @@ in {
   services.gnome-keyring.enable = true;
   services.blueman-applet.enable = true;
 
-  xdg.configFile."swaync/style.css".source = ./swaync + "/${userSettings.catppuccin-flavour}.css";  
-
   xdg.configFile."swappy/config".text = ''
     [Default]
     save_dir=${config.home.homeDirectory}/Pictures/Screenshots
     save_filename_format=screen-%Y%m%d-%H%M%S.png
+  '';
+  xdg.configFile."swayimg/config".text = ''
+    [general]
+    transparency=none
+    [info]
+    mode=off
   '';
 
   wayland.windowManager.hyprland = {
@@ -59,7 +66,7 @@ in {
     systemd.enable = true;
 
     plugins = [
-      inputs.hycov.packages.${pkgs.system}.hycov
+      # inputs.hycov.packages.${pkgs.system}.hycov
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
 

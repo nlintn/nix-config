@@ -40,8 +40,13 @@
     LC_TIME = "en_IE.UTF-8";
   };
 
+  services.logind = {
+    powerKey = "suspend";
+    lidSwitch = "suspend";
+  };
+
   xdg.portal = {
-    # enable = true;
+    enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk  
     ];
@@ -125,7 +130,7 @@
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    portalPackage = inputs.xdph.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
   };
   # programs.dconf.enable = userSettings.wm == "hyprland";
   services.blueman.enable = userSettings.wm == "hyprland";
@@ -171,7 +176,7 @@
   hardware.enableAllFirmware = true;
   # Power Management
   # powerManagement.enable = true;
-  powerManagement.powertop.enable = true;
+  # powerManagement.powertop.enable = true;
   services.thermald.enable = true;
   # services.power-profiles-daemon.enable = false;
   services.tlp = {
@@ -197,7 +202,7 @@
       libvdpau-va-gl
     ];
   };
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; }; # Force intel-media-driver
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; NIXOS_OZONE_WL = 1; }; # Force intel-media-driver
 
   environment.etc.hosts.mode = "0644";
 

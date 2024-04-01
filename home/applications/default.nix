@@ -57,13 +57,6 @@
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
-  programs.imv = {
-    enable = true;
-    settings = {
-
-    };
-  };
-
   services.kdeconnect.enable = true;
   services.kdeconnect.indicator = true;
 

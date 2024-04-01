@@ -9,11 +9,6 @@
         file = "themes/catppuccin_${userSettings.catppuccin-flavour}-zsh-syntax-highlighting.zsh";
         src = inputs.catppuccin-zsh-syntax-highlighting;
       }
-      {
-        name = "zsh-nix-shell";
-        file = "nix-shell.plugin.zsh";
-        src = inputs.zsh-nix-shell;
-      }
     ];
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;

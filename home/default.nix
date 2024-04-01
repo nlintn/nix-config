@@ -18,7 +18,6 @@
   
   home.sessionVariables = {
     DOT_DIR = "${config.home.homeDirectory}/dotfiles";
-    NIXOS_OZONE_WL = "1";
   };
 
   systemd.user.startServices = true;

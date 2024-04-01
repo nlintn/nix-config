@@ -19,7 +19,7 @@ in
   "$terminal" = "${config.programs.alacritty.package}/bin/alacritty";
   "$fileManager" = "${thunar_pkg}/bin/thunar";
   "$menu" = "${config.programs.rofi.package}/bin/rofi -show drun";
-  "$windows" = "${import ./scripts/rofi-windows.nix { inherit pkgs; }}";
+  "$windows" = "${config.programs.rofi.package}/bin/rofi -show window";
 
   env = [
     "XDG_SESSION_DESKTOP, Hyprland"
@@ -36,7 +36,7 @@ in
   ];
 
   # "debug:disable_scale_checks" = true;
-  "debug:disable_logs" = false;
+  # "debug:disable_logs" = false;
 
   /* workspace = [
     "1, persistent:true" 
@@ -54,8 +54,6 @@ in
   bind =
     # SUPER binds
     evalBinds "SUPER" [ "CTRL" "SHIFT" "ALT" ] [
-      "A, exec, ${grimblast}/bin/grimblast --freeze save area - | ${pkgs.swappy}/bin/swappy -f -"
-      "SHIFT, A, exec, ${grimblast}/bin/grimblast --freeze save output - | ${pkgs.swappy}/bin/swappy -f -"
       "Q, exec, $terminal"
       "C, killactive,"
       "V, exec, ${pkgs.copyq}/bin/copyq show"
@@ -68,6 +66,8 @@ in
       "tab, exec, $windows"
       "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs; }}"
       "BACKSPACE, exec, loginctl lock-session"
+      "A, exec, ${grimblast}/bin/grimblast --freeze save area - | ${pkgs.swappy}/bin/swappy -f -"
+      "SHIFT, A, exec, ${grimblast}/bin/grimblast --freeze save output - | ${pkgs.swappy}/bin/swappy -f -"
 
       "left,  movefocus, l"
       "right, movefocus, r"
@@ -114,7 +114,7 @@ in
     ]
     ++
     # hycov binds
-    evalBinds "ALT" [ ] [
+    /* evalBinds "ALT" [ ] [
       "tab, hycov:toggleoverview"
       "left,  hycov:movefocus,l"
       "right, hycov:movefocus,r"
@@ -125,16 +125,9 @@ in
       "j, hycov:movefocus,u"
       "k, hycov:movefocus,d"
     ]
-    ++
+    ++ */
     evalBinds "CTRL" [ "SHIFT" ] [
       "SHIFT, M, pass, ^vesktop$"
-    ]
-    ++
-    evalBinds "" [] [
-      "XF86AudioNext,   exec, ${config.services.playerctld.package}/bin/playerctl next"
-      "XF86AudioPrev,   exec, ${config.services.playerctld.package}/bin/playerctl previous"
-      "XF86AudioPlay,   exec, ${config.services.playerctld.package}/bin/playerctl play-pause"
-      "XF86AudioPause,  exec, ${config.services.playerctld.package}/bin/playerctl play-pause"
     ];
 
   bindm =
@@ -144,12 +137,6 @@ in
     ];
 
   binde =
-    evalBinds "" [ ] [
-      "XF86AudioRaiseVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -p up"
-      "XF86AudioLowerVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -p down"
-      "XF86MonBrightnessUp,   exec, ${config.services.avizo.package}/bin/lightctl -d up"
-      "XF86MonBrightnessDown, exec, ${config.services.avizo.package}/bin/lightctl -d down"
-    ] ++
     evalBinds "SUPER" [ "ALT" ] [
       "ALT, left,  resizeactive, -10 0"
       "ALT, right, resizeactive,  10 0"
@@ -162,10 +149,22 @@ in
       "ALT, j, resizeactive,  0 10"
     ];
 
-  bindl =
+  bindl = 
     evalBinds "" [ ] [
       "XF86AudioMute, exec,     ${config.services.avizo.package}/bin/volumectl -d -p toggle-mute"
       "XF86AudioMicMute, exec,  ${config.services.avizo.package}/bin/volumectl -d -m -p toogle-mute"
+      "XF86AudioNext,   exec, ${config.services.playerctld.package}/bin/playerctl next"
+      "XF86AudioPrev,   exec, ${config.services.playerctld.package}/bin/playerctl previous"
+      "XF86AudioPlay,   exec, ${config.services.playerctld.package}/bin/playerctl play-pause"
+      "XF86AudioPause,  exec, ${config.services.playerctld.package}/bin/playerctl play-pause"
+    ];
+
+  bindle =
+    evalBinds "" [ ] [
+      "XF86AudioRaiseVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -p up"
+      "XF86AudioLowerVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -p down"
+      "XF86MonBrightnessUp,   exec, ${config.services.avizo.package}/bin/lightctl -d up"
+      "XF86MonBrightnessDown, exec, ${config.services.avizo.package}/bin/lightctl -d down"
     ];
 
   binds = {
@@ -226,12 +225,16 @@ in
     "float, class:nm-connection-editor"
     "float, class:.blueman-manager-wrapped"
 
+    "float, class:xdg-desktop-portal-gtk"
+
     "float, class:firefox, title:(Password Required - Mozilla Firefox)"
 
-    "fullscreen, class:swayimg"
+    "float, class:swayimg"
     "noborder, class:swayimg"
     "noblur, class:swayimg"
     "noshadow, class:swayimg"
+    "size 100%, 100%, class:swayimg"
+    "center, class:swayimg"
 
     "float, class:copyq"
     "move onscreen cursor, class:copyq"

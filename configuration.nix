@@ -228,7 +228,7 @@
       libvdpau-va-gl
     ];
   };
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; NIXOS_OZONE_WL = 1; }; # Force intel-media-driver
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; NIXOS_OZONE_WL = "1"; }; # Force intel-media-driver
 
   environment.etc.hosts.mode = "0644";
 

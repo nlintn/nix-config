@@ -8,11 +8,14 @@
 
   # Bootloader
   boot.loader = {
-    grub.enable = true;
-    grub.efiSupport = true;
-    grub.device = "nodev";
-    grub.useOSProber = true;
-    grub.theme = inputs.catppuccin-grub + "/src/catppuccin-${userSettings.catppuccin-flavour}-grub-theme/";
+    grub = {
+      enable = true;
+      efiSupport = true;
+      device = "nodev";
+      useOSProber = true;
+      theme = inputs.catppuccin-grub + "/src/catppuccin-${userSettings.catppuccin-flavour}-grub-theme/";
+      # extraConfig = "GRUB_CMDLINE_LINUX=\"vt.default_red=36,237,166,238,138,245,139,184,91,237,166,238,138,245,139,165 vt.default_grn=39,135,218,212,173,189,213,192,96,135,218,212,173,189,213,173 vt.default_blu=58,150,149,159,244,230,202,224,120,150,149,159,244,230,202,203\"";
+    };
     efi.canTouchEfiVariables = true;
   };
 
@@ -83,9 +86,32 @@
     };*/
   };
 
+  services.greetd = lib.mkIf (userSettings.wm == "hyprland") {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format \"%d. %b %Y %H:%M:%S\" --user-menu --remember --remember-session --sessions ${inputs.hyprland.packages.${pkgs.system}.hyprland}/share/wayland-sessions";
+        user = "greeter";
+      };
+    };
+  };
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal"; # Without this errors will spam on screen
+    # Without these bootlogs will spam on screen
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
 
   # Configure console keymap
-  console.keyMap = "de";
+  console = {
+    keyMap = "de";
+    earlySetup = true;
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
+  };
 
   # Sound
   security.rtkit.enable = true;

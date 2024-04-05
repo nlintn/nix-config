@@ -1,4 +1,4 @@
-{ config, inputs, userSettings, ... }:
+{ pkgs, config, inputs, userSettings, ... }:
 
 {
   imports = [
@@ -25,4 +25,6 @@
   home.stateVersion = "24.05";
 
   programs.home-manager.enable = true;
+
+  nix.package = pkgs.nix;
 }

@@ -12,7 +12,8 @@ in {
     ./gtk-theme.nix
     ./hypridle.nix
     ./hyprlock.nix
-    ./rofi.nix
+    ./rofi
+    ./swayimg.nix
     ./swaync
     ./waybar
   ];
@@ -30,8 +31,6 @@ in {
     networkmanagerapplet
     nwg-displays
     pavucontrol
-    swayimg
-    swaynotificationcenter
     wlr-randr
     xdg-utils
     # xwaylandvideobridge
@@ -45,18 +44,6 @@ in {
   
   services.gnome-keyring.enable = true;
   services.blueman-applet.enable = true;
-
-  xdg.configFile."swappy/config".text = ''
-    [Default]
-    save_dir=${config.home.homeDirectory}/Pictures/Screenshots
-    save_filename_format=screen-%Y%m%d-%H%M%S.png
-  '';
-  xdg.configFile."swayimg/config".text = ''
-    [general]
-    transparency=none
-    [info]
-    mode=off
-  '';
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -72,4 +59,14 @@ in {
 
     settings = import ./hypr-settings.nix { inherit pkgs lib config inputs userSettings thunar_pkg; };
   };
+
+  home.activation.hyprlandActivation = ''
+    run ${import ./scripts/hyreload.nix { inherit pkgs config; } }
+  '';
+
+  xdg.configFile."swappy/config".text = ''
+    [Default]
+    save_dir=${config.home.homeDirectory}/Pictures/Screenshots
+    save_filename_format=screen-%Y%m%d-%H%M%S.png
+  '';
 }

@@ -1,15 +1,9 @@
-{ pkgs, config, inputs, userSettings, ... }:
+{ pkgs, config, ... }:
 
 {
   programs.zsh = {
     enable = true;
-    plugins = [
-      {
-        name = "syntax-highlighting_catppuccin";
-        file = "themes/catppuccin_${userSettings.catppuccin-flavour}-zsh-syntax-highlighting.zsh";
-        src = inputs.catppuccin-zsh-syntax-highlighting;
-      }
-    ];
+    initExtra = (import ./zsh-syntax-highlighting-base16.nix { inherit pkgs config; });
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
@@ -32,11 +26,6 @@
         fi
       '');
     };
-    # cdpath = [ "HOME/dotfiles" "$HOME/TUM" ];
-    # Opam env
-    # initExtra = ''
-    #   [[ ! -r /home/nico/.opam/opam-init/init.zsh ]] || source /home/nico/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
-    # '';
   };
   home.file.".zsh/oh-my-zsh" = {
     source = ./oh-my-zsh;

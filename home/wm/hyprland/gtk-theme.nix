@@ -20,7 +20,7 @@ in {
     x11.enable = true;
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Ice";
-    size = 16;
+    size = 20;
   };
 
   gtk = {
@@ -31,8 +31,8 @@ in {
     };
   
     iconTheme = {
-      package = pkgs.gnome-themes-extra;
-      name = "Adwaita";
+      package = pkgs.kora-icon-theme;
+      name = "kora";
     };
   
     font = {

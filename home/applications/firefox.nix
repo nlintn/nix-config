@@ -6,9 +6,11 @@
     package = pkgs.firefox-wayland; 
     profiles."nico" = {
       settings = {
+        "browser.download.autohideButton" = false;
         "browser.fullscreen.autohide" = false;
-        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "browser.tabs.closeWindowWithLastTab" = false;
         "media.ffmpeg.vaapi.enabled" = true;
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
       userChrome = ''
         :root[inFullscreen] #PersonalToolbar {

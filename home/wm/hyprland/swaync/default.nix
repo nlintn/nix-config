@@ -1,5 +1,7 @@
-{ userSettings, ... }:
+{ pkgs, config, ... }:
 
 {
-  xdg.configFile."swaync/style.css".source = ./. + "/${userSettings.catppuccin-flavour}.css";  
+  home.packages = [ pkgs.swaynotificationcenter ];
+
+  xdg.configFile."swaync/style.css".text = import ./theme.nix { inherit config; };
 }

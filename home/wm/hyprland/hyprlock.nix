@@ -66,9 +66,9 @@
       {
         text = "cmd[update:1000] ${config.services.playerctld.package}/bin/playerctl metadata --format '{{title}} - {{artist}}'";
         color = "rgba(${base05}cc)";
-        font_size = 18;
-        font_family = "JetBrainsMono Nerd Font, Font Awesome 6 Free Solid";
-        position = { x = 0; y = -50; };
+        font_size = 20;
+        font_family = "JetBrainsMono Nerd Font";
+        position = { x = 0; y = 30; };
         halign = "center";
         valign = "bottom";
       }

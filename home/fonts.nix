@@ -10,5 +10,6 @@
     noto-fonts-extra
     noto-fonts-cjk
     font-awesome
+    montserrat
   ];
 }

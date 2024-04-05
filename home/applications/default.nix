@@ -31,11 +31,13 @@
     jetbrains.idea-ultimate
     nil
     # pwndbg
+    texlive.combined.scheme-full
 
     # Misc
     anki
     copyq
     desmume
+    element-desktop
     gimp
     btop
     libqalculate

@@ -32,22 +32,6 @@
         "type": "github"
       }
     },
-    "catppuccin-zsh-syntax-highlighting": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1665638423,
-        "narHash": "sha256-Q7KmwUd9fblprL55W0Sf4g7lRcemnhjh4/v+TacJSfo=",
-        "owner": "catppuccin",
-        "repo": "zsh-syntax-highlighting",
-        "rev": "06d519c20798f0ebe275fc3a8101841faaeee8ea",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "zsh-syntax-highlighting",
-        "type": "github"
-      }
-    },
     "gdb-ptrfind": {
       "flake": false,
       "locked": {
@@ -373,7 +357,6 @@
     "root": {
       "inputs": {
         "catppuccin-grub": "catppuccin-grub",
-        "catppuccin-zsh-syntax-highlighting": "catppuccin-zsh-syntax-highlighting",
         "gdb-ptrfind": "gdb-ptrfind",
         "home-manager": "home-manager",
         "hycov": "hycov",

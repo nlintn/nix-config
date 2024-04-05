@@ -1,7 +1,8 @@
-{ pkgs }:
+{ pkgs, config }:
 
 pkgs.writeShellScript "hyreload" ''
-  kill $(pidof waybar);
-  ${pkgs.waybar}/bin/waybar & disown;
-  hyprctl reload;
+  ${config.wayland.windowManager.hyprland.package}/bin/hyprctl reload;
+  ${pkgs.procps}/bin/pkill -SIGUSR2 waybar;
+  ${pkgs.swaynotificationcenter}/bin/swaync-client -R;
+  ${pkgs.swaynotificationcenter}/bin/swaync-client -rs
 ''

@@ -129,6 +129,7 @@
       nodePackages.nodejs
       ripgrep
       rust-analyzer
+      texlab
     ];
   };  
 }

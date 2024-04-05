@@ -7,11 +7,12 @@
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
       userSettings = {
+        catppuccin-flavour = "macchiato"; # for apps whose theme I haven't ported to base16 yet
+        colorScheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;
         default-font = "JetBrainsMono Nerd Font";
-        catppuccin-flavour = "macchiato";
         enable-kde = false;
-        wallpaper = builtins.toString ./etc/wallpaper.jpg;
         lockscreen = builtins.toString ./etc/lockscreen.png;
+        wallpaper = builtins.toString ./etc/wallpaper.jpg;
         wm = "hyprland";
       };
     in {
@@ -82,10 +83,6 @@
       flake = false;
     };
 
-    catppuccin-zsh-syntax-highlighting = {
-      url = "github:catppuccin/zsh-syntax-highlighting";
-      flake = false;
-    };  
     gdb-ptrfind = {
       url = "github:ChaChaNop-Slide/ptrfind";
       flake = false;

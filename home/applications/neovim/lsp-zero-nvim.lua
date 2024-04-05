@@ -13,4 +13,5 @@ lspconfig.lua_ls.setup {}
 lspconfig.nil_ls.setup {}
 lspconfig.pyright.setup {}
 lspconfig.rust_analyzer.setup {}
+lspconfig.texlab.setup {}
 

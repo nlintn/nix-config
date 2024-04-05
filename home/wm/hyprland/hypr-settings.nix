@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, userSettings, thunar_pkg, ... }:
+{ pkgs, lib, config, inputs, userSettings, thunar_pkg }:
 
 let
   evalBinds = mainMod: modifiers: binds: (
@@ -18,12 +18,10 @@ in
 
   "$terminal" = "${config.programs.alacritty.package}/bin/alacritty";
   "$fileManager" = "${thunar_pkg}/bin/thunar";
-  "$menu" = "${config.programs.rofi.package}/bin/rofi -show drun";
-  "$windows" = "${config.programs.rofi.package}/bin/rofi -show window";
 
   env = [
     "XDG_SESSION_DESKTOP, Hyprland"
-    "XCURSOR_SIZE, 16"
+    "XCURSOR_SIZE, 20"
   ];
 
   exec-once = [
@@ -54,20 +52,25 @@ in
   bind =
     # SUPER binds
     evalBinds "SUPER" [ "CTRL" "SHIFT" "ALT" ] [
-      "Q, exec, $terminal"
-      "C, killactive,"
-      "V, exec, ${pkgs.copyq}/bin/copyq show"
-      "SHIFT, M, exit,"
-      "E, exec, $fileManager"
-      "SPACE, togglefloating,"
-      "R, exec, $menu"
-      "P, pseudo,"
-      "G, togglesplit,"
-      "tab, exec, $windows"
-      "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs; }}"
-      "BACKSPACE, exec, loginctl lock-session"
+      # exec keybinds
       "A, exec, ${grimblast}/bin/grimblast --freeze save area - | ${pkgs.swappy}/bin/swappy -f -"
       "SHIFT, A, exec, ${grimblast}/bin/grimblast --freeze save output - | ${pkgs.swappy}/bin/swappy -f -"
+      "E, exec, $fileManager"
+      "Q, exec, $terminal"
+      "R, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show drun"
+      "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs config; }}"
+      "T, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show ssh"
+      "V, exec, ${pkgs.copyq}/bin/copyq show"
+      "BACKSPACE, exec, loginctl lock-session"
+      "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show window"
+
+      "C, killactive,"
+      "F, fullscreen, 1"
+      "SHIFT, F, fullscreen, 0"
+      "G, togglesplit,"
+      "SHIFT, M, exit,"
+      "P, pseudo,"
+      "SPACE, togglefloating,"
 
       "left,  movefocus, l"
       "right, movefocus, r"
@@ -101,16 +104,13 @@ in
       "S, togglespecialworkspace, magic"
       "SHIFT, S, movetoworkspace, special:magic"
 
-      "D,        exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -l"
-      "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g"
+      "D,        exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad"
+      "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g -l"
 
       "CTRL, RIGHT, split-workspace, w+1"
       "CTRL, LEFT,  split-workspace, w-1"
       "CTRL SHIFT, RIGHT, split-movetoworkspace, w+1"
       "CTRL SHIFT, LEFT,  split-movetoworkspace, w-1"
-
-      "F, fullscreen, 0"
-      "SHIFT, F, fullscreen, 1"
     ]
     ++
     # hycov binds
@@ -228,6 +228,7 @@ in
     "float, class:xdg-desktop-portal-gtk"
 
     "float, class:firefox, title:(Password Required - Mozilla Firefox)"
+    "stayfocused , class:firefox, title:(Password Required - Mozilla Firefox)"
 
     "float, class:swayimg"
     "noborder, class:swayimg"
@@ -246,8 +247,8 @@ in
   ];
 
   general = {
-    gaps_in = 3;
-    gaps_out = 5;
+    gaps_in = 1;
+    gaps_out = 1;
     border_size = 1;
     # "col.active_border" = "rgba(f5bde6ee)";    
     "col.active_border" = "rgba(${config.colorScheme.palette.base0F}cc) rgba(${config.colorScheme.palette.base06}cc) 45deg";

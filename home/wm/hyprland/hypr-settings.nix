@@ -64,7 +64,7 @@ in
       "BACKSPACE, exec, loginctl lock-session"
       "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show window"
 
-      "C, killactive,"
+      "C, killactive"
       "F, fullscreen, 1"
       "SHIFT, F, fullscreen, 0"
       "G, togglesplit,"
@@ -138,21 +138,21 @@ in
 
   binde =
     evalBinds "SUPER" [ "ALT" ] [
-      "ALT, left,  resizeactive, -10 0"
-      "ALT, right, resizeactive,  10 0"
-      "ALT, up,    resizeactive, 0 -10"
-      "ALT, down,  resizeactive,  0 10"
+      "ALT, left,  resizeactive, -20 0"
+      "ALT, right, resizeactive,  20 0"
+      "ALT, up,    resizeactive, 0 -20"
+      "ALT, down,  resizeactive,  0 20"
         
-      "ALT, h, resizeactive, -10 0"
-      "ALT, l, resizeactive,  10 0"
-      "ALT, k, resizeactive, 0 -10"
-      "ALT, j, resizeactive,  0 10"
+      "ALT, h, resizeactive, -20 0"
+      "ALT, l, resizeactive,  20 0"
+      "ALT, k, resizeactive, 0 -20"
+      "ALT, j, resizeactive,  0 20"
     ];
 
   bindl = 
     evalBinds "" [ ] [
-      "XF86AudioMute, exec,     ${config.services.avizo.package}/bin/volumectl -d -p toggle-mute"
-      "XF86AudioMicMute, exec,  ${config.services.avizo.package}/bin/volumectl -d -m -p toogle-mute"
+      "XF86AudioMute, exec,     ${config.services.avizo.package}/bin/volumectl ${if config.colorScheme.variant == "dark" then "-d" else ""} -p toggle-mute"
+      "XF86AudioMicMute, exec,  ${config.services.avizo.package}/bin/volumectl ${if config.colorScheme.variant == "dark" then "-d" else ""} -m -p toogle-mute"
       "XF86AudioNext,   exec, ${config.services.playerctld.package}/bin/playerctl next"
       "XF86AudioPrev,   exec, ${config.services.playerctld.package}/bin/playerctl previous"
       "XF86AudioPlay,   exec, ${config.services.playerctld.package}/bin/playerctl play-pause"
@@ -161,10 +161,10 @@ in
 
   bindle =
     evalBinds "" [ ] [
-      "XF86AudioRaiseVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -p up"
-      "XF86AudioLowerVolume,  exec, ${config.services.avizo.package}/bin/volumectl -d -p down"
-      "XF86MonBrightnessUp,   exec, ${config.services.avizo.package}/bin/lightctl -d up"
-      "XF86MonBrightnessDown, exec, ${config.services.avizo.package}/bin/lightctl -d down"
+      "XF86AudioRaiseVolume,  exec, ${config.services.avizo.package}/bin/volumectl ${if config.colorScheme.variant == "dark" then "-d" else ""} -p up"
+      "XF86AudioLowerVolume,  exec, ${config.services.avizo.package}/bin/volumectl ${if config.colorScheme.variant == "dark" then "-d" else ""} -p down"
+      "XF86MonBrightnessUp,   exec, ${config.services.avizo.package}/bin/lightctl ${if config.colorScheme.variant == "dark" then "-d" else ""} up"
+      "XF86MonBrightnessDown, exec, ${config.services.avizo.package}/bin/lightctl ${if config.colorScheme.variant == "dark" then "-d" else ""} down"
     ];
 
   binds = {
@@ -173,7 +173,7 @@ in
 
   input = {
     kb_layout = "de";
-    follow_mouse = 1;
+    follow_mouse = 2;
 
     touchpad = {
       natural_scroll = true;

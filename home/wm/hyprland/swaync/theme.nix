@@ -1,10 +1,10 @@
-{ config }:
+{ config, userSettings }:
 
 with config.colorScheme.palette; ''
   * {
     all: unset;
     font-size: 14px;
-    font-family: "Ubuntu Nerd Font";
+    font-family: "${userSettings.default-font}";
     transition: 200ms;
   }
   

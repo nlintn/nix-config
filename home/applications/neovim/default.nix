@@ -13,6 +13,8 @@
 
       vim.o.signcolumn = 'number'
 
+      vim.o.ignorecase = true
+
       vim.o.tabstop = 4
       vim.o.shiftwidth = 4
       vim.o.expandtab = true
@@ -122,6 +124,7 @@
     ];
 
     extraPackages = with pkgs; [
+      # clang-tools_17
       fd
       jdt-language-server
       lua-language-server

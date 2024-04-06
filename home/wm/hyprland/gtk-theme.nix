@@ -27,7 +27,7 @@ in {
     enable = true;
     theme = {
       package = gtk-catppuccin-theme;
-      name = "Catppuccin-${capitalize userSettings.catppuccin-flavour}-Compact-Mauve-Dark";
+      name = "Catppuccin-${capitalize userSettings.catppuccin-flavour}-Compact-Mauve-${capitalize config.colorScheme.variant}";
     };
   
     iconTheme = {

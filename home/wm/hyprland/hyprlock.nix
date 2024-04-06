@@ -64,7 +64,7 @@
         valign = "center";
       }
       {
-        text = "cmd[update:1000] ${config.services.playerctld.package}/bin/playerctl metadata --format '{{title}} - {{artist}}'";
+        text = "cmd[update:1000] ${config.services.playerctld.package}/bin/playerctl metadata --format '{{title}} | {{artist}}'";
         color = "rgba(${base05}cc)";
         font_size = 20;
         font_family = "JetBrainsMono Nerd Font";

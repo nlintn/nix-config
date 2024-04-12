@@ -124,15 +124,19 @@
     ];
 
     extraPackages = with pkgs; [
-      # clang-tools_17
-      fd
+      # Language Servers
+      clang-tools_17
       jdt-language-server
       lua-language-server
       nil
-      nodePackages.nodejs
-      ripgrep
+      nodePackages.pyright
       rust-analyzer
       texlab
+
+      # Misc
+      fd
+      nodePackages.nodejs
+      ripgrep
     ];
   };  
 }

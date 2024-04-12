@@ -211,6 +211,7 @@ in
   };
 
   misc = {
+    close_special_on_empty = false;
     focus_on_activate = true;
     mouse_move_enables_dpms = true;
     key_press_enables_dpms = true;
@@ -260,12 +261,12 @@ in
   };
 
   decoration = {
-    rounding = 0;
+    rounding = 2;
 
     blur = {
       enabled = true;
-      size = 3;
-      passes = 1;
+      size = 6;
+      passes = 2;
 
       vibrancy = 0.1696;
     };

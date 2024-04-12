@@ -20,8 +20,6 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     # Coding stuff
-    cargo
-    # clang-tools_17
     gdb
     github-desktop
     gitkraken

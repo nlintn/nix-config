@@ -61,7 +61,7 @@ in {
   };
 
   home.activation.hyprlandActivation = ''
-    run ${import ./scripts/hyreload.nix { inherit pkgs config; } }
+    run ${import ./scripts/hyreload.nix { inherit pkgs config userSettings; } }
   '';
 
   xdg.configFile."swappy/config".text = ''

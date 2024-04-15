@@ -6,11 +6,12 @@
     ./firefox.nix
     ./fzf.nix
     ./git.nix
+    ./gpg.nix
     ./neovim
     ./obs-studio.nix
     ./opam.nix
     ./ssh.nix
-    # ./tmux.nix
+    ./thunderbird.nix
     ./vim.nix
     ./vscode.nix
     ./zellij.nix
@@ -23,12 +24,12 @@
     gdb
     github-desktop
     gitkraken
+    isabelle
+    jetbrains.idea-ultimate
+    pwndbg
     (python3.withPackages ( python-pkgs: [
       python311Packages.pwntools
     ]))
-    jetbrains.idea-ultimate
-    nil
-    pwndbg
     texlive.combined.scheme-full
 
     # Misc
@@ -36,15 +37,15 @@
     copyq
     desmume
     element-desktop
+    fastfetch
     gimp
     btop
     libqalculate
     lolcat
-    neofetch
+    obsidian
     spotify
     spotify-tray
     telegram-desktop
-    thunderbird
     tree
     vesktop
     wl-clipboard
@@ -52,8 +53,6 @@
   ];
 
   programs.zathura.enable = true;
-  programs.gpg.enable = true;
-  services.gpg-agent.enable = true;
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
@@ -61,15 +60,6 @@
   services.kdeconnect.indicator = true;
 
   services.playerctld.enable = true;
-
-  /*
-  services.spotifyd = {
-    enable = true;
-    settings = {
-      device_name = "meoww";
-    };
-  };
-  */  
 
   home.file.".gdbinit".text = ''
     source ${inputs.gdb-ptrfind}/ptrfind.py

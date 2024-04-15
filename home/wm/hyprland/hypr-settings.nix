@@ -13,7 +13,6 @@ in
 {
   source = [
     "$HOME/.config/hypr/monitors.conf"
-    "$HOME/.config/hypr/workspaces.conf"
   ];
 
   "$terminal" = "${config.programs.alacritty.package}/bin/alacritty";
@@ -58,7 +57,7 @@ in
       "E, exec, $fileManager"
       "Q, exec, $terminal"
       "R, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show drun"
-      "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs config; }}"
+      "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs config userSettings; }}"
       "T, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show ssh"
       "V, exec, ${pkgs.copyq}/bin/copyq show"
       "BACKSPACE, exec, loginctl lock-session"
@@ -252,8 +251,8 @@ in
     gaps_out = 1;
     border_size = 1;
     # "col.active_border" = "rgba(f5bde6ee)";    
-    "col.active_border" = "rgba(${config.colorScheme.palette.base0F}cc) rgba(${config.colorScheme.palette.base06}cc) 45deg";
-    "col.inactive_border" = "rgba(${config.colorScheme.palette.base04}aa)";
+    "col.active_border" = "rgba(${config.colorScheme.palette.base0F}88) rgba(${config.colorScheme.palette.base06}88) 45deg";
+    "col.inactive_border" = "rgba(${config.colorScheme.palette.base04}66)";
 
     layout = "master";
 

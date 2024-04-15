@@ -23,6 +23,8 @@
 
       vim.o.mouse = 'a'
       vim.o.mousemoveevent = true
+
+      vim.o.conceallevel = 1
     '';
 
     extraConfig = ''
@@ -35,8 +37,8 @@
       cmp_luasnip
       cmp-nvim-lsp
       luasnip
-      neodev-nvim
       markdown-preview-nvim
+      neodev-nvim
       nvim-web-devicons
       playground
 
@@ -104,6 +106,12 @@
         plugin = nvim-autopairs;
         type = "lua";
         config = ''require("nvim-autopairs").setup {}'';
+      }
+
+      {
+        plugin = obsidian-nvim;
+        type = "lua";
+        config = builtins.readFile ./obsidian-nvim.lua;
       }
 
       {

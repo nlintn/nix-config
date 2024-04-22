@@ -15,7 +15,7 @@
     plugins = with pkgs.vimPlugins; [
       catppuccin-vim
     ];
-    extraConfig = ''
+    extraConfig = /* vim */ ''
       set ignorecase
 
       " Cursor Settings
@@ -28,9 +28,7 @@
       " autocmd InsertEnter * set cursorline
       " autocmd InsertLeave * set nocursorline
 
-
-      " Ctrl-C to copy to wayland clipboard
-      xnoremap <silent> <C-C> :w !wl-copy<CR><CR>
+      set clipboard = 'unnamedplus'
 
       " Wraparound lines while navigating
       set whichwrap+=<,>,h,l,[,]

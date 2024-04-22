@@ -4,7 +4,7 @@
   programs.neovim = {
     enable = true;
 
-    extraLuaConfig = ''
+    extraLuaConfig = /* lua */ ''
       vim.g.mapleader = ' '
       vim.g.maplocalleader = ' '
 
@@ -25,12 +25,15 @@
       vim.o.mousemoveevent = true
 
       vim.o.conceallevel = 1
+
+      vim.o.clipboard = 'unnamedplus'
     '';
 
-    extraConfig = ''
+    extraConfig = /* vim */ ''
       set whichwrap+=<,>,h,l,[,]
       autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
       autocmd vimenter * hi NormalNC guibg=NONE ctermbg=NONE
+      autocmd vimenter * hi LineNr guibg=NONE ctermbg=NONE
     '';
 
     plugins = with pkgs.vimPlugins; [

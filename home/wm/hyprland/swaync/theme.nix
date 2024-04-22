@@ -1,6 +1,6 @@
 { config, userSettings }:
 
-with config.colorScheme.palette; ''
+with config.colorScheme.palette; /* css */ ''
   * {
     all: unset;
     font-size: 14px;

@@ -66,6 +66,7 @@
       "show-passive-items": true
   },
   "clock": {
+      "interval": 15,
       "format": " {:%H:%M %a %d.%m}",
       "tooltip-format": "<tt><small>{calendar}</small></tt>",
       "calendar": {
@@ -94,19 +95,19 @@
   "memory": {
     "format": "󰍛 {}%",
     "format-alt": "󰍛 {used}/{total} GiB",
-    "interval": 5
+    "interval": 15
   },
   "cpu": {
     "format": "󰻠 {usage}%",
     "format-alt": "󰻠 {avg_frequency} GHz",
-    "interval": 5
+    "interval": 15
   },
   "temperature": {
     "thermal-zone": 2,
     "critical-threshold": 80,
     "format": "{temperatureC}°C {icon}",
     "format-icons": ["", "", ""],
-    "interval": 5
+    "interval": 15
   },
   "battery": {
     "interval": 15,
@@ -130,8 +131,8 @@
   "pulseaudio": {
       "format": "{volume}% {icon} {format_source}",
       "format-bluetooth": "{volume}% {icon} {format_source}",
-      "format-bluetooth-muted": " {icon} {format_source}",
-      "format-muted": " {format_source}",
+      "format-bluetooth-muted": " {icon} {format_source}",
+      "format-muted": " {format_source}",
       "format-source": "{volume}% ",
       "format-source-muted": "",
       "format-icons": {

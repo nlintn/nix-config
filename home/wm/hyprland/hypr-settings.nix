@@ -105,6 +105,7 @@ in
 
       "D,        exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad"
       "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g -l"
+      "CTRL, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -t"
 
       "CTRL, RIGHT, split-workspace, w+1"
       "CTRL, LEFT,  split-workspace, w-1"
@@ -186,7 +187,8 @@ in
   gestures = {
     workspace_swipe = true;
     workspace_swipe_fingers = 3;
-    workspace_swipe_numbered = true;
+    workspace_swipe_forever = true;
+    workspace_swipe_use_r = true;
   };
 
   plugin.hycov = {

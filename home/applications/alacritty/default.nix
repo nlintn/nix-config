@@ -12,6 +12,7 @@
           family = "JetBrainsMono Nerd Font"; 
           style = "Regular";
         };
+        size = 10.5;
       };
       mouse.hide_when_typing = true;
       window = {

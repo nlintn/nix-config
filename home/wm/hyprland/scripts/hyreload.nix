@@ -11,5 +11,5 @@ pkgs.writeShellScript "hyreload" ''
   ${pkgs.swaynotificationcenter}/bin/swaync-client -rs &&
   ${pkgs.psmisc}/bin/killall swaybg;
   ${pkgs.swaybg}/bin/swaybg -i ${userSettings.wallpaper} & disown &&
-  ${pkgs.libnotify}/bin/notify-send -u normal "Reloaded successfully"
+  ${pkgs.libnotify}/bin/notify-send -u low -e "Reloaded successfully"
 ''

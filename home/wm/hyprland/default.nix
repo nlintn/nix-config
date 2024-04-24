@@ -19,8 +19,6 @@ in {
   ];
 
   home.packages = [
-    config.services.playerctld.package
- 
     thunar_pkg
 
     (import ./scripts/rofi-powermenu.nix { inherit pkgs; })
@@ -69,4 +67,9 @@ in {
     save_dir=${config.home.homeDirectory}/Pictures/Screenshots
     save_filename_format=screen-%Y%m%d-%H%M%S.png
   '';
+
+  nix.settings = {
+    extra-trusted-substituters = ["https://hyprland.cachix.org"];
+    extra-trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  };
 }

@@ -40,7 +40,7 @@ with config.colorScheme.palette; {
     background = "#${base06}";
   };
   normal = {
-    black = "#${base00}";
+    black = "#${base03}";
     red = "#${base08}";
     green = "#${base0B}";
     yellow = "#${base0A}";
@@ -60,7 +60,7 @@ with config.colorScheme.palette; {
     white = "#${base07}";
   };
   dim = {
-    black = "#${base00}";
+    black = "#${base03}";
     red = "#${base08}";
     green = "#${base0B}";
     yellow = "#${base0A}";

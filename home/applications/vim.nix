@@ -28,7 +28,7 @@
       " autocmd InsertEnter * set cursorline
       " autocmd InsertLeave * set nocursorline
 
-      set clipboard = 'unnamedplus'
+      set clipboard=unnamedplus
 
       " Wraparound lines while navigating
       set whichwrap+=<,>,h,l,[,]

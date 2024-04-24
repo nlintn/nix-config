@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 
 builtins.toPath (pkgs.writeText "theme-final.rasi" (
-  with config.colorScheme.palette; /* css */ ''
+  with config.colorScheme.palette; ''
     * {
       bg0:    #242424E6;
       bg1:    #${base04}80;

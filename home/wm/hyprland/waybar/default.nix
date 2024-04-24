@@ -1,9 +1,9 @@
-{ ... }:
+{ pkgs, config, inputs, userSettings, ... }:
 
 {
   programs.waybar = {
     enable = true;
-    style = builtins.readFile ./style.css;
+    style = import ./style.nix { inherit config inputs userSettings; };
   };
-  xdg.configFile."waybar/config".source = ./config.json;
+  xdg.configFile."waybar/config".text = import ./config.nix { inherit pkgs config; };
 }

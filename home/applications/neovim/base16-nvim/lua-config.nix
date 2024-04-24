@@ -1,6 +1,6 @@
 { config }:
 
-with config.colorScheme.palette; ''
+with config.colorScheme.palette; /* lua */ ''
   require("base16-colorscheme").with_config {
     telescope = true,
     indentblankline = true,

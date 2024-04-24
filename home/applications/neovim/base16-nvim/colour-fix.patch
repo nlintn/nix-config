@@ -1,5 +1,14 @@
+From cad77897e16386765bd7eb8b04c31c3b1496b445 Mon Sep 17 00:00:00 2001
+From: Nico Lintner <118087966+nlintn@users.noreply.github.com>
+Date: Mon, 22 Apr 2024 15:09:54 +0200
+Subject: [PATCH] color changes
+
+---
+ lua/base16-colorscheme.lua | 114 ++++++++++++++++++++-----------------
+ 1 file changed, 62 insertions(+), 52 deletions(-)
+
 diff --git a/lua/base16-colorscheme.lua b/lua/base16-colorscheme.lua
-index e09da6d..2c02ac3 100644
+index fc708c9..c053565 100644
 --- a/lua/base16-colorscheme.lua
 +++ b/lua/base16-colorscheme.lua
 @@ -154,7 +154,7 @@ function M.setup(colors, config)
@@ -244,42 +253,24 @@ index e09da6d..2c02ac3 100644
          hi['@event'] = 'Identifier'
          hi['@interface'] = 'Structure'
          hi['@modifier'] = 'Identifier'
-@@ -593,21 +600,23 @@ function M.setup(colors, config)
-         hi['@typeParameter'] = 'Type'
-         hi['@decorator'] = 'Identifier'
- 
--        -- TODO: figure out what these should be
--        -- hi['@lsp.type.namespace'] = '@namespace'
--        -- hi['@lsp.type.type'] = '@type'
--        -- hi['@lsp.type.class'] = '@type'
--        -- hi['@lsp.type.enum'] = '@type'
--        -- hi['@lsp.type.interface'] = '@type'
--        -- hi['@lsp.type.struct'] = '@structure'
--        -- hi['@lsp.type.parameter'] = '@parameter'
--        -- hi['@lsp.type.variable'] = '@variable'
--        -- hi['@lsp.type.property'] = '@property'
--        -- hi['@lsp.type.enumMember'] = '@constant'
--        -- hi['@lsp.type.function'] = '@function'
--        -- hi['@lsp.type.method'] = '@method'
--        -- hi['@lsp.type.macro'] = '@macro'
--        -- hi['@lsp.type.decorator'] = '@function'
-+        hi['@lsp.type.namespace'] = '@namespace'
-+        hi['@lsp.type.type'] = '@type'
-+        hi['@lsp.type.class'] = '@type'
-+        hi['@lsp.type.enum'] = '@type'
-+        hi['@lsp.type.interface'] = '@type'
-+        hi['@lsp.type.struct'] = '@structure'
-+        hi['@lsp.type.parameter'] = '@parameter'
-+        hi['@lsp.type.variable'] = '@variable'
-+        hi['@lsp.type.property'] = '@property'
+@@ -602,11 +609,14 @@ function M.setup(colors, config)
+         hi['@lsp.type.parameter'] = '@parameter'
+         hi['@lsp.type.variable'] = '@variable'
+         hi['@lsp.type.property'] = '@property'
+-        hi['@lsp.type.enumMember'] = '@constant'
 +        hi['@lsp.type.enumMember'] = '@enumMember'
-+        hi['@lsp.type.function'] = '@function'
-+        hi['@lsp.type.method'] = '@method'
+         hi['@lsp.type.function'] = '@function'
+         hi['@lsp.type.method'] = '@method'
+-        hi['@lsp.type.macro'] = '@function.macro'
 +        hi['@lsp.type.macro'] = '@macro'
-+        hi['@lsp.type.decorator'] = '@function'
+         hi['@lsp.type.decorator'] = '@function'
 +        hi['@lsp.type.path'] = 'LspPath'
 +        hi['@lsp.typemod.parameter.definition'] = '@parameter'
 +        hi['@lsp.typemod.property.definition'] = 'LspPropertyDefinition'
      end
  
      if M.config.mini_completion then
+-- 
+2.44.0
+
+

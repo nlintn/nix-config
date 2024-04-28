@@ -25,6 +25,7 @@
       vim.o.mousemoveevent = true
 
       vim.o.conceallevel = 1
+      vim.o.concealcursor = 'cnv'
 
       vim.o.clipboard = 'unnamedplus'
     '';
@@ -38,8 +39,7 @@
 
     plugins = with pkgs.vimPlugins; [
       cmp_luasnip
-      cmp-nvim-lsp
-      luasnip
+      (import ./isabelle-syn-nvim.nix { inherit pkgs; }).package
       markdown-preview-nvim
       neodev-nvim
       nvim-web-devicons
@@ -67,6 +67,18 @@
         plugin = guess-indent-nvim;
         type = "lua";
         config = ''require("guess-indent").setup {}'';
+      }
+
+      {
+        plugin = (import ./isabelle-lsp-nvim/package-config.nix { inherit pkgs; }).package;
+        type = "lua";
+        config = (import ./isabelle-lsp-nvim/package-config.nix { inherit pkgs; }).config;
+      }
+
+      {
+        plugin = luasnip;
+        type = "lua";
+        config = builtins.readFile ./luasnip.lua;
       }
 
       {

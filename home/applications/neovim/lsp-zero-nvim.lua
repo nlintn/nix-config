@@ -8,6 +8,7 @@ lsp_zero.on_attach(
 
 local lspconfig = require("lspconfig")
 lspconfig.clangd.setup {}
+lspconfig.isabelle.setup {}
 lspconfig.jdtls.setup {}
 lspconfig.lua_ls.setup {}
 lspconfig.nil_ls.setup {}

@@ -1,0 +1,50 @@
+From 60a24a29bb6707f5641ef09eb7e32754d87f3c12 Mon Sep 17 00:00:00 2001
+From: Nico Lintner <118087966+nlintn@users.noreply.github.com>
+Date: Sun, 28 Apr 2024 06:07:09 +0200
+Subject: [PATCH] highlight fixes
+
+---
+ lua/isabelle-lsp.lua | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/lua/isabelle-lsp.lua b/lua/isabelle-lsp.lua
+index 4f69f43..37fe2f9 100644
+--- a/lua/isabelle-lsp.lua
++++ b/lua/isabelle-lsp.lua
+@@ -96,10 +96,11 @@ local function apply_config(config)
+         ['background_markdown_bullet3'] = 'markdownH3',
+         ['background_markdown_bullet4'] = 'markdownH4',
+         ['foreground_quoted'] = false,
+-        ['text_main'] = 'Normal',
++        ['text_main'] = false,
+         ['text_quasi_keyword'] = 'Keyword',
+         ['text_free'] = 'Function',
+         ['text_bound'] = 'Identifier',
++        ['text_inner_cartouche'] = 'Special',
+         ['text_inner_numeral'] = false,
+         ['text_inner_quoted'] = 'String',
+         ['text_comment1'] = 'Comment',
+@@ -110,10 +111,20 @@ local function apply_config(config)
+         ['text_antiquote'] = 'Comment',
+         ['text_raw_text'] = 'Comment',
+         ['text_plain_text'] = 'String',
++        ['text_operator'] = 'Operator',
+         ['text_overview_unprocessed'] = false,
+         ['text_overview_running'] = 'Todo',
+         ['text_overview_error'] = false,
+         ['text_overview_warning'] = false,
++        ['text_var'] = 'Special',
++        ['text_improper'] = 'Keyword',
++        ['text_skolem'] = 'Special',
++        ['text_keyword1'] = 'Keyword',
++        ['text_keyword2'] = 'Keyword',
++        ['text_keyword3'] = 'Keyword',
++        ['text_tvar'] = 'Type',
++        ['text_tfree'] = 'Type',
++        ['foreground_antiquoted'] = 'String',
+         ['dotted_writeln'] = false,
+         ['dotted_warning'] = "DiagnosticWarn",
+         ['dotted_information'] = false,
+-- 
+2.44.0
+

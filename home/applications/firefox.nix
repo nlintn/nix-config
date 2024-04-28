@@ -12,11 +12,11 @@
         "media.ffmpeg.vaapi.enabled" = true;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
-      userChrome = ''
+      userChrome = /* css */ ''
         :root[inFullscreen] #PersonalToolbar {
           visibility: visible !important;
         }
-        .titlebar-buttonbox-container{ display:none } /* Remove close button*/ 
+        .titlebar-buttonbox-container{ display:none } /* Remove close button */ 
         .titlebar-spacer[type="post-tabs"]{ display:none }
       '';
     };

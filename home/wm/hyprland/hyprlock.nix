@@ -43,7 +43,7 @@
         valign = "center";
         check_color = "rgb(${base09})";
         fail_color = "rgb(${base08})";
-        fail_text = "<i><span font='JetBrainsMono Nerd Font Mono 12'>$FAIL</span></i>";
+        fail_text = "<i><span font='${userSettings.default-font} 12'>$FAIL</span></i>";
       }
     ];
     

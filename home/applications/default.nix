@@ -10,12 +10,12 @@
     ./neovim
     ./obs-studio.nix
     ./opam.nix
+    ./shell
     ./ssh.nix
     ./thunderbird.nix
     ./vim.nix
     ./vscode.nix
     ./zellij.nix
-    ./zsh
   ];
 
   nixpkgs.config.allowUnfree = true;

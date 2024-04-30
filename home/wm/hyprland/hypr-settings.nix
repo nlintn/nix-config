@@ -28,7 +28,7 @@ in
     "${config.programs.waybar.package}/bin/waybar"
     "${pkgs.networkmanagerapplet}/bin/nm-applet"
     "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
-    "${pkgs.swaybg}/bin/swaybg -i ${userSettings.wallpaper}"
+    "${pkgs.swaybg}/bin/swaybg -i ${builtins.path { name = "swaybg-img"; path = userSettings.wallpaper; }}"
     "sleep 5; ${pkgs.copyq}/bin/copyq --start-server"
   ];
 

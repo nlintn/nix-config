@@ -16,7 +16,7 @@
 
     backgrounds = [
       {
-        path = userSettings.lockscreen;
+        path = builtins.path { name = "hyprlock-img"; path = userSettings.lockscreen; };
         blur_passes = 3;
         contrast = 0.8916;
         brightness = 0.8172;

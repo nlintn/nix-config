@@ -23,15 +23,11 @@ in {
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
-      custom = config.home.homeDirectory + "/.zsh/oh-my-zsh";
+      custom = builtins.path { name = "oh-my-zsh-custom"; path = ./oh-my-zsh-custom; recursive = true; };
       plugins = [ "git" "sudo" "colored-man-pages" "themes" ];
       theme = "meoww";
     };
     inherit shellAliases;
-  };
-  home.file.".zsh/oh-my-zsh" = {
-    source = ./oh-my-zsh;
-    recursive = true;
   };
 
   programs.bash = {

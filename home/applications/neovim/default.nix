@@ -14,6 +14,7 @@
       vim.o.signcolumn = 'number'
 
       vim.o.ignorecase = true
+      vim.keymap.set("n", "<leader>/", ":noh<CR>", { silent = true })
 
       vim.o.tabstop = 4
       vim.o.shiftwidth = 4
@@ -28,6 +29,11 @@
       vim.o.concealcursor = 'cnv'
 
       vim.o.clipboard = 'unnamedplus'
+
+      vim.o.showmode = false
+
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
     '';
 
     extraConfig = /* vim */ ''
@@ -38,12 +44,15 @@
     '';
 
     plugins = with pkgs.vimPlugins; [
+      (import ./battery-nvim.nix { inherit pkgs; }).package
       cmp_luasnip
+      cmp-nvim-lsp
       (import ./isabelle-syn-nvim.nix { inherit pkgs; }).package
       markdown-preview-nvim
       neodev-nvim
       nvim-web-devicons
       playground
+      telescope-file-browser-nvim
 
       {
         plugin = import ./base16-nvim/package-patched.nix { inherit pkgs; };
@@ -57,11 +66,11 @@
         config = ''require("Comment").setup {}'';
       }
 
-      {
+      /* {
         plugin = copilot-lua;
         type = "lua";
         config = ''require("copilot").setup {}'';
-      }
+      } */
 
       {
         plugin = guess-indent-nvim;
@@ -73,6 +82,12 @@
         plugin = (import ./isabelle-lsp-nvim/package-config.nix { inherit pkgs; }).package;
         type = "lua";
         config = (import ./isabelle-lsp-nvim/package-config.nix { inherit pkgs; }).config;
+      }
+
+      {
+        plugin = lualine-nvim;
+        type = "lua";
+        config = import ./lualine-nvim.nix { inherit config; };
       }
 
       {
@@ -98,17 +113,11 @@
         # type = "lua";
         # config = builtins.readFile ./nvim-lspconfig.lua;
       }
-
+      
       {
         plugin = nvim-navic;
         type = "lua";
         config = builtins.readFile ./nvim-navic.lua;
-      }
-
-      {
-        plugin = nvim-tree-lua;
-        type = "lua";
-        config = builtins.readFile ./nvim-tree-lua.lua;
       }
       
       {
@@ -127,6 +136,12 @@
         plugin = obsidian-nvim;
         type = "lua";
         config = builtins.readFile ./obsidian-nvim.lua;
+      }
+
+      {
+        plugin = oil-nvim;
+        type = "lua";
+        config = builtins.readFile ./oil-nvim.lua;
       }
 
       {
@@ -157,6 +172,7 @@
       texlab
 
       # Misc
+      acpi
       fd
       nodePackages.nodejs
       ripgrep

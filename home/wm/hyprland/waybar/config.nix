@@ -31,7 +31,7 @@ in /* json */ ''
     "on-scroll-up": "${hyprctl} dispatch split-workspace w+1",
     "on-scroll-down": "${hyprctl} dispatch split-workspace w-1",
     "persistent-workspaces": {
-      "*": 5
+      "*": 10
     }
   },
   "custom/playerctl": {

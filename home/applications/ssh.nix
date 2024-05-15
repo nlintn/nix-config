@@ -3,6 +3,7 @@
 {
   programs.ssh = {
     enable = true;
+    addKeysToAgent = "yes";
     matchBlocks = {
       lxhalle = {
         hostname = "lxhalle.in.tum.de";
@@ -13,5 +14,8 @@
         user = "lintner";
       };
     };
+  };
+  services.ssh-agent = {
+    enable = true;
   };
 }

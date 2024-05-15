@@ -15,7 +15,7 @@ in
     "$HOME/.config/hypr/monitors.conf"
   ];
 
-  "$terminal" = "${config.programs.alacritty.package}/bin/alacritty";
+  "$terminal" = "${config.programs.kitty.package}/bin/kitty";
   "$fileManager" = "${thunar_pkg}/bin/thunar";
 
   env = [
@@ -93,12 +93,22 @@ in
       "3, split-workspace, 3"
       "4, split-workspace, 4"
       "5, split-workspace, 5"
+      "6, split-workspace, 6"
+      "7, split-workspace, 7"
+      "8, split-workspace, 8"
+      "9, split-workspace, 9"
+      "0, split-workspace, 10"
 
       "SHIFT, 1, split-movetoworkspace, 1"
       "SHIFT, 2, split-movetoworkspace, 2"
       "SHIFT, 3, split-movetoworkspace, 3"
       "SHIFT, 4, split-movetoworkspace, 4"
       "SHIFT, 5, split-movetoworkspace, 5"
+      "SHIFT, 6, split-movetoworkspace, 6"
+      "SHIFT, 7, split-movetoworkspace, 7"
+      "SHIFT, 8, split-movetoworkspace, 8"
+      "SHIFT, 9, split-movetoworkspace, 9"
+      "SHIFT, 0, split-movetoworkspace, 10"
 
       "S, togglespecialworkspace, magic"
       "SHIFT, S, movetoworkspace, special:magic"
@@ -111,6 +121,11 @@ in
       "CTRL, LEFT,  split-workspace, w-1"
       "CTRL SHIFT, RIGHT, split-movetoworkspace, w+1"
       "CTRL SHIFT, LEFT,  split-movetoworkspace, w-1"
+
+      "CTRL, L, split-workspace, w+1"
+      "CTRL, H,  split-workspace, w-1"
+      "CTRL SHIFT, L, split-movetoworkspace, w+1"
+      "CTRL SHIFT, H,  split-movetoworkspace, w-1"
     ]
     ++
     # hycov binds
@@ -182,6 +197,7 @@ in
     };
 
     sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+    # accel_profile = "flat";
   };
 
   gestures = {
@@ -208,7 +224,7 @@ in
   };
 
   plugin.split-monitor-workspaces = {
-    count = 5;
+    count = 10;
   };
 
   misc = {

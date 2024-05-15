@@ -7,12 +7,15 @@ let
     hms = "home-manager switch --flake ${config.home.homeDirectory}/dotfiles";
     nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
     nrb = "sudo nixos-rebuild boot --flake ${config.home.homeDirectory}/dotfiles";
-    n = builtins.toString (pkgs.writeShellScript "n" ''
+    n = builtins.toString (pkgs.writeShellScript "n" /* bash */ ''
       if [[ $# -gt 0 ]] then
         ${config.programs.neovim.finalPackage}/bin/nvim $@
       else
         ${config.programs.neovim.finalPackage}/bin/nvim .
       fi
+    '');
+    open = builtins.toString (pkgs.writeShellScript "open" /* bash */ ''
+      xdg-open "$*" > /dev/null 2>&1 & disown
     '');
   };
 in {
@@ -25,7 +28,7 @@ in {
       enable = true;
       custom = builtins.path { name = "oh-my-zsh-custom"; path = ./oh-my-zsh-custom; recursive = true; };
       plugins = [ "git" "sudo" "colored-man-pages" "themes" ];
-      theme = "meoww";
+      theme = "meoww_lambda";
     };
     inherit shellAliases;
   };

@@ -14,7 +14,6 @@ with config.colorScheme.palette; /* lua */ ''
         {
           function() return navic.get_location() end,
           cond = navic.is_available,
-          -- color = { gui = 'italic', },
         },
       },
       lualine_y = {
@@ -23,15 +22,13 @@ with config.colorScheme.palette; /* lua */ ''
       },
       lualine_z = {
         {
+          function () return require("battery").get_status_line() end,
+        },
+        {
           'datetime',
           style = '%H:%M',
         },
-        {
-          function () return require("battery").get_status_line() end,
-          -- color = { fg = "#${base0E}", },
-        },
       }
     },
-    extensions = { 'oil', },
   }
 ''

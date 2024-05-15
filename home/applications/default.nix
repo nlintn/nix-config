@@ -22,6 +22,7 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     # Coding stuff
+    bear
     gdb
     github-desktop
     gitkraken
@@ -50,6 +51,7 @@
     tree
     vesktop
     wl-clipboard
+    xournalpp
     zoom-us
   ];
 

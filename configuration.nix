@@ -90,7 +90,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format \"%d. %b %Y %H:%M:%S\" --asterisks --user-menu --remember --remember-session --sessions ${inputs.hyprland.packages.${pkgs.system}.hyprland}/share/wayland-sessions";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format \"%d. %b %Y %H:%M:%S\" --asterisks --user-menu --remember --remember-session --sessions ${config.programs.hyprland.package}/share/wayland-sessions";
         user = "greeter";
       };
     };
@@ -193,6 +193,8 @@
   networking.firewall = { 
     enable = true;
   };
+
+  hardware.opentabletdriver.enable = true;
 
   hardware.enableAllFirmware = true;
   # Power Management

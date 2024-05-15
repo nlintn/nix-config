@@ -15,6 +15,7 @@
       disable-history = false;
       hide-scrollbar = true;
       click-to-exit = true;
+      matching = "fuzzy";
     };
   };
 }

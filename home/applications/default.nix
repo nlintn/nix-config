@@ -7,6 +7,7 @@
     ./fzf.nix
     ./git.nix
     ./gpg.nix
+    ./kitty
     ./neovim
     ./obs-studio.nix
     ./opam.nix

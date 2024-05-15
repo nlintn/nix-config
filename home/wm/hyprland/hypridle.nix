@@ -5,11 +5,12 @@
     enable = true;
 
     settings = {
-      lock-cmd = "${config.programs.hyprlock.package}/bin/hyprlock";
-      unlock-cmd = "pkill -SIGUSR1 hyprlock";
-      before-sleep-cmd = "${config.programs.hyprlock.package}/bin/hyprlock";
-
-      listeners = [
+      general = {
+        lock_cmd = "${config.programs.hyprlock.package}/bin/hyprlock";
+        unlock_cmd = "pkill -SIGUSR1 hyprlock";
+        before_sleep_cmd = "${config.programs.hyprlock.package}/bin/hyprlock";
+      };
+      listener = [
         {
           timeout = 300;
           on-timeout = "loginctl lock-session";

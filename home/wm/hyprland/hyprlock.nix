@@ -9,6 +9,7 @@
         no_fade_in = false;
         grace = 0;
         disable_loading_bar = true;
+        hide_cursor = true;
       };
 
       background = [
@@ -22,9 +23,9 @@
         }
       ];
       
-      input-fields = [
+      input-field = [
         {
-          size = { width = 250; height = 60; };
+          size = "250, 60";
           outline_thickness = 2;
           dots_size = 0.2; # Scale of input-field height, 0.2 - 0.8
           dots_spacing = 0.2; # Scale of dots' absolute size, 0.0 - 1.0
@@ -35,7 +36,7 @@
           fade_on_empty = false;
           placeholder_text = "<i><span font='${userSettings.default-font} 12'>UwU</span></i>";
           hide_input = false;
-          position = { x = 0; y = -120; };
+          position = "0, -120";
           halign = "center";
           valign = "center";
           check_color = "rgb(${base09})";
@@ -44,13 +45,13 @@
         }
       ];
       
-      labels = [
+      label = [
         {
           text = "cmd[update:1000] ${pkgs.coreutils}/bin/date +%H:%M:%S";
           color = "rgba(${base05}cc)";
           font_size = 130;
           font_family = "${userSettings.default-font} Mono ExtraBold";
-          position = { x = 0; y = 60; };
+          position = "0, 60";
           halign = "center";
           valign = "center";
         }  
@@ -59,7 +60,7 @@
           color = "rgba(${base05}cc)";
           font_size = 20;
           font_family = "${userSettings.default-font} Mono";
-          position = { x = 0; y = -40; };
+          position = "0, -40";
           halign = "center";
           valign = "center";
         }
@@ -68,7 +69,7 @@
           color = "rgba(${base05}cc)";
           font_size = 20;
           font_family = "${userSettings.default-font}";
-          position = { x = 0; y = 30; };
+          position = "0, 30";
           halign = "center";
           valign = "bottom";
         }

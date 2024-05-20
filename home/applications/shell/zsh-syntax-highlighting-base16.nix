@@ -74,6 +74,6 @@ if config.programs.zsh.syntaxHighlighting.enable == true then ''
   ZSH_HIGHLIGHT_STYLES[redirection]='fg=#${base05}'
   ZSH_HIGHLIGHT_STYLES[arg0]='fg=#${base05}'
   ZSH_HIGHLIGHT_STYLES[default]='fg=#${base05}'
-  ZSH_HIGHLIGHT_STYLES[cursor]='fg=#${base05}'
+  ZSH_HIGHLIGHT_STYLES[cursor]=' '
 ''
 else ""

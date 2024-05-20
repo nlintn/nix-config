@@ -31,6 +31,9 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%} ✭"
 ZSH_THEME_RUBY_PROMPT_PREFIX="%{$fg[green]%}‹"
 ZSH_THEME_RUBY_PROMPT_SUFFIX="›%{$reset_color%}"
 
-PROMPT="${user} ${pwd}${env_status}
+MODE_INDICATOR="%{$fg[yellow]%}#%{$reset_color%}"
+INSERT_MODE_INDICATOR="%{$fg[green]%}+%{$reset_color%}"
+
+PROMPT="${user} \$(vi_mode_prompt_info) ${pwd}${env_status}
 ${lambda} "
 RPROMPT="${return_code} ${git_branch} $(ruby_prompt_info)"

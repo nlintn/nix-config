@@ -7,7 +7,7 @@ let
     hms = "home-manager switch --flake ${config.home.homeDirectory}/dotfiles";
     nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
     nrb = "sudo nixos-rebuild boot --flake ${config.home.homeDirectory}/dotfiles";
-    n = builtins.toString (pkgs.writeShellScript "n" /* bash */ ''
+    nv = builtins.toString (pkgs.writeShellScript "n" /* bash */ ''
       if [[ $# -gt 0 ]] then
         ${config.programs.neovim.finalPackage}/bin/nvim $@
       else
@@ -21,13 +21,19 @@ let
 in {
   programs.zsh = {
     enable = true;
-    initExtra = (import ./zsh-syntax-highlighting-base16.nix { inherit pkgs config; });
+    initExtra = (import ./zsh-syntax-highlighting-base16.nix { inherit pkgs config; }) + /* bash */ ''
+      bindkey -v
+      bindkey -M vicmd 'V' edit-command-line
+      VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+      VI_MODE_SET_CURSOR=true
+      KEYTIMEOUT=1
+    '';
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
       custom = builtins.path { name = "oh-my-zsh-custom"; path = ./oh-my-zsh-custom; recursive = true; };
-      plugins = [ "git" "sudo" "colored-man-pages" "themes" ];
+      plugins = [ "colored-man-pages" "git" "themes" "vi-mode" ];
       theme = "meoww_lambda";
     };
     inherit shellAliases;

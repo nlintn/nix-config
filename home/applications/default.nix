@@ -36,12 +36,13 @@
 
     # Misc
     anki
+    btop
     copyq
     desmume
     element-desktop
     fastfetch
+    inkscape
     gimp
-    btop
     libqalculate
     lolcat
     obsidian

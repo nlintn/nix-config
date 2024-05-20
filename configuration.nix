@@ -56,34 +56,10 @@
     config.common.default = "*";
   };
 
-  services.xserver = if userSettings.enable-kde == true then {
+  services.libinput = {
     enable = true;
-
-    ## -------------------------------------
-    # KDE Plasma
-    displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
-    displayManager.defaultSession = "plasmawayland";
-    xkb.layout = "de";
-    xkb.variant = "";
-    ## -------------------------------------
-
-    ## -------------------------------------
-    # GNOME
-    # displayManager.gdm.enable = true;
-    # desktopManager.gnome.enable = true;
-    ## -------------------------------------
- 
-    # libinput.enable = false;
-    # synaptics.enable = true;
-  } else {
-    /* enable = true;
-    displayManager = { 
-      defaultSession = "hyprland"; 
-      lightdm = { 
-        enable = true; 
-      }; 
-    };*/
+    mouse.accelProfile = "flat";
+    touchpad.accelProfile = "flat";
   };
 
   services.greetd = lib.mkIf (userSettings.wm == "hyprland") {
@@ -219,13 +195,13 @@
   hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      # intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      # intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
       vaapiVdpau
       libvdpau-va-gl
     ];
   };
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; NIXOS_OZONE_WL = "1"; }; # Force intel-media-driver
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "i965"; NIXOS_OZONE_WL = "1"; }; # Force intel-media-driver
 
   environment.etc.hosts.mode = "0644";
 

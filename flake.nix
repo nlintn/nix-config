@@ -10,7 +10,6 @@
         catppuccin-flavour = "macchiato"; # for apps whose theme I haven't ported to base16 yet
         colorScheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;
         default-font = "JetBrainsMono Nerd Font";
-        enable-kde = false;
         lockscreen = builtins.toString ./etc/lockscreen.png;
         wallpaper = builtins.toString ./etc/wallpaper.jpg;
         wm = "hyprland";

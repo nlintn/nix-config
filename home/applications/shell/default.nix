@@ -7,7 +7,7 @@ let
     hms = "home-manager switch --flake ${config.home.homeDirectory}/dotfiles";
     nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
     nrb = "sudo nixos-rebuild boot --flake ${config.home.homeDirectory}/dotfiles";
-    nv = builtins.toString (pkgs.writeShellScript "n" /* bash */ ''
+    nv = builtins.toString (pkgs.writeShellScript "nv" /* bash */ ''
       if [[ $# -gt 0 ]] then
         ${config.programs.neovim.finalPackage}/bin/nvim $@
       else

@@ -68,26 +68,6 @@
         "type": "github"
       }
     },
-    "hycov": {
-      "inputs": {
-        "hyprland": [
-          "hyprland"
-        ]
-      },
-      "locked": {
-        "lastModified": 1713194103,
-        "narHash": "sha256-AofKf0+fiFbo9Fh/BaBtfbgUu1y84b2UkoDjEBCaytg=",
-        "owner": "nlintn",
-        "repo": "hycov",
-        "rev": "b2a9387320e45f8798a44c346a9a817113784a9d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nlintn",
-        "repo": "hycov",
-        "type": "github"
-      }
-    },
     "hyprcursor": {
       "inputs": {
         "hyprlang": [
@@ -297,7 +277,6 @@
         "catppuccin-grub": "catppuccin-grub",
         "gdb-ptrfind": "gdb-ptrfind",
         "home-manager": "home-manager",
-        "hycov": "hycov",
         "hyprland": "hyprland",
         "hyprland-contrib": "hyprland-contrib",
         "nix-colors": "nix-colors",

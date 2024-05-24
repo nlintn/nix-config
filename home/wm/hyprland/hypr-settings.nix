@@ -15,9 +15,6 @@ in
     "$HOME/.config/hypr/monitors.conf"
   ];
 
-  "$terminal" = "${config.programs.kitty.package}/bin/kitty";
-  "$fileManager" = "${thunar_pkg}/bin/thunar";
-
   env = [
     "XDG_SESSION_DESKTOP, Hyprland"
     "XCURSOR_SIZE, 20"
@@ -29,24 +26,12 @@ in
     "${pkgs.networkmanagerapplet}/bin/nm-applet"
     "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
     "${pkgs.swaybg}/bin/swaybg -i ${builtins.path { name = "swaybg-img"; path = userSettings.wallpaper; }}"
+    "${thunar_pkg}/bin/thunar --daemon"
     "sleep 5; ${pkgs.copyq}/bin/copyq --start-server"
   ];
 
   # "debug:disable_scale_checks" = true;
   # "debug:disable_logs" = false;
-
-  /* workspace = [
-    "1, persistent:true" 
-    "2, persistent:true" 
-    "3, persistent:true" 
-    "4, persistent:true" 
-    "5, persistent:true" 
-    "6, persistent:true" 
-    "7, persistent:true" 
-    "8, persistent:true" 
-    "9, persistent:true" 
-    "10, persistent:true" 
-  ]; */
 
   bind =
     # SUPER binds
@@ -54,8 +39,8 @@ in
       # exec keybinds
       "A, exec, ${grimblast}/bin/grimblast --freeze save area - | ${pkgs.swappy}/bin/swappy -f -"
       "SHIFT, A, exec, ${grimblast}/bin/grimblast --freeze save output - | ${pkgs.swappy}/bin/swappy -f -"
-      "E, exec, $fileManager"
-      "Q, exec, $terminal"
+      "E, exec, ${thunar_pkg}/bin/thunar"
+      "Q, exec, ${config.programs.kitty.package}/bin/kitty"
       "R, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show drun"
       "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs config userSettings; }}"
       "T, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show ssh"
@@ -66,9 +51,9 @@ in
       "C, killactive"
       "F, fullscreen, 1"
       "SHIFT, F, fullscreen, 0"
-      "G, togglesplit,"
+      # "G, togglesplit,"
       "SHIFT, M, exit,"
-      "P, pseudo,"
+      # "P, pseudo,"
       "SPACE, togglefloating,"
 
       "left,  movefocus, l"
@@ -115,7 +100,7 @@ in
 
       "D,        exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad"
       "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g -l"
-      "CTRL, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -t"
+      "CTRL, D,  exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -t"
 
       "CTRL, RIGHT, split-workspace, w+1"
       "CTRL, LEFT,  split-workspace, w-1"
@@ -123,24 +108,11 @@ in
       "CTRL SHIFT, LEFT,  split-movetoworkspace, w-1"
 
       "CTRL, L, split-workspace, w+1"
-      "CTRL, H,  split-workspace, w-1"
+      "CTRL, H, split-workspace, w-1"
       "CTRL SHIFT, L, split-movetoworkspace, w+1"
-      "CTRL SHIFT, H,  split-movetoworkspace, w-1"
+      "CTRL SHIFT, H, split-movetoworkspace, w-1"
     ]
     ++
-    # hycov binds
-    /* evalBinds "ALT" [ ] [
-      "tab, hycov:toggleoverview"
-      "left,  hycov:movefocus,l"
-      "right, hycov:movefocus,r"
-      "up,    hycov:movefocus,u"
-      "down,  hycov:movefocus,d"
-      "h, hycov:movefocus,l"
-      "l, hycov:movefocus,r"
-      "j, hycov:movefocus,u"
-      "k, hycov:movefocus,d"
-    ]
-    ++ */
     evalBinds "CTRL" [ "SHIFT" ] [
       "SHIFT, M, pass, ^vesktop$"
     ];
@@ -156,12 +128,12 @@ in
       "ALT, left,  resizeactive, -20 0"
       "ALT, right, resizeactive,  20 0"
       "ALT, up,    resizeactive, 0 -20"
-      "ALT, down,  resizeactive,  0 20"
+      "ALT, down,  resizeactive, 0  20"
         
       "ALT, h, resizeactive, -20 0"
       "ALT, l, resizeactive,  20 0"
       "ALT, k, resizeactive, 0 -20"
-      "ALT, j, resizeactive,  0 20"
+      "ALT, j, resizeactive, 0  20"
     ];
 
   bindl = 
@@ -193,7 +165,6 @@ in
     touchpad = {
       natural_scroll = true;
       tap-to-click = true;
-      drag_lock = true;
     };
 
     sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
@@ -207,22 +178,6 @@ in
     workspace_swipe_use_r = true;
   };
 
-  plugin.hycov = {
-    overview_gappo = 60; #gaps width from screen
-    overview_gappi = 24; #gaps width from clients
-
-    enable_hotarea = false;
-
-    enable_gesture = true;
-    swipe_fingers = 4;
-
-    disable_workspace_change = true;
-    disable_spawn = true;
-
-    enable_alt_release_exit = true;
-    alt_toggle_auto_next = true;
-  };
-
   plugin.split-monitor-workspaces = {
     count = 10;
   };
@@ -230,7 +185,7 @@ in
   misc = {
     close_special_on_empty = false;
     focus_on_activate = true;
-    mouse_move_enables_dpms = true;
+    mouse_move_enables_dpms = false;
     key_press_enables_dpms = true;
     disable_hyprland_logo = true;
     disable_splash_rendering = true;
@@ -268,8 +223,7 @@ in
     gaps_in = 1;
     gaps_out = 1;
     border_size = 1;
-    # "col.active_border" = "rgba(f5bde6ee)";    
-    "col.active_border" = "rgba(${config.colorScheme.palette.base0F}88) rgba(${config.colorScheme.palette.base06}88) 45deg";
+    "col.active_border" = "rgba(${config.colorScheme.palette.base0F}66) rgba(${config.colorScheme.palette.base06}66) 45deg";
     "col.inactive_border" = "rgba(${config.colorScheme.palette.base04}66)";
 
     layout = "master";
@@ -295,8 +249,8 @@ in
   };
 
   animations = {
-    enabled = true;
-    bezier = "myBezier, 0.05, 0.9, 0.1, 1.0";
+    enabled = false;
+    /* bezier = "myBezier, 0.05, 0.9, 0.1, 1.0";
     animation = [
       "windows, 1, 5, myBezier"
       "windowsOut, 1, 5, default, popin 80%"
@@ -304,13 +258,13 @@ in
       "borderangle, 1, 8, default"
       "fade, 1, 7, default"
       "workspaces, 1, 5, default"
-    ];
+    ]; */
   };
 
-  dwindle = {
+  /* dwindle = {
     pseudotile = true;
     preserve_split = true;
-  };
+  }; */
 
   master = {
     new_is_master = false;

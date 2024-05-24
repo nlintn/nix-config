@@ -2,7 +2,7 @@
 
 {
   imports = [ 
-    ./alacritty
+    # ./alacritty
     ./firefox.nix
     ./fzf.nix
     ./git.nix
@@ -50,6 +50,7 @@
     spotify-tray
     telegram-desktop
     tree
+    unzip
     vesktop
     wl-clipboard
     xournalpp

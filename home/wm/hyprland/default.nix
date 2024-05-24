@@ -51,7 +51,6 @@ in {
     systemd.enable = true;
 
     plugins = [
-      # inputs.hycov.packages.${pkgs.system}.hycov
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
 

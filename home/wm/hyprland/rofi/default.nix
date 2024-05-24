@@ -3,7 +3,7 @@
 {
   programs.rofi = {
     enable = true;
-    terminal = "${config.programs.alacritty.package}/bin/alacritty";
+    terminal = "${config.programs.kitty.package}/bin/kitty";
     package = pkgs.rofi-wayland;
     theme = import ./theme.nix { inherit pkgs config; };
     extraConfig = {

@@ -7,7 +7,7 @@
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
       userSettings = {
-        catppuccin-flavour = "macchiato"; # for apps whose theme I haven't ported to base16 yet
+        catppuccin-flavour = "macchiato"; # gtk, vim and grub theme
         colorScheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;
         default-font = "JetBrainsMono Nerd Font";
         lockscreen = builtins.toString ./etc/lockscreen.png;
@@ -47,10 +47,6 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
-    hycov = {
-      url = "github:nlintn/hycov";
-      inputs.hyprland.follows = "hyprland";
-    };
     split-monitor-workspaces = {
       url = "github:nlintn/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";

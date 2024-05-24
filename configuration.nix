@@ -59,7 +59,7 @@
   services.libinput = {
     enable = true;
     mouse.accelProfile = "flat";
-    touchpad.accelProfile = "flat";
+    touchpad.accelProfile = "adaptive";
   };
 
   services.greetd = lib.mkIf (userSettings.wm == "hyprland") {

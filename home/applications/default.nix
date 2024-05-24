@@ -26,7 +26,7 @@
     gdb
     github-desktop
     gitkraken
-    isabelle
+    isabelle2024-rc1
     jetbrains.idea-ultimate
     pwndbg
     (python3.withPackages ( python-pkgs: [
@@ -45,6 +45,7 @@
     gimp
     libqalculate
     lolcat
+    nixln-edit
     obsidian
     spotify
     spotify-tray

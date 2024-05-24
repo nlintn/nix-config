@@ -14,6 +14,7 @@
         wallpaper = builtins.toString ./etc/wallpaper.jpg;
         wm = "hyprland";
       };
+      overlays = { nixpkgs.overlays = [ inputs.nixpkgs-overlay.overlays.default ]; };
     in {
       nixosConfigurations = {
         meoww = lib.nixosSystem {
@@ -29,6 +30,7 @@
         nico = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
+            overlays
             ./home
           ];
           extraSpecialArgs = {
@@ -43,6 +45,11 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixpkgs-overlay = {
+      url = "github:nlintn/nixpkgs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

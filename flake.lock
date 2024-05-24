@@ -225,6 +225,27 @@
         "type": "github"
       }
     },
+    "nixln-edit": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-overlay",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1716475945,
+        "narHash": "sha256-fcorEjZQtL4y4cKPB6jH7pYHMmL9o/hpfoVVzwIa4rs=",
+        "owner": "nlintn",
+        "repo": "nixln-edit",
+        "rev": "0574e6765d51b85f6cdfcaa85a675fa35d5c5d71",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nlintn",
+        "repo": "nixln-edit",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1715534503,
@@ -256,6 +277,27 @@
         "type": "github"
       }
     },
+    "nixpkgs-overlay": {
+      "inputs": {
+        "nixln-edit": "nixln-edit",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1716524072,
+        "narHash": "sha256-9DyTSxuB1N2OU1Piq4pzMQp3rkeaDQhoYoZzOZQEevs=",
+        "owner": "nlintn",
+        "repo": "nixpkgs-overlay",
+        "rev": "8a5c2c01464fd3bb0ef7a3bacb9f92d5d175848c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nlintn",
+        "repo": "nixpkgs-overlay",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1716137900,
@@ -281,6 +323,7 @@
         "hyprland-contrib": "hyprland-contrib",
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-overlay": "nixpkgs-overlay",
         "split-monitor-workspaces": "split-monitor-workspaces"
       }
     },

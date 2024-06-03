@@ -40,13 +40,16 @@ in
       "A, exec, ${grimblast}/bin/grimblast --freeze save area - | ${pkgs.swappy}/bin/swappy -f -"
       "SHIFT, A, exec, ${grimblast}/bin/grimblast --freeze save output - | ${pkgs.swappy}/bin/swappy -f -"
       "E, exec, ${thunar_pkg}/bin/thunar"
+      "W, exec, ${config.programs.firefox.package}/bin/firefox"
       "Q, exec, ${config.programs.kitty.package}/bin/kitty"
-      "R, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show drun"
+      "R, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show drun"
       "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs config userSettings; }}"
-      "T, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show ssh"
+      "T, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show ssh"
       "V, exec, ${pkgs.copyq}/bin/copyq show"
       "BACKSPACE, exec, loginctl lock-session"
-      "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -hover-select -show window"
+      "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show window"
+      "RETURN, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show power-menu -modi 'power-menu:${import ./scripts/rofi-power-menu.nix { inherit pkgs; }}'"
+      "PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --open-panel"
 
       "C, killactive"
       "F, fullscreen, 1"
@@ -102,15 +105,15 @@ in
       "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g -l"
       "CTRL, D,  exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -t"
 
-      "CTRL, RIGHT, split-workspace, w+1"
-      "CTRL, LEFT,  split-workspace, w-1"
-      "CTRL SHIFT, RIGHT, split-movetoworkspace, w+1"
-      "CTRL SHIFT, LEFT,  split-movetoworkspace, w-1"
+      "CTRL, RIGHT, split-workspace, r+1"
+      "CTRL, LEFT,  split-workspace, r-1"
+      "CTRL SHIFT, RIGHT, split-movetoworkspace, r+1"
+      "CTRL SHIFT, LEFT,  split-movetoworkspace, r-1"
 
-      "CTRL, L, split-workspace, w+1"
-      "CTRL, H, split-workspace, w-1"
-      "CTRL SHIFT, L, split-movetoworkspace, w+1"
-      "CTRL SHIFT, H, split-movetoworkspace, w-1"
+      "CTRL, L, split-workspace, r+1"
+      "CTRL, H, split-workspace, r-1"
+      "CTRL SHIFT, L, split-movetoworkspace, r+1"
+      "CTRL SHIFT, H, split-movetoworkspace, r-1"
     ]
     ++
     evalBinds "CTRL" [ "SHIFT" ] [
@@ -223,7 +226,7 @@ in
     gaps_in = 1;
     gaps_out = 1;
     border_size = 1;
-    "col.active_border" = "rgba(${config.colorScheme.palette.base0F}66) rgba(${config.colorScheme.palette.base06}66) 45deg";
+    "col.active_border" = "rgba(${config.colorScheme.palette.base0F}66)";
     "col.inactive_border" = "rgba(${config.colorScheme.palette.base04}66)";
 
     layout = "master";
@@ -232,7 +235,7 @@ in
   };
 
   decoration = {
-    rounding = 2;
+    rounding = 0;
 
     blur = {
       enabled = true;

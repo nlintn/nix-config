@@ -12,7 +12,7 @@
       vim.o.number = true
       vim.o.relativenumber = true
 
-      vim.o.signcolumn = 'number'
+      vim.o.signcolumn = 'yes:1'
 
       vim.o.ignorecase = true
       vim.keymap.set("n", "<leader>/", ":noh<CR>", { silent = true })
@@ -46,6 +46,7 @@
 
     plugins = with pkgs.vimPlugins; [
       (import ./battery-nvim.nix { inherit pkgs; }).package
+      cmp-fuzzy-path
       cmp_luasnip
       cmp-nvim-lsp
       (import ./isabelle-syn-nvim.nix { inherit pkgs; }).package
@@ -72,6 +73,12 @@
         type = "lua";
         config = ''require("copilot").setup {}'';
       } */
+
+      {
+        plugin = gitsigns-nvim;
+        type = "lua";
+        config = ''require("gitsigns").setup {}'';
+      }
 
       {
         plugin = guess-indent-nvim;
@@ -169,6 +176,7 @@
       lua-language-server
       nil
       nodePackages.pyright
+      ocamlPackages.ocaml-lsp
       rust-analyzer
       texlab
 

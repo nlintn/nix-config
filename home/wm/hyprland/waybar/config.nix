@@ -28,8 +28,8 @@ in /* json */ ''
       "default": "󰧞"
     },
     "sort-by-number": true,
-    "on-scroll-up": "${hyprctl} dispatch split-workspace w+1",
-    "on-scroll-down": "${hyprctl} dispatch split-workspace w-1",
+    "on-scroll-up": "${hyprctl} dispatch split-workspace r+1",
+    "on-scroll-down": "${hyprctl} dispatch split-workspace r-1",
     "persistent-workspaces": {
       "*": 10
     }

@@ -20,8 +20,6 @@ in {
 
   home.packages = [
     thunar_pkg
-
-    (import ./scripts/rofi-powermenu.nix { inherit pkgs; })
     (import ./scripts/xdg-terminal-exec.nix { inherit pkgs config; })    
   ] ++ (with pkgs; [  
     evince

@@ -10,12 +10,12 @@
     ./kitty
     ./neovim
     ./obs-studio.nix
-    ./opam.nix
     ./shell
     ./ssh.nix
     ./thunderbird.nix
     ./vim.nix
     ./vscode.nix
+    ./yazi.nix
     ./zellij.nix
   ];
 
@@ -28,6 +28,7 @@
     gitkraken
     isabelle2024-rc1
     jetbrains.idea-ultimate
+    ocamlPackages.utop
     pwndbg
     (python3.withPackages ( python-pkgs: [
       python311Packages.pwntools
@@ -47,6 +48,7 @@
     lolcat
     nixln-edit
     obsidian
+    speedread
     spotify
     spotify-tray
     telegram-desktop

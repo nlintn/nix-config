@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, config, ... }:
 
 let 
   color = with config.colorScheme.palette; "bg+:#${base02},spinner:#${base06},hl:#${base08},fg:#${base05},header:#${base08},info:#${base0E},pointer:#${base06},marker:#${base06},fg+:#${base05},prompt:#${base0E},hl+:#${base08}";
@@ -19,5 +19,6 @@ in {
     changeDirWidgetOptions = [  #  ALT-C Options
       "--preview 'tree -C {}'"
     ];
-  };
+    changeDirWidgetCommand = "${pkgs.fd}/bin/fd -t d";
+  }; 
 }

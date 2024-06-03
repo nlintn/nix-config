@@ -1,7 +1,7 @@
 { pkgs }:
 
 let
-  isabelle = pkgs.isabelle2024-rc1.overrideAttrs (final: prev: {
+  isabelle = pkgs.isabelle2024-rc1-vsce.overrideAttrs (final: prev: {
     patches = (prev.patches or []) ++ [ ./isabelle-emacs.patch ];
   });
 in {

@@ -12,6 +12,7 @@ lspconfig.isabelle.setup {}
 lspconfig.jdtls.setup {}
 lspconfig.lua_ls.setup {}
 lspconfig.nil_ls.setup {}
+lspconfig.ocamllsp.setup {}
 lspconfig.pyright.setup {}
 lspconfig.rust_analyzer.setup {}
 lspconfig.texlab.setup {}

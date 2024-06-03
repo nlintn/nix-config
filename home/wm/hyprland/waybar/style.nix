@@ -19,7 +19,7 @@ in with config.colorScheme.palette; /* css */ ''
   }
   
   #workspaces {
-  	background: #282828;
+  	background: ${toRGBA base01 0.85};
   	margin: 5px 5px 5px 5px;
     padding: 0px 5px 0px 5px;
   	border-radius: 16px;
@@ -53,7 +53,7 @@ in with config.colorScheme.palette; /* css */ ''
   }
   
   #tray {
-    background: #282828;
+    background: ${toRGBA base01 0.85};
     margin: 5px 5px 5px 5px;
     border-radius: 16px;
     padding: 0px 5px;
@@ -61,7 +61,7 @@ in with config.colorScheme.palette; /* css */ ''
   
   #clock {
     color: #${base06};
-    background-color: #282828;
+    background-color: ${toRGBA base01 0.85};
     border-radius: 0px 0px 0px 24px;
     padding-left: 13px;
     padding-right: 15px;
@@ -73,7 +73,7 @@ in with config.colorScheme.palette; /* css */ ''
   }
   
   #battery {
-    background-color: #282828;
+    background-color: ${toRGBA base01 0.85};
     border-radius: 16px;
     margin: 5px;
     margin-left: 5px;
@@ -117,7 +117,7 @@ in with config.colorScheme.palette; /* css */ ''
   }
   
   #custom-playerctl {
-  	background: #282828;
+  	background: ${toRGBA base01 0.85};
   	padding-left: 15px;
     padding-right: 14px;
   	border-radius: 16px;
@@ -141,7 +141,7 @@ in with config.colorScheme.palette; /* css */ ''
   }
   
   #window {
-    background: #282828;
+    background: ${toRGBA base01 0.85};
     padding-left: 15px;
     padding-right: 15px;
     border-radius: 16px;
@@ -152,7 +152,7 @@ in with config.colorScheme.palette; /* css */ ''
   }
   
   #cpu {
-    background-color: #282828;
+    background-color: ${toRGBA base01 0.85};
     border-radius: 16px;
     margin: 5px;
     margin-left: 5px;
@@ -161,7 +161,7 @@ in with config.colorScheme.palette; /* css */ ''
     font-weight: bold;
   }
   #temperature {
-    background-color: #282828;
+    background-color: ${toRGBA base01 0.85};
     border-radius: 16px;
     margin: 5px;
     margin-left: 5px;
@@ -170,7 +170,7 @@ in with config.colorScheme.palette; /* css */ ''
     font-weight: bold;
   }
   #memory {
-    background-color: #282828;
+    background-color: ${toRGBA base01 0.85};
     border-radius: 16px;
     margin: 5px;
     margin-left: 5px;

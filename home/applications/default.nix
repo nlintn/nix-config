@@ -26,7 +26,7 @@
     gdb
     github-desktop
     gitkraken
-    isabelle2024-rc1
+    (isabelle2024-rc1-vsce.overrideAttrs { applyNvimLspPatch = true; })
     jetbrains.idea-ultimate
     ocamlPackages.utop
     pwndbg

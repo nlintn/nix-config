@@ -175,7 +175,7 @@
       jdt-language-server
       lua-language-server
       nil
-      nodePackages.pyright
+      pyright
       ocamlPackages.ocaml-lsp
       rust-analyzer
       texlab

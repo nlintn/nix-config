@@ -1,9 +1,7 @@
 { pkgs }:
 
 let
-  isabelle = pkgs.isabelle2024-rc1-vsce.overrideAttrs (final: prev: {
-    patches = (prev.patches or []) ++ [ ./isabelle-emacs.patch ];
-  });
+  isabelle = pkgs.isabelle2024-rc1-vsce.overrideAttrs { applyNvimLspPatch = true; };
 in {
   package = pkgs.vimUtils.buildVimPlugin {
     name = "isabelle-lsp-nvim";

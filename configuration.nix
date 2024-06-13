@@ -4,19 +4,14 @@
   imports =
     [
       ./hardware-configuration.nix
+      inputs.lanzaboote.nixosModules.lanzaboote
     ];
 
   # Bootloader
-  boot.loader = {
-    grub = {
-      enable = true;
-      efiSupport = true;
-      device = "nodev";
-      useOSProber = true;
-      theme = inputs.catppuccin-grub + "/src/catppuccin-${userSettings.catppuccin-flavour}-grub-theme/";
-      # extraConfig = "GRUB_CMDLINE_LINUX=\"vt.default_red=36,237,166,238,138,245,139,184,91,237,166,238,138,245,139,165 vt.default_grn=39,135,218,212,173,189,213,192,96,135,218,212,173,189,213,173 vt.default_blu=58,150,149,159,244,230,202,224,120,150,149,159,244,230,202,203\"";
-    };
-    efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/etc/secureboot";
   };
 
   # boot.kernelParams = [ "i915.force_probe=46a6" ];
@@ -119,6 +114,7 @@
     man-pages linux-manual man-pages-posix
     
     powertop
+    sbctl
     vim 
     wget
     psmisc

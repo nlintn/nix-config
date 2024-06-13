@@ -12,10 +12,11 @@
       vim.o.number = true
       vim.o.relativenumber = true
 
+      vim.o.scrolloff = 10
+
       vim.o.signcolumn = 'yes:1'
 
       vim.o.ignorecase = true
-      vim.keymap.set("n", "<leader>/", ":noh<CR>", { silent = true })
 
       vim.o.tabstop = 4
       vim.o.shiftwidth = 4
@@ -46,7 +47,6 @@
 
     plugins = with pkgs.vimPlugins; [
       (import ./battery-nvim.nix { inherit pkgs; }).package
-      cmp-fuzzy-path
       cmp_luasnip
       cmp-nvim-lsp
       (import ./isabelle-syn-nvim.nix { inherit pkgs; }).package

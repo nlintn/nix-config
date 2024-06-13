@@ -1,11 +1,11 @@
 { pkgs, config }:
 
 let
-  hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   nm-connection-editor = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
   pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
   playerctl = "${config.services.playerctld.package}/bin/playerctl";
   swaync-client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
+  gnome-calendar = "${pkgs.gnome.gnome-calendar}/bin/gnome-calendar";
 in /* json */ ''
 {
   "layer": "top",
@@ -14,10 +14,6 @@ in /* json */ ''
   "modules-left": ["hyprland/workspaces", "custom/playerctl", "custom/playerlabel" ],
   "modules-center": ["cpu", "memory", "temperature", "battery"],
   "modules-right": ["tray", "pulseaudio", "backlight", "network", "custom/notification", "clock"],
-  "custom/power": {
-    "format": "",
-    "on-click": "rofi-powermenu"
-  },
   "hyprland/workspaces": {
     "disable-scroll": true,
     "on-click": "activate",
@@ -28,8 +24,6 @@ in /* json */ ''
       "default": "󰧞"
     },
     "sort-by-number": true,
-    "on-scroll-up": "${hyprctl} dispatch split-workspace r+1",
-    "on-scroll-down": "${hyprctl} dispatch split-workspace r-1",
     "persistent-workspaces": {
       "*": 10
     }
@@ -99,7 +93,7 @@ in /* json */ ''
 	  	"on-scroll-up": "shift_up",
 	  	"on-scroll-down": "shift_down"
 	  },     
-    "on-click": "${pkgs.gnome.gnome-calendar}"
+    "on-click": "${gnome-calendar}"
   },
   "memory": {
     "format": "󰍛 {}%",

@@ -53,7 +53,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland = {
+      type = "git";
+      url = "https://github.com/hyprwm/Hyprland";
+      submodules = true;
+    };
     split-monitor-workspaces = {
       url = "github:nlintn/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
@@ -74,5 +78,12 @@
       url = "github:ChaChaNop-Slide/ptrfind";
       flake = false;
     };
+  };
+
+  nixConfig = {
+    substituters = [ "https://cache.nixos.org/" ];
+    trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+    extra-trusted-substituters = [ "https://hyprland.cachix.org" ]; 
+    extra-trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
   };
 }

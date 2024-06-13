@@ -47,9 +47,12 @@ in
       "T, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show ssh"
       "V, exec, ${pkgs.copyq}/bin/copyq show"
       "BACKSPACE, exec, loginctl lock-session"
+      "SHIFT, BACKSPACE, exec, ${import ./scripts/lock-transparent.nix { inherit pkgs config; }}"
       "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show window"
       "RETURN, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show power-menu -modi 'power-menu:${import ./scripts/rofi-power-menu.nix { inherit pkgs; }}'"
-      "PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --open-panel"
+      "PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
+      "SHIFT, PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -C"
+      "CTRL, PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-dnd"
 
       "C, killactive"
       "F, fullscreen, 1"
@@ -223,8 +226,8 @@ in
   ];
 
   general = {
-    gaps_in = 1;
-    gaps_out = 1;
+    gaps_in = 0;
+    gaps_out = 0;
     border_size = 1;
     "col.active_border" = "rgba(${config.colorScheme.palette.base0F}66)";
     "col.inactive_border" = "rgba(${config.colorScheme.palette.base04}66)";
@@ -239,7 +242,7 @@ in
 
     blur = {
       enabled = true;
-      size = 6;
+      size = 4;
       passes = 2;
 
       vibrancy = 0.1696;

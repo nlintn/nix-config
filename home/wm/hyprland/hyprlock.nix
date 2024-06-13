@@ -6,10 +6,13 @@
     
     settings = {
       general = {
-        no_fade_in = false;
+        no_fade_in = true;
+        no_fade_out = true;
         grace = 0;
         disable_loading_bar = true;
         hide_cursor = true;
+        ignore_empty_input = true;
+        pam_module = "su";
       };
 
       background = [

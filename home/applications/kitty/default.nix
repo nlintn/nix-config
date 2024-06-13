@@ -39,7 +39,9 @@ in {
       enable_audio_bell = "no";
     };
     keybindings = {
-      "ctrl+n" = "launch --cwd=current --type=tab";
+      "ctrl+shift+t" = "new_tab_with_cwd";
+      "ctrl+shift+n" = "new_os_window_with_cwd";
+      "ctrl+shift+enter" = "new_window_with_cwd";
     };
     font = {
       name = "JetBrainsMono Nerd Font";

@@ -41,7 +41,6 @@ cmp.setup {
     },
     sources = {
         { name = 'nvim_lsp' },
-        { name = 'fuzzy_path' },
         { name = 'luasnip' },
     },
 }

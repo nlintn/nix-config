@@ -45,6 +45,7 @@
     inkscape
     gimp
     libqalculate
+    libreoffice-fresh
     lolcat
     nixln-edit
     obsidian

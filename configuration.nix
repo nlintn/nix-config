@@ -93,7 +93,14 @@
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
-    wireplumber.enable = true;
+    wireplumber = {
+      enable = true;
+      extraConfig = {
+        "monitor.bluez.properties" = {
+          "bluez5.enable-ldac" = true;
+        };
+      };
+    };
   };
   
   hardware.bluetooth.enable = true;
@@ -188,7 +195,7 @@
   nixpkgs.config.packageOverrides = pkgs: {
     intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
   };
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       # intel-media-driver # LIBVA_DRIVER_NAME=iHD

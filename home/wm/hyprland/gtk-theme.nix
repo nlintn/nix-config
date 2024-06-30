@@ -26,8 +26,8 @@ in {
   gtk = {
     enable = true;
     theme = {
-      package = gtk-catppuccin-theme;
-      name = "Catppuccin-${capitalize userSettings.catppuccin-flavour}-Compact-Mauve-${capitalize config.colorScheme.variant}";
+      package = (pkgs.colloid-gtk-theme.override { themeVariants = [ "purple" ]; colorVariants = [ config.colorScheme.variant ]; sizeVariants = [ "compact" ]; tweaks = [ "nord" "rimless" ]; });
+      name = "Colloid-Purple-${capitalize config.colorScheme.variant}-Compact-Nord";
     };
   
     iconTheme = {

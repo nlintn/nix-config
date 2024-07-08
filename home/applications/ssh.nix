@@ -3,7 +3,7 @@
 {
   programs.ssh = {
     enable = true;
-    addKeysToAgent = "yes";
+    addKeysToAgent = "8h";
     matchBlocks = {
       lxhalle = {
         hostname = "lxhalle.in.tum.de";

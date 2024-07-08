@@ -7,6 +7,7 @@
     package = pkgs.rofi-wayland;
     theme = import ./theme.nix { inherit pkgs config; };
     extraConfig = {
+      ssh-command = "${config.programs.kitty.package}/bin/kitty -- kitty +kitten ssh {host}";
       modi = "run,drun,ssh,window";
       show-icons = true;
       icon-theme = "kora";

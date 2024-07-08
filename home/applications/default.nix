@@ -3,11 +3,11 @@
 {
   imports = [ 
     # ./alacritty
-    ./firefox.nix
     ./fzf.nix
     ./git.nix
     ./gpg.nix
     ./kitty
+    ./librewolf.nix
     ./neovim
     ./obs-studio.nix
     ./shell
@@ -54,6 +54,7 @@
     spotify-tray
     telegram-desktop
     tree
+    ungoogled-chromium
     unzip
     vesktop
     wl-clipboard

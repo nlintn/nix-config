@@ -62,6 +62,7 @@
       type = "git";
       url = "https://github.com/hyprwm/Hyprland";
       submodules = true;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     split-monitor-workspaces = {
       url = "github:Duckonaut/split-monitor-workspaces";

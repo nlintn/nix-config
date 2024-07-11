@@ -30,11 +30,10 @@ in {
     wlr-randr
     xdg-utils
     # xwaylandvideobridge
-  ]) ++ (with pkgs.gnome; [
     eog
     file-roller
     gnome-calendar
-    gnome-clocks
+    gnome.gnome-clocks
     totem
   ]);
   

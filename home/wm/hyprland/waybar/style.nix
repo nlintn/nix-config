@@ -4,178 +4,109 @@ let
   toRGBA = RGBhex: alpha:
     "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex}, ${builtins.toString alpha})";
 in with config.colorScheme.palette; /* css */ ''
+  @define-color white #${base05};
+  @define-color red #${base08};
+  @define-color green #${base0B};
+  @define-color teal #${base0C};
+  @define-color orange #${base09};
+  @define-color magenta #${base0E};
+  @define-color bg_trans ${toRGBA base00 0.85};
+  @define-color bg #${base00};
+  @define-color bg2 #${base01};
+  
   * {
     border: none;
-    border-radius: 0px;
-    font-family: ${userSettings.default-font};
-    font-size: 12px;
-    font-style: normal;
+    border-radius: 0;
     min-height: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    text-shadow: none;
+    icon-shadow: none;
   }
   
-  window#waybar {
-    background: ${toRGBA base00 0.85};
-    color: #${base06}
+  #waybar {
+    background: @bg_trans;
+    color: @white;
+    font-family: JetBrainsMono Nerd Font;
+    font-size: 9pt;
   }
   
   #workspaces {
-  	background: ${toRGBA base01 0.85};
-  	margin: 5px 5px 5px 5px;
-    padding: 0px 5px 0px 5px;
-  	border-radius: 16px;
-    font-weight: normal;
-    font-style: normal;
-  }
-  #workspaces button {
-    padding: 0px 5px;
-    border-radius: 16px;
-    color: #928374;
+    padding-right: 8pt;
   }
   
-  #workspaces button.active {
-    color: #${base06};
-    background-color: transparent;
-    border-radius: 16px;
-  }
-  
-  #workspaces button:hover {
-  	background-color: #${base0F};
-  	color: black;
-  	border-radius: 16px;
-  }
-  
-  #clock, #battery, #pulseaudio, #network {
-  	background: transparent;
-  	padding: 5px 5px 5px 5px;
-  	margin: 5px 5px 5px 5px;
-    border-radius: 8px;
-    border: solid 0px #f4d9e1;
-  }
-  
-  #tray {
-    background: ${toRGBA base01 0.85};
-    margin: 5px 5px 5px 5px;
-    border-radius: 16px;
-    padding: 0px 5px;
-  }
-  
+  #memory,
+  #cpu,
+  #temperature,
+  #battery,
+  #window,
+  #tray,
+  #pulseaudio,
+  #backlight,
+  #network,
   #clock {
-    color: #${base06};
-    background-color: ${toRGBA base01 0.85};
-    border-radius: 0px 0px 0px 24px;
-    padding-left: 13px;
-    padding-right: 15px;
-    margin-right: 0px;
-    margin-left: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    font-weight: bold;
+    padding-left: 8pt;
+    padding-right: 8pt;
   }
   
-  #battery {
-    background-color: ${toRGBA base01 0.85};
-    border-radius: 16px;
-    margin: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    padding: 0px 13px 0px 7px;
-    font-weight: bold;
+  #memory.warning,
+  #cpu.warning,
+  #temperature.warning {
+    color: @orange;
   }
   
+  #battery.warning.discharging {
+    color: @red;
+  }
   #battery.charging {
-    color: #${base0B};
+    color: @green;
   }
   
-  #battery.warning:not(.charging) {
-    background-color: #${base08};
-    border-radius: 5px 5px 5px 5px;
+  #workspaces button {
+    padding-left: 2pt;
+    padding-right: 2pt;
+    color: @white;
+    background: @bg2
   }
   
+  #workspaces button.visible {
+    color: @bg2;
+    background: @magenta;
+  }
+  #workspaces button.visible:hover {
+    color: @bg2;
+  }
+  #workspaces button.focused {
+    color: @bg2;
+    background: @magenta;
+  }
+  #workspaces button.urgent {
+    color: @red;
+  }
+  #workspaces button:hover {
+    color: @magenta;
+  }
+  
+  #memory,
+  #cpu,
+  #temperature,
+  #battery {
+    color: @white;
+    background: @bg;
+  }
+  
+  #tray,
+  #pulseaudio,
+  #network,
   #backlight {
-    color: #${base06};
-    border-radius: 8px;
-    margin-right: 5px;
+    color: @white;
+    background: @bg;
   }
   
-  #network {
-    color: #${base06};
-    border-radius: 8px;
-    margin-right: 5px;
-  }
-  
-  #pulseaudio {
-    color: #${base06};
-    border-radius: 8px;
-    margin-left: 0px;
-  }
-  
-  #pulseaudio.muted {
-    background: transparent;
-    color: #928374;
-    border-radius: 8px;
-    margin-left: 0px;
-  }
-  
-  #custom-playerctl {
-  	background: ${toRGBA base01 0.85};
-  	padding-left: 15px;
-    padding-right: 14px;
-  	border-radius: 16px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 0px;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 16px;
-  }
-  
-  #custom-playerlabel {
-    background: transparent;
-    padding-left: 10px;
-    padding-right: 15px;
-    border-radius: 16px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  #window {
-    background: ${toRGBA base01 0.85};
-    padding-left: 15px;
-    padding-right: 15px;
-    border-radius: 16px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  #cpu {
-    background-color: ${toRGBA base01 0.85};
-    border-radius: 16px;
-    margin: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    padding: 0px 10px 0px 10px;
-    font-weight: bold;
-  }
-  #temperature {
-    background-color: ${toRGBA base01 0.85};
-    border-radius: 16px;
-    margin: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    padding: 0px 10px 0px 10px;
-    font-weight: bold;
-  }
-  #memory {
-    background-color: ${toRGBA base01 0.85};
-    border-radius: 16px;
-    margin: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    padding: 0px 10px 0px 10px;
-    font-weight: bold;
+  #clock,
+  #custom-notification {
+    color: @white;
+    background: @bg2;
   }
 ''

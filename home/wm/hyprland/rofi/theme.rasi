@@ -19,7 +19,6 @@ window {
 
     location:       center;
     width:          540;
-    border-radius:  15;
 }
 
 inputbar {

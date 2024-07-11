@@ -25,7 +25,6 @@ with config.colorScheme.palette; /* css */ ''
   
   .floating-notifications.background .notification-row .notification-background {
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 1px #${base02};
-    border-radius: 12.6px;
     margin: 18px;
     background-color: #${base00};
     color: #${base05};
@@ -34,7 +33,6 @@ with config.colorScheme.palette; /* css */ ''
   
   .floating-notifications.background .notification-row .notification-background .notification {
     padding: 7px;
-    border-radius: 12.6px;
   }
   
   .floating-notifications.background .notification-row .notification-background .notification.critical {
@@ -63,7 +61,6 @@ with config.colorScheme.palette; /* css */ ''
   }
   
   .floating-notifications.background .notification-row .notification-background .notification > *:last-child > * .notification-action {
-    border-radius: 7px;
     color: #${base05};
     background-color: #${base02};
     box-shadow: inset 0 0 0 1px #${base03};
@@ -85,7 +82,6 @@ with config.colorScheme.palette; /* css */ ''
   .floating-notifications.background .notification-row .notification-background .close-button {
     margin: 7px;
     padding: 2px;
-    border-radius: 6.3px;
     color: #${base00};
     background-color: #${base08};
   }
@@ -102,7 +98,6 @@ with config.colorScheme.palette; /* css */ ''
   
   .control-center {
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 1px #${base02};
-    border-radius: 12.6px;
     margin: 18px;
     background-color: #${base00};
     color: #${base05};
@@ -115,7 +110,6 @@ with config.colorScheme.palette; /* css */ ''
   }
   
   .control-center .widget-title button {
-    border-radius: 7px;
     color: #${base05};
     background-color: #${base02};
     box-shadow: inset 0 0 0 1px #${base03};
@@ -135,7 +129,6 @@ with config.colorScheme.palette; /* css */ ''
   }
   
   .control-center .notification-row .notification-background {
-    border-radius: 7px;
     color: #${base05};
     background-color: #${base02};
     box-shadow: inset 0 0 0 1px #${base03};
@@ -144,7 +137,6 @@ with config.colorScheme.palette; /* css */ ''
   
   .control-center .notification-row .notification-background .notification {
     padding: 7px;
-    border-radius: 7px;
   }
   
   .control-center .notification-row .notification-background .notification.critical {
@@ -172,7 +164,6 @@ with config.colorScheme.palette; /* css */ ''
   }
   
   .control-center .notification-row .notification-background .notification > *:last-child > * .notification-action {
-    border-radius: 7px;
     color: #${base05};
     background-color: #${base01};
     box-shadow: inset 0 0 0 1px #${base03};
@@ -194,13 +185,8 @@ with config.colorScheme.palette; /* css */ ''
   .control-center .notification-row .notification-background .close-button {
     margin: 7px;
     padding: 2px;
-    border-radius: 6.3px;
     color: #${base00};
     background-color: #${base08};
-  }
-  
-  .close-button {
-    border-radius: 6.3px;
   }
   
   .control-center .notification-row .notification-background .close-button:hover {
@@ -236,7 +222,6 @@ with config.colorScheme.palette; /* css */ ''
   
   .control-center-dnd {
     margin-top: 5px;
-    border-radius: 8px;
     background: #${base02};
     border: 1px solid #${base03};
     box-shadow: none;
@@ -248,7 +233,6 @@ with config.colorScheme.palette; /* css */ ''
   
   .control-center-dnd slider {
     background: #${base03};
-    border-radius: 8px;
   }
   
   .widget-dnd {
@@ -258,7 +242,6 @@ with config.colorScheme.palette; /* css */ ''
   
   .widget-dnd > switch {
     font-size: initial;
-    border-radius: 8px;
     background: #${base02};
     border: 1px solid #${base03};
     box-shadow: none;
@@ -270,7 +253,6 @@ with config.colorScheme.palette; /* css */ ''
   
   .widget-dnd > switch slider {
     background: #${base03};
-    border-radius: 8px;
     border: 1px solid #${base04};
   }
   

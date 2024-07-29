@@ -1,8 +1,9 @@
-{ pkgs, config, userSettings, ... }:
+{ pkgs, config, inputs, userSettings, ... }:
 
 {
   programs.hyprlock = with config.colorScheme.palette; {
     enable = true;
+    package = inputs.hyprlock.packages.${pkgs.system}.default;
     
     settings = {
       general = {
@@ -18,11 +19,6 @@
       background = [
         {
           path = builtins.path { name = "hyprlock-img"; path = userSettings.lockscreen; };
-          blur_passes = 3;
-          contrast = 0.8916;
-          brightness = 0.8172;
-          vibrancy = 0.1696;
-          vibrancy_darkness = 0.0;
         }
       ];
       

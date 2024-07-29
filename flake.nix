@@ -75,6 +75,14 @@
 
     nix-colors.url = "github:misterio77/nix-colors";
     
+    hyprlock = {
+      url = "github:hyprwm/hyprlock"; 
+      inputs = {
+        nixpkgs.follows = "hyprland/nixpkgs";
+        hyprutils.follows = "hyprland/hyprutils";
+        hyprlang.follows = "hyprland/hyprlang";
+      };
+    };
     gdb-ptrfind = {
       url = "github:ChaChaNop-Slide/ptrfind";
       flake = false;

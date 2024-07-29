@@ -1,47 +1,70 @@
 { pkgs }:
 
 let
-  isabelle = pkgs.isabelle2024-rc1-vsce.overrideAttrs { applyNvimLspPatch = true; };
+  isabelle = pkgs.isabelle2024-nvim-lsp;
 in {
   package = pkgs.vimUtils.buildVimPlugin {
-    name = "isabelle-lsp-nvim";
+    name = "isabelle-lsp.nvim";
     src = pkgs.fetchFromGitHub {
       owner = "Treeniks";
       repo = "isabelle-lsp.nvim";
-      rev = "f35632c86930e71e2517ee7dc0d054e785d64728";
-      sha256 = "sha256-0IEkzyX05TVaAEABTRCuKWKMj1GFkrRx9g9u11C31p4=";
+      rev = "206cca02a9b95925f362cea35b1fba2a24dff37b";
+      sha256 = "sha256-mbiUvthEQHQvmNGZtFccasiQ0ksFP0XpZzzK79m14UU=";
     };
-    patches = [ ./highlight-group.patch ];
+    patches = [ ./disable-logging.patch ];
   };
   config = /* lua */ ''
-    require("isabelle-lsp").setup({
+    require("isabelle-lsp").setup {
       isabelle_path = "${isabelle}/bin/isabelle",
-    })
-
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "isabelle" },
-      callback = function()
-        vim.schedule(function()
-          vim.keymap.set("i", "=>", "\\<Rightarrow>", { buffer = true, silent = true })
-          vim.keymap.set("i", "==>", "\\<Longrightarrow>", { buffer = true, silent = true })
-          vim.keymap.set("i", "->", "\\<rightarrow>", { buffer = true, silent = true })
-          vim.keymap.set("i", "-->", "\\<longrightarrow>", { buffer = true, silent = true })
-          vim.keymap.set("i", "--->", "\\<longlongrightarrow>", { buffer = true, silent = true })
-          vim.keymap.set("i", "<=", "\\<Leftarrow>", { buffer = true, silent = true })
-          vim.keymap.set("i", "<==", "\\<Longleftarrow>", { buffer = true, silent = true })
-          vim.keymap.set("i", "<-", "\\<leftarrow>", { buffer = true, silent = true })
-          vim.keymap.set("i", "<--", "\\<longleftarrow>", { buffer = true, silent = true })
-          vim.keymap.set("i", "<---", "\\<longlongleftarrow>", { buffer = true, silent = true })
-
-          vim.keymap.set("i", "<=", "\\<le>", { buffer = true, silent = true })
-          vim.keymap.set("i", ">=", "\\<ge>", { buffer = true, silent = true })
-          vim.keymap.set("i", "!=", "\\<noteq>", { buffer = true, silent = true })
-          vim.keymap.set("i", "=3", "\\<equiv>", { buffer = true, silent = true })
-
-          vim.keymap.set("i", "<<", "\\<open>", { buffer = true, silent = true })
-          vim.keymap.set("i", ">>", "\\<close>", { buffer = true, silent = true })
-        end)
-      end,
-    })
+      unicode_symbols_output = true,
+      unicode_symbols_edits = true,
+      hl_group_map = {
+        ['background_unprocessed1'] = false,
+        ['background_running1'] = false,
+        ['background_canceled'] = false,
+        ['background_bad'] = false,
+        ['background_intensify'] = false,
+        ['background_markdown_bullet1'] = 'markdownH1',
+        ['background_markdown_bullet2'] = 'markdownH2',
+        ['background_markdown_bullet3'] = 'markdownH3',
+        ['background_markdown_bullet4'] = 'markdownH4',
+        ['foreground_quoted'] = false,
+        ['text_main'] = 'Normal',
+        ['text_quasi_keyword'] = 'Keyword',
+        ['text_free'] = 'Function',
+        ['text_bound'] = 'Identifier',
+        ['text_inner_numeral'] = false,
+        ['text_inner_quoted'] = 'String',
+        ['text_comment1'] = 'Comment',
+        ['text_comment2'] = false, -- seems to not exist in the LSP
+        ['text_comment3'] = false,
+        ['text_dynamic'] = false,
+        ['text_class_parameter'] = false,
+        ['text_antiquote'] = 'Comment',
+        ['text_raw_text'] = 'Comment',
+        ['text_plain_text'] = 'String',
+        ['text_overview_unprocessed'] = false,
+        ['text_overview_running'] = 'Todo',
+        ['text_overview_error'] = false,
+        ['text_overview_warning'] = false,
+        ['dotted_writeln'] = false,
+        ['dotted_warning'] = "DiagnosticUnderlineWarn",
+        ['dotted_information'] = false,
+        ['spell_checker'] = 'Underlined',
+        -- currently unused by isabelle-emacs
+        -- but will probably be used once my Language Server chages get merged into Isabelle
+        ['text_inner_cartouche'] = false,
+        ['text_var'] = 'Function',
+        ['text_skolem'] = 'Boolean',
+        ['text_tvar'] = 'Type',
+        ['text_tfree'] = 'Type',
+        ['text_operator'] = 'Operator',
+        ['text_improper'] = 'Keyword',
+        ['text_keyword3'] = 'Keyword',
+        ['text_keyword2'] = 'Keyword',
+        ['text_keyword1'] = 'Keyword',
+        ['foreground_antiquoted'] = false,
+      }
+    }
   '';
 }

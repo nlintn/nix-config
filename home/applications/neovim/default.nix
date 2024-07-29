@@ -57,6 +57,12 @@
       telescope-file-browser-nvim
 
       {
+        plugin = actions-preview-nvim;
+        type = "lua";
+        config = builtins.readFile ./actions-preview-nvim.lua;
+      }
+
+      {
         plugin = import ./base16-nvim/package-patched.nix { inherit pkgs; };
         type = "lua";
         config = import ./base16-nvim/lua-config.nix { inherit config; };

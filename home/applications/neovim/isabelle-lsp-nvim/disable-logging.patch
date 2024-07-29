@@ -1,0 +1,27 @@
+From 8333939c1c20c228b38cb8099177923def9f6edb Mon Sep 17 00:00:00 2001
+From: Nico Lintner <118087966+nlintn@users.noreply.github.com>
+Date: Mon, 29 Jul 2024 15:05:39 +0200
+Subject: [PATCH] disable logging
+
+---
+ lua/isabelle-lsp.lua | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lua/isabelle-lsp.lua b/lua/isabelle-lsp.lua
+index 223853d..a8f3e43 100644
+--- a/lua/isabelle-lsp.lua
++++ b/lua/isabelle-lsp.lua
+@@ -166,8 +166,8 @@ local function apply_config(config)
+             '-o', 'editor_output_state',
+ 
+             -- for logging
+-            '-v',
+-            '-L', '~/Documents/isabelle/isabelle-lsp.log',
++            -- '-v',
++            -- '-L', '~/Documents/isabelle/isabelle-lsp.log',
+         }
+ 
+         if config.unicode_symbols_output then
+-- 
+2.45.2
+

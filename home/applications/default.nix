@@ -44,6 +44,8 @@
     fastfetch
     inkscape
     gimp
+    gnome.gnome-clocks
+    image-roll
     libqalculate
     libreoffice-fresh
     lolcat
@@ -57,6 +59,15 @@
     ungoogled-chromium
     unzip
     vesktop
+    (pkgs.symlinkJoin {
+      name = "vlc";
+      paths = [ pkgs.vlc ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/vlc \
+          --unset DISPLAY
+      '';
+    })
     wl-clipboard
     xournalpp
     zoom-us

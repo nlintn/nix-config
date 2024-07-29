@@ -55,6 +55,7 @@
       nvim-web-devicons
       playground
       telescope-file-browser-nvim
+      vim-wakatime
 
       {
         plugin = actions-preview-nvim;

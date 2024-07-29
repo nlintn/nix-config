@@ -16,8 +16,10 @@ in
   ];
 
   env = [
+    "QT_QPA_PLATFORM, wayland"
     "XDG_SESSION_DESKTOP, Hyprland"
-    "XCURSOR_SIZE, 20"
+    "HYPRCURSOR_THEME, ${config.home.pointerCursor.name}"
+    "HYPRCURSOR_SIZE, ${toString config.home.pointerCursor.size}"
   ];
 
   exec-once = [
@@ -48,7 +50,6 @@ in
       "V, exec, ${pkgs.copyq}/bin/copyq show"
       "BACKSPACE, exec, loginctl lock-session"
       "SHIFT, BACKSPACE, exec, ${import ./scripts/lock-transparent.nix { inherit pkgs config; }}"
-      "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show window"
       "RETURN, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show power-menu -modi 'power-menu:${import ./scripts/rofi-power-menu.nix { inherit pkgs; }}'"
       "PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
       "SHIFT, PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -C"
@@ -57,10 +58,13 @@ in
       "C, killactive"
       "F, fullscreen, 1"
       "SHIFT, F, fullscreen, 0"
-      # "G, togglesplit,"
       "SHIFT, M, exit,"
       # "P, pseudo,"
       "SPACE, togglefloating,"
+
+      "G, togglegroup,"
+      "TAB, changegroupactive, f"
+      "SHIFT, TAB, changegroupactive, b"
 
       "left,  movefocus, l"
       "right, movefocus, r"
@@ -117,8 +121,10 @@ in
       "CTRL, H, split-workspace, r-1"
       "CTRL SHIFT, L, split-movetoworkspace, r+1"
       "CTRL SHIFT, H, split-movetoworkspace, r-1"
-    ]
-    ++
+    ] ++
+    evalBinds "ALT" [] [
+      "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show window"
+    ] ++
     evalBinds "CTRL" [ "SHIFT" ] [
       "SHIFT, M, pass, ^vesktop$"
     ];
@@ -175,6 +181,8 @@ in
 
     sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
     # accel_profile = "flat";
+    repeat_rate = 30;
+    repeat_delay = 400;
   };
 
   gestures = {
@@ -186,6 +194,16 @@ in
 
   plugin.split-monitor-workspaces = {
     count = 10;
+  };
+
+  group = {
+    "col.border_active" = "rgba(${config.colorScheme.palette.base0F}66)";
+    "col.border_inactive" = "rgba(${config.colorScheme.palette.base04}66)";
+    groupbar = {
+      text_color = "0xff${config.colorScheme.palette.base05}";
+      "col.active" = "0x99${config.colorScheme.palette.base0E}";
+      "col.inactive" = "0x55${config.colorScheme.palette.base0E}";
+    };
   };
 
   misc = {

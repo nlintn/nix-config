@@ -19,7 +19,7 @@ in {
     changeDirWidgetOptions = [  #  ALT-C Options
       "--preview 'tree -C {}'"
     ];
-    fileWidgetCommand = "${pkgs.fd}/bin/fd -t f";
-    changeDirWidgetCommand = "${pkgs.fd}/bin/fd -t d";
+    fileWidgetCommand = "${pkgs.fd}/bin/fd -I -t f";
+    changeDirWidgetCommand = "${pkgs.fd}/bin/fd -I -t d";
   }; 
 }

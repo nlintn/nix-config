@@ -6,14 +6,6 @@ let
     +
     (lib.substring 1 ((lib.stringLength str) - 1) str)
   );
-  gtk-catppuccin-theme = (
-    pkgs.catppuccin-gtk.override {
-      accents = [ "mauve" ];
-      size = "compact";
-      tweaks = [ "rimless" ];
-      variant = userSettings.catppuccin-flavour;
-    }
-  );
 in {
   home.pointerCursor = {
     gtk.enable = true;

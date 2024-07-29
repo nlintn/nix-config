@@ -29,12 +29,7 @@ in {
     pavucontrol
     wlr-randr
     xdg-utils
-    # xwaylandvideobridge
-    eog
     file-roller
-    gnome-calendar
-    gnome.gnome-clocks
-    totem
   ]);
   
   services.gnome-keyring.enable = true;

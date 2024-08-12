@@ -8,5 +8,5 @@ pkgs.vimUtils.buildVimPlugin {
     rev = "eec6882101dd189117f79c5d18d389d20cfc0415";
     hash = "sha256-p3HWYasmi0gVUM5l9jLWL4Iy37Uxnvbj3SO/cMCpDBg=";
   };
-  patches = [ ./colour-fix.patch ];
+  patches = [ ./color-changes.patch ];
 }

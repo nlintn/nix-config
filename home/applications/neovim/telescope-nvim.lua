@@ -34,6 +34,7 @@ vim.keymap.set('n', '<leader>li', tele_builtin.lsp_implementations, {})
 vim.keymap.set('n', '<leader>ld', tele_builtin.lsp_type_definitions, {})
 
 require("telescope").load_extension("file_browser")
+require("telescope").load_extension("ui-select")
 local tele_ext = require('telescope').extensions
 vim.keymap.set('n', '<leader>fd', tele_ext.file_browser.file_browser, {})
 

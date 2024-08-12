@@ -10,6 +10,7 @@ in with config.colorScheme.palette; /* css */ ''
   @define-color teal #${base0C};
   @define-color orange #${base09};
   @define-color magenta #${base0E};
+  @define-color flamingo #${base0F};
   @define-color bg_trans ${toRGBA base00 0.85};
   @define-color bg #${base00};
   @define-color bg2 #${base01};
@@ -66,10 +67,13 @@ in with config.colorScheme.palette; /* css */ ''
   #workspaces button {
     padding-left: 2pt;
     padding-right: 2pt;
-    color: @white;
+    color: @magenta;
     background: @bg2
   }
   
+  #workspaces button.empty {
+    color: @white;
+  }
   #workspaces button.visible {
     color: @bg2;
     background: @magenta;
@@ -85,7 +89,7 @@ in with config.colorScheme.palette; /* css */ ''
     color: @red;
   }
   #workspaces button:hover {
-    color: @magenta;
+    color: @flamingo;
   }
   
   #memory,

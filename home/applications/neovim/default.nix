@@ -55,13 +55,8 @@
       nvim-web-devicons
       playground
       telescope-file-browser-nvim
+      telescope-ui-select-nvim
       vim-wakatime
-
-      {
-        plugin = actions-preview-nvim;
-        type = "lua";
-        config = builtins.readFile ./actions-preview-nvim.lua;
-      }
 
       {
         plugin = import ./base16-nvim/package-patched.nix { inherit pkgs; };

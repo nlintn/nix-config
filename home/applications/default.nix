@@ -2,7 +2,6 @@
 
 {
   imports = [ 
-    # ./alacritty
     ./fzf.nix
     ./git.nix
     ./gpg.nix
@@ -50,6 +49,7 @@
     libreoffice-fresh
     lolcat
     nixln-edit
+    nix-tree
     obsidian
     speedread
     spotify

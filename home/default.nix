@@ -17,7 +17,7 @@
   colorScheme = userSettings.colorScheme;
   
   home.sessionVariables = {
-    DOT_DIR = "${config.home.homeDirectory}/dotfiles";
+    NIX_CONFIG_DIR = "${config.home.homeDirectory}/nix-config";
   };
 
   systemd.user.startServices = true;

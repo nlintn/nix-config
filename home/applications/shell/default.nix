@@ -3,10 +3,10 @@
 let  
   shellAliases = {
     c = "clear";
-    dotdir = "builtin cd ${config.home.homeDirectory}/dotfiles";
-    hms = "home-manager switch --flake ${config.home.homeDirectory}/dotfiles";
-    nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
-    nrb = "sudo nixos-rebuild boot --flake ${config.home.homeDirectory}/dotfiles";
+    confdir = "builtin cd $NIX_CONFIG_DIR";
+    hms = "home-manager switch --flake $NIX_CONFIG_DIR";
+    nrs = "nixos-rebuild switch --flake $NIX_CONFIG_DIR --use-remote-sudo";
+    nrb = "nixos-rebuild boot --flake $NIX_CONFIG_DIR --use-remote-sudo";
     nv = builtins.toString (pkgs.writeShellScript "nv" /* bash */ ''
       if [[ $# -gt 0 ]] then
         ${config.programs.neovim.finalPackage}/bin/nvim $@

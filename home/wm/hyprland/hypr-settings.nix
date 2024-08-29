@@ -18,11 +18,10 @@ in
   env = [
     "QT_QPA_PLATFORM, wayland"
     "XDG_SESSION_DESKTOP, Hyprland"
-    "HYPRCURSOR_THEME, ${config.home.pointerCursor.name}"
-    "HYPRCURSOR_SIZE, ${toString config.home.pointerCursor.size}"
   ];
 
   exec-once = [
+    "${config.wayland.windowManager.hyprland.package}/bin/hyprctl setcursor ${config.home.pointerCursor.name} ${toString config.home.pointerCursor.size}"
     "${pkgs.swaynotificationcenter}/bin/swaync"
     "${config.programs.waybar.package}/bin/waybar"
     "${pkgs.networkmanagerapplet}/bin/nm-applet"

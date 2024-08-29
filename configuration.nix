@@ -203,6 +203,8 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
+    package = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.system}.mesa.drivers;
+    package32 = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.system}.pkgsi686Linux.mesa.drivers;
   };
   environment.sessionVariables = { LIBVA_DRIVER_NAME = "i965"; NIXOS_OZONE_WL = "1"; }; # Force intel-media-driver
 

@@ -18,16 +18,37 @@
     ./zellij.nix
   ];
 
-  nixpkgs.config.allowUnfree = true;
-  home.packages = with pkgs; [
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "jitsi-meet-1.0.8043"
+    ];
+  };
+
+  home.packages = with pkgs; let
+    vlc = (pkgs.symlinkJoin {
+      name = "vlc";
+      paths = [ pkgs.vlc ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/vlc \
+          --unset DISPLAY
+        mv $out/share/applications/vlc.desktop{,.orig}
+        substitute $out/share/applications/vlc.desktop{.orig,} \
+          --replace-fail Exec=${pkgs.vlc}/bin/vlc Exec=$out/bin/vlc
+      '';
+    }); 
+  in [
     # Coding stuff
+    atac
     bear
     gdb
-    github-desktop
-    gitkraken
+    ghidra
     isabelle2024-nvim-lsp
     jetbrains.idea-ultimate
+    lazygit
     ocamlPackages.utop
+    postgresql
     pwndbg
     (python3.withPackages ( python-pkgs: [
       python311Packages.pwntools
@@ -41,6 +62,7 @@
     desmume
     element-desktop
     fastfetch
+    fd
     inkscape
     gimp
     gnome.gnome-clocks
@@ -51,23 +73,18 @@
     nixln-edit
     nix-tree
     obsidian
+    prismlauncher
+    ripgrep
     speedread
     spotify
     spotify-tray
+    sshfs
     telegram-desktop
     tree
     ungoogled-chromium
     unzip
     vesktop
-    (pkgs.symlinkJoin {
-      name = "vlc";
-      paths = [ pkgs.vlc ];
-      buildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/vlc \
-          --unset DISPLAY
-      '';
-    })
+    vlc
     wl-clipboard
     xournalpp
     zoom-us

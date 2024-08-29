@@ -54,6 +54,7 @@
       neodev-nvim
       nvim-web-devicons
       playground
+      presence-nvim
       telescope-file-browser-nvim
       telescope-ui-select-nvim
       vim-wakatime
@@ -77,9 +78,15 @@
       } */
 
       {
+        plugin = crates-nvim;
+        type = "lua";
+        config = builtins.readFile ./crates-nvim.lua;
+      }
+
+      {
         plugin = gitsigns-nvim;
         type = "lua";
-        config = ''require("gitsigns").setup {}'';
+        config = builtins.readFile ./gitsigns-nvim.lua;
       }
 
       {

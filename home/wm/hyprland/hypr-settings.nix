@@ -36,7 +36,7 @@ in
 
   bind =
     # SUPER binds
-    evalBinds "SUPER" [ "CTRL" "SHIFT" "ALT" ] [
+    evalBinds "SUPER" [ "ALT" "CTRL" "SHIFT" ] [
       # exec keybinds
       "A, exec, ${grimblast}/bin/grimblast --freeze save area - | ${pkgs.swappy}/bin/swappy -f -"
       "SHIFT, A, exec, ${grimblast}/bin/grimblast --freeze save output - | ${pkgs.swappy}/bin/swappy -f -"
@@ -50,9 +50,9 @@ in
       "BACKSPACE, exec, loginctl lock-session"
       "SHIFT, BACKSPACE, exec, ${import ./scripts/lock-transparent.nix { inherit pkgs config; }}"
       "RETURN, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show power-menu -modi 'power-menu:${import ./scripts/rofi-power-menu.nix { inherit pkgs; }}'"
-      "PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
-      "SHIFT, PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -C"
-      "CTRL, PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-dnd"
+      "DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
+      "SHIFT, DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -C"
+      "CTRL, DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-dnd"
 
       "C, killactive"
       "F, fullscreen, 1"
@@ -62,9 +62,52 @@ in
       "SPACE, togglefloating,"
 
       "G, togglegroup,"
-      "TAB, changegroupactive, f"
-      "SHIFT, TAB, changegroupactive, b"
 
+      "dead_circumflex, workspace, previous_per_monitor"
+      "1, split-workspace, 1"
+      "2, split-workspace, 2"
+      "3, split-workspace, 3"
+      "4, split-workspace, 4"
+      "5, split-workspace, 5"
+      "6, split-workspace, 6"
+      "7, split-workspace, 7"
+      "8, split-workspace, 8"
+      "9, split-workspace, 9"
+      "0, split-workspace, 10"
+
+      "SHIFT, 1, split-movetoworkspacesilent, 1"
+      "SHIFT, 2, split-movetoworkspacesilent, 2"
+      "SHIFT, 3, split-movetoworkspacesilent, 3"
+      "SHIFT, 4, split-movetoworkspacesilent, 4"
+      "SHIFT, 5, split-movetoworkspacesilent, 5"
+      "SHIFT, 6, split-movetoworkspacesilent, 6"
+      "SHIFT, 7, split-movetoworkspacesilent, 7"
+      "SHIFT, 8, split-movetoworkspacesilent, 8"
+      "SHIFT, 9, split-movetoworkspacesilent, 9"
+      "SHIFT, 0, split-movetoworkspacesilent, 10"
+
+      "S, togglespecialworkspace, magic"
+      "SHIFT, S, movetoworkspacesilent, special:magic"
+
+      "D,        exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -n scratchpad"
+      "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g -l -n scratchpad"
+      "CTRL, D,  togglespecialworkspace, scratchpad"
+    ] ++
+    evalBinds "ALT" [] [
+      "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show window"
+    ] ++
+    evalBinds "CTRL" [ "SHIFT" ] [
+      "SHIFT, M, pass, ^vesktop$"
+    ];
+
+  bindm =
+    evalBinds "SUPER" [ ] [
+      "mouse:272, movewindow"
+      "mouse:273, resizewindow"
+    ];
+
+  binde =
+    evalBinds "SUPER" [ "ALT" "CTRL" "SHIFT" ] [
       "left,  movefocus, l"
       "right, movefocus, r"
       "up,    movefocus, u"
@@ -82,34 +125,15 @@ in
       "SHIFT, k, movewindow, u"
       "SHIFT, j, movewindow, d"
 
-      "1, split-workspace, 1"
-      "2, split-workspace, 2"
-      "3, split-workspace, 3"
-      "4, split-workspace, 4"
-      "5, split-workspace, 5"
-      "6, split-workspace, 6"
-      "7, split-workspace, 7"
-      "8, split-workspace, 8"
-      "9, split-workspace, 9"
-      "0, split-workspace, 10"
-
-      "SHIFT, 1, split-movetoworkspace, 1"
-      "SHIFT, 2, split-movetoworkspace, 2"
-      "SHIFT, 3, split-movetoworkspace, 3"
-      "SHIFT, 4, split-movetoworkspace, 4"
-      "SHIFT, 5, split-movetoworkspace, 5"
-      "SHIFT, 6, split-movetoworkspace, 6"
-      "SHIFT, 7, split-movetoworkspace, 7"
-      "SHIFT, 8, split-movetoworkspace, 8"
-      "SHIFT, 9, split-movetoworkspace, 9"
-      "SHIFT, 0, split-movetoworkspace, 10"
-
-      "S, togglespecialworkspace, magic"
-      "SHIFT, S, movetoworkspace, special:magic"
-
-      "D,        exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad"
-      "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g -l"
-      "CTRL, D,  exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -t"
+      "ALT, left,  resizeactive, -20 0"
+      "ALT, right, resizeactive,  20 0"
+      "ALT, up,    resizeactive, 0 -20"
+      "ALT, down,  resizeactive, 0  20"
+        
+      "ALT, h, resizeactive, -20 0"
+      "ALT, l, resizeactive,  20 0"
+      "ALT, k, resizeactive, 0 -20"
+      "ALT, j, resizeactive, 0  20"
 
       "CTRL, RIGHT, split-workspace, r+1"
       "CTRL, LEFT,  split-workspace, r-1"
@@ -120,31 +144,9 @@ in
       "CTRL, H, split-workspace, r-1"
       "CTRL SHIFT, L, split-movetoworkspace, r+1"
       "CTRL SHIFT, H, split-movetoworkspace, r-1"
-    ] ++
-    evalBinds "ALT" [] [
-      "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show window"
-    ] ++
-    evalBinds "CTRL" [ "SHIFT" ] [
-      "SHIFT, M, pass, ^vesktop$"
-    ];
 
-  bindm =
-    evalBinds "SUPER" [ ] [
-      "mouse:272, movewindow"
-      "mouse:273, resizewindow"
-    ];
-
-  binde =
-    evalBinds "SUPER" [ "ALT" ] [
-      "ALT, left,  resizeactive, -20 0"
-      "ALT, right, resizeactive,  20 0"
-      "ALT, up,    resizeactive, 0 -20"
-      "ALT, down,  resizeactive, 0  20"
-        
-      "ALT, h, resizeactive, -20 0"
-      "ALT, l, resizeactive,  20 0"
-      "ALT, k, resizeactive, 0 -20"
-      "ALT, j, resizeactive, 0  20"
+      "TAB, changegroupactive, f"
+      "SHIFT, TAB, changegroupactive, b"
     ];
 
   bindl = 
@@ -170,7 +172,9 @@ in
   };
 
   input = {
-    kb_layout = "de";
+    kb_layout = "de,de";
+    kb_variant = "neo_qwertz,";
+    kb_options = "grp:alt_space_toggle";
     follow_mouse = 2;
 
     touchpad = {
@@ -236,6 +240,14 @@ in
     "float, class:copyq"
     "move onscreen cursor, class:copyq"
     "pin, class:copyq"
+
+    "pin, class:xdragon"
+  ];
+
+  workspace = [
+    "w[t1], gapsout:0, gapsin:0, border: 0, rounding:0"
+    "w[tg1], gapsout:0, gapsin:0, border: 0, rounding:0"
+    "f[1], gapsout:0, gapsin:0, border: 0, rounding:0"
   ];
 
   layerrule = [
@@ -293,7 +305,6 @@ in
     new_status = "slave";
     new_on_top = true;
     mfact = 0.65;
-    no_gaps_when_only = 1;
   };
 
   xwayland.force_zero_scaling = true;

@@ -9,6 +9,8 @@
 
   # Bootloader
   boot.loader.systemd-boot.enable = lib.mkForce false;
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.lanzaboote = {
     enable = true;
     pkiBundle = "/etc/secureboot";
@@ -79,7 +81,7 @@
 
   # Configure console keymap
   console = {
-    keyMap = "de";
+    keyMap = "neoqwertz";
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
   };

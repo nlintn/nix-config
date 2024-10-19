@@ -18,8 +18,8 @@ in {
   gtk = {
     enable = true;
     theme = {
-      package = (pkgs.colloid-gtk-theme.override { themeVariants = [ "purple" ]; colorVariants = [ config.colorScheme.variant ]; sizeVariants = [ "compact" ]; tweaks = [ "nord" "rimless" ]; });
-      name = "Colloid-Purple-${capitalize config.colorScheme.variant}-Compact-Nord";
+      package = (pkgs.colloid-gtk-theme.override { colorVariants = [ config.colorScheme.variant ]; sizeVariants = [ "compact" ]; tweaks = [ "nord" "rimless" ]; });
+      name = "Colloid-${capitalize config.colorScheme.variant}-Compact-Nord";
     };
   
     iconTheme = {

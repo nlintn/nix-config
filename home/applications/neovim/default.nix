@@ -11,6 +11,7 @@
 
       vim.o.number = true
       vim.o.relativenumber = true
+      vim.o.cursorline = true
 
       vim.o.scrolloff = 10
 
@@ -43,6 +44,16 @@
       autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
       autocmd vimenter * hi NormalNC guibg=NONE ctermbg=NONE
       autocmd vimenter * hi LineNr guibg=NONE ctermbg=NONE
+      map gn :e <cfile><CR>
+
+      augroup CursorLine
+        au!
+        au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+        au WinLeave * setlocal nocursorline
+      augroup END
+      
+      inoremap <Up> <C-O>gk
+      inoremap <Down> <C-O>gj
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -54,7 +65,6 @@
       neodev-nvim
       nvim-web-devicons
       playground
-      presence-nvim
       telescope-file-browser-nvim
       telescope-ui-select-nvim
       vim-wakatime
@@ -100,6 +110,12 @@
         type = "lua";
         config = (import ./isabelle-lsp-nvim/package-config.nix { inherit pkgs; }).config;
       }
+
+      /* {
+        plugin = lean-nvim;
+        type = "lua";
+        config = ''require('lean').setup { mappings = true }'';
+      } */
 
       {
         plugin = lualine-nvim;

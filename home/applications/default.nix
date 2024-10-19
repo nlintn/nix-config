@@ -42,16 +42,21 @@
     # Coding stuff
     atac
     bear
+    coq
     gdb
     ghidra
+    ghostscript
     isabelle2024-nvim-lsp
     jetbrains.idea-ultimate
     lazygit
+    lean4
     ocamlPackages.utop
     postgresql
     pwndbg
-    (python3.withPackages ( python-pkgs: [
-      python311Packages.pwntools
+    (python3.withPackages ( python-pkgs: with python-pkgs; [
+      pillow
+      pwntools
+      requests
     ]))
     texlive.combined.scheme-full
 
@@ -60,12 +65,13 @@
     btop
     copyq
     desmume
+    dig
     element-desktop
     fastfetch
     fd
     inkscape
     gimp
-    gnome.gnome-clocks
+    gnome-clocks
     image-roll
     libqalculate
     libreoffice-fresh
@@ -73,7 +79,11 @@
     nixln-edit
     nix-tree
     obsidian
+    pdfarranger
+    pdftk
+    poppler_utils
     prismlauncher
+    prusa-slicer
     ripgrep
     speedread
     spotify
@@ -86,6 +96,7 @@
     vesktop
     vlc
     wl-clipboard
+    xdragon
     xournalpp
     zoom-us
   ];

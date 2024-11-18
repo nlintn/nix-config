@@ -8,7 +8,7 @@
     noto-fonts
     noto-fonts-emoji
     noto-fonts-extra
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     font-awesome
     montserrat
   ];

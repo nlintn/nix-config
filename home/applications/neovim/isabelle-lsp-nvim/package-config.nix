@@ -15,7 +15,8 @@ in {
   };
   config = /* lua */ ''
     require("isabelle-lsp").setup {
-      isabelle_path = "${isabelle}/bin/isabelle",
+      -- isabelle_path = "${isabelle}/bin/isabelle",
+      isabelle_path = "isabelle/bin/isabelle",
       unicode_symbols_output = true,
       unicode_symbols_edits = true,
       hl_group_map = {
@@ -32,7 +33,7 @@ in {
         ['text_main'] = 'Normal',
         ['text_quasi_keyword'] = 'Keyword',
         ['text_free'] = 'Function',
-        ['text_bound'] = 'Identifier',
+        ['text_bound'] = 'Character',
         ['text_inner_numeral'] = false,
         ['text_inner_quoted'] = 'String',
         ['text_comment1'] = 'Comment',
@@ -51,17 +52,15 @@ in {
         ['dotted_warning'] = "DiagnosticUnderlineWarn",
         ['dotted_information'] = false,
         ['spell_checker'] = 'Underlined',
-        -- currently unused by isabelle-emacs
-        -- but will probably be used once my Language Server chages get merged into Isabelle
         ['text_inner_cartouche'] = false,
         ['text_var'] = 'Function',
         ['text_skolem'] = 'Boolean',
         ['text_tvar'] = 'Type',
         ['text_tfree'] = 'Type',
-        ['text_operator'] = 'Operator',
-        ['text_improper'] = 'Keyword',
+        ['text_operator'] = 'Type',
+        ['text_improper'] = 'Macro',
         ['text_keyword3'] = 'Keyword',
-        ['text_keyword2'] = 'Keyword',
+        ['text_keyword2'] = 'Operator',
         ['text_keyword1'] = 'Keyword',
         ['foreground_antiquoted'] = false,
       }

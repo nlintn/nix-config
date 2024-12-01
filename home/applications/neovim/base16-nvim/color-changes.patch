@@ -1,22 +1,17 @@
-From 49fcba76a73ef74353baabbe2da1aebf8a27b085 Mon Sep 17 00:00:00 2001
+From f3c0de85e50ee1b5ad09aec66bd2e082aacbf6c4 Mon Sep 17 00:00:00 2001
 From: Nico Lintner <118087966+nlintn@users.noreply.github.com>
 Date: Mon, 22 Apr 2024 15:09:54 +0200
 Subject: [PATCH] color changes
 
 ---
- lua/base16-colorscheme.lua | 159 ++++++++++++++++++++-----------------
- 1 file changed, 85 insertions(+), 74 deletions(-)
+ lua/base16-colorscheme.lua | 155 ++++++++++++++++++++-----------------
+ 1 file changed, 83 insertions(+), 72 deletions(-)
 
 diff --git a/lua/base16-colorscheme.lua b/lua/base16-colorscheme.lua
-index fc708c9..2381154 100644
+index fc708c9..ac18571 100644
 --- a/lua/base16-colorscheme.lua
 +++ b/lua/base16-colorscheme.lua
-@@ -144,37 +144,38 @@ function M.setup(colors, config)
-     local hi                              = M.highlight
- 
-     -- Vim editor colors
--    hi.Normal                             = { guifg = M.colors.base05, guibg = M.colors.base00, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = M.colors.cterm00 }
-+    hi.Normal                             = { guifg = M.colors.base05, nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
+@@ -148,33 +148,34 @@ function M.setup(colors, config)
      hi.Bold                               = { guifg = nil, guibg = nil, gui = 'bold', guisp = nil, ctermfg = nil, ctermbg = nil }
      hi.Debug                              = { guifg = M.colors.base08, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
      hi.Directory                          = { guifg = M.colors.base0D, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0D, ctermbg = nil }
@@ -269,7 +264,7 @@ index fc708c9..2381154 100644
          hi['@markup.heading']           = '@text.title'
          hi['@markup.raw']               = '@text.literal'
          hi['@markup.link']              = '@text.reference'
-@@ -453,20 +461,20 @@ function M.setup(colors, config)
+@@ -453,19 +461,19 @@ function M.setup(colors, config)
      end
  
      if M.config.ts_rainbow then
@@ -293,13 +288,11 @@ index fc708c9..2381154 100644
  
 -    hi.NormalFloat       = { guifg = M.colors.base05, guibg = M.colors.base00, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = M.colors.cterm00 }
 -    hi.FloatBorder       = { guifg = M.colors.base05, guibg = M.colors.base00, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = M.colors.cterm00 }
--    hi.NormalNC          = { guifg = M.colors.base05, guibg = M.colors.base00, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = M.colors.cterm00 }
 +    hi.NormalFloat       = { guifg = M.colors.base05, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
 +    hi.FloatBorder       = { guifg = M.colors.base0E, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
-+    hi.NormalNC          = { guifg = M.colors.base05, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
+     hi.NormalNC          = { guifg = M.colors.base05, guibg = M.colors.base00, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = M.colors.cterm00 }
      hi.TermCursor        = { guifg = M.colors.base00, guibg = M.colors.base05, gui = 'none', guisp = nil, ctermfg = M.colors.cterm00, ctermbg = M.colors.cterm05 }
      hi.TermCursorNC      = { guifg = M.colors.base00, guibg = M.colors.base05, gui = nil, guisp = nil, ctermfg = M.colors.cterm00, ctermbg = M.colors.cterm05 }
- 
 @@ -491,7 +499,7 @@ function M.setup(colors, config)
              hi.TelescopeBorder       = { guifg = darkerbg, guibg = darkerbg, gui = nil, guisp = nil }
              hi.TelescopePromptBorder = { guifg = darkerstatusline, guibg = darkerstatusline, gui = nil, guisp = nil }
@@ -359,5 +352,5 @@ index fc708c9..2381154 100644
  
      if M.config.mini_completion then
 -- 
-2.46.0
+2.47.0
 

@@ -9,5 +9,6 @@
       commit.gpgsign = true;
       pull.ff = "only";
     };
+    lfs.enable = true;
   };
 }

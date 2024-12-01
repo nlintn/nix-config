@@ -12,7 +12,6 @@
     ./shell
     ./ssh.nix
     ./thunderbird.nix
-    ./vim.nix
     ./vscode.nix
     ./yazi.nix
     ./zellij.nix
@@ -46,6 +45,7 @@
     gdb
     ghidra
     ghostscript
+    gnumake
     isabelle2024-nvim-lsp
     jetbrains.idea-ultimate
     lazygit
@@ -54,7 +54,6 @@
     postgresql
     pwndbg
     (python3.withPackages ( python-pkgs: with python-pkgs; [
-      pillow
       pwntools
       requests
     ]))
@@ -62,22 +61,25 @@
 
     # Misc
     anki
-    btop
+    blender
     copyq
     desmume
     dig
     element-desktop
     fastfetch
     fd
+    file
     inkscape
     gimp
     gnome-clocks
+    htop
     image-roll
     libqalculate
     libreoffice-fresh
     lolcat
     nixln-edit
     nix-tree
+    nmap
     obsidian
     pdfarranger
     pdftk
@@ -95,10 +97,12 @@
     unzip
     vesktop
     vlc
+    wireshark
     wl-clipboard
     xdragon
     xournalpp
     zoom-us
+    zulip
   ];
 
   programs.zathura.enable = true;

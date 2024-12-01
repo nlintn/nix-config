@@ -1,9 +1,16 @@
 { pkgs, config, ... }:
 
 {
+  programs.neovide = {
+    enable = true;
+    settings = {};
+  };
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
 
     extraLuaConfig = /* lua */ ''
       vim.g.mapleader = ' '
@@ -13,7 +20,7 @@
       vim.o.relativenumber = true
       vim.o.cursorline = true
 
-      vim.o.scrolloff = 10
+      vim.o.scrolloff = 5
 
       vim.o.signcolumn = 'yes:1'
 
@@ -41,9 +48,6 @@
 
     extraConfig = /* vim */ ''
       set whichwrap+=<,>,h,l,[,]
-      autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
-      autocmd vimenter * hi NormalNC guibg=NONE ctermbg=NONE
-      autocmd vimenter * hi LineNr guibg=NONE ctermbg=NONE
       map gn :e <cfile><CR>
 
       augroup CursorLine
@@ -54,6 +58,17 @@
       
       inoremap <Up> <C-O>gk
       inoremap <Down> <C-O>gj
+
+      if exists("g:neovide")
+        let g:neovide_cursor_animation_length = 0.05
+        let g:neovide_cursor_trail_size = 0
+        let g:neovide_cursor_animate_in_insert_mode = v:false
+        let g:neovide_cursor_animate_command_line = v:false
+      else
+        autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
+        autocmd vimenter * hi NormalNC guibg=NONE ctermbg=NONE
+        autocmd vimenter * hi LineNr guibg=NONE ctermbg=NONE
+      endif
     '';
 
     plugins = with pkgs.vimPlugins; [

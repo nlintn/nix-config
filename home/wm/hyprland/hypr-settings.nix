@@ -50,9 +50,12 @@ in
       "BACKSPACE, exec, loginctl lock-session"
       "SHIFT, BACKSPACE, exec, ${import ./scripts/lock-transparent.nix { inherit pkgs config; }}"
       "RETURN, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show power-menu -modi 'power-menu:${import ./scripts/rofi-power-menu.nix { inherit pkgs; }}'"
-      "DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
-      "SHIFT, DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -C"
-      "CTRL, DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-dnd"
+      # "DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
+      # "SHIFT, DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -C"
+      # "CTRL, DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-dnd"
+      "PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
+      "SHIFT, PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -C"
+      "CTRL, PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-dnd"
 
       "C, killactive"
       "F, fullscreen, 1"
@@ -173,7 +176,7 @@ in
 
   input = {
     kb_layout = "de,de";
-    kb_variant = "neo_qwertz,";
+    kb_variant = ",neo_qwertz";
     kb_options = "grp:alt_space_toggle";
     follow_mouse = 2;
 
@@ -242,12 +245,15 @@ in
     "pin, class:copyq"
 
     "pin, class:xdragon"
+    "bordersize 0, floating:0, onworkspace:w[tv1]"
+    "rounding 0, floating:0, onworkspace:w[tv1]"
+    "bordersize 0, floating:0, onworkspace:f[1]"
+    "rounding 0, floating:0, onworkspace:f[1]"
   ];
 
   workspace = [
-    "w[t1], gapsout:0, gapsin:0, border: 0, rounding:0"
-    "w[tg1], gapsout:0, gapsin:0, border: 0, rounding:0"
-    "f[1], gapsout:0, gapsin:0, border: 0, rounding:0"
+    "w[tv1], gapsout:0, gapsin:0"
+    "f[1], gapsout:0, gapsin:0"
   ];
 
   layerrule = [

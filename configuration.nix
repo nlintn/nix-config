@@ -112,7 +112,7 @@
   users.users.nico = {
     isNormalUser = true;
     description = "nico UwU";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "wireshark" ];
     shell = pkgs.zsh;
   };
 
@@ -155,6 +155,7 @@
     # nix-ld.libraries = with pkgs; [];
     java.enable = true;
     steam.enable = true;
+    wireshark.enable = true;
   };
 
   virtualisation.docker = {
@@ -175,7 +176,7 @@
     enable = true;
   };
 
-  hardware.opentabletdriver.enable = true;
+  # hardware.opentabletdriver.enable = true;
 
   hardware.enableAllFirmware = true;
   # Power Management
@@ -225,9 +226,10 @@
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
-    extra-trusted-substituters = ["https://hyprland.cachix.org"];
-    extra-trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    extra-trusted-substituters = [ "https://hyprland.cachix.org" ];
+    extra-trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    extra-trusted-users = [ "@wheel" ];
   };
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 }

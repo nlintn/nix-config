@@ -37,7 +37,8 @@ in /* json */ '' {
     "sort-by-number": true,
     "persistent-workspaces": {
       "*": 10
-    }
+    },
+    "spacing": 0
   },
 
   "memory": {
@@ -77,6 +78,10 @@ in /* json */ '' {
     "format": "Bat {capacity}%",
     "format-charging": "Bat {capacity}%",
     "tooltip": true
+  },
+
+  "hyprland/window": {
+    "seperate-outputs": true
   },
   
   "tray": {

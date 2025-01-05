@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 
 let  
   shellAliases = {
@@ -7,21 +7,11 @@ let
     hms = "home-manager switch --flake $NIX_CONFIG_DIR";
     nrs = "nixos-rebuild switch --flake $NIX_CONFIG_DIR --use-remote-sudo";
     nrb = "nixos-rebuild boot --flake $NIX_CONFIG_DIR --use-remote-sudo";
-    nv = builtins.toString (pkgs.writeShellScript "nv" /* bash */ ''
-      if [[ $# -gt 0 ]] then
-        ${config.programs.neovim.finalPackage}/bin/nvim $@
-      else
-        ${config.programs.neovim.finalPackage}/bin/nvim .
-      fi
-    '');
-    open = builtins.toString (pkgs.writeShellScript "open" /* bash */ ''
-      xdg-open "$*" > /dev/null 2>&1 & disown
-    '');
   };
 in {
   programs.zsh = {
     enable = true;
-    initExtra = (import ./zsh-syntax-highlighting-base16.nix { inherit pkgs config; }) + /* bash */ ''
+    initExtra = (import ./zsh-syntax-highlighting-base16.nix { inherit config; }) + /* bash */ ''
       bindkey -v
       bindkey -M vicmd 'V' edit-command-line
       VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true

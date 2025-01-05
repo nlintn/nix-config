@@ -11,7 +11,7 @@ lspconfig.clangd.setup {}
 lspconfig.isabelle.setup {}
 lspconfig.jdtls.setup {}
 lspconfig.lua_ls.setup {}
-lspconfig.nil_ls.setup {}
+lspconfig.nixd.setup {}
 lspconfig.ocamllsp.setup {}
 lspconfig.pyright.setup {}
 lspconfig.rust_analyzer.setup {}

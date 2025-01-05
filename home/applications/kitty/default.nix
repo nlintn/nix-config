@@ -47,7 +47,7 @@ in {
     font = {
       name = "JetBrainsMono Nerd Font";
       size = 10.5;
-      package = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; });
+      package = pkgs.nerd-fonts.jetbrains-mono;
     };
   };
 }

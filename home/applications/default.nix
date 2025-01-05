@@ -12,6 +12,7 @@
     ./shell
     ./ssh.nix
     ./thunderbird.nix
+    ./vlc.nix
     ./vscode.nix
     ./yazi.nix
     ./zellij.nix
@@ -24,20 +25,7 @@
     ];
   };
 
-  home.packages = with pkgs; let
-    vlc = (pkgs.symlinkJoin {
-      name = "vlc";
-      paths = [ pkgs.vlc ];
-      buildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/vlc \
-          --unset DISPLAY
-        mv $out/share/applications/vlc.desktop{,.orig}
-        substitute $out/share/applications/vlc.desktop{.orig,} \
-          --replace-fail Exec=${pkgs.vlc}/bin/vlc Exec=$out/bin/vlc
-      '';
-    }); 
-  in [
+  home.packages = with pkgs; [
     # Coding stuff
     atac
     bear
@@ -46,7 +34,7 @@
     ghidra
     ghostscript
     gnumake
-    isabelle2024-nvim-lsp
+    # isabelle2024-nvim-lsp
     jetbrains.idea-ultimate
     lazygit
     lean4
@@ -63,7 +51,7 @@
     anki
     blender
     copyq
-    desmume
+    # desmume
     dig
     element-desktop
     fastfetch
@@ -74,6 +62,7 @@
     gnome-clocks
     htop
     image-roll
+    keepassxc
     libqalculate
     libreoffice-fresh
     lolcat
@@ -86,6 +75,7 @@
     poppler_utils
     prismlauncher
     prusa-slicer
+    rclone
     ripgrep
     speedread
     spotify
@@ -96,11 +86,11 @@
     ungoogled-chromium
     unzip
     vesktop
-    vlc
     wireshark
     wl-clipboard
     xdragon
     xournalpp
+    yubioath-flutter
     zoom-us
     zulip
   ];
@@ -115,6 +105,11 @@
   services.playerctld.enable = true;
 
   home.file.".gdbinit".text = ''
-    source ${inputs.gdb-ptrfind}/ptrfind.py
+    source ${(pkgs.fetchFromGitHub {
+      owner = "ChaChaNop-Slide";
+      repo = "ptrfind";
+      rev = "c3f350e9e95b612330523c1515ea90ddace5c6e6";
+      sha256 = "sha256-UoG/DDLlRdxH5r/jaNd7UuUEg7H9pfkpZBpAXkZBM98=";
+    })}/ptrfind.py
   '';
 }

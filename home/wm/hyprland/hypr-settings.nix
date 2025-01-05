@@ -18,17 +18,17 @@ in
   env = [
     "QT_QPA_PLATFORM, wayland"
     "XDG_SESSION_DESKTOP, Hyprland"
+    "HYPRCURSOR_THEME, ${config.home.pointerCursor.name}"
+    "HYPRCURSOR_SIZE, ${toString config.home.pointerCursor.size}"
+    "XCURSOR_SIZE, ${toString config.home.pointerCursor.size}"
   ];
 
   exec-once = [
-    "${config.wayland.windowManager.hyprland.package}/bin/hyprctl setcursor ${config.home.pointerCursor.name} ${toString config.home.pointerCursor.size}"
-    "${pkgs.swaynotificationcenter}/bin/swaync"
-    "${config.programs.waybar.package}/bin/waybar"
-    "${pkgs.networkmanagerapplet}/bin/nm-applet"
-    "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
     "${pkgs.swaybg}/bin/swaybg -i ${builtins.path { name = "swaybg-img"; path = userSettings.wallpaper; }}"
     "${thunar_pkg}/bin/thunar --daemon"
-    "sleep 5; ${pkgs.copyq}/bin/copyq --start-server"
+
+    "[workspace special:pwm silent] ${pkgs.keepassxc}/bin/keepassxc"
+    "[workspace special:pwm silent] ${config.programs.kitty.package}/bin/kitty ~/PWM"
   ];
 
   # "debug:disable_scale_checks" = true;
@@ -46,7 +46,7 @@ in
       "R, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show drun"
       "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs config userSettings; }}"
       "T, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show ssh"
-      "V, exec, ${pkgs.copyq}/bin/copyq show"
+      "V, exec, ${config.services.copyq.package}/bin/copyq show"
       "BACKSPACE, exec, loginctl lock-session"
       "SHIFT, BACKSPACE, exec, ${import ./scripts/lock-transparent.nix { inherit pkgs config; }}"
       "RETURN, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show power-menu -modi 'power-menu:${import ./scripts/rofi-power-menu.nix { inherit pkgs; }}'"
@@ -91,6 +91,9 @@ in
 
       "S, togglespecialworkspace, magic"
       "SHIFT, S, movetoworkspacesilent, special:magic"
+
+      "P, togglespecialworkspace, pwm"
+      "SHIFT, P, movetoworkspacesilent, special:pwm"
 
       "D,        exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -n scratchpad"
       "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g -l -n scratchpad"
@@ -224,14 +227,11 @@ in
   windowrulev2 = [
     "suppressevent maximize, class:.*"
 
-    "float, class:pavucontrol"
+    "float, class:org.pulseaudio.pavucontrol"
     "float, class:nm-connection-editor"
     "float, class:.blueman-manager-wrapped"
 
     "float, class:xdg-desktop-portal-gtk"
-
-    "float, class:firefox, title:(Password Required - Mozilla Firefox)"
-    "stayfocused , class:firefox, title:(Password Required - Mozilla Firefox)"
 
     "float, class:swayimg"
     "noborder, class:swayimg"
@@ -243,8 +243,15 @@ in
     "float, class:copyq"
     "move onscreen cursor, class:copyq"
     "pin, class:copyq"
+    "size 40%, 40%, class:copyq"
+
+    "float, class:org.keepassxc.KeePassXC, title:Generate Password"
+
+    "float, class:steam, title:Steam Settings"
+    "float, class:steam, title:Friends List"
 
     "pin, class:xdragon"
+
     "bordersize 0, floating:0, onworkspace:w[tv1]"
     "rounding 0, floating:0, onworkspace:w[tv1]"
     "bordersize 0, floating:0, onworkspace:f[1]"
@@ -282,30 +289,9 @@ in
 
       vibrancy = 0.1696;
     };
-
-    /* drop_shadow = true;
-    shadow_range = 4;
-    shadow_render_power = 3;
-    "col.shadow" = "rgba(1a1a1aee)"; */
   };
 
-  animations = {
-    enabled = false;
-    /* bezier = "myBezier, 0.05, 0.9, 0.1, 1.0";
-    animation = [
-      "windows, 1, 5, myBezier"
-      "windowsOut, 1, 5, default, popin 80%"
-      "border, 1, 10, default"
-      "borderangle, 1, 8, default"
-      "fade, 1, 7, default"
-      "workspaces, 1, 5, default"
-    ]; */
-  };
-
-  /* dwindle = {
-    pseudotile = true;
-    preserve_split = true;
-  }; */
+  animations.enabled = false;
 
   master = {
     new_status = "slave";

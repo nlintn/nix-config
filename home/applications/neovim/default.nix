@@ -21,6 +21,7 @@
       vim.o.cursorline = true
 
       vim.o.scrolloff = 5
+      vim.o.wrap = false
 
       vim.o.signcolumn = 'yes:1'
 
@@ -29,6 +30,9 @@
       vim.o.tabstop = 4
       vim.o.shiftwidth = 4
       vim.o.expandtab = true
+
+      vim.o.list = true
+      vim.o.listchars='tab:«-»,space:·,nbsp:␣,extends:⟩,precedes:⟨'
 
       vim.o.termguicolors = true
 
@@ -47,7 +51,7 @@
     '';
 
     extraConfig = /* vim */ ''
-      set whichwrap+=<,>,h,l,[,]
+      " set whichwrap+=<,>,h,l,[,]
       map gn :e <cfile><CR>
 
       augroup CursorLine
@@ -64,22 +68,28 @@
         let g:neovide_cursor_trail_size = 0
         let g:neovide_cursor_animate_in_insert_mode = v:false
         let g:neovide_cursor_animate_command_line = v:false
+        let g:neovide_hide_mouse_when_typing = 1
       else
         autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
         autocmd vimenter * hi NormalNC guibg=NONE ctermbg=NONE
         autocmd vimenter * hi LineNr guibg=NONE ctermbg=NONE
+        autocmd vimenter * hi CursorLine guibg=NONE ctermbg=NONE
+        autocmd vimenter * hi CursorLineNr guibg=NONE ctermbg=NONE
+        autocmd vimenter * hi CursorLineSign guibg=NONE ctermbg=NONE
       endif
     '';
 
     plugins = with pkgs.vimPlugins; [
-      (import ./battery-nvim.nix { inherit pkgs; }).package
+      (pkgs.callPackage ./battery-nvim.nix {})
       cmp_luasnip
       cmp-nvim-lsp
+      copilot-vim
       (import ./isabelle-syn-nvim.nix { inherit pkgs; }).package
       markdown-preview-nvim
       neodev-nvim
       nvim-web-devicons
       playground
+      # plenary-nvim
       telescope-file-browser-nvim
       telescope-ui-select-nvim
       vim-wakatime
@@ -121,9 +131,9 @@
       }
 
       {
-        plugin = (import ./isabelle-lsp-nvim/package-config.nix { inherit pkgs; }).package;
+        plugin = (pkgs.callPackage ./isabelle-lsp-nvim.nix {}).package;
         type = "lua";
-        config = (import ./isabelle-lsp-nvim/package-config.nix { inherit pkgs; }).config;
+        config = (pkgs.callPackage ./isabelle-lsp-nvim.nix {}).config;
       }
 
       /* {
@@ -214,7 +224,7 @@
       clang-tools_17
       jdt-language-server
       lua-language-server
-      nil
+      nixd
       pyright
       ocamlPackages.ocaml-lsp
       rust-analyzer

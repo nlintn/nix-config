@@ -1,9 +1,8 @@
-{ pkgs, config, inputs, userSettings, ... }:
+{ pkgs, config, userSettings, ... }:
 
 {
   programs.hyprlock = with config.colorScheme.palette; {
     enable = true;
-    package = inputs.hyprlock.packages.${pkgs.system}.default;
     
     settings = {
       general = {
@@ -35,7 +34,7 @@
           fade_on_empty = false;
           placeholder_text = "<i><span font='${userSettings.default-font} 12'>UwU</span></i>";
           hide_input = false;
-          position = "0, -120";
+          position = "0, -140";
           halign = "center";
           valign = "center";
           check_color = "rgb(${base09})";
@@ -48,9 +47,9 @@
         {
           text = "cmd[update:1000] ${pkgs.coreutils}/bin/date +%H:%M:%S";
           color = "rgba(${base05}cc)";
-          font_size = 130;
+          font_size = 150;
           font_family = "${userSettings.default-font} Mono ExtraBold";
-          position = "0, 60";
+          position = "0, 80";
           halign = "center";
           valign = "center";
         }  
@@ -59,7 +58,7 @@
           color = "rgba(${base05}cc)";
           font_size = 20;
           font_family = "${userSettings.default-font} Mono";
-          position = "0, -40";
+          position = "0, -80";
           halign = "center";
           valign = "center";
         }

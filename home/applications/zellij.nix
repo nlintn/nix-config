@@ -1,11 +1,11 @@
-{ userSettings, ... }:
+{ config, ... }:
 
 {
   programs.zellij = {
     enable = true;
     enableZshIntegration = false;
     settings = {
-      theme = "catppuccin-${userSettings.catppuccin-flavour}";
+      theme = "${config.colorScheme.slug}";
       default_layout = "compact";
       pane_frames = false;
       mouse_mode = true;

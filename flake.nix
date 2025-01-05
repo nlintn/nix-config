@@ -7,7 +7,6 @@
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
       userSettings = {
-        catppuccin-flavour = "macchiato"; # vim theme
         colorScheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;
         default-font = "JetBrainsMono Nerd Font";
         lockscreen = builtins.toString ./etc/lockscreen.png;
@@ -22,7 +21,6 @@
           modules = [ ./configuration.nix ];
           specialArgs = {
             inherit inputs;
-            inherit userSettings;
           };
         };
       };
@@ -73,19 +71,6 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
-    
-    hyprlock = {
-      url = "github:hyprwm/hyprlock"; 
-      inputs = {
-        nixpkgs.follows = "hyprland/nixpkgs";
-        hyprutils.follows = "hyprland/hyprutils";
-        hyprlang.follows = "hyprland/hyprlang";
-      };
-    };
-    gdb-ptrfind = {
-      url = "github:ChaChaNop-Slide/ptrfind";
-      flake = false;
-    };
   };
 
   nixConfig = {

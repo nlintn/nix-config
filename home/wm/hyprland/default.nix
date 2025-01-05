@@ -1,27 +1,30 @@
 { pkgs, lib, config, inputs, userSettings, ... }:
 
-let thunar_pkg = with pkgs.xfce; 
+let thunar_pkg = with pkgs.xfce;
   thunar.override {
     thunarPlugins = [ thunar-archive-plugin thunar-media-tags-plugin ];
   };
 in {
-  imports =  [
+  imports = [
     inputs.hyprland.homeManagerModules.default
 
     ./avizo.nix
     ./gtk-theme.nix
     ./hypridle.nix
     ./hyprlock.nix
+    ./networkmanagerapplet.nix
+    ./polkit-gnome-authentication-agent.nix
     ./rofi
     ./swayimg.nix
     ./swaync
     ./waybar
+    ./wayland-pipewire-idle-inhibit.nix
   ];
 
   home.packages = [
     thunar_pkg
     (import ./scripts/xdg-terminal-exec.nix { inherit pkgs config; })    
-  ] ++ (with pkgs; [  
+  ] ++ (with pkgs; [
     evince
     hyprpicker
     networkmanagerapplet
@@ -32,7 +35,11 @@ in {
     file-roller
   ]);
   
-  services.gnome-keyring.enable = true;
+  services.copyq = {
+    enable = true;
+    forceXWayland = false;
+  };
+  # services.gnome-keyring.enable = true;
   services.blueman-applet.enable = true;
 
   wayland.windowManager.hyprland = {
@@ -60,7 +67,7 @@ in {
   '';
 
   nix.settings = {
-    extra-trusted-substituters = ["https://hyprland.cachix.org"];
-    extra-trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    extra-trusted-substituters = [ "https://hyprland.cachix.org" ];
+    extra-trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
   };
 }

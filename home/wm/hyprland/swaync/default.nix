@@ -1,7 +1,8 @@
-{ pkgs, config, userSettings, ... }:
+{ config, userSettings, ... }:
 
 {
-  home.packages = [ pkgs.swaynotificationcenter ];
-
-  xdg.configFile."swaync/style.css".text = import ./theme.nix { inherit config userSettings; };
+  services.swaync = {
+    enable = true;
+    style = import ./theme.nix { inherit config userSettings; };
+  };
 }

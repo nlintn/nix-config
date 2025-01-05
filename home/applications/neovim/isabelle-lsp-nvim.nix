@@ -1,22 +1,41 @@
-{ pkgs }:
+{ fetchFromGitHub, lua51Packages, neovimUtils, writeText }:
 
-let
-  isabelle = pkgs.isabelle2024-nvim-lsp;
-in {
-  package = pkgs.vimUtils.buildVimPlugin {
-    name = "isabelle-lsp.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "Treeniks";
-      repo = "isabelle-lsp.nvim";
-      rev = "206cca02a9b95925f362cea35b1fba2a24dff37b";
-      sha256 = "sha256-mbiUvthEQHQvmNGZtFccasiQ0ksFP0XpZzzK79m14UU=";
+{
+  package = neovimUtils.buildNeovimPlugin {
+    luaAttr = lua51Packages.buildLuarocksPackage {
+      pname = "isabelle-lsp.nvim";
+      version = "scm-1";
+      src = fetchFromGitHub {
+        owner = "Treeniks";
+        repo = "isabelle-lsp.nvim";
+        rev = "8eaf60f08d7f3ec6782d12327fa7e1b88545bd7c";
+        sha256 = "sha256-rtwhEB8Aq+2RbS4ZtydKmodwfk2N6LE5GIBdfu8Ru04=";
+      };
+      disabled = lua51Packages.lua.luaversion != "5.1";
+      knownRockspec = writeText "isabelle-lsp.nvim-scm-1.rockspec" ''
+        package = "isabelle-lsp.nvim"
+        version = "scm-1"
+        source = {
+          url = "git://github.com/Treeniks/isabelle-lsp.nvim",
+        }
+        dependencies = {
+          "lua == 5.1",
+        }
+        build = {
+          type = "builtin",
+          modules = {
+            ["isabelle-lsp"] = "lua/isabelle-lsp.lua",
+          },
+        }
+      '';
     };
-    patches = [ ./disable-logging.patch ];
+    nvimRequiredCheck = "isabelle-lsp";
   };
   config = /* lua */ ''
     require("isabelle-lsp").setup {
-      -- isabelle_path = "${isabelle}/bin/isabelle",
-      isabelle_path = "isabelle/bin/isabelle",
+      isabelle_path = os.getenv("LOCAL_ISABELLE_PATH") or "isabelle",
+      log = nil,
+      verbose = false,
       unicode_symbols_output = true,
       unicode_symbols_edits = true,
       hl_group_map = {
@@ -30,7 +49,7 @@ in {
         ['background_markdown_bullet3'] = 'markdownH3',
         ['background_markdown_bullet4'] = 'markdownH4',
         ['foreground_quoted'] = false,
-        ['text_main'] = 'Normal',
+        ['text_main'] = false,
         ['text_quasi_keyword'] = 'Keyword',
         ['text_free'] = 'Function',
         ['text_bound'] = 'Character',

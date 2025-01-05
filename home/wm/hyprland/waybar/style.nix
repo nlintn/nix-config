@@ -11,7 +11,6 @@ in with config.colorScheme.palette; /* css */ ''
   @define-color orange #${base09};
   @define-color magenta #${base0E};
   @define-color flamingo #${base0F};
-  @define-color bg_trans ${toRGBA base00 0.85};
   @define-color bg #${base00};
   @define-color bg2 #${base01};
   
@@ -27,10 +26,10 @@ in with config.colorScheme.palette; /* css */ ''
   }
   
   #waybar {
-    background: @bg_trans;
     color: @white;
     font-family: JetBrainsMono Nerd Font;
     font-size: 9pt;
+    background: @bg;
   }
   
   #workspaces {
@@ -65,10 +64,10 @@ in with config.colorScheme.palette; /* css */ ''
   }
   
   #workspaces button {
-    padding-left: 2pt;
-    padding-right: 2pt;
+    padding-left: 0pt;
+    padding-right: 0pt;
     color: @magenta;
-    background: @bg2
+    background: @bg2;
   }
   
   #workspaces button.empty {

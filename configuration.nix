@@ -1,11 +1,10 @@
-{ config, pkgs, lib, inputs, userSettings, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      inputs.lanzaboote.nixosModules.lanzaboote
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    inputs.lanzaboote.nixosModules.lanzaboote
+  ];
 
   # Bootloader
   boot.loader.systemd-boot.enable = lib.mkForce false;
@@ -59,7 +58,7 @@
     touchpad.accelProfile = "adaptive";
   };
 
-  services.greetd = lib.mkIf (userSettings.wm == "hyprland") {
+  services.greetd = {
     enable = true;
     settings = {
       default_session = {
@@ -81,7 +80,8 @@
 
   # Configure console keymap
   console = {
-    keyMap = "neoqwertz";
+    # keyMap = "neoqwertz";
+    keyMap = "de";
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
   };
@@ -97,11 +97,7 @@
     #jack.enable = true;
     wireplumber = {
       enable = true;
-      extraConfig = {
-        "monitor.bluez.properties" = {
-          "bluez5.enable-ldac" = true;
-        };
-      };
+      extraConfig = { };
     };
   };
   
@@ -124,7 +120,7 @@
     
     powertop
     sbctl
-    vim 
+    vim
     wget
     psmisc
   ];
@@ -134,28 +130,29 @@
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
   };
-  # programs.dconf.enable = userSettings.wm == "hyprland";
-  services.blueman.enable = userSettings.wm == "hyprland";
-  services.gnome.gnome-keyring.enable = userSettings.wm == "hyprland";
-  services.upower.enable = userSettings.wm == "hyprland";
-  programs.gnome-disks.enable = userSettings.wm == "hyprland";
-  services.gvfs.enable = userSettings.wm == "hyprland";
-  services.tumbler.enable = userSettings.wm == "hyprland";
-  services.gnome.evolution-data-server.enable = userSettings.wm == "hyprland";
-  services.gnome.gnome-online-accounts.enable = userSettings.wm == "hyprland";
 
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
-    konsole
-    oxygen
-  ];
+  services = {
+    blueman.enable = true;
+    # gnome.gnome-keyring.enable = true;
+    gvfs.enable = true;
+    pcscd.enable = true;
+    tumbler.enable = true;
+    upower.enable = true;
+  };
 
   programs = {
-    zsh.enable = true;
+    ausweisapp = {
+      enable = true;
+      openFirewall = true;
+    };
+    # dconf.enable = true;
+    java.enable = true;
+    kdeconnect.enable = true;
     nix-ld.enable = true;
     # nix-ld.libraries = with pkgs; [];
-    java.enable = true;
     steam.enable = true;
     wireshark.enable = true;
+    zsh.enable = true;
   };
 
   virtualisation.docker = {
@@ -166,10 +163,6 @@
     enable = true;
     man.enable = true;
     dev.enable = true;
-  };
-
-  programs.kdeconnect = {
-    enable = true;
   };
 
   networking.firewall = { 

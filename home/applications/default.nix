@@ -62,6 +62,7 @@
     gnome-clocks
     htop
     image-roll
+    jq
     keepassxc
     libqalculate
     libreoffice-fresh

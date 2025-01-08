@@ -51,7 +51,6 @@
     '';
 
     extraConfig = /* vim */ ''
-      " set whichwrap+=<,>,h,l,[,]
       map gn :e <cfile><CR>
 
       augroup CursorLine
@@ -89,7 +88,6 @@
       neodev-nvim
       nvim-web-devicons
       playground
-      # plenary-nvim
       telescope-file-browser-nvim
       telescope-ui-select-nvim
       vim-wakatime
@@ -105,12 +103,6 @@
         type = "lua";
         config = ''require("Comment").setup {}'';
       }
-
-      /* {
-        plugin = copilot-lua;
-        type = "lua";
-        config = ''require("copilot").setup {}'';
-      } */
 
       {
         plugin = crates-nvim;
@@ -135,12 +127,6 @@
         type = "lua";
         config = (pkgs.callPackage ./isabelle-lsp-nvim.nix {}).config;
       }
-
-      /* {
-        plugin = lean-nvim;
-        type = "lua";
-        config = ''require('lean').setup { mappings = true }'';
-      } */
 
       {
         plugin = lualine-nvim;

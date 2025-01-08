@@ -28,7 +28,6 @@ in
     "${thunar_pkg}/bin/thunar --daemon"
 
     "[workspace special:pwm silent] ${pkgs.keepassxc}/bin/keepassxc"
-    "[workspace special:pwm silent] ${config.programs.kitty.package}/bin/kitty ~/PWM"
   ];
 
   # "debug:disable_scale_checks" = true;
@@ -98,6 +97,8 @@ in
       "D,        exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -n scratchpad"
       "SHIFT, D, exec, ${inputs.hyprland-contrib.packages.${pkgs.system}.scratchpad}/bin/scratchpad -g -l -n scratchpad"
       "CTRL, D,  togglespecialworkspace, scratchpad"
+
+      "K, exec, ${pkgs.callPackage ./scripts/swap-workspace-windows.nix { inherit config; }}/bin/swap-workspace-windows 1 11 10"
     ] ++
     evalBinds "ALT" [] [
       "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show window"
@@ -240,10 +241,10 @@ in
     "size 100%, 100%, class:swayimg"
     "center, class:swayimg"
 
-    "float, class:copyq"
-    "move onscreen cursor, class:copyq"
-    "pin, class:copyq"
-    "size 40%, 40%, class:copyq"
+    "float, class:com.github.hluk.copyq"
+    "move onscreen cursor, class:com.github.hluk.copyq"
+    "pin, class:com.github.hluk.copyq"
+    "size 40%, 40%, class:com.github.hluk.copyq"
 
     "float, class:org.keepassxc.KeePassXC, title:Generate Password"
 

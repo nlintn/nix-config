@@ -3,10 +3,12 @@
 {
   imports = [ 
     ./bat
+    ./firefox-nightly.nix
     ./fzf.nix
     ./git.nix
     ./gpg.nix
     ./kitty
+    # ./librewolf.nix
     ./neovim
     ./obs-studio.nix
     ./shell

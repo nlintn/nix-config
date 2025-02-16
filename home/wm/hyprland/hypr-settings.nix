@@ -40,7 +40,7 @@ in
       "A, exec, ${grimblast}/bin/grimblast --freeze save area - | ${pkgs.swappy}/bin/swappy -f -"
       "SHIFT, A, exec, ${grimblast}/bin/grimblast --freeze save output - | ${pkgs.swappy}/bin/swappy -f -"
       "E, exec, ${thunar_pkg}/bin/thunar"
-      "W, exec, ${config.programs.librewolf.package}/bin/librewolf"
+      "W, exec, ${config.programs.firefox.package}/bin/firefox-nightly"
       "Q, exec, ${config.programs.kitty.package}/bin/kitty"
       "R, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show drun"
       "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs config userSettings; }}"

@@ -3,6 +3,7 @@
 pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
   p.tree-sitter-bash
   p.tree-sitter-c
+  p.tree-sitter-c_sharp
   p.tree-sitter-cmake
   p.tree-sitter-cpp
   p.tree-sitter-css
@@ -24,4 +25,5 @@ pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
   p.tree-sitter-vim
   p.tree-sitter-xml
   p.tree-sitter-yaml
+  p.tree-sitter-zig
 ])

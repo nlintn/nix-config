@@ -8,9 +8,12 @@
       pkgs = nixpkgs.legacyPackages.${system};
       userSettings = {
         colorScheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;
-        default-font = "JetBrainsMono Nerd Font";
-        lockscreen = builtins.toString ./etc/lockscreen.png;
-        wallpaper = builtins.toString ./etc/wallpaper.jpg;
+        default-font = {
+          name = "JetBrainsMono Nerd Font";
+          package = pkgs.nerd-fonts.jetbrains-mono;
+        };
+        lockscreen = builtins.path { name = "lockscreen-img"; path = ./etc/lockscreen.png; };
+        wallpaper = builtins.path { name = "wallpaper-img"; path = ./etc/wallpaper.jpg; };
         wm = "hyprland";
       };
       overlays = { nixpkgs.overlays = [ inputs.nixpkgs-overlay.overlays.default ]; };
@@ -60,10 +63,6 @@
       type = "git";
       url = "https://github.com/hyprwm/Hyprland";
       submodules = true;
-    };
-    split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces";
-      inputs.hyprland.follows = "hyprland";
     };
     hyprland-contrib = {
       url = "github:hyprwm/contrib";

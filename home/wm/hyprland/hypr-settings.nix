@@ -24,7 +24,7 @@ in
   ];
 
   exec-once = [
-    "${pkgs.swaybg}/bin/swaybg -i ${builtins.path { name = "swaybg-img"; path = userSettings.wallpaper; }}"
+    "${pkgs.swaybg}/bin/swaybg -i ${userSettings.wallpaper}"
     "${thunar_pkg}/bin/thunar --daemon"
 
     "[workspace special:pwm silent] ${pkgs.keepassxc}/bin/keepassxc"
@@ -59,34 +59,35 @@ in
       "C, killactive"
       "F, fullscreen, 1"
       "SHIFT, F, fullscreen, 0"
-      "SHIFT, M, exit,"
+      "SHIFT, Z, exec, loginctl terminate-session self"
+      "CTRL SHIFT, Z, exit"
       # "P, pseudo,"
       "SPACE, togglefloating,"
 
       "G, togglegroup,"
 
       "dead_circumflex, workspace, previous_per_monitor"
-      "1, split-workspace, 1"
-      "2, split-workspace, 2"
-      "3, split-workspace, 3"
-      "4, split-workspace, 4"
-      "5, split-workspace, 5"
-      "6, split-workspace, 6"
-      "7, split-workspace, 7"
-      "8, split-workspace, 8"
-      "9, split-workspace, 9"
-      "0, split-workspace, 10"
+      "1, workspace, r~1"
+      "2, workspace, r~2"
+      "3, workspace, r~3"
+      "4, workspace, r~4"
+      "5, workspace, r~5"
+      "6, workspace, r~6"
+      "7, workspace, r~7"
+      "8, workspace, r~8"
+      "9, workspace, r~9"
+      "0, workspace, r~10"
 
-      "SHIFT, 1, split-movetoworkspacesilent, 1"
-      "SHIFT, 2, split-movetoworkspacesilent, 2"
-      "SHIFT, 3, split-movetoworkspacesilent, 3"
-      "SHIFT, 4, split-movetoworkspacesilent, 4"
-      "SHIFT, 5, split-movetoworkspacesilent, 5"
-      "SHIFT, 6, split-movetoworkspacesilent, 6"
-      "SHIFT, 7, split-movetoworkspacesilent, 7"
-      "SHIFT, 8, split-movetoworkspacesilent, 8"
-      "SHIFT, 9, split-movetoworkspacesilent, 9"
-      "SHIFT, 0, split-movetoworkspacesilent, 10"
+      "SHIFT, 1, movetoworkspacesilent, r~1"
+      "SHIFT, 2, movetoworkspacesilent, r~2"
+      "SHIFT, 3, movetoworkspacesilent, r~3"
+      "SHIFT, 4, movetoworkspacesilent, r~4"
+      "SHIFT, 5, movetoworkspacesilent, r~5"
+      "SHIFT, 6, movetoworkspacesilent, r~6"
+      "SHIFT, 7, movetoworkspacesilent, r~7"
+      "SHIFT, 8, movetoworkspacesilent, r~8"
+      "SHIFT, 9, movetoworkspacesilent, r~9"
+      "SHIFT, 0, movetoworkspacesilent, r~10"
 
       "S, togglespecialworkspace, magic"
       "SHIFT, S, movetoworkspacesilent, special:magic"
@@ -142,18 +143,23 @@ in
       "ALT, k, resizeactive, 0 -20"
       "ALT, j, resizeactive, 0  20"
 
-      "CTRL, RIGHT, split-workspace, r+1"
-      "CTRL, LEFT,  split-workspace, r-1"
-      "CTRL SHIFT, RIGHT, split-movetoworkspace, r+1"
-      "CTRL SHIFT, LEFT,  split-movetoworkspace, r-1"
+      "CTRL, RIGHT, workspace, r+1"
+      "CTRL, LEFT,  workspace, r-1"
+      "CTRL SHIFT, RIGHT, movetoworkspace, r+1"
+      "CTRL SHIFT, LEFT,  movetoworkspace, r-1"
 
-      "CTRL, L, split-workspace, r+1"
-      "CTRL, H, split-workspace, r-1"
-      "CTRL SHIFT, L, split-movetoworkspace, r+1"
-      "CTRL SHIFT, H, split-movetoworkspace, r-1"
+      "CTRL, L, workspace, r+1"
+      "CTRL, H, workspace, r-1"
+      "CTRL SHIFT, L, movetoworkspace, r+1"
+      "CTRL SHIFT, H, movetoworkspace, r-1"
 
       "TAB, changegroupactive, f"
       "SHIFT, TAB, changegroupactive, b"
+
+      "M, focusmonitor, +1"
+      "N, focusmonitor, -1"
+      "SHIFT, M, movewindow, mon:+1"
+      "SHIFT, N, movewindow, mon:-1"
     ];
 
   bindl = 
@@ -175,6 +181,7 @@ in
     ];
 
   binds = {
+    window_direction_monitor_fallback = false;
     workspace_back_and_forth = true;
   };
 
@@ -202,10 +209,6 @@ in
     workspace_swipe_use_r = true;
   };
 
-  plugin.split-monitor-workspaces = {
-    count = 10;
-  };
-
   group = {
     "col.border_active" = "rgba(${config.colorScheme.palette.base0F}66)";
     "col.border_inactive" = "rgba(${config.colorScheme.palette.base04}66)";
@@ -217,16 +220,25 @@ in
   };
 
   misc = {
+    allow_session_lock_restore = true;
     close_special_on_empty = false;
-    focus_on_activate = true;
-    mouse_move_enables_dpms = false;
-    key_press_enables_dpms = true;
     disable_hyprland_logo = true;
     disable_splash_rendering = true;
+    focus_on_activate = true;
+    font_family = userSettings.default-font.name;
+    key_press_enables_dpms = true;
+    mouse_move_enables_dpms = false;
+    new_window_takes_over_fullscreen = 2;
+
+    enable_swallow = true;
+    swallow_regex = "^(kitty)$";
+    swallow_exception_regex = "^(wev)$";
   };
 
   windowrulev2 = [
     "suppressevent maximize, class:.*"
+
+    "group new, class:thunderbird, initialTitle:Mozilla Thunderbird"
 
     "float, class:org.pulseaudio.pavucontrol"
     "float, class:nm-connection-editor"
@@ -248,6 +260,14 @@ in
 
     "float, class:org.keepassxc.KeePassXC, title:Generate Password"
 
+    "float, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
+    "move onscreen cursor, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
+    "pin, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
+
+    "float, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
+    "move onscreen cursor, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
+    "pin, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
+
     "float, class:steam, title:Steam Settings"
     "float, class:steam, title:Friends List"
 
@@ -260,6 +280,27 @@ in
   ];
 
   workspace = [
+     "1, monitor:eDP-1, persistent:true, default:true"
+     "2, monitor:eDP-1, persistent:true"
+     "3, monitor:eDP-1, persistent:true"
+     "4, monitor:eDP-1, persistent:true"
+     "5, monitor:eDP-1, persistent:true"
+     "6, monitor:eDP-1, persistent:true"
+     "7, monitor:eDP-1, persistent:true"
+     "8, monitor:eDP-1, persistent:true"
+     "9, monitor:eDP-1, persistent:true"
+    "10, monitor:eDP-1, persistent:true"
+    # "11, monitor:HDMI-A-1, persistent:true, default:true"
+    # "12, monitor:HDMI-A-1, persistent:true"
+    # "13, monitor:HDMI-A-1, persistent:true"
+    # "14, monitor:HDMI-A-1, persistent:true"
+    # "15, monitor:HDMI-A-1, persistent:true"
+    # "16, monitor:HDMI-A-1, persistent:true"
+    # "17, monitor:HDMI-A-1, persistent:true"
+    # "18, monitor:HDMI-A-1, persistent:true"
+    # "19, monitor:HDMI-A-1, persistent:true"
+    # "20, monitor:HDMI-A-1, persistent:true"
+
     "w[tv1], gapsout:0, gapsin:0"
     "f[1], gapsout:0, gapsin:0"
   ];
@@ -276,8 +317,9 @@ in
     "col.inactive_border" = "rgba(${config.colorScheme.palette.base04}66)";
 
     layout = "master";
-
     allow_tearing = false;
+
+    snap.enabled = true;
   };
 
   decoration = {
@@ -301,4 +343,9 @@ in
   };
 
   xwayland.force_zero_scaling = true;
+
+  ecosystem = {
+    no_update_news = true;
+    no_donation_nag = true;
+  };
 }

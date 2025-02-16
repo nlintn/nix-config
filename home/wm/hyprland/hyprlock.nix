@@ -32,14 +32,14 @@
           inner_color = "rgba(0, 0, 0, 0.5)";
           font_color = "rgb(200, 200, 200)";
           fade_on_empty = false;
-          placeholder_text = "<i><span font='${userSettings.default-font} 12'>UwU</span></i>";
+          placeholder_text = "<i><span font='${userSettings.default-font.name} 12'>UwU</span></i>";
           hide_input = false;
           position = "0, -140";
           halign = "center";
           valign = "center";
           check_color = "rgb(${base09})";
           fail_color = "rgb(${base08})";
-          fail_text = "<i><span font='${userSettings.default-font} 12'>$FAIL</span></i>";
+          fail_text = "<i><span font='${userSettings.default-font.name} 12'>$FAIL</span></i>";
         }
       ];
       
@@ -48,7 +48,7 @@
           text = "cmd[update:1000] ${pkgs.coreutils}/bin/date +%H:%M:%S";
           color = "rgba(${base05}cc)";
           font_size = 150;
-          font_family = "${userSettings.default-font} Mono ExtraBold";
+          font_family = "${userSettings.default-font.name} Mono ExtraBold";
           position = "0, 80";
           halign = "center";
           valign = "center";
@@ -57,7 +57,7 @@
           text = "hi there, $USER :3";
           color = "rgba(${base05}cc)";
           font_size = 20;
-          font_family = "${userSettings.default-font} Mono";
+          font_family = "${userSettings.default-font.name} Mono";
           position = "0, -80";
           halign = "center";
           valign = "center";
@@ -66,7 +66,7 @@
           text = "cmd[update:1000] ${config.services.playerctld.package}/bin/playerctl metadata --format '{{title}} | {{artist}}'";
           color = "rgba(${base05}cc)";
           font_size = 20;
-          font_family = "${userSettings.default-font}";
+          font_family = "${userSettings.default-font.name}";
           position = "0, 30";
           halign = "center";
           valign = "bottom";

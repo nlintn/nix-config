@@ -27,4 +27,6 @@
   programs.home-manager.enable = true;
 
   nix.package = pkgs.nix;
+
+  news.display = "silent";
 }

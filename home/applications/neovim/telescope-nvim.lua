@@ -1,23 +1,3 @@
-local actions = require("telescope").extensions.file_browser.actions
-local telescope_actions = require("telescope.actions.state")
-local oil = require("oil")
-
-require("telescope").setup {
-  extensions = {
-    file_browser = {
-      mappings = {
-        ["i"] = {
-          ["<C-u>"] = function(prompt_bufnr)
-            local entry = telescope_actions.get_selected_entry()
-            --  actions.close(prompt_bufnr)
-            oil.open(entry.path)
-          end,
-        }
-      }
-    }
-  }
-}
-
 local tele_builtin = require('telescope.builtin')
 
 vim.keymap.set('n', '<leader>ff', tele_builtin.find_files, {})
@@ -33,8 +13,8 @@ vim.keymap.set('n', '<leader>lr', tele_builtin.lsp_references, {})
 vim.keymap.set('n', '<leader>li', tele_builtin.lsp_implementations, {})
 vim.keymap.set('n', '<leader>ld', tele_builtin.lsp_type_definitions, {})
 
-require("telescope").load_extension("file_browser")
 require("telescope").load_extension("ui-select")
-local tele_ext = require('telescope').extensions
-vim.keymap.set('n', '<leader>fd', tele_ext.file_browser.file_browser, {})
+
+require("telescope").load_extension("telescope-tabs")
+vim.keymap.set('n', '<leader>tt', require("telescope-tabs").list_tabs, {})
 

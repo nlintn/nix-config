@@ -4,6 +4,9 @@
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+    settings = {
+      manager.show_hidden = true;
+    };
     theme = with config.colorScheme.palette; {
       manager = {
         cwd = { fg = "#${base0C}"; };
@@ -100,25 +103,25 @@
 
       filetype = {
         rules = [
-        	# Images
-        	{ mime = "image/*"; fg = "#${base0C}"; }
+          # Images
+          { mime = "image/*"; fg = "#${base0C}"; }
         
-        	# Videos
-        	{ mime = "video/*"; fg = "#${base0A}"; }
-        	{ mime = "audio/*"; fg = "#${base0A}"; }
+          # Videos
+          { mime = "video/*"; fg = "#${base0A}"; }
+          { mime = "audio/*"; fg = "#${base0A}"; }
         
-        	# Archives
-        	{ mime = "application/zip";             fg = "#${base06}"; }
-        	{ mime = "application/gzip";            fg = "#${base06}"; }
-        	{ mime = "application/x-tar";           fg = "#${base06}"; }
-        	{ mime = "application/x-bzip";          fg = "#${base06}"; }
-        	{ mime = "application/x-bzip2";         fg = "#${base06}"; }
-        	{ mime = "application/x-7z-compressed"; fg = "#${base06}"; }
-        	{ mime = "application/x-rar";           fg = "#${base06}"; }
+          # Archives
+          { mime = "application/zip";             fg = "#${base06}"; }
+          { mime = "application/gzip";            fg = "#${base06}"; }
+          { mime = "application/x-tar";           fg = "#${base06}"; }
+          { mime = "application/x-bzip";          fg = "#${base06}"; }
+          { mime = "application/x-bzip2";         fg = "#${base06}"; }
+          { mime = "application/x-7z-compressed"; fg = "#${base06}"; }
+          { mime = "application/x-rar";           fg = "#${base06}"; }
         
-        	# Fallback
-        	{ name = "*"; fg = "#${base05}"; }
-        	{ name = "*/"; fg = "#${base0D}"; }
+          # Fallback
+          { name = "*"; fg = "#${base05}"; }
+          { name = "*/"; fg = "#${base0D}"; }
         ];
       };
     };

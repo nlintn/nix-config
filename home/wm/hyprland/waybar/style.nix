@@ -27,7 +27,7 @@ in with config.colorScheme.palette; /* css */ ''
   
   #waybar {
     color: @white;
-    font-family: JetBrainsMono Nerd Font;
+    font-family: ${userSettings.default-font.name};
     font-size: 9pt;
     background: @bg;
   }

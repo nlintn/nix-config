@@ -39,7 +39,6 @@ in {
     enable = true;
     forceXWayland = false;
   };
-  # services.gnome-keyring.enable = true;
   services.blueman-applet.enable = true;
 
   wayland.windowManager.hyprland = {
@@ -49,9 +48,7 @@ in {
     xwayland.enable = true;
     systemd.enable = true;
 
-    plugins = [
-      inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
-    ];
+    plugins = [ ];
 
     settings = import ./hypr-settings.nix { inherit pkgs lib config inputs userSettings thunar_pkg; };
   };

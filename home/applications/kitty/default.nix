@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, userSettings, ... }:
 
 let 
   scrollback_pager = pkgs.writeShellScript "scrollback_pager" ''
@@ -45,9 +45,9 @@ in {
       "ctrl+shift+enter" = "new_window_with_cwd";
     };
     font = {
-      name = "JetBrainsMono Nerd Font";
+      name = userSettings.default-font.name;
       size = 10.5;
-      package = pkgs.nerd-fonts.jetbrains-mono;
+      package = userSettings.default-font.package;
     };
   };
 }

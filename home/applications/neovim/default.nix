@@ -38,6 +38,7 @@
 
       vim.o.mouse = 'a'
       vim.o.mousemoveevent = true
+      vim.o.mousemodel = 'extend'
 
       vim.o.conceallevel = 1
       vim.o.concealcursor = 'cnv'
@@ -61,6 +62,9 @@
       
       inoremap <Up> <C-O>gk
       inoremap <Down> <C-O>gj
+
+      noremap <C-ö> :tabprevious<CR>
+      noremap <C-ä> :tabnext<CR>
 
       if exists("g:neovide")
         let g:neovide_cursor_animation_length = 0.05
@@ -89,6 +93,7 @@
       nvim-web-devicons
       playground
       telescope-file-browser-nvim
+      (pkgs.callPackage ./telescope-tabs.nix {})
       telescope-ui-select-nvim
       vim-wakatime
 

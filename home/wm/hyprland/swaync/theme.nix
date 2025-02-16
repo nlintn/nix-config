@@ -4,7 +4,7 @@ with config.colorScheme.palette; /* css */ ''
   * {
     all: unset;
     font-size: 14px;
-    font-family: "${userSettings.default-font}";
+    font-family: "${userSettings.default-font.name}";
     transition: 200ms;
   }
   

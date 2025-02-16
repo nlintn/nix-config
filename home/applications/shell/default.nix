@@ -1,12 +1,17 @@
-{ config, ... }:
+{ pkgs, lib, config, ... }:
 
 let  
   shellAliases = {
-    c = "clear";
-    confdir = "builtin cd $NIX_CONFIG_DIR";
+    c = "${pkgs.ncurses}/bin/clear";
+    cat = lib.mkIf config.programs.bat.enable "${pkgs.bat}/bin/bat";
+    confdir = "builtin cd ${config.home.sessionVariables.NIX_CONFIG_DIR}";
     hms = "home-manager switch --flake $NIX_CONFIG_DIR";
     nrs = "nixos-rebuild switch --flake $NIX_CONFIG_DIR --use-remote-sudo";
     nrb = "nixos-rebuild boot --flake $NIX_CONFIG_DIR --use-remote-sudo";
+    open = "${pkgs.xdg-utils}/bin/xdg-open";
+    xopen = "${(pkgs.writeShellScript "xopen" /* bash */ ''
+      ${pkgs.xdg-utils}/bin/xdg-open "$*" > /dev/null 2>&1 & disown
+    '')}";
   };
 in {
   programs.zsh = {

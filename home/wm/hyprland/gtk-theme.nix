@@ -28,7 +28,7 @@ in {
     };
   
     font = {
-      name = userSettings.default-font;
+      name = userSettings.default-font.name;
       size = 10;
     };
   };

@@ -78,6 +78,11 @@
     TTYVTDisallocate = true;
   };
 
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6ep";
+  };
+
   # Configure console keymap
   console = {
     # keyMap = "neoqwertz";
@@ -157,6 +162,10 @@
 
   virtualisation.docker = {
     enable = true;
+  };
+
+  virtualisation.virtualbox = {
+    host.enable = true;
   };
 
   documentation = {

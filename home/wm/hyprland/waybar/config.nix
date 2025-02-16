@@ -6,7 +6,7 @@ let
   swaync-client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
 in /* json */ '' {
   "layer": "top",
-  "position": "top",
+  "position": "bottom",
 
   "modules-left": [
     "hyprland/workspaces",

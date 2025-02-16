@@ -2,11 +2,11 @@
 
 {
   imports = [ 
+    ./bat
     ./fzf.nix
     ./git.nix
     ./gpg.nix
     ./kitty
-    ./librewolf.nix
     ./neovim
     ./obs-studio.nix
     ./shell
@@ -49,9 +49,10 @@
 
     # Misc
     anki
+    arp-scan
     blender
     copyq
-    # desmume
+    desmume
     dig
     element-desktop
     fastfetch
@@ -68,6 +69,7 @@
     libreoffice-fresh
     lolcat
     nixln-edit
+    nix-inspect
     nix-tree
     nmap
     obsidian
@@ -78,6 +80,7 @@
     prusa-slicer
     rclone
     ripgrep
+    scanmem
     speedread
     spotify
     spotify-tray
@@ -87,6 +90,7 @@
     ungoogled-chromium
     unzip
     vesktop
+    wev
     wireshark
     wl-clipboard
     xdragon

@@ -1,7 +1,7 @@
 {
   description = "UwU";
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, nixpkgs-overlay, ... } @ inputs:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -16,12 +16,15 @@
         wallpaper = builtins.path { name = "wallpaper-img"; path = ./etc/wallpaper.jpg; };
         wm = "hyprland";
       };
-      overlays = { nixpkgs.overlays = [ inputs.nixpkgs-overlay.overlays.default ]; };
+      overlays = { nixpkgs.overlays = [ nixpkgs-overlay.overlays.default ]; };
     in {
       nixosConfigurations = {
         meoww = lib.nixosSystem {
           inherit system;
-          modules = [ ./configuration.nix ];
+          modules = [
+            overlays
+            ./configuration.nix
+          ];
           specialArgs = {
             inherit inputs;
           };
@@ -36,6 +39,7 @@
           ];
           extraSpecialArgs = {
             inherit inputs;
+            inherit self;
             inherit userSettings;
           };
         };
@@ -54,11 +58,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    firefox-flake = {
-      url = "github:nix-community/flake-firefox-nightly";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -68,6 +67,11 @@
 
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    pwndbg = {
+      url = "github:pwndbg/pwndbg";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

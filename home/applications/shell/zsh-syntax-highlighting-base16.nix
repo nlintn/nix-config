@@ -3,7 +3,7 @@
 # source: https://github.com/catppuccin/zsh-syntax-highlighting
 
 with config.colorScheme.palette;
-if config.programs.zsh.syntaxHighlighting.enable == true then ''
+if config.programs.zsh.syntaxHighlighting.enable then ''
   ZSH_HIGHLIGHT_HIGHLIGHTERS=(main cursor)
   typeset -gA ZSH_HIGHLIGHT_STYLES
   

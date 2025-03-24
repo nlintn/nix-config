@@ -33,7 +33,7 @@ pkgs.writeShellScript "rofi-power-menu" /* bash */ ''
   
   declare -A actions
   actions[lockscreen]="loginctl lock-session self"
-  actions[logout]="loginctl terminate-session self"
+  actions[logout]="loginctl terminate-user $(whoami)"
   actions[suspend]="systemctl suspend"
   actions[hibernate]="systemctl hibernate"
   actions[reboot]="systemctl reboot"

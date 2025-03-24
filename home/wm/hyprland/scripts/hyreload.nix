@@ -5,11 +5,13 @@ pkgs.writeShellScript "hyreload" ''
     echo "no hyprland instance running";
     exit 0;
   fi
+  ${pkgs.systemd}/bin/systemctl --user reset-failed &&
+  ${pkgs.systemd}/bin/systemctl --user daemon-reload &&
+  ${pkgs.systemd}/bin/systemctl --user restart waybar.service &&
+  ${pkgs.systemd}/bin/systemctl --user restart swaync.service &&
+
   ${config.wayland.windowManager.hyprland.package}/bin/hyprctl reload &&
-  ${pkgs.procps}/bin/pkill -SIGUSR2 waybar &&
-  ${pkgs.swaynotificationcenter}/bin/swaync-client -R &&
-  ${pkgs.swaynotificationcenter}/bin/swaync-client -rs &&
   ${pkgs.psmisc}/bin/killall swaybg;
-  ${pkgs.swaybg}/bin/swaybg -i ${builtins.path { name = "swaybg-img"; path = userSettings.wallpaper; }} & disown &&
+  ${pkgs.swaybg}/bin/swaybg -i ${userSettings.wallpaper} & disown &&
   ${pkgs.libnotify}/bin/notify-send -u low -e "Reloaded successfully"
 ''

@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, userSettings, ... }:
+{ pkgs, config, inputs, ... }:
 
 let
   toRGBA = RGBhex: alpha:
@@ -6,8 +6,29 @@ let
 in {
   programs.firefox = {
     enable = true;
-    package = inputs.firefox-flake.packages.${pkgs.system}.firefox-nightly-bin;
-    # package = pkgs.firefox-wayland;
+    package = pkgs.firefox-wayland;
+    # package = pkgs.firefox-nightly-bin.unwrapped;
+    policies = {
+      ExtensionSettings =
+        let
+          mkExtension = { name, uuid, area ? "menupanel", private ? false }: {
+            name = uuid;
+            value = {
+              install_url = "https://addons.mozilla.org/firefox/downloads/latest/${name}/latest.xpi";
+              installation_mode = "normal_installed";
+              default_area = area;
+              private_browsing = private;
+            };
+          };
+        in [
+          { name = "darkreader"; uuid = "addon@darkreader.org"; }
+          { name = "dictionary-german"; uuid = "de-DE@dictionaries.addons.mozilla.org"; }
+          { name = "istilldontcareaboutcookies"; uuid = "idcac-pub@guus.ninja"; }
+          { name = "keepassxc-browser"; uuid = "keepassxc-browser@keepassxc.org"; area = "navbar"; private = true; }
+          { name = "ublock-origin"; uuid = "uBlock0@raymondhill.net"; private = true; }
+          { name = "vimium-ff"; uuid = "{d7742d87-e61d-4b78-b8a1-b469842139fa}"; }
+        ] |> builtins.map (ext: mkExtension ext) |> builtins.listToAttrs;
+    };
     profiles.${config.home.username} = {
       isDefault = true;
       search = {
@@ -18,24 +39,87 @@ in {
 
       settings = {
         "browser.aboutConfig.showWarning" = false;
+        "browser.toolbars.bookmarks.visibility" = "never";
         "browser.ctrlTab.sortByRecentlyUsed" = false;
         "browser.display.use_system_colors" = true;
         "browser.download.autohideButton" = false;
         "browser.fullscreen.autohide" = false;
+        "browser.link.open_newwindow.restriction" = 0;
         "browser.ml.enable" = false;
         "browser.ml.chat.enabled" = false;
+        "browser.urlbar.scotchBonnet.enableOverride" = false;
         "browser.search.separatePrivateDefault" = false;
         "browser.tabs.allow_transparent_browser" = true;
         "browser.tabs.closeWindowWithLastTab" = false;
-        "dom.security.https_only_mode" = false;
+        "browser.tabs.minWidth" = 55;
+        "browser.tabs.warnOnClose" = true;
+        "dom.security.https_only_mode" = true;
+        "extensions.pocket.enabled" = false;
+        "extensions.quarantinedDomains.enabled" = false;
+        "general.autoScroll" = true;
+        "general.smoothScroll" = true;
         "identity.fxaccounts.enabled" = true;
         "intl.regional_prefs.use_os_locales" = true;
         "media.ffmpeg.vaapi.enabled" = true;
         "privacy.resistFingerprinting" = false;
         "sidebar.revamp" = true;
+        "sidebar.revamp.round-content-area" = true;
         "sidebar.verticalTabs" = true;
+        "signon.rememberSignons" = false;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "ui.prefersReducedMotion" = 1;
         "webgl.disabled" = false;
+
+        "browser.disableResetPrompt" = true;
+        "browser.download.panel.shown" = true;
+        "browser.feeds.showFirstRunUI" = false;
+        "browser.messaging-system.whatsNewPanel.enabled" = false;
+        "browser.rights.3.shown" = true;
+        "browser.shell.checkDefaultBrowser" = false;
+        "browser.shell.defaultBrowserCheckCount" = 1;
+        "browser.startup.homepage_override.mstone" = "ignore";
+        "browser.uitour.enabled" = false;
+        "startup.homepage_override_url" = "";
+        "trailhead.firstrun.didSeeAboutWelcome" = true;
+        "browser.bookmarks.restore_default_bookmarks" = false;
+        "browser.bookmarks.addedImportButton" = true;
+
+        "browser.newtabpage.activity-stream.feeds.sections" = false;
+        "browser.newtabpage.activity-stream.discoverystream.enabled" = false;
+        "browser.newtabpage.activity-stream.showRecentSaves" = false;
+        "browser.newtabpage.activity-stream.showSponsored" = false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+        "browser.newtabpage.activity-stream.showWeather" = false;
+        "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
+        "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
+        "browser.newtabpage.activity-stream.feeds.topsites" = false;
+        "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts" = false;
+
+        # Disable some telemetry
+        "app.shield.optoutstudies.enabled" = false;
+        "browser.discovery.enabled" = false;
+        "browser.newtabpage.activity-stream.feeds.telemetry" = false;
+        "browser.newtabpage.activity-stream.telemetry" = false;
+        "browser.ping-centre.telemetry" = false;
+        "datareporting.healthreport.service.enabled" = false;
+        "datareporting.healthreport.uploadEnabled" = false;
+        "datareporting.policy.dataSubmissionEnabled" = false;
+        "datareporting.sessions.current.clean" = true;
+        "devtools.onboarding.telemetry.logged" = false;
+        "toolkit.telemetry.archive.enabled" = false;
+        "toolkit.telemetry.bhrPing.enabled" = false;
+        "toolkit.telemetry.enabled" = false;
+        "toolkit.telemetry.firstShutdownPing.enabled" = false;
+        "toolkit.telemetry.hybridContent.enabled" = false;
+        "toolkit.telemetry.newProfilePing.enabled" = false;
+        "toolkit.telemetry.prompted" = 2;
+        "toolkit.telemetry.rejected" = true;
+        "toolkit.telemetry.reportingpolicy.firstRun" = false;
+        "toolkit.telemetry.server" = "";
+        "toolkit.telemetry.shutdownPingSender.enabled" = false;
+        "toolkit.telemetry.unified" = false;
+        "toolkit.telemetry.unifiedIsOptIn" = false;
+        "toolkit.telemetry.updatePing.enabled" = false;
 
         "browser.search.suggest.enabled" = true;
         "browser.urlbar.suggest.quicksuggest.nonsponsored" = true;
@@ -50,10 +134,26 @@ in {
         "privacy.clearOnShutdown.history" = false;
 
         "privacy.fingerprintingProtection" = true;
+        "privacy.trackingprotection.enabled" = true;
         
         "devtools.chrome.enabled" = true;
         "devtools.debugger.remote-enabled" = true;
         "devtools.serviceWorkers.testing.enabled" = true;
+
+        "network.trr.mode" = 3;
+        "network.trr.uri" = "https://dns.quad9.net/dns-query";
+
+        "services.sync.engine.addons" = false;
+        "services.sync.engine.addresses" = true;
+        "services.sync.engine.addresses.available" = true;
+        "services.sync.engine.bookmarks" = true;
+        "services.sync.engine.creditcards" = true;
+        "services.sync.engine.creditcards.available" = true;
+        "services.sync.engine.history" = true;
+        "services.sync.engine.passwords" = true;
+        "services.sync.engine.prefs" = false;
+        "services.sync.engine.prefs.modified" = false;
+        "services.sync.engine.tabs" = true;
       };
 
       userChrome = with config.colorScheme.palette; /* css */ ''
@@ -71,9 +171,12 @@ in {
           --arrowpanel-border-color: #${base03} !important;
           --lwt-accent-color: transparent !important;
           --lwt-accent-color-inactive: transparent !important;
-          --tab-selected-textcolor: #${base05} !important;
+          --lwt-sidebar-background-color: #${base00} !important;
+          --lwt-sidebar-text-color: #${base05} !important;
+          --tab-selected-textcolor: #${base0E} !important;
           --tab-selected-bgcolor: transparent !important;
           --tab-selected-outline-color: #${base0E} !important;
+          --tab-loading-fill: #${base0E} !important;
           --toolbarbutton-icon-fill-attention: #${base0E} !important;
           --toolbar-field-background-color: #${base00} !important;
           /* --toolbar-field-focus-color: #${base05} !important; */
@@ -129,6 +232,7 @@ in {
           --field-color: #${base05} !important;
           --field-bg-color: #${base02} !important;
           --field-border-color: #${base04} !important;
+          --fxview-bg-color: transparent !important;
           --sidebar-toolbar-bg-color: #${base01} !important;
           --toolbar-bg-color: #${base02} !important;
           --toolbar-icon-bg-color: #${base05} !important;

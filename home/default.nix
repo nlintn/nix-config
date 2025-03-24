@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, userSettings, ... }:
+{ pkgs, config, inputs, userSettings, self, ... }:
 
 {
   imports = [
@@ -26,7 +26,21 @@
 
   programs.home-manager.enable = true;
 
-  nix.package = pkgs.nix;
+  nix = {
+    package = pkgs.nix;
+    registry = {
+      "n".flake = inputs.nixpkgs;
+      "self".flake = self;
+    };
+    gc = {
+      automatic = true;
+      frequency = "weekly";
+      options = "--delete-older-than 14d";
+    };
+    settings = {
+      experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+    };
+  };
 
   news.display = "silent";
 }

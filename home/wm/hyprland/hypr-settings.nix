@@ -40,15 +40,16 @@ in
       "A, exec, ${grimblast}/bin/grimblast --freeze save area - | ${pkgs.swappy}/bin/swappy -f -"
       "SHIFT, A, exec, ${grimblast}/bin/grimblast --freeze save output - | ${pkgs.swappy}/bin/swappy -f -"
       "E, exec, ${thunar_pkg}/bin/thunar"
-      "W, exec, ${config.programs.firefox.package}/bin/firefox-nightly"
+      "W, exec, ${config.programs.firefox.finalPackage}/bin/firefox"
       "Q, exec, ${config.programs.kitty.package}/bin/kitty"
-      "R, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show drun"
+      "R, exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi drun -show drun -drun-show-actions"
       "SHIFT, R, exec, ${import ./scripts/hyreload.nix { inherit pkgs config userSettings; }}"
-      "T, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show ssh"
+      "T, exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi ssh -show ssh"
+      "PERIOD, exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi emoji -show emoji -matching normal"
       "V, exec, ${config.services.copyq.package}/bin/copyq show"
       "BACKSPACE, exec, loginctl lock-session"
       "SHIFT, BACKSPACE, exec, ${import ./scripts/lock-transparent.nix { inherit pkgs config; }}"
-      "RETURN, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show power-menu -modi 'power-menu:${import ./scripts/rofi-power-menu.nix { inherit pkgs; }}'"
+      "RETURN, exec, ${config.programs.rofi.finalPackage}/bin/rofi -show power-menu -modi 'power-menu:${import ./scripts/rofi-power-menu.nix { inherit pkgs; }}'"
       # "DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
       # "SHIFT, DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -C"
       # "CTRL, DEAD_ACUTE, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-dnd"
@@ -57,6 +58,7 @@ in
       "CTRL, PLUS, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-dnd"
 
       "C, killactive"
+      "SHIFT, C, forcekillactive"
       "F, fullscreen, 1"
       "SHIFT, F, fullscreen, 0"
       "SHIFT, Z, exec, loginctl terminate-session self"
@@ -102,7 +104,7 @@ in
       "K, exec, ${pkgs.callPackage ./scripts/swap-workspace-windows.nix { inherit config; }}/bin/swap-workspace-windows 1 11 10"
     ] ++
     evalBinds "ALT" [] [
-      "TAB, exec, ${config.programs.rofi.package}/bin/rofi -click-to-exit -show window"
+      "TAB, exec, ${config.programs.rofi.finalPackage}/bin/rofi -show window"
     ] ++
     evalBinds "CTRL" [ "SHIFT" ] [
       "SHIFT, M, pass, ^vesktop$"
@@ -222,6 +224,7 @@ in
   misc = {
     allow_session_lock_restore = true;
     close_special_on_empty = false;
+    disable_autoreload = true;
     disable_hyprland_logo = true;
     disable_splash_rendering = true;
     focus_on_activate = true;
@@ -235,7 +238,9 @@ in
     swallow_exception_regex = "^(wev)$";
   };
 
-  windowrulev2 = [
+  render.cm_enabled = false;
+
+  windowrule = [
     "suppressevent maximize, class:.*"
 
     "group new, class:thunderbird, initialTitle:Mozilla Thunderbird"
@@ -243,6 +248,7 @@ in
     "float, class:org.pulseaudio.pavucontrol"
     "float, class:nm-connection-editor"
     "float, class:.blueman-manager-wrapped"
+    "float, class:wihotspot"
 
     "float, class:xdg-desktop-portal-gtk"
 
@@ -329,9 +335,9 @@ in
       enabled = true;
       size = 4;
       passes = 2;
-
       vibrancy = 0.1696;
     };
+    shadow.enabled = false;
   };
 
   animations.enabled = false;

@@ -6,13 +6,16 @@
     
     settings = {
       general = {
-        no_fade_in = true;
-        no_fade_out = true;
         grace = 0;
         disable_loading_bar = true;
         hide_cursor = true;
         ignore_empty_input = true;
-        pam_module = "su";
+      };
+
+      animation = [ "fade,0" ];
+
+      auth = {
+        "pam:module" = "su";
       };
 
       background = [

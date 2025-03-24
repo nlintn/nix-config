@@ -3,28 +3,25 @@
 {
   imports = [ 
     ./bat
-    ./firefox-nightly.nix
+    ./firefox.nix
     ./fzf.nix
     ./git.nix
     ./gpg.nix
     ./kitty
-    # ./librewolf.nix
     ./neovim
     ./obs-studio.nix
+    ./protonmail-bridge.nix
     ./shell
     ./ssh.nix
     ./thunderbird.nix
     ./vlc.nix
-    ./vscode.nix
     ./yazi.nix
     ./zellij.nix
   ];
 
   nixpkgs.config = {
     allowUnfree = true;
-    permittedInsecurePackages = [
-      "jitsi-meet-1.0.8043"
-    ];
+    permittedInsecurePackages = [ ];
   };
 
   home.packages = with pkgs; [
@@ -39,10 +36,9 @@
     # isabelle2024-nvim-lsp
     jetbrains.idea-ultimate
     lazygit
-    lean4
     ocamlPackages.utop
     postgresql
-    pwndbg
+    (inputs.pwndbg.packages.${pkgs.system}.pwndbg)
     (python3.withPackages ( python-pkgs: with python-pkgs; [
       pwntools
       requests
@@ -65,10 +61,12 @@
     gnome-clocks
     htop
     image-roll
+    ipinfo
     jq
     keepassxc
     libqalculate
     libreoffice-fresh
+    linux-wifi-hotspot
     lolcat
     nixln-edit
     nix-inspect
@@ -79,10 +77,13 @@
     pdftk
     poppler_utils
     prismlauncher
+    protonmail-desktop
+    protonvpn-gui
     prusa-slicer
     rclone
     ripgrep
     scanmem
+    signal-desktop
     speedread
     spotify
     spotify-tray
@@ -91,6 +92,7 @@
     tree
     ungoogled-chromium
     unzip
+    usbutils
     vesktop
     wev
     wireshark
@@ -99,7 +101,7 @@
     xournalpp
     yubioath-flutter
     zoom-us
-    zulip
+    # zulip
   ];
 
   programs.zathura.enable = true;

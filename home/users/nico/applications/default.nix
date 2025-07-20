@@ -34,7 +34,7 @@
     ghidra
     ghostscript
     gnumake
-    jetbrains.idea-ultimate
+    # jetbrains.idea-ultimate
     lazygit
     ocamlPackages.utop
     postgresql
@@ -84,7 +84,6 @@
     prusa-slicer
     rclone
     ripgrep
-    scanmem
     signal-desktop
     speedread
     spotify

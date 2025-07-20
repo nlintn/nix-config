@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  system.stateVersion = "25.11";
+
   imports = [
     ./bootloader.nix
     ./hardware-configuration.nix
@@ -8,6 +10,8 @@
     ./disko
     ./users
   ];
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   hardware.i2c.enable = true;
 
@@ -97,6 +101,7 @@
     man-pages linux-manual man-pages-posix
 
     arp-scan
+    git
     powertop
     psmisc
     sbctl
@@ -177,7 +182,7 @@
       libvdpau-va-gl
     ];
   };
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "i965"; NIXOS_OZONE_WL = "1"; }; # Force intel-media-driver
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "i965"; }; # Force intel-media-driver
 
   nix = {
     optimise = {

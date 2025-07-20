@@ -13,6 +13,8 @@ let
   };
 in {
   imports = [
+    ../common/wayland.nix
+
     ../common/avizo.nix
     ../common/gtk-theme.nix
     ../common/networkmanagerapplet.nix

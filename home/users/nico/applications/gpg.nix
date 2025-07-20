@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ osConfig, pkgs, ... }:
 
 {
   programs.gpg = {
     enable = true;
+    scdaemonSettings = {
+      disable-ccid = (osConfig.services.pcscd.enable or false);
+    };
   };
 
   services.gpg-agent = {
@@ -10,6 +13,5 @@
     pinentry.package = pkgs.pinentry-gnome3;
   };
 
-  home.packages = [ pkgs.gcr ];
-
+  dbus.packages = [ pkgs.gcr ];
 }

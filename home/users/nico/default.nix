@@ -1,12 +1,18 @@
 { pkgs, lib, config, inputs, self, userSettings, config-store-path, ... }:
 
 {
+  home.stateVersion = "25.11";
+
   imports = [
+    ./options.nix
+
     inputs.nix-colors.homeManagerModules.default
 
     ./applications
 
     ./fonts.nix
+
+    ./xdg
 
     ./wm
   ];
@@ -17,14 +23,12 @@
   colorScheme = userSettings.colorScheme;
 
   home.sessionVariables = {
-    NIX_CONFIG_DIR = lib.escapeShellArg "${config.home.homeDirectory}/${userSettings.rel-config-path}";
+    NIX_CONFIG_DIR = config.home.configDirectory;
     CONFIG_STORE_PATH = config-store-path;
   };
 
-  home.activation.copyNixConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] (
-    let
-      config-dir = lib.escapeShellArg "${config.home.homeDirectory}/${userSettings.rel-config-path}";
-    in /* sh */ '' [ -e ${config-dir} ] || cp -r ${config-store-path} ${config-dir} '');
+  home.activation.copyNixConfig = lib.hm.dag.entryAfter [ "linkGeneration" ]
+    /* sh */ '' [ -e ${config.home.configDirectory} ] || cp -r ${config-store-path} ${config.home.configDirectory} '';
 
   nix = let
     pre_reg = lib.mapAttrs (_: flake: { inherit flake; }) self.inputs;
@@ -49,7 +53,6 @@
 
   systemd.user.startServices = true;
 
-  home.stateVersion = "25.05";
   programs.home-manager.enable = true;
   news.display = "silent";
 }

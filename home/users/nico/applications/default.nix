@@ -34,7 +34,6 @@
     ghidra
     ghostscript
     gnumake
-    # isabelle2024-nvim-lsp
     jetbrains.idea-ultimate
     lazygit
     ocamlPackages.utop
@@ -94,7 +93,6 @@
     telegram-desktop
     tree
     unar
-    ungoogled-chromium
     usbutils
     vesktop
     wev
@@ -105,14 +103,23 @@
     yubioath-flutter
   ];
 
-  programs.zathura.enable = true;
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
+  programs = {
+    chromium = {
+      enable = true;
+      package = pkgs.ungoogled-chromium;
+    };
+    zathura.enable = true;
+    direnv.enable = true;
+    direnv.nix-direnv.enable = true;
+  };
 
-  services.kdeconnect.enable = true;
-  services.kdeconnect.indicator = true;
-
-  services.playerctld.enable = true;
+  services = {
+    kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
+    playerctld.enable = true;
+  };
 
   home.file.".gdbinit".text = ''
     source ${(pkgs.fetchFromGitHub {

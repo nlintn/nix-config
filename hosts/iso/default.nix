@@ -4,6 +4,8 @@ let
   isoClosureDir = "toplevel-closures";
   isoConfigDir = "config";
 in {
+  system.stateVersion = "25.11";
+
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
   ];
@@ -35,6 +37,8 @@ in {
 
   environment.systemPackages = (with pkgs; [
     disko
+    git
+    sbctl
   ]) ++ lib.flatten (
     lib.mapAttrsToList (systemName: _: with pkgs; [
       (callPackage ./disko-dfm-system.nix { disko-config-path = "/iso/${isoConfigDir}/hosts/systems/${systemName}/disko/disko-config.nix"; inherit systemName; })

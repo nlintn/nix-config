@@ -1,9 +1,6 @@
 { config, lib, pkgs, self, overlays, config-store-path, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
-    git
-  ];
   programs.nano.enable = false;
   programs.vim = {
     enable = true;
@@ -60,5 +57,4 @@
   environment.sessionVariables.CONFIG_STORE_PATH = config-store-path;
 
   system.configurationRevision = lib.mkIf (self ? rev) self.rev;
-  system.stateVersion = "25.05";
 }

@@ -39,19 +39,8 @@
       pool = {
         type = "lvm_vg";
         lvs = {
-          root = {
-            size = "100%";
-            # extraArgs = [ "--addtag root" ];
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/";
-              mountOptions = [ "defaults" ];
-            };
-          };
           home = {
             size = "512G";
-            # extraArgs = [ "--addtag home" ];
             content = {
               type = "filesystem";
               format = "ext4";
@@ -60,10 +49,18 @@
           };
           swap = {
             size = "16G";
-            # extraArgs = [ "--addtag swap" ];
             content = {
               type = "swap";
               resumeDevice = true;
+            };
+          };
+          root = {
+            size = "100%";
+            content = {
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/";
+              mountOptions = [ "defaults" ];
             };
           };
         };

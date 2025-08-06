@@ -1,8 +1,7 @@
-{ lib, ... }:
+{ config, lib, ... }:
+
 {
   networking = {
-    hostName = "meoww";
-
     usePredictableInterfaceNames = false;
 
     networkmanager = {
@@ -44,5 +43,6 @@
       };
     };
   };
-  environment.shellAliases."dns-restart" = "systemctl restart dnscrypt-proxy2.service";
+  environment.shellAliases."dns-restart" = "${config.systemd.package}/bin/systemctl restart dnscrypt-proxy2.service";
+  environment.shellAliases."dns-stop" = "${config.systemd.package}/bin/systemctl stop dnscrypt-proxy2.service";
 }

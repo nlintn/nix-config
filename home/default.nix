@@ -1,9 +1,12 @@
-{ lib, home-manager, pkgs, specialArgs }:
+{ home-manager, pkgs, specialArgs }:
 
-lib.mapAttrs (n: _:
+(builtins.readDir ./users) |> builtins.mapAttrs (n: _:
   home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
-    modules = [ ./users/${n} ];
-    extraSpecialArgs = specialArgs;
+    modules = [
+      ./users/${n}
+      ./common.nix
+    ];
+    extraSpecialArgs = specialArgs // { hmUsername = n; };
   }
-) (builtins.readDir ./users)
+)

@@ -1,7 +1,11 @@
-{ pkgs, config, userSettings, ... }:
+{ config, pkgs, userSettings, ... }:
 
 {
-  programs.hyprlock = with config.colorScheme.palette; {
+  home.sessionVariables = {
+    __LOCK_CMD = "${config.programs.hyprlock.package}/bin/hyprlock";
+    __UNLOCK_CMD =  "${pkgs.procps}/bin/pkill -SIGUSR1 hyprlock";
+  };
+  programs.hyprlock = {
     enable = true;
 
     settings = {
@@ -9,6 +13,7 @@
         grace = 0;
         hide_cursor = true;
         ignore_empty_input = true;
+        immediate_render = true;
       };
 
       animation = [ "fade,0" ];
@@ -23,7 +28,7 @@
         }
       ];
 
-      input-field = [
+      input-field = with config.colorScheme.palette; [
         {
           size = "250, 60";
           outline_thickness = 2;
@@ -45,7 +50,7 @@
         }
       ];
 
-      label = [
+      label = with config.colorScheme.palette; [
         {
           text = "cmd[update:1000] ${pkgs.coreutils}/bin/date +%H:%M:%S";
           color = "rgba(${base05}cc)";
@@ -54,7 +59,7 @@
           position = "0, 80";
           halign = "center";
           valign = "center";
-        }  
+        }
         {
           text = "hi there, $USER :3";
           color = "rgba(${base05}cc)";

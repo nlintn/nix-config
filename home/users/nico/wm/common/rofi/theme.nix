@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ config, pkgs, ... }:
 
 builtins.toPath (pkgs.writeText "theme-final.rasi" (
   with config.colorScheme.palette; ''

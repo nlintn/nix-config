@@ -2,7 +2,7 @@
 
 writeShellApplication {
   name = "swap-workspace-windows";
-  runtimeInputs = [ jq config.wayland.windowManager.hyprland.package ];
+  runtimeInputs = [ jq config.wayland.windowManager.hyprland.finalPackage ];
   text =  /* sh */ ''
     SOURCE_WORKSPACE_START=$1
     TARGET_WORKSPACE_START=$2

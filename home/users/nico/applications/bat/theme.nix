@@ -1,4 +1,4 @@
-{ config }:
+{ config, ... }:
 
 builtins.toFile "base16.tmTheme" (with config.colorScheme.palette; /* xml */ ''
   <?xml version="1.0" encoding="UTF-8"?>

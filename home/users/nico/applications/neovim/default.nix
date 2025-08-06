@@ -1,4 +1,4 @@
-{ pkgs, config, userSettings, ... }:
+{ config, pkgs, userSettings, ... }:
 
 {
   programs.neovide = {
@@ -11,6 +11,7 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    vimdiffAlias = true;
 
     extraLuaConfig = /* lua */ ''
       vim.g.mapleader = ' '
@@ -49,8 +50,8 @@
       vim.o.mousemoveevent = true
       vim.o.mousemodel = 'extend'
 
-      vim.o.conceallevel = 1
-      vim.o.concealcursor = 'cnv'
+      vim.o.conceallevel = 2
+      vim.o.concealcursor = 'nc'
 
       vim.o.clipboard = 'unnamedplus'
 
@@ -109,12 +110,13 @@
       cmp-nvim-lsp
       cmp-nvim-lsp-document-symbol
       cmp-nvim-lsp-signature-help
+      diffview-nvim
       isabelle-syn-nvim
       markdown-preview-nvim
+      nvim-navic
       nvim-web-devicons
       telescope-tabs
       telescope-ui-select-nvim
-      vim-wakatime
 
       {
         plugin = import ./base16-nvim/package-patched.nix { inherit pkgs; };
@@ -162,9 +164,9 @@
       }
 
       {
-        plugin = (pkgs.callPackage ./isabelle-lsp-nvim.nix {}).package;
+        plugin = isabelle-lsp-nvim;
         type = "lua";
-        config = (pkgs.callPackage ./isabelle-lsp-nvim.nix {}).config;
+        config = import ./isabelle-lsp-nvim.nix {};
       }
 
       {
@@ -190,29 +192,17 @@
         type = "lua";
         config = builtins.readFile ./nvim-lspconfig.lua;
       }
-      
+
       {
-        plugin = nvim-navic;
+        plugin = (pkgs.callPackage ./nvim-treesitter.nix {}).pkg;
         type = "lua";
-        config = builtins.readFile ./nvim-navic.lua;
+        config = (pkgs.callPackage ./nvim-treesitter.nix {}).config;
       }
-      
-      {
-        plugin = import ./nvim-treesitter/package-withPlugins.nix { inherit pkgs; };
-        type = "lua";
-        config = builtins.readFile ./nvim-treesitter/lua-config.lua;
-      }
-      
+
       {
         plugin = nvim-autopairs;
         type = "lua";
         config = ''require("nvim-autopairs").setup {}'';
-      }
-
-      {
-        plugin = obsidian-nvim;
-        type = "lua";
-        config = builtins.readFile ./obsidian-nvim.lua;
       }
 
       {
@@ -254,10 +244,9 @@
       vscode-langservers-extracted
 
       # Misc
-      acpi
       fd
-      nodePackages.nodejs
+      # nodePackages.nodejs
       ripgrep
     ];
-  };  
+  };
 }

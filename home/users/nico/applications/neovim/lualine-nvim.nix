@@ -1,9 +1,41 @@
-{ config }:
+{ ... }:
 
-with config.colorScheme.palette; /* lua */ ''
-  require("battery").setup {}
+/* lua */ ''
+  local battery = require("battery")
+  battery.setup {}
   local navic = require("nvim-navic")
-  
+  navic.setup {
+    lsp = { auto_attach = true, },
+    icons = {
+      File = ' ',
+      Module = ' ',
+      Namespace = ' ',
+      Package = ' ',
+      Class = ' ',
+      Method = ' ',
+      Property = ' ',
+      Field = ' ',
+      Constructor = ' ',
+      Enum = ' ',
+      Interface = ' ',
+      Function = ' ',
+      Variable = ' ',
+      Constant = ' ',
+      String = ' ',
+      Number = ' ',
+      Boolean = ' ',
+      Array = ' ',
+      Object = ' ',
+      Key = ' ',
+      Null = ' ',
+      EnumMember = ' ',
+      Struct = ' ',
+      Event = ' ',
+      Operator = ' ',
+      TypeParameter = ' '
+    },
+  }
+
   require("lualine").setup {
     options = {
       theme = 'base16',
@@ -21,7 +53,7 @@ with config.colorScheme.palette; /* lua */ ''
       lualine_y = { 'progress', 'location', },
       lualine_z = {
         {
-          function () return require("battery").get_status_line() end,
+          function () return battery.get_status_line() end,
         },
         {
           'datetime',

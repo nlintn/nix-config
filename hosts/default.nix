@@ -4,7 +4,7 @@ let
   systemConfigurations = lib.mapAttrs (n: _:
     lib.nixosSystem {
       system = import ./systems/${n}/system.nix;
-      specialArgs = specialArgs // { inherit specialArgs; };
+      specialArgs = specialArgs // { inherit specialArgs; nixSystemName = n; };
       modules = [
         ./systems/${n}
         ./common.nix
@@ -14,7 +14,7 @@ let
 in systemConfigurations // {
   iso = lib.nixosSystem {
     inherit system;
-    specialArgs = specialArgs // { inherit systemConfigurations; };
+    specialArgs = specialArgs // { inherit systemConfigurations; nixSystemName = "iso"; };
     modules = [
       ./iso
       ./common.nix

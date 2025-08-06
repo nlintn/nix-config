@@ -1,4 +1,4 @@
-{ pkgs, lib', config, userSettings, ...}:
+{ config, pkgs, lib', userSettings, ... }:
 
 {
   home.pointerCursor = {
@@ -34,8 +34,6 @@
   };
 
   dconf.settings = {
-    "org/gnome/desktop/wm/preferences" = {
-      button-layout = "";
-    };
+    "org/gnome/desktop/wm/preferences".button-layout = "";
   };
 }

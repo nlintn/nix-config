@@ -1,6 +1,7 @@
-{ writeShellScript, writeText, config }:
+{ config, writeShellScript, writeText, ... }:
 
-writeShellScript "lock-transparent" /* bash */ ''
+writeShellScript "lock-transparent" /* sh */ ''
+  ${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl keyword misc:session_lock_xray true
   systemd-inhibit --what=idle ${config.programs.hyprlock.package}/bin/hyprlock -c ${
     writeText "hyprlock-transp.conf" ''
       general {
@@ -13,4 +14,5 @@ writeShellScript "lock-transparent" /* bash */ ''
       }
     ''
   }
+  ${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl keyword misc:session_lock_xray false
 ''

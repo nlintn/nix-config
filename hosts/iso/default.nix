@@ -1,17 +1,17 @@
-{ lib, modulesPath, pkgs, systemConfigurations, config-store-path, ... }:
+{ lib, modulesPath, pkgs, config-store-path, systemConfigurations, ... }:
 
-let
-  isoClosureDir = "toplevel-closures";
-  isoConfigDir = "config";
-in {
+{
   system.stateVersion = "25.11";
 
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
   ];
 
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
   networking = {
-    hostName = "iso";
     networkmanager.enable = true;
     wireless.enable = false;
   };
@@ -23,26 +23,15 @@ in {
   isoImage = {
     edition = "custom-min";
     squashfsCompression = "gzip -Xcompression-level 1";
-
-    contents = [
-      {
-        source = config-store-path;
-        target = "/${isoConfigDir}";
-      }
-    ] ++ lib.mapAttrsToList (n: v: {
-      source = v.config.system.build.toplevel;
-      target = "/${isoClosureDir}/${n}";
-    }) systemConfigurations;
   };
 
   environment.systemPackages = (with pkgs; [
     disko
-    git
     sbctl
   ]) ++ lib.flatten (
-    lib.mapAttrsToList (systemName: _: with pkgs; [
-      (callPackage ./disko-dfm-system.nix { disko-config-path = "/iso/${isoConfigDir}/hosts/systems/${systemName}/disko/disko-config.nix"; inherit systemName; })
-      (callPackage ./install-system-closure.nix { closurePath = "/iso/${isoClosureDir}/${systemName}"; inherit systemName; })
+    lib.mapAttrsToList (systemName: v: with pkgs; [
+      (callPackage ./disko-dfm-system.nix { disko-config-path = "${config-store-path}/hosts/systems/${systemName}/disko/disko-config.nix"; inherit systemName; })
+      (callPackage ./install-system-closure.nix { closureStorePath = v.config.system.build.toplevel; inherit systemName; })
     ]) systemConfigurations
   );
 

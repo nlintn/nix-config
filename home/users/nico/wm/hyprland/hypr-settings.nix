@@ -1,28 +1,26 @@
-{ pkgs, lib', config, userSettings, hyreload, lock-transparent, rofi-power-menu, thunar_pkg, ... }:
+{ config, pkgs, lib', userSettings, hyreload, ... } @ args:
 
 let
   evalBinds = lib'.hyprland.evalBinds;
 
+  var_brightnessctl = "${config.services.avizo.package}/bin/lightctl -e 2 ${if config.colorScheme.variant == "dark" then "-d" else ""}";
   var_browser = "${config.programs.firefox.finalPackage}/bin/firefox";
   var_copyq = "${config.services.copyq.package}/bin/copyq";
-  var_filemanager = "${thunar_pkg}/bin/thunar";
+  var_filemanager = "${config.programs.thunar.finalPackage}/bin/thunar";
   var_grimblast = "${pkgs.grimblast}/bin/grimblast";
   var_hyprpicker = "${pkgs.hyprpicker}/bin/hyprpicker";
-  var_lightctl = "${config.services.avizo.package}/bin/lightctl";
+  var_hyprtabs = "${pkgs.callPackage ./scripts/hyprtabs.nix args}/bin/hyprtabs";
+  var_lock-transparent = "${pkgs.callPackage ./hyprlock/lock-transparent.nix args}";
+  var_loginctl = config.systemd.user.loginctlPath;
   var_playerctl = "${config.services.playerctld.package}/bin/playerctl";
-  var_pwm = "${pkgs.keepassxc}/bin/keepassxc";
+  var_pwm = "${config.programs.keepassxc.package}/bin/keepassxc";
   var_rofi = "${config.programs.rofi.finalPackage}/bin/rofi";
-  var_scratchpad = "${pkgs.callPackage "${pkgs.fetchFromGitHub {
-    owner = "hyprwm";
-    repo = "contrib";
-    rev = "910dad4c5755c1735d30da10c96d9086aa2a608d";
-    sha256 = "sha256-PMQoXbfmWPuXnF8EaWqRmvTvl7+WFUrDVgufFRPgOM4=";
-  }}/scratchpad" { libnotify = null; }}/bin/scratchpad";
+  var_rofi-power-menu = "${pkgs.callPackage ../common/rofi/rofi-power-menu.nix args}";
+  var_scratchpad = "${pkgs.hyscratchpad.override { libnotify = null; }}/bin/scratchpad";
   var_swappy = "${pkgs.swappy}/bin/swappy";
-  var_swaybg = "${pkgs.swaybg}/bin/swaybg";
   var_swaync-client = "${config.services.swaync.package}/bin/swaync-client";
   var_term = "${config.programs.kitty.package}/bin/kitty";
-  var_volumectl = "${config.services.avizo.package}/bin/volumectl";
+  var_volumectl = "${config.services.avizo.package}/bin/volumectl ${if config.colorScheme.variant == "dark" then "-d" else ""}";
 
 in with config.colorScheme.palette; {
   source = [
@@ -31,33 +29,17 @@ in with config.colorScheme.palette; {
 
   monitor = [
     ", preferred, 0x0, 1.25"
-    "eDP-1, preferred, auto-down, 1.6"
+    "eDP-1, preferred, auto-center-down, 1.6"
   ];
 
   env = [
-    "QT_QPA_PLATFORM, wayland"
-    "XDG_SESSION_DESKTOP, Hyprland"
     "HYPRCURSOR_THEME, ${config.home.pointerCursor.name}"
     "HYPRCURSOR_SIZE, ${toString config.home.pointerCursor.size}"
-    "XCURSOR_SIZE, ${toString config.home.pointerCursor.size}"
   ];
 
   exec-once = [
-    "${var_swaybg} -i ${userSettings.wallpaper}"
-    "${var_filemanager} --daemon"
-
     "[workspace special:pwm silent] ${var_pwm}"
   ];
-
-  workspace = [
-    "special:magic, on-created-empty:${var_term}"
-    "special:pwm, on-created-empty:${var_pwm}"
-
-    "w[tv1], gapsout:0, gapsin:0"
-    "f[1], gapsout:0, gapsin:0"
-  ];
-
-  # "debug:disable_scale_checks" = true;
   # "debug:disable_logs" = false;
 
   bind =
@@ -75,9 +57,9 @@ in with config.colorScheme.palette; {
       "T, exec, ${var_rofi} -modi ssh -show ssh"
       "PERIOD, exec, ${var_rofi} -modi emoji -show emoji -matching normal"
       "V, exec, ${var_copyq} show"
-      "BACKSPACE, exec, loginctl lock-session"
-      "SHIFT, BACKSPACE, exec, ${lock-transparent}"
-      "RETURN, exec, ${var_rofi} -show power-menu -modi 'power-menu:${rofi-power-menu}'"
+      "BACKSPACE, exec, ${var_loginctl} lock-session"
+      "SHIFT, BACKSPACE, exec, ${var_lock-transparent}"
+      "RETURN, exec, ${var_rofi} -show power-menu -modi 'power-menu:${var_rofi-power-menu}'"
       "PLUS, exec, ${var_swaync-client} --toggle-panel"
       "SHIFT, PLUS, exec, ${var_swaync-client} -C"
       "CTRL, PLUS, exec, ${var_swaync-client} --toggle-dnd"
@@ -86,12 +68,13 @@ in with config.colorScheme.palette; {
       "SHIFT, C, forcekillactive"
       "F, fullscreen, 1"
       "SHIFT, F, fullscreen, 0"
-      "SHIFT, Z, exec, loginctl terminate-session self"
+      "SHIFT, Z, exec, ${var_loginctl} terminate-session self"
       "CTRL SHIFT, Z, exit"
       # "P, pseudo,"
       "SPACE, togglefloating,"
 
-      "G, togglegroup,"
+      "G, exec, ${var_hyprtabs}"
+      "SHIFT, G, togglegroup,"
 
       "dead_circumflex, workspace, previous_per_monitor"
       "1, workspace, r~1"
@@ -193,8 +176,8 @@ in with config.colorScheme.palette; {
 
   bindl = 
     evalBinds "" [ ] [
-      "XF86AudioMute,    exec, ${var_volumectl} ${if config.colorScheme.variant == "dark" then "-d" else ""} -p toggle-mute"
-      "XF86AudioMicMute, exec, ${var_volumectl} ${if config.colorScheme.variant == "dark" then "-d" else ""} -m -p toogle-mute"
+      "XF86AudioMute,    exec, ${var_volumectl} -p toggle-mute"
+      "XF86AudioMicMute, exec, ${var_volumectl} -m -p toogle-mute"
       "XF86AudioNext,    exec, ${var_playerctl} next"
       "XF86AudioPrev,    exec, ${var_playerctl} previous"
       "XF86AudioPlay,    exec, ${var_playerctl} play-pause"
@@ -203,10 +186,10 @@ in with config.colorScheme.palette; {
 
   bindle =
     evalBinds "" [ ] [
-      "XF86AudioRaiseVolume,  exec, ${var_volumectl} ${if config.colorScheme.variant == "dark" then "-d" else ""} -p up"
-      "XF86AudioLowerVolume,  exec, ${var_volumectl} ${if config.colorScheme.variant == "dark" then "-d" else ""} -p down"
-      "XF86MonBrightnessUp,   exec, ${var_lightctl}  ${if config.colorScheme.variant == "dark" then "-d" else ""} up"
-      "XF86MonBrightnessDown, exec, ${var_lightctl}  ${if config.colorScheme.variant == "dark" then "-d" else ""} down"
+      "XF86AudioRaiseVolume,  exec, ${var_volumectl} -p up"
+      "XF86AudioLowerVolume,  exec, ${var_volumectl} -p down"
+      "XF86MonBrightnessUp,   exec, ${var_brightnessctl} up"
+      "XF86MonBrightnessDown, exec, ${var_brightnessctl} down"
     ];
 
   binds = {
@@ -242,14 +225,28 @@ in with config.colorScheme.palette; {
     "col.border_active" = "rgba(${base0F}66)";
     "col.border_inactive" = "rgba(${base04}66)";
     groupbar = {
+      font_size = 10;
+      gaps_in = 2;
+      gaps_out = 0;
+      gradients = true;
+      gradient_rounding = 0;
+      height = 14;
+      indicator_gap = 0;
+      indicator_height = 0;
+      keep_upper_gap = false;
       text_color = "0xff${base05}";
+      text_offset = 1;
+
       "col.active" = "0x99${base0E}";
+      font_weight_active = "semibold";
       "col.inactive" = "0x55${base0E}";
+      font_weight_inactive= "light";
     };
   };
 
   misc = {
     allow_session_lock_restore = true;
+    anr_missed_pings = 3;
     close_special_on_empty = false;
     disable_autoreload = true;
     disable_hyprland_logo = true;
@@ -262,7 +259,7 @@ in with config.colorScheme.palette; {
 
     enable_swallow = true;
     swallow_regex = "^(kitty)$";
-    swallow_exception_regex = "^(firefox|wev|xdragon.*)$";
+    swallow_exception_regex = "^(xopen .*|xx .*|firefox|wev|xdragon.*)$";
   };
 
   render.cm_enabled = false;
@@ -272,7 +269,7 @@ in with config.colorScheme.palette; {
 
     "group new, class:thunderbird, initialTitle:Mozilla Thunderbird"
 
-    "float, class:org.pulseaudio.pavucontrol"
+    "float, class:com.saivert.pwvucontrol"
     "float, class:nm-connection-editor"
     "float, class:.blueman-manager-wrapped"
     "float, class:wihotspot"
@@ -283,6 +280,8 @@ in with config.colorScheme.palette; {
     "move onscreen cursor, class:com.github.hluk.copyq"
     "pin, class:com.github.hluk.copyq"
     "size 40%, 40%, class:com.github.hluk.copyq"
+
+    "prop noscreenshare 1, class:org.keepassxc.KeePassXC"
 
     "float, class:org.keepassxc.KeePassXC, title:Generate Password"
 
@@ -301,10 +300,20 @@ in with config.colorScheme.palette; {
 
     "pin, class:xdragon"
 
-    "bordersize 0, floating:0, onworkspace:w[tv1]"
-    "rounding 0, floating:0, onworkspace:w[tv1]"
-    "bordersize 0, floating:0, onworkspace:f[1]"
-    "rounding 0, floating:0, onworkspace:f[1]"
+    "prop bordersize 0, floating:0, onworkspace:w[tv1]"
+    "prop rounding 0, floating:0, onworkspace:w[tv1]"
+    "prop bordersize 0, floating:0, onworkspace:f[1]"
+    "prop rounding 0, floating:0, onworkspace:f[1]"
+
+    "prop decorate 0, floating:0, onworkspace:w[t1]"
+  ];
+
+  workspace = [
+    "special:magic, on-created-empty:${var_term}"
+    "special:pwm, on-created-empty:${var_pwm}"
+
+    "w[tv1], gapsout:0, gapsin:0"
+    "f[1], gapsout:0, gapsin:0"
   ];
 
   layerrule = [

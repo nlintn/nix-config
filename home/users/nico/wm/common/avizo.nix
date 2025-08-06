@@ -1,8 +1,8 @@
-{ config, inputs, ... }:
+{ config, nix-colors, ... }:
 
 let
   toRGBA = RGBhex: alpha:
-    "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex}, ${builtins.toString alpha})";
+    "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex}, ${builtins.toString alpha})";
 in {
   services.avizo = {
     enable = true;

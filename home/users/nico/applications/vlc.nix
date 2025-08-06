@@ -5,7 +5,7 @@
     (pkgs.symlinkJoin {
       name = "vlc";
       paths = [ pkgs.vlc ];
-      buildInputs = [ pkgs.makeWrapper ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         wrapProgram $out/bin/vlc \
           --unset DISPLAY

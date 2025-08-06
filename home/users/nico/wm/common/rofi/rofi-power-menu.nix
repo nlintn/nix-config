@@ -1,17 +1,17 @@
-{ writeShellScript }:
+{ config, writeShellScript, ... }:
 
 
 writeShellScript "rofi-power-menu" /* bash */ ''
   # Source: https://github.com/jluttine/rofi-power-menu
   set -e
   set -u
-  
+
   # All supported choices
   all=(shutdown reboot suspend hibernate logout lockscreen)
-  
+
   # By default, show all (i.e., just copy the array)
   show=("''${all[@]}")
-  
+
   declare -A texts
   texts[lockscreen]="lock screen"
   texts[switchuser]="switch user"
@@ -32,16 +32,16 @@ writeShellScript "rofi-power-menu" /* bash */ ''
   icons[cancel]="\Uf0156"
   
   declare -A actions
-  actions[lockscreen]="loginctl lock-session self"
-  actions[logout]="loginctl terminate-user $(whoami)"
-  actions[suspend]="systemctl suspend"
-  actions[hibernate]="systemctl hibernate"
-  actions[reboot]="systemctl reboot"
-  actions[shutdown]="systemctl poweroff"
-  
+  actions[lockscreen]="${config.systemd.user.loginctlPath} lock-sessions self"
+  actions[logout]="${config.systemd.user.loginctlPath} terminate-user $(whoami)"
+  actions[suspend]="${config.systemd.user.systemctlPath} suspend"
+  actions[hibernate]="${config.systemd.user.systemctlPath} hibernate"
+  actions[reboot]="${config.systemd.user.systemctlPath} reboot"
+  actions[shutdown]="${config.systemd.user.systemctlPath} poweroff"
+
   # By default, ask for confirmation for actions that are irreversible
   confirmations=(reboot shutdown logout lockscreen hibernate suspend)
-  
+
   # By default, no dry run
   dryrun=false
   showsymbols=true
@@ -59,7 +59,7 @@ writeShellScript "rofi-power-menu" /* bash */ ''
           fi
       done
   }
-  
+
   # Parse command-line options
   parsed=$(getopt --options=h --longoptions=help,dry-run,confirm:,choices:,choose:,symbols,no-symbols,text,no-text,symbols-font: --name "$0" -- "$@")
   if [ $? -ne 0 ]; then
@@ -158,16 +158,16 @@ writeShellScript "rofi-power-menu" /* bash */ ''
               ;;
       esac
   done
-  
+
   if [ "$showsymbols" = "false" -a "$showtext" = "false" ]
   then
       echo "Invalid options: cannot have --no-symbols and --no-text enabled at the same time." >&2
       exit 1
   fi
-  
+
   # Define the messages after parsing the CLI options so that it is possible to
   # configure them in the future.
-  
+
   function write_message {
       if [ -z ''${symbols_font+x} ];
       then
@@ -188,7 +188,7 @@ writeShellScript "rofi-power-menu" /* bash */ ''
           echo -n "$text"
       fi
   }
-  
+
   function print_selection {
       echo -e "$1" | $(read -r -d ''' entry; echo "echo $entry")
   }
@@ -204,7 +204,7 @@ writeShellScript "rofi-power-menu" /* bash */ ''
       confirmationMessages[$entry]=$(write_message "''${icons[$entry]}" "Yes, ''${texts[$entry]}")
   done
   confirmationMessages[cancel]=$(write_message "''${icons[cancel]}" "No, cancel")
-  
+
   if [ $# -gt 0 ]
   then
       # If arguments given, use those as the selection
@@ -216,12 +216,12 @@ writeShellScript "rofi-power-menu" /* bash */ ''
           selection="''${messages[$selectionID]}"
       fi
   fi
-  
+
   # Don't allow custom entries
   echo -e "\0no-custom\x1ftrue"
   # Use markup
   echo -e "\0markup-rows\x1ftrue"
-  
+
   if [ -z "''${selection+x}" ]
   then
       echo -e "\0prompt\x1fPower menu"

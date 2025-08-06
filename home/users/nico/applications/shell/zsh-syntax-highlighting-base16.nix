@@ -1,4 +1,4 @@
-{ config }:
+{ config, ... }:
 
 # source: https://github.com/catppuccin/zsh-syntax-highlighting
 

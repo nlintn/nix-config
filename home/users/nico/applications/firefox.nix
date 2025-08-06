@@ -1,13 +1,12 @@
-{ pkgs, config, inputs, ... }:
+{ config, pkgs, nix-colors, ... }:
 
 let
   toRGBA = RGBhex: alpha:
-    "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex}, ${builtins.toString alpha})";
+    "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex}, ${builtins.toString alpha})";
 in {
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-wayland;
-    # package = pkgs.firefox-nightly-bin.unwrapped;
     policies = {
       ExtensionSettings =
         let
@@ -27,8 +26,9 @@ in {
           { name = "keepassxc-browser"; uuid = "keepassxc-browser@keepassxc.org"; area = "navbar"; private = true; }
           { name = "ublock-origin"; uuid = "uBlock0@raymondhill.net"; private = true; }
           { name = "vimium-ff"; uuid = "{d7742d87-e61d-4b78-b8a1-b469842139fa}"; }
-        ] |> builtins.map (ext: mkExtension ext) |> builtins.listToAttrs;
+        ] |> builtins.map mkExtension |> builtins.listToAttrs;
     };
+    profiles.test = { id = 1; };
     profiles.${config.home.username} = {
       isDefault = true;
       search = {
@@ -38,6 +38,10 @@ in {
       };
 
       settings = {
+        "browser.tabs.unloadOnLowMemory" = true;
+        "browser.low_commit_space_threshold_percent" = 50;
+        "browser.tabs.min_inactive_duration_before_unload" = 1800000;
+
         "browser.aboutConfig.showWarning" = false;
         "browser.toolbars.bookmarks.visibility" = "never";
         "browser.ctrlTab.sortByRecentlyUsed" = false;
@@ -135,7 +139,7 @@ in {
 
         "privacy.fingerprintingProtection" = true;
         "privacy.trackingprotection.enabled" = true;
-        
+
         "devtools.chrome.enabled" = true;
         "devtools.debugger.remote-enabled" = true;
         "devtools.serviceWorkers.testing.enabled" = true;
@@ -156,6 +160,9 @@ in {
       };
 
       userChrome = with config.colorScheme.palette; /* css */ ''
+        :root:not([chromehidden~="toolbar"]) {
+          min-width: 20px !important;
+        }
         :root[inFullscreen] #PersonalToolbar {
           visibility: visible !important;
         }
@@ -164,6 +171,7 @@ in {
 
         :root {
           --toolbox-bgcolor: transparent !important;
+          --toolbox-bgcolor-inactive: transparent !important;
           --tabpanel-background-color: transparent !important;
           --arrowpanel-background: #${base00} !important;
           --arrowpanel-color: #${base05} !important;
@@ -225,6 +233,7 @@ in {
           }
         }
         body {
+          /* background-color: white; */
           --body-bg-color: #${base00} !important;
           --button-hover-color: #${base03} !important;
           --dropdown-btn-bg-color: #${base02} !important;

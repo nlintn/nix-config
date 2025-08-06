@@ -1,4 +1,4 @@
-{ disk ? "/dev/nvme1n1", ... }:
+{ disk, ... }:
 
 {
   disko.devices = {
@@ -47,20 +47,20 @@
               mountpoint = "/home";
             };
           };
-          swap = {
-            size = "16G";
-            content = {
-              type = "swap";
-              resumeDevice = true;
-            };
-          };
           root = {
-            size = "100%";
+            size = "-16G";
             content = {
               type = "filesystem";
               format = "ext4";
               mountpoint = "/";
-              mountOptions = [ "defaults" ];
+            };
+          };
+          swap = {
+            size = "16G";
+            content = {
+              type = "swap";
+              discardPolicy = "both";
+              resumeDevice = true;
             };
           };
         };

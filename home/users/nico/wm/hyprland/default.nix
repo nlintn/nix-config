@@ -1,15 +1,8 @@
-{ pkgs, lib, config, userSettings, ... } @ args:
+{ config, lib, pkgs, userSettings, ... } @ args:
 
 let
   customPkgs = {
-    hyreload = pkgs.callPackage ./scripts/hyreload.nix { inherit config userSettings; };
-    lock-transparent = pkgs.callPackage ./hyprlock/lock-transparent.nix { inherit config; };
-    rofi-power-menu = pkgs.callPackage ../common/rofi/rofi-power-menu.nix {};
-    thunar_pkg = with pkgs.xfce;
-      thunar.override {
-        thunarPlugins = [ thunar-archive-plugin thunar-media-tags-plugin ];
-      };
-    xdg-terminal-exec = pkgs.callPackage ../common/scripts/xdg-terminal-exec.nix { inherit config; };
+    hyreload = pkgs.callPackage ./scripts/hyreload.nix args;
   };
 in {
   imports = [
@@ -17,50 +10,65 @@ in {
 
     ../common/avizo.nix
     ../common/gtk-theme.nix
-    ../common/networkmanagerapplet.nix
-    ../common/polkit-gnome-authentication-agent.nix
     ../common/rofi
     ../common/swaync
-    ../common/wayland-pipewire-idle-inhibit.nix
 
     ./hypridle.nix
     ./hyprlock
     ./waybar
   ];
 
-  home.packages = (with customPkgs; [
-    thunar_pkg
-    xdg-terminal-exec
-  ]) ++ (with pkgs; [
-    evince
+  home.packages = with pkgs; [
+    file-roller
     nwg-displays
-    pavucontrol
+    pwvucontrol
     swayimg
     wlr-randr
-    xdg-utils
-    file-roller
-  ]);
+  ];
+
+  programs = {
+    nm-applet.enable = true;
+    swaybg = {
+      enable = true;
+      image.path = userSettings.wallpaper;
+    };
+  };
 
   services.copyq = {
     enable = true;
     forceXWayland = false;
   };
-  services.blueman-applet.enable = true;
+  services = {
+    blueman-applet.enable = true;
+    polkit-gnome.enable = true;
+    wayland-pipewire-idle-inhibit.enable = true;
+  };
 
   wayland.windowManager.hyprland = {
     enable = true;
 
     xwayland.enable = true;
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+      variables = [ "--all" ];
+    };
 
     plugins = with pkgs.hyprlandPlugins; [
-      hyprsplit
+      (hyprsplit.overrideAttrs { src = pkgs.fetchFromGitHub { owner = "shezdy"; repo = "hyprsplit"; rev = "v0.50.1"; sha256 = "sha256-D0zfdUJXBRnNMmv/5qW+X4FJJ3/+t7yQmwJFkBuEgck="; }; })
     ];
 
     settings = import ./hypr-settings.nix (args // customPkgs);
   };
 
-  home.activation.hyprlandActivation = lib.hm.dag.entryAfter [ "reloadSystemd" ] "run ${customPkgs.hyreload}";
+  xdg.portal = {
+    enable = lib.mkDefault true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ]; # hyprland already auto added
+    config."hyprland" = {
+      default = [ "hyprland" "gtk" ];
+    };
+  };
+
+  # home.activation.hyprlandActivation = lib.hm.dag.entryAfter [ "reloadSystemd" ] "run ${customPkgs.hyreload}";
 
   xdg.configFile."swappy/config".text = ''
     [Default]

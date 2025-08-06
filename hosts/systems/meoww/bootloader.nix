@@ -1,12 +1,12 @@
-{ lib, inputs, ... }:
+{ lib, lanzaboote, ... }:
 
 {
   imports = [
-    inputs.lanzaboote.nixosModules.lanzaboote
+    lanzaboote.nixosModules.lanzaboote
   ];
 
   boot = {
-    loader.efi.canTouchEfiVariables = false;
+    loader.efi.canTouchEfiVariables = true;
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";

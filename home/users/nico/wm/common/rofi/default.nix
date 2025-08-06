@@ -1,11 +1,11 @@
-{ pkgs, config, ... }:
+{ config, pkgs, ... } @ args:
 
 {
   programs.rofi = {
     enable = true;
     terminal = "${config.programs.kitty.package}/bin/kitty";
     package = pkgs.rofi-wayland;
-    theme = import ./theme.nix { inherit pkgs config; };
+    theme = import ./theme.nix args;
     plugins = with pkgs; [ rofi-emoji-wayland ];
     extraConfig = {
       ssh-command = "${config.programs.kitty.package}/bin/kitty -- kitty +kitten ssh {host}";

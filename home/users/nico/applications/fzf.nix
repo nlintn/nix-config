@@ -1,7 +1,8 @@
-{ pkgs, config, ... }:
+{ config, pkgs, ... }:
 
-let 
-  color = with config.colorScheme.palette; "bg+:#${base02},spinner:#${base06},hl:#${base08},fg:#${base05},header:#${base08},info:#${base0E},pointer:#${base06},marker:#${base06},fg+:#${base05},prompt:#${base0E},hl+:#${base08}";
+let
+  color = with config.colorScheme.palette;
+    "bg+:#${base02},spinner:#${base06},hl:#${base08},fg:#${base05},header:#${base08},info:#${base0E},pointer:#${base06},marker:#${base06},fg+:#${base05},prompt:#${base0E},hl+:#${base08}";
 in {
   programs.fzf = {
     enable = true;
@@ -19,7 +20,7 @@ in {
     changeDirWidgetOptions = [  #  ALT-C Options
       "--preview 'tree -C {}'"
     ];
-    fileWidgetCommand = "${pkgs.fd}/bin/fd -I -t f";
-    changeDirWidgetCommand = "${pkgs.fd}/bin/fd -I -t d";
+    fileWidgetCommand = "${pkgs.fd}/bin/fd -I -t f -L";
+    changeDirWidgetCommand = "${pkgs.fd}/bin/fd -I -t d -L";
   }; 
 }

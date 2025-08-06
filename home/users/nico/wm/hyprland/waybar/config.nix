@@ -1,9 +1,9 @@
-{ pkgs, config }:
+{ config, pkgs, ... }:
 
 let
-  nm-connection-editor = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
-  pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
-  swaync-client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
+  var_conctl = "${config.programs.nm-applet.package}/bin/nm-connection-editor";
+  var_volctl = "${pkgs.pwvucontrol}/bin/pwvucontrol";
+  var_swaync-client = "${config.services.swaync.package}/bin/swaync-client";
 in /* json */ '' {
   "layer": "top",
   "position": "bottom",
@@ -116,7 +116,7 @@ in /* json */ '' {
       "default": ["", "", ""]
     },
     "scroll-step": 1,
-    "on-click": "${pavucontrol}",
+    "on-click": "${var_volctl}",
     "tooltip": false
   },
 
@@ -132,7 +132,7 @@ in /* json */ '' {
     "format-ethernet": "{ifname}",
     "format-disconnected": "No connection",
     "tooltip": false,
-    "on-click": "${nm-connection-editor}"
+    "on-click": "${var_conctl}"
   },
 
   "clock": {
@@ -151,9 +151,9 @@ in /* json */ '' {
       "dnd-none": " "
     },
     "return-type": "json",
-    "exec": "${swaync-client} -swb",
-    "on-click": "sleep 0.1 && ${swaync-client} -t -sw",
-    "on-click-right": "sleep 0.1 && ${swaync-client} -d -sw",
+    "exec": "${var_swaync-client} -swb",
+    "on-click": "sleep 0.1 && ${var_swaync-client} -t -sw",
+    "on-click-right": "sleep 0.1 && ${var_swaync-client} -d -sw",
     "escape": true
   }
 } ''

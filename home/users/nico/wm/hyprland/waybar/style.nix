@@ -1,9 +1,6 @@
-{ config, inputs, userSettings }:
+{ config, userSettings, ... }:
 
-let
-  toRGBA = RGBhex: alpha:
-    "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex}, ${builtins.toString alpha})";
-in with config.colorScheme.palette; /* css */ ''
+with config.colorScheme.palette; /* css */ ''
   @define-color white #${base05};
   @define-color red #${base08};
   @define-color green #${base0B};

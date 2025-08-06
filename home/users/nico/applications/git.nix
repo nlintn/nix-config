@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   programs.git = {
@@ -7,11 +7,28 @@
     userEmail = "118087966+nlintn@users.noreply.github.com";
     extraConfig = {
       pull.ff = "only";
+      push.autoSetupRemote = true;
 
-      user.signingkey = "0D77816AE7FD9289E44A5405F68094C6AF089B92";
+      merge.tool = "nvim";
+      mergetool = {
+        prompt = false;
+        "nvim".cmd = ''${config.programs.neovim.finalPackage}/bin/nvim -c "DiffviewOpen"'';
+      };
+
+      user.signingkey = "620394D5D26C67A8";
       commit.gpgsign = true;
       tag.gpgsign = true;
       push.gpgsign = "if-asked";
+
+      column.ui = "auto";
+      help.autocorrect = "prompt";
+      status.branch = true;
+
+      branch.sort = "-committerdate";
+      tag.sort = "-version:refname";
+
+      maintenance.auto = true;
+      maintenance.strategy = "incremental";
     };
     lfs.enable = true;
   };

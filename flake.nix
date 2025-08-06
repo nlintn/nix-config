@@ -1,5 +1,5 @@
 {
-  outputs = { self, nixpkgs, home-manager, nixpkgs-overlay, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, nixpkgs-overlay, nix-colors, ... } @ inputs:
     let
       system = "x86_64-linux"; # default system
       lib = nixpkgs.lib;
@@ -7,7 +7,7 @@
       overlays = [ nixpkgs-overlay.overlays.default ];
       pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
       userSettings = {
-        colorScheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;
+        colorScheme = nix-colors.colorSchemes.catppuccin-macchiato;
         default-font = {
           name = "JetBrainsMono Nerd Font";
           package = pkgs.nerd-fonts.jetbrains-mono;
@@ -18,15 +18,16 @@
         wm = "hyprland";
       };
       specialArgs = {
-        inherit inputs self overlays lib' userSettings;
+        inherit inputs overlays lib' userSettings;
         config-store-path = builtins.path { path = self; };
-      };
+        hmSubmodules = import ./home/submodules.nix;
+      } // inputs;
     in {
       nixosConfigurations = import ./hosts {
         inherit lib system specialArgs;
       };
       homeConfigurations = import ./home {
-        inherit lib home-manager pkgs specialArgs;
+        inherit home-manager pkgs specialArgs;
       };
       packages = lib'.eachSystem nixpkgs (_: rec {
         iso = self.nixosConfigurations.iso.config.system.build.isoImage;
@@ -58,10 +59,5 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
-
-    pwndbg = {
-      url = "github:pwndbg/pwndbg";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 }

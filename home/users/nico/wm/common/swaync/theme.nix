@@ -1,4 +1,4 @@
-{ config, userSettings }:
+{ config, userSettings, ... }:
 
 with config.colorScheme.palette; /* css */ ''
   * {

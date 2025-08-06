@@ -1,9 +1,9 @@
-{ pkgs, config, userSettings, ... }:
+{ config, options, pkgs, userSettings, ... }:
 
 let 
   scrollback_pager = pkgs.writeShellScript "scrollback_pager" ''
     set -eu
-    
+
     if [ "$#" -eq 3 ]; then
         INPUT_LINE_NUMBER=''${1:-0}
         CURSOR_LINE=''${2:-1}
@@ -12,7 +12,7 @@ let
     else
         AUTOCMD_TERMCLOSE_CMD="normal G"
     fi
-    
+
     exec ${config.programs.neovim.finalPackage}/bin/nvim 63<&0 0</dev/null \
         -u NONE \
         -c "map <silent> q :qa!<CR>" \
@@ -26,6 +26,14 @@ in {
   imports = [ ./base16-colors.nix ];
   programs.kitty = {
     enable = true;
+    package = let
+      pkg = options.programs.kitty.package.default;
+    in pkgs.symlinkJoin {
+      name = pkg.name;
+      paths = [ pkg ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = "wrapProgram $out/bin/kitty --add-flags -1";
+    };
     settings = {
       background_opacity = "0.85";
 

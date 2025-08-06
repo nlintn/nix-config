@@ -1,8 +1,11 @@
-{ config, userSettings, ... }:
+{ ... } @ args:
 
 {
   services.swaync = {
     enable = true;
-    style = import ./theme.nix { inherit config userSettings; };
+    style = import ./theme.nix args;
+    settings = {
+      cssPriority = "user";
+    };
   };
 }

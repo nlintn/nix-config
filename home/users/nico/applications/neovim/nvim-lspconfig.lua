@@ -3,6 +3,9 @@ vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
 vim.keymap.set('n', 'gl', function() vim.diagnostic.open_float { border = 'single', } end, {})
 vim.keymap.set('n', '<F4>', vim.lsp.buf.code_action, {})
 
+vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
+vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
+
 vim.keymap.set('i', '<C-s>', function() vim.lsp.buf.signature_help { border = 'single', } end, {})
 vim.keymap.set('v', '<C-s>', function() vim.lsp.buf.signature_help { border = 'single', } end, {})
 

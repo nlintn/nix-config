@@ -5,17 +5,17 @@ let
 
   chromium = lib.mkIf config.programs.chromium.enable "chromium-browser.desktop";
   desmume = "org.desmume.DeSmuME.desktop";
-  evince = "org.Gnome.Evince.desktop";
+  evince = lib.mkIf config.programs.evince.enable "org.gnome.Evince.desktop";
   firefox = lib.mkIf config.programs.firefox.enable config.programs.firefox.finalPackage.desktopItem.name;
   gimp = "gimp.desktop";
   image-roll = "com.github.weclaw1.ImageRoll.desktop";
-  keepassxc = "org.keepassxc.KeePassXC.desktop";
+  keepassxc = lib.mkIf config.programs.keepassxc.enable "org.keepassxc.KeePassXC.desktop";
   neovim = lib.mkIf config.programs.neovim.enable "nvim.desktop";
   pdf-arranger = "com.github.jeromerobert.pdfarranger.desktop";
   prusa-slicer = "PrusaSlicer.desktop";
   prusa-gcode-viewer = "PrusaGcodeviewer.desktop";
   swayimg = "swayimg.desktop";
-  thunar = "thunar.desktop";
+  thunar = lib.mkIf config.programs.thunar.enable "thunar.desktop";
   thunderbird = lib.mkIf config.programs.thunderbird.enable config.programs.thunderbird.package.desktopItem.name;
   vlc = "vlc.desktop";
   wireshark = "org.wireshark.Wireshark.desktop";
@@ -62,10 +62,17 @@ let
   ];
 
   browsers = f [
-    "X-scheme-handler/http"
-    "X-scheme-handler/https"
-    "X-scheme-handler/about"
-    "X-scheme-handler/unknown"
+    "x-scheme-handler/http"
+    "x-scheme-handler/https"
+    "x-scheme-handler/chrome"
+    "x-scheme-handler/about"
+    "x-scheme-handler/unknown"
+    "application/x-extension-htm"
+    "application/x-extension-html"
+    "application/x-extension-shtml"
+    "application/xhtml+xml"
+    "application/x-extension-xhtml"
+    "application/x-extension-xht"
   ] [
     firefox
     chromium
@@ -83,8 +90,8 @@ let
   folders = f [
     "inode/directory"
   ] [
-    yazi
     thunar
+    yazi
   ];
 
   images = f [
@@ -183,7 +190,7 @@ let
     vlc
   ];
 
-  x-content = f [
+  media = f [
     "x-content/audio-cdda"
     "x-content/video-svcd"
     "x-content/video-vcd"
@@ -212,5 +219,5 @@ in
     packetCaptures
     texts
     videos
-    x-content
+    media
   ]) // extraSettings

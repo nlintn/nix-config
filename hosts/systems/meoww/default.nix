@@ -1,17 +1,45 @@
-{ config, pkgs, ... }:
+{ config, pkgs, userSettings, ... }:
 
 {
   system.stateVersion = "25.11";
 
   imports = [
     ./bootloader.nix
+    ./disko
+    ./displaymanager.nix
     ./hardware-configuration.nix
     ./network-configuration.nix
-    ./disko
-    ./users
+
+    ./users/nico.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  colorScheme = userSettings.colorScheme;
+
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
+  boot = {
+    initrd.systemd.enable = true;
+    kernelPackages = pkgs.linuxPackages_latest;
+    blacklistedKernelModules = [ "intel-ipu6-isys" ];
+  };
+
+  boot.tmp.useTmpfs = true;
+  boot.tmp.tmpfsHugeMemoryPages = "within_size";
+  nix.settings.build-dir = "/var/tmp";
+  systemd.services.nix-daemon.environment."TMPDIR" = config.nix.settings.build-dir;
+
+  console = {
+    # earlySetup = true;
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
+    colors = with config.colorScheme.palette; [
+      base00 base08 base0B base0A base0D base0E base0C base07
+      base04 base08 base0B base0A base0D base0E base0C base05
+    ];
+  };
+
+  time.hardwareClockInLocalTime = true;
 
   hardware.i2c.enable = true;
 
@@ -20,36 +48,10 @@
     lidSwitch = "suspend";
   };
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    config.common.default = "*";
-  };
-
   services.libinput = {
     enable = true;
     mouse.accelProfile = "flat";
     touchpad.accelProfile = "adaptive";
-  };
-
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format \"%d. %b %Y %H:%M:%S\" --asterisks --user-menu --remember --remember-session --sessions ${config.programs.hyprland.package}/share/wayland-sessions";
-        user = "greeter";
-      };
-    };
-  };
-  systemd.services.greetd.serviceConfig = {
-    Type = "idle";
-    StandardInput = "tty";
-    StandardOutput = "tty";
-    StandardError = "journal"; # Without this errors will spam on screen
-    # Without these bootlogs will spam on screen
-    TTYReset = true;
-    TTYVHangup = true;
-    TTYVTDisallocate = true;
   };
 
   # hardware.ipu6 = {
@@ -61,16 +63,12 @@
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    # alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-    wireplumber = {
-      enable = true;
-      extraConfig = { };
-    };
+    wireplumber.enable = true;
+    alsa.enable = false;
+    jack.enable = false;
   };
+  services.pulseaudio.enable = false;
   
   hardware.bluetooth = {
     enable = true;
@@ -93,8 +91,6 @@
     };
   };
 
-  programs.zsh.enable = true;
-
   security.polkit.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -113,10 +109,10 @@
   };
 
   services = {
-    blueman.enable = true;
-    gvfs.enable = true;
-    pcscd.enable = true;
-    tumbler.enable = true;
+    blueman.enable = true; # bluetooth manager
+    gvfs.enable = true; # for hot plugging usb storage etc
+    pcscd.enable = true; # smart cards
+    tumbler.enable = true; # thumbnails
     upower.enable = true;
   };
 
@@ -131,11 +127,8 @@
     # nix-ld.libraries = with pkgs; [];
     steam.enable = true;
     wireshark.enable = true;
-  };
-
-  virtualisation.docker = {
-    enable = true;
-    enableOnBoot = false;
+    xfconf.enable = true;
+    zsh.enable = true;
   };
 
   virtualisation.virtualbox = {
@@ -150,8 +143,6 @@
     man.enable = true;
     dev.enable = true;
   };
-
-  # hardware.opentabletdriver.enable = true;
 
   hardware.enableAllFirmware = true;
   # Power Management
@@ -194,6 +185,5 @@
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
-    settings.extra-trusted-users = [ "@wheel" ];
   };
 }

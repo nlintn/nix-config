@@ -10,7 +10,7 @@
     ghidra
     ghostscript
     gnumake
-    # jetbrains.idea-ultimate
+    jetbrains.idea-ultimate
     ocamlPackages.utop
     postgresql
     postman

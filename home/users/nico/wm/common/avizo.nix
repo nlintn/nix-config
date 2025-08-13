@@ -2,7 +2,7 @@
 
 let
   toRGBA = RGBhex: alpha:
-    "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex}, ${builtins.toString alpha})";
+    "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex},${builtins.toString alpha})";
 in {
   services.avizo = {
     enable = true;

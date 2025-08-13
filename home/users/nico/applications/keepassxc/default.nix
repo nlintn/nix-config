@@ -10,7 +10,7 @@ in {
     settings = {
       General = {
         AutoSaveAfterEveryChange = false;
-        AutoSaveOnExit = true;
+        AutoSaveOnExit = false;
         AutoSaveNonDataChanges = false;
         BackupBeforeSave = true;
       };
@@ -39,8 +39,7 @@ in {
         ClearSearch = true;
         ClearSearchTimeout = 5;
         IconDownloadFallback = true;
-        LockDatabaseIdle = true;
-        LockDatabaseIdleSeconds = 600;
+        LockDatabaseIdle = false;
         LockDatabaseScreenLock = true;
         NoConfirmMoveEntryToRecycleBin = true;
         PasswordEmptyPlaceholder = true;

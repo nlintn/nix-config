@@ -45,4 +45,6 @@
   };
   environment.shellAliases."dns-restart" = "${config.systemd.package}/bin/systemctl restart dnscrypt-proxy2.service";
   environment.shellAliases."dns-stop" = "${config.systemd.package}/bin/systemctl stop dnscrypt-proxy2.service";
+
+  systemd.services.NetworkManager-wait-online.enable = false;
 }

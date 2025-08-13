@@ -6,12 +6,15 @@
   ];
 
   boot = {
-    loader.efi.canTouchEfiVariables = true;
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
     };
-    loader.systemd-boot.enable = lib.mkForce false;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      timeout = 0;
+    };
   };
+  boot.loader.systemd-boot.enable = lib.mkForce false;
 
 }

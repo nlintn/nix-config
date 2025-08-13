@@ -31,7 +31,7 @@
     mark3_foreground = "#${base00}";
     mark3_background = "#${base0C}";
 
-    color0 = "#${base03}";
+    color0 = "#${base01}";
     color8 = "#${base03}";
 
     color1 = "#${base08}";

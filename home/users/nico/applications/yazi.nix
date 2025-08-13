@@ -1,10 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, ... } @ args:
 
 {
   programs.yazi = {
     enable = true;
     package = pkgs.yazi.override { extraPackages = [ pkgs.exiftool ]; };
-    enableZshIntegration = true;
     settings = {
       mgr.show_hidden = true;
       opener.open = [
@@ -12,6 +11,12 @@
         { run = ''${config.home.shellAliases.xopen} "$@"''; desc = "XOpen"; }
       ];
     };
+    plugins = with pkgs.yaziPlugins; {
+      inherit full-border;
+    };
+    initLua = /* lua */ ''
+      require("full-border"):setup()
+    '';
     theme = with config.colorScheme.palette; {
       mgr = {
         cwd = { fg = "#${base0C}"; };
@@ -44,7 +49,7 @@
         border_style  = { fg = "#${base04}"; };
 
         # Highlighting
-        # syntect_theme = "~/.config/yazi/Catppuccin-macchiato.tmTheme";
+        syntect_theme = import ./tm-theme.nix args;
       };
 
       status = {

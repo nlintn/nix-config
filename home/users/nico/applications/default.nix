@@ -4,7 +4,7 @@
   imports = [
     ./packages.nix
 
-    ./bat
+    ./bat.nix
     ./firefox.nix
     ./fzf.nix
     ./gdb.nix
@@ -14,13 +14,12 @@
     ./kitty
     ./neovim
     ./obs-studio.nix
-    ./shell
     ./ssh.nix
     ./thunar.nix
     ./thunderbird.nix
     ./vlc.nix
     ./yazi.nix
-    ./zellij.nix
+    ./zathura.nix
   ];
 
   nixpkgs.config = lib.mkIf (!(osConfig.home-manager.useGlobalPkgs or false)) {
@@ -40,7 +39,6 @@
       enable = true;
       settings.git.overrideGpg = true;
     };
-    zathura.enable = true;
   };
 
   services = {

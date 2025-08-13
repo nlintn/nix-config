@@ -19,16 +19,16 @@
       };
       listener = [
         {
-          timeout = 175;
+          timeout = 180;
           on-timeout = "${pkgs.brightnessctl}/bin/brightnessctl -s set 75%-";
           on-resume = "${pkgs.brightnessctl}/bin/brightnessctl -r";
         }
         {
-          timeout = 180;
+          timeout = 190;
           on-timeout = config.home.sessionVariables.SESSION_LOCK_CMD;
         }
         {
-          timeout = 240;
+          timeout = 250;
           on-timeout = "${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl dispatch dpms off";
           on-resume = "${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl dispatch dpms on";
         }

@@ -17,7 +17,7 @@ let
         -u NONE \
         -c "map <silent> q :qa!<CR>" \
         -c "set shell=bash scrollback=100000 laststatus=0 clipboard+=unnamedplus" \
-        -c "autocmd VimEnter * hi Normal guibg=NONE ctermbg=NONE" \
+        -c "autocmd VimEnter * hi Normal guifg=#${config.colorScheme.palette.base05} guibg=NONE ctermbg=NONE" \
         -c "autocmd TermEnter * stopinsert" \
         -c "autocmd TermClose * ''${AUTOCMD_TERMCLOSE_CMD}" \
         -c 'terminal sed </dev/fd/63 -e "s/'$'\x1b''']8;;file:[^\]*[\]//g" && sleep 0.01 && printf "'$'\x1b''']2;"' 
@@ -37,7 +37,7 @@ in {
     settings = {
       background_opacity = "0.85";
 
-      cursor_shape = "block";
+      cursor_shape = "beam";
       cursor_blink_interval = 0;
       disable_ligatures = "always";
 

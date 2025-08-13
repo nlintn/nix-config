@@ -20,7 +20,7 @@ let
   vlc = "vlc.desktop";
   wireshark = "org.wireshark.Wireshark.desktop";
   yazi = lib.mkIf config.programs.yazi.enable "yazi.desktop";
-  zathura = "org.pwmt.zathura.desktop";
+  zathura = lib.mkIf config.programs.zathura.enable "org.pwmt.zathura.desktop";
 
   audios = f [
     "audio/basic"
@@ -82,8 +82,8 @@ let
     "application/pdf"
     "application/postscript"
   ] [
-    evince
     zathura
+    evince
     pdf-arranger
   ];
   

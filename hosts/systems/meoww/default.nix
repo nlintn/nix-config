@@ -1,4 +1,4 @@
-{ config, pkgs, userSettings, ... }:
+{ config, pkgs, self, userSettings, ... }:
 
 {
   system.stateVersion = "25.11";
@@ -20,7 +20,7 @@
   };
 
   boot = {
-    initrd.systemd.enable = true;
+    # initrd.systemd.enable = true;
     kernelPackages = pkgs.linuxPackages_latest;
     blacklistedKernelModules = [ "intel-ipu6-isys" ];
   };
@@ -29,6 +29,13 @@
   boot.tmp.tmpfsHugeMemoryPages = "within_size";
   nix.settings.build-dir = "/var/tmp";
   systemd.services.nix-daemon.environment."TMPDIR" = config.nix.settings.build-dir;
+
+  system.autoUpgrade = {
+    enable = true;
+    dates = "daily";
+    flags = [ "--update-input" "nixpkgs" "-L" "--no-write-lock-file" ];
+    flake = self.outPath;
+  };
 
   console = {
     # earlySetup = true;
@@ -97,7 +104,6 @@
     man-pages linux-manual man-pages-posix
 
     arp-scan
-    git
     powertop
     psmisc
     sbctl
@@ -130,6 +136,10 @@
     xfconf.enable = true;
     zsh.enable = true;
   };
+  environment.etc."vimrc".text = ''
+    let &t_SI = "\e[6 q"
+    let &t_EI = "\e[2 q"
+  '';
 
   virtualisation.virtualbox = {
     host = {

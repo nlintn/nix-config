@@ -10,12 +10,13 @@ let
   var_grimblast = "${pkgs.grimblast}/bin/grimblast";
   var_hyprpicker = "${pkgs.hyprpicker}/bin/hyprpicker";
   var_hyprtabs = "${pkgs.callPackage ./scripts/hyprtabs.nix args}/bin/hyprtabs";
+  var_lock-cmd = config.home.sessionVariables.SESSION_LOCK_CMD;
   var_lock-transparent = "${pkgs.callPackage ./hyprlock/lock-transparent.nix args}";
   var_loginctl = config.systemd.user.loginctlPath;
   var_playerctl = "${config.services.playerctld.package}/bin/playerctl";
   var_pwm = "${config.programs.keepassxc.package}/bin/keepassxc";
   var_rofi = "${config.programs.rofi.finalPackage}/bin/rofi";
-  var_rofi-power-menu = "${pkgs.callPackage ../common/rofi/rofi-power-menu.nix args}";
+  var_power-menu = "${config.programs.wlogout.package}/bin/wlogout";
   var_scratchpad = "${pkgs.hyscratchpad.override { libnotify = null; }}/bin/scratchpad";
   var_swappy = "${pkgs.swappy}/bin/swappy";
   var_swaync-client = "${config.services.swaync.package}/bin/swaync-client";
@@ -57,9 +58,9 @@ in with config.colorScheme.palette; {
       "T, exec, ${var_rofi} -modi ssh -show ssh"
       "PERIOD, exec, ${var_rofi} -modi emoji -show emoji -matching normal"
       "V, exec, ${var_copyq} show"
-      "BACKSPACE, exec, ${var_loginctl} lock-session"
+      "BACKSPACE, exec, ${var_lock-cmd}"
       "SHIFT, BACKSPACE, exec, ${var_lock-transparent}"
-      "RETURN, exec, ${var_rofi} -show power-menu -modi 'power-menu:${var_rofi-power-menu}'"
+      "RETURN, exec, ${var_power-menu}"
       "PLUS, exec, ${var_swaync-client} --toggle-panel"
       "SHIFT, PLUS, exec, ${var_swaync-client} -C"
       "CTRL, PLUS, exec, ${var_swaync-client} --toggle-dnd"
@@ -234,6 +235,7 @@ in with config.colorScheme.palette; {
       indicator_gap = 0;
       indicator_height = 0;
       keep_upper_gap = false;
+      scrolling = false;
       text_color = "0xff${base05}";
       text_offset = 1;
 
@@ -286,12 +288,12 @@ in with config.colorScheme.palette; {
     "float, class:org.keepassxc.KeePassXC, title:Generate Password"
 
     "float, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
-    "move onscreen cursor, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
+    "center, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
     "pin, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
     "stayfocused, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
 
     "float, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
-    "move onscreen cursor, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
+    "center, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
     "pin, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
     "stayfocused, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
 

@@ -5,8 +5,8 @@ pkgs.vimUtils.buildVimPlugin {
   src = pkgs.fetchFromGitHub {
     owner = "RRethy";
     repo = "base16-nvim";
-    rev = "5d0fcd834d48048822e36221ab067bedb3ef5c93";
-    hash = "sha256-BqycJYqqCjSGjJSji5HK6IuBaagWhbsY3GBKTUgPsgw=";
+    rev = "860f1cabe934de259c955792fca9d9a2fd8aea01";
+    hash = "sha256-/Wus4s+jEhPsZfk5mmMSXkKbJhNsw7VllD0+YhrRgJA=";
   };
   patches = [ ./color-changes.patch ];
 }

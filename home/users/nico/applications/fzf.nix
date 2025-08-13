@@ -13,12 +13,12 @@ in {
       "--color=${color}"
     ];
     fileWidgetOptions = [       # CTRL-T Options
-      "--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+      "--preview '(${config.programs.bat.package}/bin/bat --paging=never --color=always {} || ${pkgs.tree}/bin/tree -C {}) 2> /dev/null | head -200'"
     ];
     historyWidgetOptions = [    # CTRL-R Options
     ];
     changeDirWidgetOptions = [  #  ALT-C Options
-      "--preview 'tree -C {}'"
+      "--preview '${pkgs.tree}/bin/tree -C {}'"
     ];
     fileWidgetCommand = "${pkgs.fd}/bin/fd -I -t f -L";
     changeDirWidgetCommand = "${pkgs.fd}/bin/fd -I -t d -L";

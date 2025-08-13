@@ -12,6 +12,7 @@ in {
     ../common/gtk-theme.nix
     ../common/rofi
     ../common/swaync
+    ../common/wlogout.nix
 
     ./hypridle.nix
     ./hyprlock
@@ -54,7 +55,7 @@ in {
     };
 
     plugins = with pkgs.hyprlandPlugins; [
-      (hyprsplit.overrideAttrs { src = pkgs.fetchFromGitHub { owner = "shezdy"; repo = "hyprsplit"; rev = "v0.50.1"; sha256 = "sha256-D0zfdUJXBRnNMmv/5qW+X4FJJ3/+t7yQmwJFkBuEgck="; }; })
+      hyprsplit
     ];
 
     settings = import ./hypr-settings.nix (args // customPkgs);

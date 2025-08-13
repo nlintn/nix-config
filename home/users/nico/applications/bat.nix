@@ -8,7 +8,7 @@
       paging = "always";
     };
     themes = {
-      "base16".src = import ./theme.nix args;
+      "base16".src = import ./tm-theme.nix args;
     };
   };
 }

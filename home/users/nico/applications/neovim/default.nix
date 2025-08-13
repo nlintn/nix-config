@@ -245,7 +245,6 @@
 
       # Misc
       fd
-      # nodePackages.nodejs
       ripgrep
     ];
   };

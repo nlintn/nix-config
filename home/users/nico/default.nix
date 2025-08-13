@@ -7,7 +7,7 @@
     ./applications
 
     ./fonts.nix
-
+    ./shell
     ./xdg
 
     ./wm

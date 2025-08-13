@@ -17,7 +17,7 @@
     };
   
     iconTheme = {
-      package = pkgs.kora-icon-theme;
+      package = pkgs.kora-icon-theme.overrideDerivation (_: { dontWrapQtApps = true; }); # TODO: remove after in nixos-unstable
       name = "kora";
     };
   

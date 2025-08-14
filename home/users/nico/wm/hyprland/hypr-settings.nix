@@ -1,4 +1,4 @@
-{ config, pkgs, lib', userSettings, hyreload, ... } @ args:
+{ config, lib, pkgs, lib', userSettings, hyreload, ... } @ args:
 
 let
   evalBinds = lib'.hyprland.evalBinds;
@@ -16,7 +16,7 @@ let
   var_playerctl = "${config.services.playerctld.package}/bin/playerctl";
   var_pwm = "${config.programs.keepassxc.package}/bin/keepassxc";
   var_rofi = "${config.programs.rofi.finalPackage}/bin/rofi";
-  var_power-menu = "${config.programs.wlogout.package}/bin/wlogout";
+  var_power-menu = "${lib.getExe config.programs.wlogout.package}";
   var_scratchpad = "${pkgs.hyscratchpad.override { libnotify = null; }}/bin/scratchpad";
   var_swappy = "${pkgs.swappy}/bin/swappy";
   var_swaync-client = "${config.services.swaync.package}/bin/swaync-client";

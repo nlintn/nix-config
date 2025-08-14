@@ -113,6 +113,7 @@
   programs.hyprland = {
     enable = true;
   };
+  programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
 
   services = {
     blueman.enable = true; # bluetooth manager

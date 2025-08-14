@@ -12,7 +12,7 @@ in {
     ../common/gtk-theme.nix
     ../common/rofi
     ../common/swaync
-    ../common/wlogout.nix
+    ../common/wlogout
 
     ./hypridle.nix
     ./hyprlock

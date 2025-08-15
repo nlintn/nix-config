@@ -113,6 +113,10 @@
   programs.hyprland = {
     enable = true;
   };
+  security.pam.services."hyprlock" = {
+    enable = true;
+    enableGnomeKeyring = config.services.gnome.gnome-keyring.enable;
+  };
   programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
 
   services = {

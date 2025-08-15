@@ -1,7 +1,12 @@
 { config, pkgs, ... }:
 
 let
-  pkg_patched = pkgs.keepassxc.overrideAttrs (_: prev: { patches = prev.patches ++ [ ./disable_config_access_error.patch ];});
+  pkg_patched = pkgs.keepassxc.overrideAttrs (_: prev: {
+    patches = prev.patches or [] ++ [
+      ./0001-disable-config-access-error-message-on-config-load.patch
+      ./0002-disable-save-changes-modal-on-database-lock.patch
+    ];
+  });
 in {
   programs.keepassxc = {
     enable = true;

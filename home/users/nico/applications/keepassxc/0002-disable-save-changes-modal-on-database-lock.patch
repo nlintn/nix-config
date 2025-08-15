@@ -1,0 +1,34 @@
+From 1d3aa182c959b97e5dd5577964be6e5f8fd354ea Mon Sep 17 00:00:00 2001
+From: Nico Lintner <118087966+nlintn@users.noreply.github.com>
+Date: Fri, 15 Aug 2025 14:33:38 +0200
+Subject: [PATCH 2/2] disable save changes modal on database lock
+
+---
+ src/gui/DatabaseWidget.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/gui/DatabaseWidget.cpp b/src/gui/DatabaseWidget.cpp
+index 90f2fecb..cc756a7d 100644
+--- a/src/gui/DatabaseWidget.cpp
++++ b/src/gui/DatabaseWidget.cpp
+@@ -1886,7 +1886,7 @@ bool DatabaseWidget::lock()
+             }
+         }
+ 
+-        if (!saved) {
++        /* if (!saved) {
+             QString msg;
+             if (!m_db->metadata()->name().toHtmlEscaped().isEmpty()) {
+                 msg = tr("\"%1\" was modified.\nSave changes?").arg(m_db->metadata()->name().toHtmlEscaped());
+@@ -1907,7 +1907,7 @@ bool DatabaseWidget::lock()
+                 m_attemptingLock = false;
+                 return false;
+             }
+-        }
++        } */
+     } else if (m_db->hasNonDataChanges() && config()->get(Config::AutoSaveNonDataChanges).toBool()) {
+         // Silently auto-save non-data changes, ignore errors
+         QString errorMessage;
+-- 
+2.50.1
+

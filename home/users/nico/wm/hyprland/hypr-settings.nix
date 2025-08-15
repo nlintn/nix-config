@@ -236,12 +236,12 @@ in with config.colorScheme.palette; {
       indicator_height = 0;
       keep_upper_gap = false;
       scrolling = false;
-      text_color = "0xff${base05}";
+      text_color = "rgb(${base05})";
       text_offset = 1;
 
-      "col.active" = "0x99${base0E}";
+      "col.active" = "rgba(${base0E}99)";
       font_weight_active = "semibold";
-      "col.inactive" = "0x55${base0E}";
+      "col.inactive" = "rgba(${base0E}55)";
       font_weight_inactive= "light";
     };
   };

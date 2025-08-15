@@ -185,8 +185,9 @@ in {
           --tab-selected-outline-color: #${base0E} !important;
           --tab-loading-fill: #${base0E} !important;
           --toolbarbutton-icon-fill-attention: #${base0E} !important;
+          --toolbar-field-color: #${base05} !important;
           --toolbar-field-background-color: #${base00} !important;
-          /* --toolbar-field-focus-color: #${base05} !important; */
+          --toolbar-field-focus-color: #${base05} !important;
           --toolbar-field-focus-background-color: #${base00} !important;
           --urlbarView-highlight-background: #${base02} !important;
           --urlbarView-highlight-color: #${base05} !important;
@@ -212,14 +213,14 @@ in {
           --sidebar-background-color : #${base00} !important;
           --sidebar-border-color : #${base03} !important;
           --sidebar-text-color : #${base05} !important;
-
         }
         ::selection {
           background: ${toRGBA base0E 0.3} !important;
-          color: #cad3f5 !important;
+          color: #${base05} !important;
         }
         menupopup {
           --panel-background: #${base00} !important;
+          --panel-color: #${base05} !important;
         }
       '';
 

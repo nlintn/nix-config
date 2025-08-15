@@ -1,14 +1,14 @@
-From 408140e796787e3fdccca451fcf0fd1456110c9e Mon Sep 17 00:00:00 2001
+From 51b67851618be24fcaa18373fe168164cd4600e5 Mon Sep 17 00:00:00 2001
 From: Nico Lintner <118087966+nlintn@users.noreply.github.com>
 Date: Fri, 8 Aug 2025 17:02:07 +0200
 Subject: [PATCH] color changes
 
 ---
- lua/base16-colorscheme.lua | 196 ++++++++++++++++++-------------------
- 1 file changed, 96 insertions(+), 100 deletions(-)
+ lua/base16-colorscheme.lua | 198 ++++++++++++++++++-------------------
+ 1 file changed, 98 insertions(+), 100 deletions(-)
 
 diff --git a/lua/base16-colorscheme.lua b/lua/base16-colorscheme.lua
-index 996b47c..3c5a888 100644
+index 996b47c..fc088d5 100644
 --- a/lua/base16-colorscheme.lua
 +++ b/lua/base16-colorscheme.lua
 @@ -92,7 +92,6 @@ M.highlight = setmetatable({}, {
@@ -155,16 +155,18 @@ index 996b47c..3c5a888 100644
  
      -- Spelling highlighting
      hi.SpellBad                           = { guifg = nil, guibg = nil, gui = 'undercurl', guisp = M.colors.base08, ctermfg = nil, ctermbg = nil }
-@@ -261,7 +262,7 @@ function M.setup(colors, config)
+@@ -260,8 +261,9 @@ function M.setup(colors, config)
+     hi.SpellCap                           = { guifg = nil, guibg = nil, gui = 'undercurl', guisp = M.colors.base0D, ctermfg = nil, ctermbg = nil }
      hi.SpellRare                          = { guifg = nil, guibg = nil, gui = 'undercurl', guisp = M.colors.base0E, ctermfg = nil, ctermbg = nil }
  
++    hi.DiagnosticOk                       = { guifg = M.colors.base0B, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
      hi.DiagnosticError                    = { guifg = M.colors.base08, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
 -    hi.DiagnosticWarn                     = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
 +    hi.DiagnosticWarn                     = { guifg = M.colors.base0A, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
      hi.DiagnosticInfo                     = { guifg = M.colors.base0D, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0D, ctermbg = nil }
      hi.DiagnosticHint                     = { guifg = M.colors.base0C, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0C, ctermbg = nil }
      hi.DiagnosticUnderlineError           = { guifg = nil, guibg = nil, gui = 'undercurl', guisp = M.colors.base08, ctermfg = nil, ctermbg = nil }
-@@ -285,7 +286,7 @@ function M.setup(colors, config)
+@@ -285,7 +287,7 @@ function M.setup(colors, config)
      hi.TSAnnotation                       = { guifg = M.colors.base0F, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0F, ctermbg = nil }
      hi.TSAttribute                        = { guifg = M.colors.base0A, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
      hi.TSBoolean                          = { guifg = M.colors.base09, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm09, ctermbg = nil }
@@ -173,7 +175,7 @@ index 996b47c..3c5a888 100644
      hi.TSComment                          = { guifg = M.colors.base03, guibg = nil, gui = 'italic', guisp = nil, ctermfg = M.colors.cterm03, ctermbg = nil }
      hi.TSConstructor                      = { guifg = M.colors.base0D, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0D, ctermbg = nil }
      hi.TSConditional                      = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
-@@ -294,26 +295,27 @@ function M.setup(colors, config)
+@@ -294,26 +296,27 @@ function M.setup(colors, config)
      hi.TSConstMacro                       = { guifg = M.colors.base08, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
      hi.TSError                            = { guifg = M.colors.base08, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
      hi.TSException                        = { guifg = M.colors.base08, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
@@ -211,7 +213,7 @@ index 996b47c..3c5a888 100644
      hi.TSPunctSpecial                     = { guifg = M.colors.base0F, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0F, ctermbg = nil }
      hi.TSRepeat                           = { guifg = M.colors.base0E, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0E, ctermbg = nil }
      hi.TSString                           = { guifg = M.colors.base0B, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0B, ctermbg = nil }
-@@ -324,15 +326,16 @@ function M.setup(colors, config)
+@@ -324,15 +327,16 @@ function M.setup(colors, config)
      hi.TSTagDelimiter                     = { guifg = M.colors.base0F, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm0F, ctermbg = nil }
      hi.TSText                             = { guifg = M.colors.base05, guibg = nil, gui = 'none', guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
      hi.TSStrong                           = { guifg = nil, guibg = nil, gui = 'bold', guisp = nil, ctermfg = nil, ctermbg = nil }
@@ -234,7 +236,7 @@ index 996b47c..3c5a888 100644
      hi.TSVariableBuiltin                  = { guifg = M.colors.base08, guibg = nil, gui = 'italic', guisp = nil, ctermfg = M.colors.cterm08, ctermbg = nil }
  
      hi.TSDefinition                       = { guifg = nil, guibg = nil, gui = 'underline', guisp = M.colors.base04, ctermfg = nil, ctermbg = nil }
-@@ -340,11 +343,15 @@ function M.setup(colors, config)
+@@ -340,11 +344,15 @@ function M.setup(colors, config)
      hi.TSCurrentScope                     = { guifg = nil, guibg = nil, gui = 'bold', guisp = nil, ctermfg = nil, ctermbg = nil }
  
      hi.LspInlayHint                       = { guifg = M.colors.base03, guibg = nil, gui = 'italic', guisp = nil, ctermfg = M.colors.cterm03, ctermbg = nil }
@@ -251,7 +253,7 @@ index 996b47c..3c5a888 100644
          hi['@preproc']                  = 'PreProc'
          hi['@define']                   = 'Define'
          hi['@operator']                 = 'TSOperator'
-@@ -372,6 +379,7 @@ function M.setup(colors, config)
+@@ -372,6 +380,7 @@ function M.setup(colors, config)
          hi['@keyword.function']         = 'TSKeywordFunction'
          hi['@keyword.operator']         = 'TSKeywordOperator'
          hi['@keyword.return']           = 'TSKeyword'
@@ -259,7 +261,7 @@ index 996b47c..3c5a888 100644
          hi['@conditional']              = 'TSConditional'
          hi['@repeat']                   = 'TSRepeat'
          hi['@debug']                    = 'Debug'
-@@ -397,6 +405,7 @@ function M.setup(colors, config)
+@@ -397,6 +406,7 @@ function M.setup(colors, config)
          hi['@text.diff.add']            = 'DiffAdd'
          hi['@text.diff.delete']         = 'DiffDelete'
          hi['@text.strong']              = 'TSStrong'
@@ -267,7 +269,7 @@ index 996b47c..3c5a888 100644
          hi['@text.emphasis']            = 'TSEmphasis'
          hi['@text.underline']           = 'TSUnderline'
          hi['@text.strike']              = 'TSStrike'
-@@ -427,7 +436,6 @@ function M.setup(colors, config)
+@@ -427,7 +437,6 @@ function M.setup(colors, config)
          hi['@diff.delta']               = 'DiffChange'
          hi['@string.special.url']       = '@text.uri'
          hi['@keyword.directive']        = '@preproc'
@@ -275,7 +277,7 @@ index 996b47c..3c5a888 100644
          hi['@keyword.storage']          = '@storageclass'
          hi['@keyword.conditional']      = '@conditional'
          hi['@keyword.debug']            = '@debug'
-@@ -443,7 +451,7 @@ function M.setup(colors, config)
+@@ -443,7 +452,7 @@ function M.setup(colors, config)
          hi['@markup.strong']            = '@text.strong'
          hi['@markup.italic']            = 'Italic'
          hi['@markup.link']              = '@text.link'
@@ -284,7 +286,7 @@ index 996b47c..3c5a888 100644
          hi['@markup.heading']           = '@text.title'
          hi['@markup.raw']               = '@text.literal'
          hi['@markup.link']              = '@text.reference'
-@@ -453,19 +461,19 @@ function M.setup(colors, config)
+@@ -453,19 +462,19 @@ function M.setup(colors, config)
      end
  
      if M.config.ts_rainbow then
@@ -313,7 +315,7 @@ index 996b47c..3c5a888 100644
      hi.NormalNC          = { guifg = M.colors.base05, guibg = M.colors.base00, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = M.colors.cterm00 }
      hi.TermCursor        = { guifg = M.colors.base00, guibg = M.colors.base05, gui = 'none', guisp = nil, ctermfg = M.colors.cterm00, ctermbg = M.colors.cterm05 }
      hi.TermCursorNC      = { guifg = M.colors.base00, guibg = M.colors.base05, gui = nil, guisp = nil, ctermfg = M.colors.cterm00, ctermbg = M.colors.cterm05 }
-@@ -483,33 +491,18 @@ function M.setup(colors, config)
+@@ -483,33 +492,19 @@ function M.setup(colors, config)
      hi.TreesitterContext = { guifg = nil, guibg = M.colors.base01, gui = 'italic', guisp = nil, ctermfg = nil, ctermbg = M.colors.cterm01 }
  
      if M.config.telescope then
@@ -350,16 +352,17 @@ index 996b47c..3c5a888 100644
 +        hi.TelescopePreviewLine    = 'IncSearch'
 +        hi.TelescopePreviewTitle   = { guifg = M.colors.base01, guibg = M.colors.base08, gui = nil, guisp = nil }
 +        hi.TelescopePromptBorder   = { guifg = M.colors.base0E, guibg = nil, gui = nil, guisp = nil }
-+        hi.TelescopePromptNormal   = { guifg = M.colors.base05, guibg = M.colors.base01, gui = nil, guisp = nil }
++        hi.TelescopePromptCounter  = { guifg = M.colors.base04, guibg = nil, gui = nil, guisp = nil }
++        hi.TelescopePromptNormal   = { guifg = M.colors.base05, guibg = nil, gui = nil, guisp = nil }
 +        hi.TelescopePromptPrefix   = { guifg = M.colors.base0B, guibg = nil, gui = nil, guisp = nil }
 +        hi.TelescopePromptTitle    = { guifg = M.colors.base01, guibg = M.colors.base0B, gui = nil, guisp = nil }
 +        hi.TelescopeResultsTitle   = { guifg = M.colors.base01, guibg = M.colors.base09, gui = nil, guisp = nil }
-+        hi.TelescopeSelection      = { guifg = nil, guibg = M.colors.base01, gui = nil, guisp = nil }
-+        hi.TelescopeSelectionCaret = { guifg = M.colors.base09, guibg = M.colors.base01, gui = nil, guisp = nil }
++        hi.TelescopeSelection      = { guifg = nil, guibg = M.colors.base02, gui = nil, guisp = nil }
++        hi.TelescopeSelectionCaret = { guifg = M.colors.base09, guibg = M.colors.base02, gui = nil, guisp = nil }
      end
  
      if M.config.notify then
-@@ -546,7 +539,7 @@ function M.setup(colors, config)
+@@ -546,7 +541,7 @@ function M.setup(colors, config)
      if M.config.cmp then
          hi.CmpDocumentationBorder   = { guifg = M.colors.base05, guibg = M.colors.base00, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = M.colors.cterm00 }
          hi.CmpDocumentation         = { guifg = M.colors.base05, guibg = M.colors.base00, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = M.colors.cterm00 }
@@ -368,7 +371,7 @@ index 996b47c..3c5a888 100644
          hi.CmpItemAbbrDeprecated    = { guifg = M.colors.base03, guibg = nil, gui = 'strikethrough', guisp = nil, ctermfg = M.colors.cterm03, ctermbg = nil }
          hi.CmpItemAbbrMatch         = { guifg = M.colors.base0D, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0D, ctermbg = nil }
          hi.CmpItemAbbrMatchFuzzy    = { guifg = M.colors.base0D, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0D, ctermbg = nil }
-@@ -567,10 +560,10 @@ function M.setup(colors, config)
+@@ -567,10 +562,10 @@ function M.setup(colors, config)
          hi.CmpItemKindEnum          = { guifg = M.colors.base0A, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
          hi.CmpItemKindUnit          = { guifg = M.colors.base0A, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm0A, ctermbg = nil }
          hi.CmpItemKindModule        = { guifg = M.colors.base05, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
@@ -382,7 +385,7 @@ index 996b47c..3c5a888 100644
          hi.CmpItemKindOperator      = { guifg = M.colors.base05, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm05, ctermbg = nil }
          hi.CmpItemKindSnippet       = { guifg = M.colors.base04, guibg = nil, gui = nil, guisp = nil, ctermfg = M.colors.cterm04, ctermbg = nil }
      end
-@@ -585,7 +578,7 @@ function M.setup(colors, config)
+@@ -585,7 +580,7 @@ function M.setup(colors, config)
          hi['@class'] = 'TSType'
          hi['@struct'] = 'TSType'
          hi['@enum'] = 'TSType'
@@ -391,7 +394,7 @@ index 996b47c..3c5a888 100644
          hi['@event'] = 'Identifier'
          hi['@interface'] = 'Structure'
          hi['@modifier'] = 'Identifier'
-@@ -602,11 +595,14 @@ function M.setup(colors, config)
+@@ -602,11 +597,14 @@ function M.setup(colors, config)
          hi['@lsp.type.parameter'] = '@parameter'
          hi['@lsp.type.variable'] = '@variable'
          hi['@lsp.type.property'] = '@property'

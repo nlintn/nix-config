@@ -29,4 +29,5 @@ with config.colorScheme.palette; /* lua */ ''
     base0E = "#${base0E}",
     base0F = "#${base0F}",
   }
+  vim.o.background = 'dark' -- required (regardless of dark or light theme), else neovim magically changes some colors
 ''

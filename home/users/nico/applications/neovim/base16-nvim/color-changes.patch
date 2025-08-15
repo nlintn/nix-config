@@ -1,4 +1,4 @@
-From 408140e796787e3fdccca451fcf0fd1456110c9e Mon Sep 17 00:00:00 2001
+From 213f02aa035efa4f0409a8e767edad00313adbb3 Mon Sep 17 00:00:00 2001
 From: Nico Lintner <118087966+nlintn@users.noreply.github.com>
 Date: Fri, 8 Aug 2025 17:02:07 +0200
 Subject: [PATCH] color changes
@@ -8,7 +8,7 @@ Subject: [PATCH] color changes
  1 file changed, 96 insertions(+), 100 deletions(-)
 
 diff --git a/lua/base16-colorscheme.lua b/lua/base16-colorscheme.lua
-index 996b47c..3c5a888 100644
+index 996b47c..43f38da 100644
 --- a/lua/base16-colorscheme.lua
 +++ b/lua/base16-colorscheme.lua
 @@ -92,7 +92,6 @@ M.highlight = setmetatable({}, {
@@ -350,7 +350,7 @@ index 996b47c..3c5a888 100644
 +        hi.TelescopePreviewLine    = 'IncSearch'
 +        hi.TelescopePreviewTitle   = { guifg = M.colors.base01, guibg = M.colors.base08, gui = nil, guisp = nil }
 +        hi.TelescopePromptBorder   = { guifg = M.colors.base0E, guibg = nil, gui = nil, guisp = nil }
-+        hi.TelescopePromptNormal   = { guifg = M.colors.base05, guibg = M.colors.base01, gui = nil, guisp = nil }
++        hi.TelescopePromptNormal   = { guifg = M.colors.base05, guibg = nil, gui = nil, guisp = nil }
 +        hi.TelescopePromptPrefix   = { guifg = M.colors.base0B, guibg = nil, gui = nil, guisp = nil }
 +        hi.TelescopePromptTitle    = { guifg = M.colors.base01, guibg = M.colors.base0B, gui = nil, guisp = nil }
 +        hi.TelescopeResultsTitle   = { guifg = M.colors.base01, guibg = M.colors.base09, gui = nil, guisp = nil }

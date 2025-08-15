@@ -17,10 +17,6 @@
 
       animation = [ "fade,0" ];
 
-      auth = {
-        "pam:module" = "su";
-      };
-
       background = [
         {
           path = userSettings.lockscreen;

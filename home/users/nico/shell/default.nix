@@ -2,12 +2,11 @@
 
 {
   imports = [
-    ./aliases
+    ./aliases.nix
     ./starship.nix
 
     ./zsh
   ];
-
 
   programs.bash = {
     enable = true;
@@ -16,5 +15,9 @@
 
   programs.dircolors = {
     enable = true;
+  };
+
+  home.sessionVariables = {
+    GROFF_NO_SGR = "1";
   };
 }

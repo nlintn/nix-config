@@ -20,7 +20,7 @@ with config.colorScheme.palette; /* css */ ''
     padding: 0;
     box-shadow: none;
     text-shadow: none;
-    icon-shadow: none;
+    -gtk-icon-shadow: none;
   }
   
   #waybar {

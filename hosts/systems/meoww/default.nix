@@ -1,4 +1,4 @@
-{ config, pkgs, self, userSettings, ... }:
+{ config, lib, pkgs, self, userSettings, ... }:
 
 {
   system.stateVersion = "25.11";
@@ -33,7 +33,11 @@
   system.autoUpgrade = {
     enable = true;
     dates = "daily";
-    flags = [ "--update-input" "nixpkgs" "-L" "--no-write-lock-file" ];
+    flags = [
+      "--update-input nixpkgs" "--update-input nixpkgs-overlay"
+      "-L" "--no-write-lock-file"
+      "--option max-jobs 1" "--option cores 1"
+    ];
     flake = self.outPath;
   };
 
@@ -132,6 +136,31 @@
       enable = true;
       openFirewall = true;
     };
+    captive-browser = {
+      enable = true;
+      browser = lib.concatStringsSep " " [
+        ''env XDG_CONFIG_HOME="$PREV_CONFIG_HOME"''
+        ''${pkgs.ungoogled-chromium}/bin/chromium''
+        ''--user-data-dir=''${XDG_DATA_HOME:-$HOME/.local/share}/chromium-captive''
+        ''--proxy-server="socks5://$PROXY"''
+        ''--proxy-bypass-list="<-loopback>"''
+        ''--no-first-run''
+        ''--new-window''
+        ''--incognito''
+        ''--no-default-browser-check''
+        ''--no-crash-upload''
+        ''--disable-extensions''
+        ''--disable-sync''
+        ''--disable-background-networking''
+        ''--disable-client-side-phishing-detection''
+        ''--disable-component-update''
+        ''--disable-translate''
+        ''--disable-web-resources''
+        ''--safebrowsing-disable-auto-update''
+        ''http://cache.nixos.org/''
+      ];
+      interface = "wlan0";
+    };
     java.enable = true;
     kdeconnect.enable = true;
     nix-ld.enable = true;
@@ -193,7 +222,7 @@
   nix = {
     optimise = {
       automatic = true;
-      dates = [ "weekly" ];
+      dates = "weekly";
     };
     gc = {
       automatic = true;

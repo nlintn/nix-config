@@ -3,7 +3,7 @@
 let
   evalBinds = lib'.hyprland.evalBinds;
 
-  var_brightnessctl = "${config.services.avizo.package}/bin/lightctl -e 2 ${if config.colorScheme.variant == "dark" then "-d" else ""}";
+  var_brightnessctl = "${config.services.avizo.package}/bin/lightctl -e 2";
   var_browser = "${config.programs.firefox.finalPackage}/bin/firefox";
   var_copyq = "${config.services.copyq.package}/bin/copyq";
   var_filemanager = "${config.programs.thunar.finalPackage}/bin/thunar";
@@ -21,7 +21,7 @@ let
   var_swappy = "${pkgs.swappy}/bin/swappy";
   var_swaync-client = "${config.services.swaync.package}/bin/swaync-client";
   var_term = "${config.programs.kitty.package}/bin/kitty";
-  var_volumectl = "${config.services.avizo.package}/bin/volumectl ${if config.colorScheme.variant == "dark" then "-d" else ""}";
+  var_volumectl = "${config.services.avizo.package}/bin/volumectl";
 
 in with config.colorScheme.palette; {
   source = [
@@ -227,7 +227,7 @@ in with config.colorScheme.palette; {
     "col.border_inactive" = "rgba(${base04}66)";
     groupbar = {
       font_size = 10;
-      gaps_in = 2;
+      gaps_in = 1;
       gaps_out = 0;
       gradients = true;
       gradient_rounding = 0;
@@ -236,13 +236,15 @@ in with config.colorScheme.palette; {
       indicator_height = 0;
       keep_upper_gap = false;
       scrolling = false;
-      text_color = "rgb(${base05})";
       text_offset = 1;
 
-      "col.active" = "rgba(${base0E}99)";
+      "col.active" = "rgba(${base0E}dd)";
       font_weight_active = "semibold";
-      "col.inactive" = "rgba(${base0E}55)";
-      font_weight_inactive= "light";
+      text_color = "rgb(${base01})";
+
+      "col.inactive" = "rgba(${base00}dd)";
+      font_weight_inactive= "normal";
+      text_color_inactive = "rgb(${base05})";
     };
   };
 

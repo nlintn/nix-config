@@ -26,7 +26,6 @@
 
       vim.o.number = true
       vim.o.relativenumber = true
-      vim.o.cursorline = true
 
       vim.o.scrolloff = 8
       vim.o.sidescrolloff = 8
@@ -64,13 +63,19 @@
       vim.o.foldenable = false
 
       vim.o.completeopt = 'menuone,preview,noselect,fuzzy,nosort'
+
+      local function update_pwd(_)
+        vim.api.nvim_set_current_dir(vim.fn.fnamemodify(vim.fn.finddir(".git", ".;"), ":h"))
+      end
+      update_pwd {}
+      vim.api.nvim_create_user_command("UpdatePwd", update_pwd, {})
     '';
 
     extraConfig = /* vim */ ''
       augroup CursorLine
         au!
-        au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-        au WinLeave * setlocal nocursorline
+        au InsertEnter * setlocal cursorline
+        au WinLeave,InsertLeave * setlocal nocursorline
       augroup END
 
       inoremap <Up> <C-O>gk
@@ -221,6 +226,12 @@
         plugin = telescope-nvim;
         type = "lua";
         config = builtins.readFile ./telescope-nvim.lua;
+      }
+
+      {
+        plugin = undotree;
+        type = "lua";
+        config = /* lua */ ''vim.keymap.set('n', '<F5>', vim.cmd.UndotreeToggle)'';
       }
 
       {

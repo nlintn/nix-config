@@ -72,9 +72,10 @@
         background-size: 25%;
       }
 
-      button:focus, button:active, button:hover {
+      button:focus, button:active {
         background-color: ${toRGBA base03 0.9};
         outline-style: none;
+        background-size: 30%;
       }
 
       #lock {

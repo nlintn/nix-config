@@ -24,12 +24,13 @@ in {
           { name = "dictionary-german"; uuid = "de-DE@dictionaries.addons.mozilla.org"; }
           { name = "istilldontcareaboutcookies"; uuid = "idcac-pub@guus.ninja"; }
           { name = "keepassxc-browser"; uuid = "keepassxc-browser@keepassxc.org"; area = "navbar"; private = true; }
+          { name = "tridactyl-vim"; uuid = "tridactyl.vim@cmcaine.co.uk"; }
           { name = "ublock-origin"; uuid = "uBlock0@raymondhill.net"; private = true; }
-          { name = "vimium-ff"; uuid = "{d7742d87-e61d-4b78-b8a1-b469842139fa}"; }
+          { name = "violentmonkey"; uuid = "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}"; }
         ] |> builtins.map mkExtension |> builtins.listToAttrs;
     };
-    profiles.test = { id = 1; };
-    profiles.${config.home.username} = {
+    nativeMessagingHosts = with pkgs; [ tridactyl-native ];
+    profiles.default = {
       isDefault = true;
       search = {
         default = "ddg";
@@ -157,6 +158,41 @@ in {
         "services.sync.engine.prefs" = false;
         "services.sync.engine.prefs.modified" = false;
         "services.sync.engine.tabs" = true;
+
+        "browser.uiCustomization.state" = {
+          "placements" = {
+            "widget-overflow-fixed-list" = [];
+            "unified-extensions-area" = [
+              "ublock0_raymondhill_net-browser-action"
+              "addon_darkreader_org-browser-action"
+              "_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action"
+              "idcac-pub_guus_ninja-browser-action"
+            ];
+            "nav-bar" = [
+              "firefox-view-button"
+              "alltabs-button"
+              "back-button"
+              "forward-button"
+              "vertical-spacer"
+              "urlbar-container"
+              "customizableui-special-spring1"
+              "downloads-button"
+              "keepassxc-browser_keepassxc_org-browser-action"
+              "unified-extensions-button"
+              "fxa-toolbar-menu-button"
+              "developer-button"
+              "history-panelmenu"
+            ];
+            "toolbar-menubar" = ["menubar-items"];
+            "TabsToolbar"= [];
+            "vertical-tabs"= ["tabbrowser-tabs"];
+            "PersonalToolbar"= ["personal-bookmarks"];
+          };
+          "seen" = [];
+          "dirtyAreaCache" = [];
+          "currentVersion" = 23;
+          "newElementCount" = 0;
+        };
       };
 
       userChrome = with config.colorScheme.palette; /* css */ ''

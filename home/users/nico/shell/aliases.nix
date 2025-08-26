@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... } @ args:
+{ config, lib, pkgs, ... }:
 
 {
   home.shellAliases = let
@@ -11,7 +11,6 @@
       ls = "${pkgs.coreutils}/bin/ls --color=tty";
       la = "${ls} -Ahl --group-directories-first";
       lt = "${ls} -hlrt";
-      man = import ./man.nix args;
       open = "${pkgs.xdg-utils}/bin/xdg-open";
       xx = "${pkgs.writeShellScript "xx" "$@ >/dev/null >&1 2>&1 & builtin disown"}";
       xopen = "${pkgs.writeShellScript "xopen" ''${open} "$@" & builtin disown''}";

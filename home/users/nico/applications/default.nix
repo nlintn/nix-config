@@ -1,4 +1,4 @@
-{ lib, osConfig, pkgs, ... }:
+{ config, lib, osConfig, pkgs, ... }:
 
 {
   imports = [
@@ -10,6 +10,7 @@
     ./gdb.nix
     ./git.nix
     ./gpg.nix
+    ./less.nix
     ./keepassxc
     ./kitty
     ./neovim
@@ -47,6 +48,10 @@
       indicator = true;
     };
     playerctld.enable = true;
-    protonmail-bridge.enable = true;
+    protonmail-bridge = {
+      enable = true;
+      enableCfgScript = true;
+      extraPackages = [ config.programs.keepassxc.package ];
+    };
   };
 }

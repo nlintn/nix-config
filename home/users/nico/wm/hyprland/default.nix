@@ -21,7 +21,7 @@ in {
 
   home.packages = with pkgs; [
     file-roller
-    nwg-displays
+    # nwg-displays TODO: add back when working again
     pwvucontrol
     swayimg
     wlr-randr

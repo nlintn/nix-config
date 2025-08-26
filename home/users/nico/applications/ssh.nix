@@ -3,19 +3,23 @@
 {
   programs.ssh = {
     enable = true;
-    # addKeysToAgent = "8h";
-    matchBlocks = {
+    enableDefaultConfig = false;
+    matchBlocks = builtins.mapAttrs (_: v: { extraOptions = v; }) {
+      "*" = {
+        Compression = "no";
+        ForwardAgent = "no";
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+      };
       lxhalle = {
-        hostname = "lxhalle.in.tum.de";
-        user = "lintn";
+        Hostname = "halle.cit.tum.de";
+        User = "lintn";
       };
       valhalla = {
-        hostname = "valhalla.fs.tum.de";
-        user = "lintner";
+        Hostname = "valhalla.fs.tum.de";
+        User = "lintner";
       };
     };
   };
-  services.ssh-agent = {
-    enable = true;
-  };
+
+  services.ssh-agent.enable = true;
 }

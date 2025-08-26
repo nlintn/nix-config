@@ -22,7 +22,7 @@
     texlive.combined.scheme-full
 
     # Misc
-    anki
+    # anki TODO: add back when working again
     blender
     copyq
     cowsay

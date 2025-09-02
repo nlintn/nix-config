@@ -6,19 +6,20 @@
       lib' = nixpkgs-overlay.lib;
       overlays = [ nixpkgs-overlay.overlays.default ];
       pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
+      assets = builtins.readDir ./assets |> builtins.mapAttrs (n: _: builtins.path { path = "${./assets}/${n}"; });
       userSettings = {
         colorScheme = nix-colors.colorSchemes.catppuccin-macchiato;
         default-font = {
           name = "JetBrainsMono Nerd Font";
           package = pkgs.nerd-fonts.jetbrains-mono;
         };
-        lockscreen = builtins.path { path = ./etc/lockscreen.png; };
+        lockscreen = assets."lockscreen.png";
+        wallpaper = assets."wallpaper.jpg";
         rel-config-path = "nix-config";
-        wallpaper = builtins.path { path = ./etc/wallpaper.jpg; };
         wm = "hyprland";
       };
       specialArgs = {
-        inherit inputs overlays lib' userSettings;
+        inherit inputs overlays lib' assets userSettings;
         config-store-path = builtins.path { path = self; };
         hmSubmodules = import ./home/submodules.nix;
       } // inputs;

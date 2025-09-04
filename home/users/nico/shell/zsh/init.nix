@@ -30,7 +30,7 @@
         eval "
           function ''${wrapped_name}() {
             zle .''${widget}
-            builtin printf %s \"\''${CUTBUFFER}\" | ${pkgs.wl-clipboard}/bin/wl-copy 2>/dev/null || true
+            (builtin printf %s \"\''${CUTBUFFER}\" | ${pkgs.wl-clipboard}/bin/wl-copy 2>/dev/null &) || true
           }
         "
       else

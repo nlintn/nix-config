@@ -6,7 +6,7 @@ let
 in {
   services.avizo = {
     enable = true;
-    package = pkgs.avizo.overrideDerivation (p: {
+    package = pkgs.avizo.overrideAttrs (p: {
       patchPhase = /* sh */ ''
         sed -i 's/#000000/#${config.colorScheme.palette.base05}/g' data/images/*.svg
         sed -i 's/\.png/.svg/g' {"avizo.gresource.xml","src/avizo_service.vala"}

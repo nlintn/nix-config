@@ -8,9 +8,10 @@
       c = "${pkgs.ncurses}/bin/clear";
       cat = lib.mkIf config.programs.bat.enable "${config.programs.bat.package}/bin/bat --paging=never";
       confdir = "builtin cd -- ${configDirectory}";
-      ls = "${pkgs.coreutils}/bin/ls --color=tty";
-      la = "${ls} -Ahl --group-directories-first";
-      lt = "${ls} -hlrt";
+      ls = "${lib.getExe pkgs.eza} -g --color=auto --git";
+      ll = "${ls} -l --group-directories-first --icons=auto --time-style=long-iso";
+      la = "${ll} -a";
+      lt = "${ll} --sort=newest";
       open = "${pkgs.xdg-utils}/bin/xdg-open";
       xx = "${pkgs.writeShellScript "xx" "$@ >/dev/null >&1 2>&1 & builtin disown"}";
       xopen = "${pkgs.writeShellScript "xopen" ''${open} "$@" & builtin disown''}";
@@ -27,5 +28,9 @@
       ns = "nix shell";
       nr = "nix repl --expr '{ inherit (import <nixpkgs> {}) pkgs lib; }'";
     })
+  ];
+
+  home.packages = with pkgs; [
+    eza
   ];
 }

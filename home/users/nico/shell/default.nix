@@ -10,11 +10,7 @@
 
   programs.bash = {
     enable = true;
-    historyFile = "${config.xdg.stateHome}";
-  };
-
-  programs.dircolors = {
-    enable = true;
+    historyFile = "${config.xdg.stateHome}/.bash_history";
   };
 
   home.sessionVariables = {

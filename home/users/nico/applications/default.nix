@@ -32,6 +32,7 @@
     chromium = {
       enable = true;
       package = pkgs.ungoogled-chromium;
+      commandLineArgs = [ "--no-default-browser-check" ];
     };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;

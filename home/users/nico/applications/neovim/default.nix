@@ -1,4 +1,4 @@
-{ config, pkgs, userSettings, ... }:
+{ config, pkgs, userSettings, ... } @ args:
 
 {
   programs.neovide = {
@@ -9,8 +9,6 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
     vimdiffAlias = true;
 
     extraLuaConfig = /* lua */ ''
@@ -124,9 +122,8 @@
       telescope-ui-select-nvim
 
       {
-        plugin = import ./base16-nvim/package-patched.nix { inherit pkgs; };
+        inherit (pkgs.callPackage ./base16-nvim args) plugin config;
         type = "lua";
-        config = import ./base16-nvim/lua-config.nix { inherit config; };
       }
 
       {
@@ -136,12 +133,9 @@
       }
 
       {
-        plugin = copilot-vim;
-        type = "viml";
-        config = ''
-          imap <silent><script><expr> <C-Tab> copilot#Accept("\<CR>")
-          let g:copilot_no_tab_map = v:true
-        '';
+        plugin = copilot-lua;
+        type = "lua";
+        config = pkgs.callPackage ./copilot-lua.nix args;
       }
 
       {
@@ -171,13 +165,13 @@
       {
         plugin = isabelle-lsp-nvim;
         type = "lua";
-        config = import ./isabelle-lsp-nvim.nix {};
+        config = builtins.readFile ./isabelle-lsp-nvim.lua;
       }
 
       {
         plugin = lualine-nvim;
         type = "lua";
-        config = import ./lualine-nvim.nix { inherit config; };
+        config = builtins.readFile ./lualine-nvim.lua;
       }
 
       # {
@@ -199,9 +193,9 @@
       }
 
       {
-        plugin = (pkgs.callPackage ./nvim-treesitter.nix {}).pkg;
+        plugin = nvim-treesitter.withAllGrammars;
         type = "lua";
-        config = (pkgs.callPackage ./nvim-treesitter.nix {}).config;
+        config = builtins.readFile ./nvim-treesitter.lua;
       }
 
       {
@@ -214,6 +208,12 @@
         plugin = oil-nvim;
         type = "lua";
         config = builtins.readFile ./oil-nvim.lua;
+      }
+
+      {
+        plugin = orgmode;
+        type = "lua";
+        config = builtins.readFile ./orgmode.lua;
       }
 
       {

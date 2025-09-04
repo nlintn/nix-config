@@ -11,9 +11,9 @@ end
 
 local permission_hlgroups = {
   ['-'] = 'NonText',
-  ['r'] = 'DiagnosticSignOk',
-  ['w'] = 'DiagnosticSignWarn',
-  ['x'] = 'DiagnosticSignError',
+  ['r'] = 'DiagnosticSignWarn',
+  ['w'] = 'DiagnosticSignError',
+  ['x'] = 'DiagnosticSignOk',
 }
 
 require("oil").setup {

@@ -5,7 +5,7 @@
     ./packages.nix
 
     ./bat.nix
-    ./firefox.nix
+    ./firefox
     ./fzf.nix
     ./gdb.nix
     ./git.nix

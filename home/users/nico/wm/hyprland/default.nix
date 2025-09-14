@@ -21,7 +21,7 @@ in {
 
   home.packages = with pkgs; [
     file-roller
-    # nwg-displays TODO: add back when working again
+    nwg-displays
     pwvucontrol
     swayimg
     wlr-randr
@@ -55,7 +55,15 @@ in {
     };
 
     plugins = with pkgs.hyprlandPlugins; [
-      hyprsplit
+      (hyprsplit.overrideAttrs (p: rec {
+        version = "0.51.0";
+        src = pkgs.fetchFromGitHub {
+          owner = "shezdy";
+          repo = "hyprsplit";
+          tag = "v${version}";
+          hash = "sha256-h6vDtBKTfyuA/6frSFcTrdjoAKhwlGBT+nzjoWf9sQE=";
+        };
+      }))
     ];
 
     settings = import ./hypr-settings.nix (args // customPkgs);

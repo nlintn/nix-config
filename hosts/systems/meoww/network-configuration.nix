@@ -19,7 +19,7 @@
   };
   services.resolved.enable = lib.mkForce false;
 
-  services.dnscrypt-proxy2 = {
+  services.dnscrypt-proxy = {
     enable = true;
     settings = {
       # query_log.file = "/var/log/dnscrypt-proxy/query.log";

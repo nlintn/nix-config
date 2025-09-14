@@ -4,9 +4,9 @@
   programs.rofi = {
     enable = true;
     terminal = "${config.programs.kitty.package}/bin/kitty";
-    package = pkgs.rofi-wayland;
+    package = pkgs.rofi;
     theme = import ./theme.nix args;
-    plugins = with pkgs; [ rofi-emoji-wayland ];
+    plugins = with pkgs; [ rofi-emoji ];
     extraConfig = {
       ssh-command = "${config.programs.kitty.package}/bin/kitty -- kitty +kitten ssh {host}";
       modi = "run,drun,ssh,window";

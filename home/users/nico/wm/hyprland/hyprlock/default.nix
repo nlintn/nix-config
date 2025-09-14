@@ -1,8 +1,8 @@
-{ config, pkgs, userSettings, ... }:
+{ config, lib, pkgs, userSettings, ... }:
 
 {
   home.sessionVariables = {
-    __LOCK_CMD = "${config.programs.hyprlock.package}/bin/hyprlock";
+    __LOCK_CMD = lib.getExe config.programs.hyprlock.package;
     __UNLOCK_CMD =  "${pkgs.procps}/bin/pkill -SIGUSR1 hyprlock";
   };
   programs.hyprlock = {

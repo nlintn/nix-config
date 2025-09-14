@@ -1,8 +1,9 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   color = with config.colorScheme.palette;
     "bg+:#${base02},spinner:#${base06},hl:#${base08},fg:#${base05},header:#${base08},info:#${base0E},pointer:#${base06},marker:#${base06},fg+:#${base05},prompt:#${base0E},hl+:#${base08}";
+  fd = lib.getExe pkgs.fd;
 in {
   programs.fzf = {
     enable = true;
@@ -19,20 +20,20 @@ in {
       prompt  = "#${base0E}";
       spinner = "#${base06}";
     };
-    defaultCommand = "${pkgs.fd}/bin/fd -IL";
+    defaultCommand = "${fd} -IL";
     defaultOptions = [
       "--height 60%"
       "--border"
       "--layout=reverse"
       "--color=${color}"
     ];
-    changeDirWidgetCommand = "${pkgs.fd}/bin/fd -IL -t d";
+    changeDirWidgetCommand = "${fd} -IL -t d";
     changeDirWidgetOptions = [  #  ALT-C Options
-      "--preview '${pkgs.tree}/bin/tree -C {}'"
+      "--preview '${lib.getExe pkgs.tree} -C {}'"
     ];
-    fileWidgetCommand = "${pkgs.fd}/bin/fd -IL -t f";
+    fileWidgetCommand = "${fd} -IL -t f";
     fileWidgetOptions = [       # CTRL-T Options
-      "--preview '(${config.programs.bat.package}/bin/bat --paging=never --color=always {} || ${pkgs.tree}/bin/tree -C {}) 2> /dev/null | head -200'"
+      "--preview '(${lib.getExe config.programs.bat.package} --paging=never --color=always {} || ${lib.getExe pkgs.tree} -C {}) 2> /dev/null | head -200'"
     ];
     historyWidgetOptions = [    # CTRL-R Options
     ];

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   home.packages = [
@@ -11,7 +11,7 @@
           --unset DISPLAY
         mv $out/share/applications/vlc.desktop{,.orig}
         substitute $out/share/applications/vlc.desktop{.orig,} \
-          --replace-fail Exec=${pkgs.vlc}/bin/vlc Exec=$out/bin/vlc
+          --replace-fail Exec=${lib.getExe pkgs.vlc} Exec=$out/bin/vlc
       '';
     })
   ];

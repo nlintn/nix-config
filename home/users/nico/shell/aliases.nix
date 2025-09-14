@@ -6,7 +6,7 @@
   in lib.mkMerge [
     rec {
       c = "${pkgs.ncurses}/bin/clear";
-      cat = lib.mkIf config.programs.bat.enable "${config.programs.bat.package}/bin/bat --paging=never";
+      cat = lib.mkIf config.programs.bat.enable "${lib.getExe config.programs.bat.package} --paging=never";
       confdir = "builtin cd -- ${configDirectory}";
       ls = "${lib.getExe pkgs.eza} -g --color=auto --git";
       ll = "${ls} -l --group-directories-first --icons=auto --time-style=long-iso";

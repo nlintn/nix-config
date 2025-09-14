@@ -1,8 +1,8 @@
-{ config, writeShellScript, writeText, ... }:
+{ config, lib, writeShellScriptBin, writeText, ... }:
 
-writeShellScript "lock-transparent" /* sh */ ''
+writeShellScriptBin "lock-transparent" /* sh */ ''
   ${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl keyword misc:session_lock_xray true
-  systemd-inhibit --what=idle ${config.programs.hyprlock.package}/bin/hyprlock -c ${
+  systemd-inhibit --what=idle ${lib.getExe config.programs.hyprlock.package} -c ${
     writeText "hyprlock-transp.conf" ''
       general {
         disable_loading_bar=true

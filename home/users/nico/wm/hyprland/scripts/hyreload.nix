@@ -16,6 +16,6 @@ in /* sh */ ''
 
     ${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl reload
 
-    ${libnotify}/bin/notify-send -u low -e "reloaded successfully"
+    ${lib.getExe libnotify} -u low -e "reloaded successfully"
   fi
 '')

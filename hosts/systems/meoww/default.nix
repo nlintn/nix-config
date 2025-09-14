@@ -140,7 +140,7 @@
       enable = true;
       browser = lib.concatStringsSep " " [
         ''env XDG_CONFIG_HOME="$PREV_CONFIG_HOME"''
-        ''${pkgs.ungoogled-chromium}/bin/chromium''
+        ''${lib.getExe pkgs.ungoogled-chromium}''
         ''--user-data-dir=''${XDG_DATA_HOME:-$HOME/.local/share}/chromium-captive''
         ''--proxy-server="socks5://$PROXY"''
         ''--proxy-bypass-list="<-loopback>"''

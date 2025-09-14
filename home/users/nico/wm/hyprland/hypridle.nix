@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   home.sessionVariables = {
@@ -20,8 +20,8 @@
       listener = [
         {
           timeout = 180;
-          on-timeout = "${pkgs.brightnessctl}/bin/brightnessctl -s set 75%-";
-          on-resume = "${pkgs.brightnessctl}/bin/brightnessctl -r";
+          on-timeout = "${lib.getExe pkgs.brightnessctl} -s set 75%-";
+          on-resume = "${lib.getExe pkgs.brightnessctl} -r";
         }
         {
           timeout = 190;

@@ -12,7 +12,7 @@
       merge.tool = "nvim";
       mergetool = {
         prompt = false;
-        "nvim".cmd = ''${config.programs.neovim.finalPackage}/bin/nvim -c "DiffviewOpen"'';
+        "nvim".cmd = ''${config.home.sessionVariables.NVIM} -c "DiffviewOpen"'';
       };
 
       user.signingkey = "620394D5D26C67A8";

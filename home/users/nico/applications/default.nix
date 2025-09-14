@@ -13,7 +13,7 @@
     ./less.nix
     ./keepassxc
     ./kitty
-    ./neovim
+    ./neovim.nix
     ./obs-studio.nix
     ./ssh.nix
     ./thunar.nix

@@ -242,6 +242,29 @@
         "type": "github"
       }
     },
+    "nvim-config": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-overlay": [
+          "nixpkgs-overlay"
+        ]
+      },
+      "locked": {
+        "lastModified": 1757884024,
+        "narHash": "sha256-uBX8mrR5MfshhaAcb2jTPHhaH0kuolEXiktW5UkSx00=",
+        "owner": "nlintn",
+        "repo": "nvim-config",
+        "rev": "eb32ac90483d79ff67df8a41885d70dc45b25010",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nlintn",
+        "repo": "nvim-config",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks-nix": {
       "inputs": {
         "flake-compat": [
@@ -276,7 +299,8 @@
         "lanzaboote": "lanzaboote",
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-overlay": "nixpkgs-overlay"
+        "nixpkgs-overlay": "nixpkgs-overlay",
+        "nvim-config": "nvim-config"
       }
     },
     "rust-overlay": {

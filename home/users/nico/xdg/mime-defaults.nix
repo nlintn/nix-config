@@ -10,7 +10,7 @@ let
   gimp = "gimp.desktop";
   image-roll = "com.github.weclaw1.ImageRoll.desktop";
   keepassxc = lib.mkIf config.programs.keepassxc.enable "org.keepassxc.KeePassXC.desktop";
-  neovim = lib.mkIf config.programs.neovim.enable "nvim.desktop";
+  neovim = lib.mkIf (config.home.sessionVariables ? NVIM) "nvim.desktop";
   pdf-arranger = "com.github.jeromerobert.pdfarranger.desktop";
   prusa-slicer = "PrusaSlicer.desktop";
   prusa-gcode-viewer = "PrusaGcodeviewer.desktop";

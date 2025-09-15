@@ -1,6 +1,6 @@
-{ config, options, pkgs, userSettings, ... }:
+{ config, options, pkgs, userSettings, ... } @ args:
 
-let 
+let
   scrollback_pager = pkgs.writeShellScript "scrollback_pager" ''
     set -eu
 
@@ -16,14 +16,12 @@ let
     exec ${config.home.sessionVariables.NVIM} 63<&0 0</dev/null \
         -u NONE \
         -c "map <silent> q :qa!<CR>" \
-        -c "set shell=bash scrollback=100000 laststatus=0 clipboard+=unnamedplus" \
-        -c "autocmd VimEnter * hi Normal guifg=#${config.colorScheme.palette.base05} guibg=NONE ctermbg=NONE" \
+        -c "set scrollback=100000 laststatus=0 clipboard+=unnamedplus notermguicolors" \
         -c "autocmd TermEnter * stopinsert" \
         -c "autocmd TermClose * ''${AUTOCMD_TERMCLOSE_CMD}" \
         -c 'terminal sed </dev/fd/63 -e "s/'$'\x1b''']8;;file:[^\]*[\]//g" && sleep 0.01 && printf "'$'\x1b''']2;"' 
   '';
 in {
-  imports = [ ./base16-colors.nix ];
   programs.kitty = {
     enable = true;
     package = let
@@ -34,7 +32,7 @@ in {
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = "wrapProgram $out/bin/kitty --add-flags -1";
     };
-    settings = {
+    settings = (import ./base16-colors.nix args) // {
       background_opacity = "0.85";
 
       cursor_shape = "beam";
@@ -44,7 +42,7 @@ in {
       scrollback_pager = "${scrollback_pager} 'INPUT_LINE_NUMBER' 'CURSOR_LINE' 'CURSOR_COLUMN'";
 
       mouse_hide_wait = -1;
-      
+
       enable_audio_bell = "no";
     };
     keybindings = {

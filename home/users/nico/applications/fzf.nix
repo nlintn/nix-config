@@ -1,8 +1,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  color = with config.colorScheme.palette;
-    "bg+:#${base02},spinner:#${base06},hl:#${base08},fg:#${base05},header:#${base08},info:#${base0E},pointer:#${base06},marker:#${base06},fg+:#${base05},prompt:#${base0E},hl+:#${base08}";
   fd = lib.getExe pkgs.fd;
 in {
   programs.fzf = {
@@ -25,7 +23,6 @@ in {
       "--height 60%"
       "--border"
       "--layout=reverse"
-      "--color=${color}"
     ];
     changeDirWidgetCommand = "${fd} -IL -t d";
     changeDirWidgetOptions = [  #  ALT-C Options

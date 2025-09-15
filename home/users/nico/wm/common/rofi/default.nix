@@ -4,7 +4,11 @@
   programs.rofi = {
     enable = true;
     terminal = "${config.programs.kitty.package}/bin/kitty";
-    package = pkgs.rofi;
+    package = pkgs.rofi.override {
+      rofi-unwrapped = pkgs.rofi-unwrapped.override (with config.home.sessionVariables; {
+        waylandSupport = WAYLAND_SUPPORT == "1"; x11Support = X11_SUPPORT == "1";
+      });
+    };
     theme = import ./theme.nix args;
     plugins = with pkgs; [ rofi-emoji ];
     extraConfig = {

@@ -5,6 +5,7 @@
 
   home.packages = with pkgs; [
     userSettings.default-font.package
+    font-awesome
     noto-fonts
     noto-fonts-emoji
     noto-fonts-extra

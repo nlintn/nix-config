@@ -10,7 +10,7 @@ let
 in {
   programs.keepassxc = {
     enable = true;
-    package = pkg_patched.override { withKeePassKeeShare = false; withKeePassX11 = (config.home.sessionVariables.ONLY_WAYLAND_SESSION or "0") != "1"; };
+    package = pkg_patched.override { withKeePassKeeShare = false; withKeePassX11 = config.home.sessionVariables.X11_SUPPORT == "1"; };
     # Available Settings: https://github.com/keepassxreboot/keepassxc/blob/647272e9c5542297d3fcf6502e6173c96f12a9a0/src/core/Config.cpp#L49-L223
     settings = {
       General = {

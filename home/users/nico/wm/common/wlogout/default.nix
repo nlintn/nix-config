@@ -21,7 +21,7 @@
       }
       {
         "label" = "logout";
-        "action" = "${loginctl} terminate-user ${pkgs.coreutils}/bin/whoami";
+        "action" = "${loginctl} terminate-user $UID";
         "text" = "Logout";
         "keybind" = "e";
       }

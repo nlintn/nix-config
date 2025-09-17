@@ -34,6 +34,10 @@
         iso = self.nixosConfigurations.iso.config.system.build.isoImage;
         default = iso;
       });
+      checks = lib'.eachSystemPkgs nixpkgs (pkgs: rec {
+        build = pkgs.callPackage ./check-build.nix { inherit self; };
+        default = build;
+      });
     };
 
   inputs = {

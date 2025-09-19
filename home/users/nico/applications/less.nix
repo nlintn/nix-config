@@ -6,7 +6,8 @@
     package = let
       pkg = pkgs.less;
     in pkgs.symlinkJoin {
-      name = pkg.name;
+      inherit (pkg) name;
+      meta.mainProgram = pkg.meta.mainProgram;
       paths = [ pkg ];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = let
@@ -25,7 +26,6 @@
           --set LESS_TERMCAP_se $'${reset}' \
           --set LESS_TERMCAP_us $'${bold + green}' \
           --set LESS_TERMCAP_ue $'${reset}' \
-          --set GROFF_NO_SGR "1"
       '';
     };
   };

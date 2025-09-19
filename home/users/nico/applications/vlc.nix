@@ -1,10 +1,12 @@
 { pkgs, lib, ... }:
 
 {
-  home.packages = [
-    (pkgs.symlinkJoin {
-      name = "vlc";
-      paths = [ pkgs.vlc ];
+  home.packages = [(
+    let
+      pkg = pkgs.vlc;
+    in pkgs.symlinkJoin {
+      inherit (pkg) name meta;
+      paths = [ pkg ];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         wrapProgram $out/bin/vlc \
@@ -13,6 +15,6 @@
         substitute $out/share/applications/vlc.desktop{.orig,} \
           --replace-fail Exec=${lib.getExe pkgs.vlc} Exec=$out/bin/vlc
       '';
-    })
-  ];
+    }
+  )];
 }

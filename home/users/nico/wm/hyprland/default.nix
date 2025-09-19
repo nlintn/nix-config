@@ -55,7 +55,7 @@ in {
     };
 
     plugins = with pkgs.hyprlandPlugins; [
-      (hyprsplit.overrideAttrs (p: rec {
+      (hyprsplit.overrideAttrs (p: rec { # TODO: remove when in nixpkgs
         version = "0.51.0";
         src = pkgs.fetchFromGitHub {
           owner = "shezdy";

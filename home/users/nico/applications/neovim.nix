@@ -6,9 +6,9 @@ let
   };
   bin = lib.getExe pkg;
 in {
-  home.sessionVariables = rec {
+  home.sessionVariables = {
     NVIM = bin;
-    EDITOR = NVIM;
+    EDITOR = "nvim";
   };
   home.shellAliases.vimdiff = "${bin} -d";
   home.packages = [ pkg ];

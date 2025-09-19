@@ -20,7 +20,7 @@ let
   var_scratchpad = lib.getExe (pkgs.hyscratchpad.override { libnotify = null; });
   var_swappy = lib.getExe pkgs.swappy;
   var_swaync-client = "${config.services.swaync.package}/bin/swaync-client";
-  var_term = "${config.programs.kitty.package}/bin/kitty";
+  var_term = lib.getExe config.programs.kitty.package;
   var_volumectl = "${config.services.avizo.package}/bin/volumectl";
 
 in with config.colorScheme.palette; {

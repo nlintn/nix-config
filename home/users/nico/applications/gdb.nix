@@ -8,7 +8,7 @@ let
 in {
   home.packages = [
     (pkgs.symlinkJoin {
-      name = pkg.name;
+      inherit (pkg) name meta;
       paths = [ pkg ];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = /* sh */ ''

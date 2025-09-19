@@ -27,7 +27,7 @@ in {
     package = let
       pkg = options.programs.kitty.package.default;
     in pkgs.symlinkJoin {
-      name = pkg.name;
+      inherit (pkg) name meta;
       paths = [ pkg ];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = "wrapProgram $out/bin/kitty --add-flags -1";

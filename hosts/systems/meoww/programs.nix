@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    man-pages linux-manual man-pages-posix
+    man-pages linux-manual man-pages-posix clang-manpages
 
     arp-scan
     powertop

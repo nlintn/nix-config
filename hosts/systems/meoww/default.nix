@@ -52,4 +52,6 @@
   };
 
   security.polkit.enable = true;
+
+  systemd.oomd.enableUserSlices = true;
 }

@@ -3,6 +3,10 @@
 {
   services = {
     blueman.enable = true; # bluetooth manager
+    earlyoom = {
+      enable = true;
+      enableNotifications = true;
+    };
     gvfs.enable = true; # for hot plugging usb storage etc
     libinput = {
       enable = true;

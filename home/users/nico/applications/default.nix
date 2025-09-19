@@ -5,6 +5,7 @@
     ./packages.nix
 
     ./bat.nix
+    ./element-desktop.nix
     ./firefox
     ./fzf.nix
     ./gdb.nix
@@ -54,5 +55,6 @@
       enableCfgScript = true;
       extraPackages = [ config.programs.keepassxc.package ];
     };
+    systembus-notify.enable = true;
   };
 }

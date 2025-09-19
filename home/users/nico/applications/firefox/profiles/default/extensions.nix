@@ -4,6 +4,7 @@
   force = true;
   packages = with pkgs.firefoxAddons; [
     darkreader
+    dictionary-german
     keepassxc-browser
     ublock-origin
     vimium-ff

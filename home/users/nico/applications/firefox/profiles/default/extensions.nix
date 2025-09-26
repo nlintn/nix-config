@@ -9,6 +9,7 @@
     ublock-origin
     vimium-ff
     violentmonkey
+    zen-internet
   ];
 
   settings = let
@@ -75,6 +76,29 @@
         "code:1" = /* js */ ''
           (function() { document.documentElement.setAttribute('data-bs-theme', 'dark'); })();
         '';
+      };
+      zen-internet.settings = {
+        "transparentZenSettings" = {
+          "enableStyling" = true;
+          "autoUpdate" = false;
+          "forceStyling" = false;
+          "whitelistMode" = false;
+          "whitelistStyleMode" = false;
+          "disableTransparency" = false;
+          "disableHover" = true;
+          "disableFooter" = true;
+          "fallbackBackgroundList" = [];
+          "lastFetchedTime" = 0;
+          "welcomeShown" = true;
+        };
+        "skipForceThemingList" = [];
+        "skipThemingList" = [];
+        "fallbackBackgroundList" = [
+          "wikipedia.org"
+          "de.wikipedia.org"
+        ];
+        "stylesRepositoryUrl" = "";
+        "styles" = pkgs.firefoxAddons.zen-internet.styles;
       };
     };
   in

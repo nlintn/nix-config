@@ -323,6 +323,25 @@ in with config.colorScheme.palette; {
 
   layerrule = [
     "noanim, selection"
+
+    "blur, rofi"
+    "xray off, rofi"
+
+    "blur, logout_dialog"
+    "xray off, logout_dialog"
+
+    "abovelock, avizo"
+    "blur, avizo"
+    "xray off, avizo"
+    "ignorezero, avizo"
+
+    "blur, avizo"
+    "xray off, avizo"
+    "ignorezero, avizo"
+
+    "blur, swaync-.*"
+    "xray off, swaync-.*"
+    "ignorezero, swaync-.*"
   ];
 
   general = {
@@ -343,9 +362,9 @@ in with config.colorScheme.palette; {
 
     blur = {
       enabled = true;
-      size = 4;
+      size = 7;
       passes = 2;
-      vibrancy = 0.1696;
+      xray = false;
     };
     shadow.enabled = false;
   };

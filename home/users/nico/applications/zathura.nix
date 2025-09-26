@@ -14,7 +14,7 @@ in {
       guioptions = "hsv";
 
       default-fg = "#${base05}";
-      default-bg = toRGBA base00 0;
+      default-bg = toRGBA base00 0.5;
 
       completion-bg = "#${base02}";
       completion-fg = "#${base05}";

@@ -49,7 +49,7 @@ entry {
 
 message {
     border:             2px 0 0;
-    border-color:       @bg1;
+    border-color:       @bg3;
     background-color:   @bg1;
 }
 
@@ -63,7 +63,7 @@ listview {
 
     fixed-height:   false;
     border:         1px 0 0;
-    border-color:   @bg1;
+    border-color:   @bg3;
 }
 
 element {

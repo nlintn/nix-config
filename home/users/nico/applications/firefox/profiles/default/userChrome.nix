@@ -18,7 +18,7 @@ in /* css */ ''
     --toolbox-bgcolor-inactive: transparent !important;
     --toolbox-textcolor: #${base05} !important;
     --toolbox-textcolor-inactive: ${toRGBA base05 0.8} !important;
-    --tabpanel-background-color: transparent !important;
+    --tabpanel-background-color: ${toRGBA base02 0.3} !important;
     --arrowpanel-background: #${base00} !important;
     --arrowpanel-color: #${base05} !important;
     --arrowpanel-border-color: #${base03} !important;
@@ -32,10 +32,10 @@ in /* css */ ''
     --tab-loading-fill: #${base0E} !important;
     --toolbarbutton-icon-fill-attention: #${base0E} !important;
     --toolbar-field-color: #${base05} !important;
-    --toolbar-field-background-color: #${base00} !important;
+    --toolbar-field-background-color: #${base01} !important;
     --toolbar-field-focus-color: #${base05} !important;
-    --toolbar-field-focus-background-color: #${base00} !important;
-    --toolbar-field-focus-border-color: #${base0E} !important;
+    --toolbar-field-focus-background-color: #${base01} !important;
+    --toolbar-field-focus-border-color: ${toRGBA base0E 0.8} !important;
     --urlbarView-highlight-background: #${base02} !important;
     --urlbarView-highlight-color: #${base05} !important;
 
@@ -49,11 +49,11 @@ in /* css */ ''
     --button-text-color: #${base05} !important;
     --button-text-color-primary: #${base01} !important;
 
-    --toolbar-bgcolor: #${base02} !important;
+    --toolbar-bgcolor: ${toRGBA base02 0.5} !important;
     --toolbar-color: #${base05} !important;
 
-    --sidebar-background-color : #${base00} !important;
-    --sidebar-border-color : #${base03} !important;
+    --sidebar-background-color : ${toRGBA base00 0.5} !important;
+    --sidebar-border-color : ${toRGBA base03 0.5} !important;
     --sidebar-text-color : #${base05} !important;
 
     --color-accent-primary: #${base0E} !important;
@@ -73,6 +73,12 @@ in /* css */ ''
     color: #${base01} !important;
   }
 
+  #input {
+    background: ${toRGBA base02 0.5} !important;
+    color: #${base05} !important;
+    border-color: ${toRGBA base03 0.5} !important;
+  }
+
   menupopup {
     --panel-background: #${base00} !important;
     --panel-color: #${base05} !important;
@@ -86,6 +92,14 @@ in /* css */ ''
   }
   splitter#sidebar-tools-and-extensions-splitter {
     border-color: #${base03} !important;
+  }
+  #PopupAutoComplete {
+    --panel-color: #${base05} !important;
+    --panel-background: #${base02} !important;
+    --panel-border-color: #${base03} !important;
+  }
+  .autocomplete-richlistbox {
+    color: #${base05} !important;
   }
 
   @-moz-document url(chrome://browser/content/places/places.xhtml) {

@@ -6,7 +6,7 @@
     autocd = true;
     autosuggestion = {
       enable = true;
-      highlight = "fg=8";
+      highlight = "fg=#${config.colorScheme.palette.base04}";
     };
     dotDir = "${config.xdg.configHome}/zsh";
     enableCompletion = true;

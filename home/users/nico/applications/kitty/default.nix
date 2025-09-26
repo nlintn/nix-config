@@ -33,11 +33,13 @@ in {
       postBuild = "wrapProgram $out/bin/kitty --add-flags -1";
     };
     settings = (import ./base16-colors.nix args) // {
-      background_opacity = "0.85";
+      background_opacity = "0.65";
+      transparent_background_colors = with config.colorScheme.palette; "#${base02} #${base03}";
 
       cursor_shape = "beam";
       cursor_blink_interval = 0;
       disable_ligatures = "always";
+      scrollback_indicator_opacity = 0.7;
 
       scrollback_pager = "${scrollback_pager} 'INPUT_LINE_NUMBER' 'CURSOR_LINE' 'CURSOR_COLUMN'";
 

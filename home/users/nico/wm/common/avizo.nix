@@ -17,8 +17,8 @@ in {
       fade-in = 0.1;
       fade-out = 0.2;
       image-opacity = 0.9;
-      border-color = toRGBA base02 0.9;
-      background = toRGBA base00 0.9;
+      border-color = toRGBA base03 0.8;
+      background = toRGBA base00 0.5;
       bar-fg-color = toRGBA base05 0.9;
       bar-bg-color = toRGBA base01 0.9;
     };

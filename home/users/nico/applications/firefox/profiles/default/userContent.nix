@@ -12,11 +12,11 @@ in /* css */ ''
       visibility: hidden !important;
     }
     .search-handoff-button {
-      background-color: #${base02} !important;
+      background-color: ${toRGBA base02 0.5} !important;
       color: #${base05} !important;
     }
   }
-  @-moz-document url-prefix(about:blank), url-prefix(about:home), url-prefix(about:newtab), url-prefix(about:firefoxview) {
+  @-moz-document url-prefix(about:) {
     .logo {
       background-image: url('data:image/svg+xml;utf8,${builtins.readFile assets."nix-snowflake-rainbow.svg" |> lib.escapeURL}') !important;
     }
@@ -25,14 +25,14 @@ in /* css */ ''
       --input-text-color: #${base05} !important;
     }
     :root {
-      --newtab-background-color: #${base00} !important;
-      --newtab-background-color-secondary: #${base02} !important;
+      --newtab-background-color: ${toRGBA base00 0.5} !important;
+      --newtab-background-color-secondary: #${toRGBA base02 0.5} !important;
       --newtab-primary-action-background: #${base0E} !important;
       --newtab-primary-action-background-dimmed: #${base0E} !important;
 
       --border-color-interactive: #${base03} !important;
 
-      --body-bg-color: #${base00} !important;
+      --body-bg-color: ${toRGBA base00 0.5} !important;
       --button-hover-color: #${base03} !important;
       --dropdown-btn-bg-color: #${base02} !important;
       --field-color: #${base05} !important;
@@ -84,10 +84,6 @@ in /* css */ ''
     --vimium-foreground-color: #${base00} !important;
     --vimium-foreground-text-color: #${base05} !important;
     --vimium-link-color: #${base0E} !important;
-  }
-  html {
-    background-color: white;
-    color: black;
   }
   ::selection {
     background-color: ${toRGBA base0E 0.35} !important;

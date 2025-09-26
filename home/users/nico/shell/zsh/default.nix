@@ -15,6 +15,6 @@
       highlighters = [ "main" "cursor" "brackets" ];
       styles = import ./zsh-syntax-highlighting-base16.nix args;
     };
-    initContent = import ./init.nix args;
+    initContent = pkgs.callPackage ./init.nix {};
   };
 }

@@ -42,7 +42,6 @@
       ];
       interface = "wlan0";
     };
-    java.enable = true;
     kdeconnect.enable = true;
     nix-ld.enable = true;
     # nix-ld.libraries = with pkgs; [];

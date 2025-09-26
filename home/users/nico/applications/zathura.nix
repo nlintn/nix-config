@@ -12,6 +12,7 @@ in {
     };
     options = with config.colorScheme.palette; {
       guioptions = "hsv";
+      selection-clipboard = "clipboard";
 
       default-fg = "#${base05}";
       default-bg = toRGBA base00 0.5;

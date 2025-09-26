@@ -1,4 +1,4 @@
-{ config, lib, osConfig, pkgs, ... }:
+{ config, lib, osConfig ? null, pkgs, ... }:
 
 {
   imports = [
@@ -14,6 +14,7 @@
     ./less.nix
     ./keepassxc
     ./kitty
+    ./lazygit.nix
     ./neovim.nix
     ./obs-studio.nix
     ./ssh.nix
@@ -38,16 +39,14 @@
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
     evince.enable = true;
-    lazygit = {
-      enable = true;
-      settings.git.overrideGpg = true;
-    };
+    java.enable = true;
   };
 
   services = {
     kdeconnect = {
       enable = true;
       indicator = true;
+      package = lib.mkIf (osConfig != null) osConfig.programs.kdeconnect.package;
     };
     playerctld.enable = true;
     protonmail-bridge = {

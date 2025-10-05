@@ -12,6 +12,7 @@
       ll = "${ls} -l --group-directories-first --icons=auto --time-style=long-iso";
       la = "${ll} -a";
       lt = "${ll} --sort=newest";
+      tree = "${ls} --tree";
       open = "${pkgs.xdg-utils}/bin/xdg-open";
       xx = "${pkgs.writeShellScript "xx" "$@ >/dev/null >&1 2>&1 & builtin disown"}";
       xopen = "${pkgs.writeShellScript "xopen" ''${open} "$@" & builtin disown''}";

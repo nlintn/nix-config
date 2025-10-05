@@ -22,6 +22,8 @@
     quickemu
     texlive.combined.scheme-full
 
+    llvmPackages_latest.clang-manpages llvmPackages_latest.llvm-manpages
+
     # Misc
     anki
     blender
@@ -35,6 +37,7 @@
     fractal-next
     gimp
     gnome-clocks
+    hieroglyphic
     htop
     image-roll
     inkscape
@@ -67,7 +70,6 @@
     spotify-tray
     sshfs
     telegram-desktop
-    tree
     unar
     usbutils
     vesktop

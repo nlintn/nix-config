@@ -9,6 +9,7 @@ in {
   home.sessionVariables = {
     NVIM = bin;
     EDITOR = "nvim";
+    MANPAGER = "${bin} +Man!";
   };
   home.shellAliases.vimdiff = "${bin} -d";
   home.packages = [ pkg ];

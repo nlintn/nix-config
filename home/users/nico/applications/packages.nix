@@ -19,6 +19,7 @@
       requests
     ]))
     qemu
+    quickemu
     texlive.combined.scheme-full
 
     # Misc

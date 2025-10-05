@@ -50,11 +50,4 @@
     xfconf.enable = true;
     zsh.enable = true;
   };
-
-  virtualisation.virtualbox = {
-    host = {
-      enable = true;
-      # enableExtensionPack = true;
-    };
-  };
 }

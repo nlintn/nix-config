@@ -15,12 +15,12 @@
       package = (pkgs.colloid-gtk-theme.override { colorVariants = [ config.colorScheme.variant ]; sizeVariants = [ "compact" ]; tweaks = [ "nord" "rimless" ]; });
       name = "Colloid-${lib'.capitalizeString config.colorScheme.variant}-Compact-Nord";
     };
-  
+
     iconTheme = {
       package = pkgs.kora-icon-theme;
       name = "kora";
     };
-  
+
     font = {
       package = userSettings.default-font.package;
       name = userSettings.default-font.name;

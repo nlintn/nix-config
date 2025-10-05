@@ -33,22 +33,23 @@
     fd
     file
     fractal-next
-    inkscape
     gimp
     gnome-clocks
     htop
     image-roll
+    inkscape
     ipinfo
     jq
+    libnotify
     libqalculate
     libreoffice-fresh
     linux-wifi-hotspot
     lolcat
-    nixln-edit
     nix-diff
     nix-inspect
     nix-output-monitor
     nix-tree
+    nixln-edit
     nmap
     obsidian
     pdfarranger

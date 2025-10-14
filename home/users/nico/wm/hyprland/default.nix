@@ -55,15 +55,7 @@ in {
     };
 
     plugins = with pkgs.hyprlandPlugins; [
-      (hyprsplit.overrideAttrs (p: rec { # TODO: remove when in nixpkgs
-        version = "0.51.0";
-        src = pkgs.fetchFromGitHub {
-          owner = "shezdy";
-          repo = "hyprsplit";
-          tag = "v${version}";
-          hash = "sha256-h6vDtBKTfyuA/6frSFcTrdjoAKhwlGBT+nzjoWf9sQE=";
-        };
-      }))
+      hyprsplit
     ];
 
     settings = import ./hypr-settings.nix (args // customPkgs);

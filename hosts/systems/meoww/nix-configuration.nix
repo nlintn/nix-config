@@ -1,10 +1,6 @@
-{ config, lib, self, ... }:
+{ self, ... }:
 
 {
-  nix.settings.build-dir = lib.mkIf config.boot.tmp.useTmpfs "/var/tmp";
-  systemd.services.nix-daemon.environment."TMPDIR" =
-    lib.mkIf (config.nix.settings ? build-dir) config.nix.settings.build-dir;
-
   system.autoUpgrade = {
     enable = true;
     dates = "daily";

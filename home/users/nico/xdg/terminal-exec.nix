@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 {
   xdg.terminal-exec = {
@@ -10,9 +10,4 @@
       ];
     };
   };
-  # home.packages = [ pkgs.xdg-terminal-exec ];
-  #
-  # xdg.configFile."xdg-terminals.list".text = lib.concatLines [
-  #   (lib.optionalString config.programs.kitty.enable "kitty.desktop")
-  # ];
 }

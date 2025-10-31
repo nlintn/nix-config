@@ -24,6 +24,7 @@ in {
     nwg-displays
     pwvucontrol
     swayimg
+    wl-mirror
     wlr-randr
   ];
 

@@ -10,6 +10,7 @@
       # dhcp = "dhcpcd";
       # logLevel = "TRACE";
     };
+
     firewall.enable = true;
     nftables.enable = true;
 

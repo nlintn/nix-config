@@ -16,13 +16,14 @@
         black      = "\\e[30m";
         red        = "\\e[31m";
         green      = "\\e[32m";
+        grey       = "\\e[90m";
         bg_magenta = "\\e[45m";
       in /* sh */ ''
         wrapProgram $out/bin/less \
           --set LESS_TERMCAP_mb $'${bold + red}' \
-          --set LESS_TERMCAP_md $'${bold + red}' \
+          --set LESS_TERMCAP_md $'${grey}' \
           --set LESS_TERMCAP_me $'${reset}' \
-          --set LESS_TERMCAP_so $'${bold + black + bg_magenta}' \
+          --set LESS_TERMCAP_so $'${black + bg_magenta}' \
           --set LESS_TERMCAP_se $'${reset}' \
           --set LESS_TERMCAP_us $'${bold + green}' \
           --set LESS_TERMCAP_ue $'${reset}' \

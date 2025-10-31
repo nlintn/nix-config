@@ -9,6 +9,9 @@ in {
     mappings = {
       "<Return>" = "navigate next";
       "<S-Return>" = "navigate previous";
+
+      "[index] <Left>" = "zoom collapse";
+      "[index] <Right>" = "zoom expand";
     };
     options = with config.colorScheme.palette; {
       guioptions = "hsv";
@@ -43,14 +46,14 @@ in {
       index-fg = "#${base05}";
       index-bg = "#${base00}";
       index-active-fg = "#${base05}";
-      index-active-bg = toRGBA base0E 0.3;
+      index-active-bg = toRGBA base0E 0.5;
 
       render-loading-bg = toRGBA base00 0.5;
       render-loading-fg = "#${base05}";
 
       highlight-fg = "#${base05}";
-      highlight-color = toRGBA base0E 0.3;
-      highlight-active-color = toRGBA base0E 0.5;
+      highlight-color = toRGBA base09 0.5;
+      highlight-active-color = toRGBA base08 0.5;
     };
   };
 }

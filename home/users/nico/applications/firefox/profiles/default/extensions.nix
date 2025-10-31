@@ -26,11 +26,12 @@
       };
       ublock-origin.settings = {
         "selectedFilterLists" = [
-          "user-filters" "ublock-filters" "ublock-badware" "ublock-privacy" "ublock-quick-fixes" "ublock-unbreak"
+          "user-filters" "ublock-filters" "ublock-badware" "ublock-privacy" "ublock-quick-fixes" "ublock-unbreak" "ublock-experimental"
           "easylist" "easyprivacy" "urlhaus-1" "plowe-0" "fanboy-cookiemonster" "ublock-cookies-easylist"
           /* "fanboy-social" "easylist-chat" "easylist-newsletters" "easylist-notifications" "easylist-annoyances" */
           "DEU-0"
         ];
+        "uiAccentCustom" = true;
         "uiAccentCustom0" = "#${base0E}";
       };
       violentmonkey.settings = {
@@ -96,6 +97,7 @@
         "fallbackBackgroundList" = [
           "wikipedia.org"
           "de.wikipedia.org"
+          "en.wikipedia.org"
         ];
         "stylesRepositoryUrl" = "";
         "styles" = pkgs.firefoxAddons.zen-internet.styles;

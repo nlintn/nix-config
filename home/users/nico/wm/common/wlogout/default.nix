@@ -56,15 +56,15 @@
       }
 
       window {
-        background-color: ${toRGBA base00 0.7};
+        background-color: ${toRGBA base00 0.2};
       }
 
       button {
         border-radius: 0px;
-        border-color: ${toRGBA base0E 0.7};
+        border-color: ${toRGBA base04 0.8};
         text-decoration-color: #${base05};
         color: #${base05};
-        background-color: ${toRGBA base01 0.9};
+        background-color: ${toRGBA base01 0.7};
         border-style: solid;
         border-width: 1px;
         background-repeat: no-repeat;
@@ -73,7 +73,7 @@
       }
 
       button:focus, button:active {
-        background-color: ${toRGBA base03 0.9};
+        background-color: ${toRGBA base02 0.7};
         outline-style: none;
         background-size: 30%;
       }

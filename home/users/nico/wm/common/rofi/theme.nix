@@ -7,6 +7,7 @@ builtins.toPath (pkgs.writeText "theme-final.rasi" (
       bg1:    #${base04}80;
       bg2:    #${base0E}8f;
       bg3:    #${base01}5f;
+      bg4:    #${base02}c0;
 
       fg0:    #${base05};
       fg1:    #${base05};

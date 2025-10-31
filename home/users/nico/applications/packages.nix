@@ -3,6 +3,7 @@
 {
   home.packages = with pkgs; [
     # Coding stuff
+    ansible
     atac
     bear
     bviplus
@@ -26,6 +27,7 @@
 
     # Misc
     anki
+    audacity
     blender
     copyq
     cowsay
@@ -39,6 +41,7 @@
     gnome-clocks
     hieroglyphic
     htop
+    imagemagick
     image-roll
     inkscape
     ipinfo
@@ -46,7 +49,6 @@
     libnotify
     libqalculate
     libreoffice-fresh
-    linux-wifi-hotspot
     lolcat
     nix-diff
     nix-inspect

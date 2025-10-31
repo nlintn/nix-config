@@ -12,10 +12,10 @@
     ./ghostty
     ./git.nix
     ./gpg.nix
-    ./less.nix
     ./keepassxc
     ./kitty
     ./lazygit.nix
+    ./less.nix
     ./neovim.nix
     ./obs-studio.nix
     ./ssh.nix

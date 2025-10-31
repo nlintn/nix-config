@@ -262,7 +262,7 @@ in with config.colorScheme.palette; {
     mouse_move_enables_dpms = false;
     new_window_takes_over_fullscreen = 2;
 
-    enable_swallow = true;
+    enable_swallow = false;
     swallow_regex = "^(kitty|ghostty)$";
     swallow_exception_regex = "^(xopen .*|xx .*|firefox|wev|xdragon.*)$";
   };
@@ -277,7 +277,6 @@ in with config.colorScheme.palette; {
     "float, class:com.saivert.pwvucontrol"
     "float, class:nm-connection-editor"
     "float, class:.blueman-manager-wrapped"
-    "float, class:wihotspot"
 
     "float, class:xdg-desktop-portal-gtk"
 
@@ -326,6 +325,7 @@ in with config.colorScheme.palette; {
 
     "blur, rofi"
     "xray off, rofi"
+    "ignorealpha 0.2, rofi"
 
     "blur, logout_dialog"
     "xray off, logout_dialog"

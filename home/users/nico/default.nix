@@ -19,6 +19,10 @@
       [ -e ${NIX_CONFIG_DIR} ] || cp -r ${CONFIG_STORE_PATH} ${NIX_CONFIG_DIR}
     '');
 
+  home.sessionPath = [
+    "${config.home.homeDirectory}/.local/bin"
+  ];
+
   nix = {
     registry = {
       "n".flake = nixpkgs;

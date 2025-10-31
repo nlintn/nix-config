@@ -9,6 +9,7 @@
     ./firefox
     ./fzf.nix
     ./gdb.nix
+    ./ghostty
     ./git.nix
     ./gpg.nix
     ./less.nix
@@ -20,6 +21,7 @@
     ./ssh.nix
     ./thunar.nix
     ./thunderbird.nix
+    ./tmux.nix
     ./vlc.nix
     ./yazi.nix
     ./zathura.nix

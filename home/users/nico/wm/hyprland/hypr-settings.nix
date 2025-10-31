@@ -20,7 +20,7 @@ let
   var_scratchpad = lib.getExe (pkgs.hyscratchpad.override { libnotify = null; });
   var_swappy = lib.getExe pkgs.swappy;
   var_swaync-client = "${config.services.swaync.package}/bin/swaync-client";
-  var_term = lib.getExe config.programs.kitty.package;
+  var_term = lib.getExe config.programs.ghostty.package;
   var_volumectl = "${config.services.avizo.package}/bin/volumectl";
 
 in with config.colorScheme.palette; {
@@ -263,7 +263,7 @@ in with config.colorScheme.palette; {
     new_window_takes_over_fullscreen = 2;
 
     enable_swallow = true;
-    swallow_regex = "^(kitty)$";
+    swallow_regex = "^(kitty|ghostty)$";
     swallow_exception_regex = "^(xopen .*|xx .*|firefox|wev|xdragon.*)$";
   };
 

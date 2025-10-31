@@ -36,7 +36,7 @@
     fastfetch
     fd
     file
-    fractal-next
+    fractal
     gimp
     gnome-clocks
     hieroglyphic
@@ -59,7 +59,7 @@
     obsidian
     pdfarranger
     pdftk
-    poppler_utils
+    poppler-utils
     prismlauncher
     protonmail-desktop
     protonvpn-gui
@@ -78,7 +78,7 @@
     wev
     wireshark
     wl-clipboard
-    xdragon
+    dragon-drop
     xournalpp
     yubioath-flutter
   ];

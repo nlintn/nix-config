@@ -7,8 +7,7 @@
     userSettings.default-font.package
     font-awesome
     noto-fonts
-    noto-fonts-emoji
-    noto-fonts-extra
+    noto-fonts-color-emoji
     noto-fonts-cjk-sans
     raleway
   ];

@@ -3,9 +3,12 @@
 {
   programs.git = {
     enable = true;
-    userName = "Nico Lintner";
-    userEmail = "118087966+nlintn@users.noreply.github.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Nico Lintner";
+        email = "118087966+nlintn@users.noreply.github.com";
+      };
+
       pull.ff = "only";
       push.autoSetupRemote = true;
 

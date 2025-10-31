@@ -264,7 +264,7 @@ in with config.colorScheme.palette; {
 
     enable_swallow = false;
     swallow_regex = "^(kitty|ghostty)$";
-    swallow_exception_regex = "^(xopen .*|xx .*|firefox|wev|xdragon.*)$";
+    swallow_exception_regex = "^(xopen .*|xx .*|firefox|wev|dragon-drop.*)$";
   };
 
   render.cm_enabled = false;
@@ -302,7 +302,7 @@ in with config.colorScheme.palette; {
     "float, class:steam, title:Steam Settings"
     "float, class:steam, title:Friends List"
 
-    "pin, class:xdragon"
+    "pin, class:dragon-drop"
 
     "prop bordersize 0, floating:0, onworkspace:w[tv1]"
     "prop rounding 0, floating:0, onworkspace:w[tv1]"

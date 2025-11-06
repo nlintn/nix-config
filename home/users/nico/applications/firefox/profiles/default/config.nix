@@ -22,6 +22,8 @@
   "browser.link.open_newwindow.restriction" = 0;
   "browser.ml.enable" = false;
   "browser.ml.chat.enabled" = false;
+  "browser.ml.chat.menu" = false;
+  "browser.ml.chat.page" = false;
   "browser.urlbar.scotchBonnet.enableOverride" = false;
   "browser.search.separatePrivateDefault" = false;
   "browser.tabs.allow_transparent_browser" = true;

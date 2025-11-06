@@ -98,6 +98,7 @@
           "wikipedia.org"
           "de.wikipedia.org"
           "en.wikipedia.org"
+          "stackoverflow.com"
         ];
         "stylesRepositoryUrl" = "";
         "styles" = pkgs.firefoxAddons.zen-internet.styles;

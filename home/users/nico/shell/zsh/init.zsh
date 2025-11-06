@@ -16,7 +16,7 @@ autoload edit-command-line &&
 zle -N edit-command-line &&
 bindkey -a "^V" edit-command-line
 
-function copy() {
+copy() {
   if [ "$#" = "0" ]; then
     local formatted="$($base64 -w 0 /dev/stdin)"
   else
@@ -26,7 +26,7 @@ function copy() {
   builtin printf "\e]52;c;%s${terminfo[bel]}" "$formatted"
 }
 
-function paste() {
+paste() {
   if which wl-paste &>/dev/null; then
     wl-paste
   else
@@ -47,13 +47,13 @@ function paste() {
   fi
 }
 
-function wrap_clipboard_widgets_copy() {
+wrap_clipboard_widgets_copy() {
   local widget
   local wrapped_name
   for widget in "$@"; do
     wrapped_name="_zsh-vi-copy-${widget}"
     eval "
-      function ${wrapped_name}() {
+      ${wrapped_name}() {
         zle .${widget}
         copy \"\$CUTBUFFER\"
       }
@@ -61,13 +61,13 @@ function wrap_clipboard_widgets_copy() {
     zle -N "${widget}" "${wrapped_name}"
   done
 }
-function wrap_clipboard_widgets_paste() {
+wrap_clipboard_widgets_paste() {
   local widget
   local wrapped_name
   for widget in "$@"; do
     wrapped_name="_zsh-vi-paste-${widget}"
     eval "
-      function ${wrapped_name}() {
+      ${wrapped_name}() {
         CUTBUFFER=\"\$(paste widget 2>/dev/null || builtin echo \$CUTBUFFER)\"
         zle .${widget}
       }
@@ -84,4 +84,4 @@ wrap_clipboard_widgets_copy \
 wrap_clipboard_widgets_paste \
     vi-put-{before,after} \
     put-replace-selection
-unfunction wrap_clipboard_widgets_{copy,paste}
+unset -f wrap_clipboard_widgets_{copy,paste}

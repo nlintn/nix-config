@@ -1,7 +1,7 @@
 { config, lib, pkgs, nvim-config, ... }:
 
 let
-  pkg = nvim-config.packages.${pkgs.system}.nvim.override {
+  pkg = nvim-config.packages.${pkgs.stdenv.hostPlatform.system}.nvim.override {
     base16-palette = config.colorScheme.palette;
   };
   bin = lib.getExe pkg;

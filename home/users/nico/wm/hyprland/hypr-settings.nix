@@ -262,9 +262,9 @@ in with config.colorScheme.palette; {
     mouse_move_enables_dpms = false;
     new_window_takes_over_fullscreen = 2;
 
-    enable_swallow = false;
-    swallow_regex = "^(kitty|ghostty)$";
-    swallow_exception_regex = "^(xopen .*|xx .*|firefox|wev|dragon-drop.*)$";
+    # enable_swallow = false;
+    # swallow_regex = "^(kitty|ghostty)$";
+    # swallow_exception_regex = "^(xopen .*|xx .*|firefox|wev|dragon-drop.*)$";
   };
 
   render.cm_enabled = false;

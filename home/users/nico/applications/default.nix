@@ -42,6 +42,7 @@
     direnv.nix-direnv.enable = true;
     evince.enable = true;
     java.enable = true;
+    zoxide.enable = true;
   };
 
   services = {

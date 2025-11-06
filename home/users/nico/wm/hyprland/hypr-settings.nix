@@ -10,7 +10,7 @@ let
   var_grimblast = lib.getExe pkgs.grimblast;
   var_hyprpicker = lib.getExe pkgs.hyprpicker;
   var_hyprtabs = lib.getExe (pkgs.callPackage ./scripts/hyprtabs.nix args);
-  var_lock-cmd = config.home.sessionVariables.SESSION_LOCK_CMD;
+  var_lock-cmd = config.vars.sessionLockCmd;
   var_lock-transparent = lib.getExe (pkgs.callPackage ./hyprlock/lock-transparent.nix args);
   var_loginctl = config.systemd.user.loginctlPath;
   var_playerctl = lib.getExe config.services.playerctld.package;

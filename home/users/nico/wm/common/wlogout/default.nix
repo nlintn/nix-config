@@ -9,7 +9,7 @@
     in [
       {
         "label" = "lock";
-        "action" = "${config.home.sessionVariables.SESSION_LOCK_CMD}";
+        "action" = "${config.vars.sessionLockCmd}";
         "text" = "Lock";
         "keybind" = "l";
       }

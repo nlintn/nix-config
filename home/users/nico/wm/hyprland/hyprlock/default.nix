@@ -1,9 +1,9 @@
 { config, lib, pkgs, userSettings, ... }:
 
 {
-  home.sessionVariables = {
-    __LOCK_CMD = lib.getExe config.programs.hyprlock.package;
-    __UNLOCK_CMD =  "${pkgs.procps}/bin/pkill -SIGUSR1 hyprlock";
+  vars = {
+    lockCmd = "${lib.getExe config.programs.hyprlock.package} --grace 2";
+    unlockCmd = "${pkgs.procps}/bin/pkill -SIGUSR1 hyprlock";
   };
   programs.hyprlock = {
     enable = true;

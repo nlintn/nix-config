@@ -5,9 +5,9 @@
     enable = true;
     terminal = lib.getExe config.programs.ghostty.package;
     package = pkgs.rofi.override {
-      rofi-unwrapped = pkgs.rofi-unwrapped.override (with config.home.sessionVariables; {
-        waylandSupport = WAYLAND_SUPPORT == "1"; x11Support = X11_SUPPORT == "1";
-      });
+      rofi-unwrapped = pkgs.rofi-unwrapped.override  {
+        inherit (config.vars) waylandSupport x11Support;
+      };
     };
     theme = import ./theme.nix args;
     plugins = with pkgs; [ rofi-emoji ];

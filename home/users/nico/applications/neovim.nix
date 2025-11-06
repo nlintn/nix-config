@@ -6,8 +6,8 @@ let
   };
   bin = lib.getExe pkg;
 in {
+  vars.nvimPackage = pkg;
   home.sessionVariables = {
-    NVIM = bin;
     EDITOR = "nvim";
     MANPAGER = "${bin} +Man!";
   };

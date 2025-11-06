@@ -1,4 +1,4 @@
-{ config, options, pkgs, userSettings, ... } @ args:
+{ config, lib, options, pkgs, userSettings, ... } @ args:
 
 let
   scrollback_pager = pkgs.writeShellScript "scrollback_pager" ''
@@ -13,7 +13,7 @@ let
         AUTOCMD_TERMCLOSE_CMD="normal G"
     fi
 
-    exec ${config.home.sessionVariables.NVIM} 63<&0 0</dev/null \
+    exec ${lib.getExe config.vars.nvimPackage} 63<&0 0</dev/null \
         -u NONE \
         -c "map <silent> q :qa!<CR>" \
         -c "set scrollback=100000 laststatus=0 clipboard+=unnamedplus notermguicolors" \

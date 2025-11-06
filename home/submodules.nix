@@ -13,6 +13,7 @@
 
       sharedModules = [
         ./common.nix
+        ./options.nix
       ];
 
       users.${n} = {

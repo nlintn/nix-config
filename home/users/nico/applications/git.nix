@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   programs.git = {
@@ -15,7 +15,7 @@
       merge.tool = "nvim";
       mergetool = {
         prompt = false;
-        "nvim".cmd = ''${config.home.sessionVariables.NVIM} -c "DiffviewOpen"'';
+        "nvim".cmd = ''${lib.getExe config.vars.nvimPackage} -c "DiffviewOpen"'';
       };
 
       user.signingkey = "620394D5D26C67A8";

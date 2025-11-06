@@ -1,10 +1,11 @@
-{ lib, ... }:
+{ ... }:
 
 {
+  vars = {
+    waylandSupport = true;
+    x11Support = false;
+  };
   home.sessionVariables = {
-    WAYLAND_SUPPORT = "1";
-    X11_SUPPORT = lib.mkDefault "0";
-
     CLUTTER_BACKEND = "wayland";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     GDK_BACKEND = "wayland";

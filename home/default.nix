@@ -6,6 +6,7 @@
     modules = [
       ./users/${n}
       ./common.nix
+      ./options.nix
     ];
     extraSpecialArgs = specialArgs // { hmUsername = n; };
   }

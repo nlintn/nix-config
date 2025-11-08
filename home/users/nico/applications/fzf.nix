@@ -21,10 +21,10 @@
       "--height 60%"
       "--border"
       "--layout=reverse"
-    ];
-    changeDirWidgetCommand = "${pkgs.coreutils}/bin/cat <(${lib.getExe config.programs.zoxide.package} query --list) <(${lib.getExe pkgs.fd} -HIL -t d -E .cache)";
+    ] ++ lib.optional config.programs.tmux.enable "--tmux bottom,75%,60%";
+    changeDirWidgetCommand = "${lib.getExe' pkgs.coreutils "cat"} <(${lib.getExe config.programs.zoxide.package} query --list) <(${lib.getExe pkgs.fd} -IL -t d -E .cache)";
     changeDirWidgetOptions = [  #  ALT-C Options
-      "--preview '${lib.getExe pkgs.eza} --color --tree {}'"
+      "--preview '${lib.getExe pkgs.eza} --color=always --follow-symlinks --tree {}'"
     ];
     fileWidgetCommand = "${lib.getExe pkgs.fd} -IL -t f";
     fileWidgetOptions = [       # CTRL-T Options

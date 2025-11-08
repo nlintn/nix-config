@@ -14,7 +14,7 @@ in /* sh */ ''
     ${lib.optionalString config.services.swaync.enable "${systemctl} --user restart swaync.service"}
     ${lib.optionalString config.programs.waybar.enable "${systemctl} --user restart waybar.service"}
 
-    ${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl reload
+    ${lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl"} reload
 
     ${lib.getExe libnotify} -u low -e "reloaded successfully"
   fi

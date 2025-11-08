@@ -29,8 +29,8 @@
         }
         {
           timeout = 250;
-          on-timeout = "${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl dispatch dpms off";
-          on-resume = "${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl dispatch dpms on";
+          on-timeout = "${lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl"} dispatch dpms off";
+          on-resume = "${lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl"} dispatch dpms on";
         }
         {
           timeout = 600;

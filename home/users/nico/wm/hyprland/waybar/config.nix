@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 
 let
-  var_conctl = "${config.programs.nm-applet.package}/bin/nm-connection-editor";
+  var_conctl = lib.getExe' config.programs.nm-applet.package "nm-connection-editor";
   var_volctl = lib.getExe pkgs.pwvucontrol;
-  var_swaync-client = "${config.services.swaync.package}/bin/swaync-client";
+  var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
 in /* json */ '' {
   "layer": "top",
   "position": "bottom",

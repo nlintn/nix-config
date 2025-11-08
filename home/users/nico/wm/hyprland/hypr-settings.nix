@@ -3,10 +3,10 @@
 let
   evalBinds = lib'.hyprland.evalBinds;
 
-  var_brightnessctl = "${config.services.avizo.package}/bin/lightctl -e 2";
+  var_brightnessctl = "${lib.getExe' config.services.avizo.package "lightctl"} -e 2";
   var_browser = lib.getExe config.programs.firefox.finalPackage;
   var_copyq = lib.getExe config.services.copyq.package;
-  var_filemanager = "${config.programs.thunar.finalPackage}/bin/thunar";
+  var_filemanager = lib.getExe' config.programs.thunar.finalPackage "thunar";
   var_grimblast = lib.getExe pkgs.grimblast;
   var_hyprpicker = lib.getExe pkgs.hyprpicker;
   var_hyprtabs = lib.getExe (pkgs.callPackage ./scripts/hyprtabs.nix args);
@@ -19,9 +19,9 @@ let
   var_power-menu = lib.getExe config.programs.wlogout.package;
   var_scratchpad = lib.getExe (pkgs.hyscratchpad.override { libnotify = null; });
   var_swappy = lib.getExe pkgs.swappy;
-  var_swaync-client = "${config.services.swaync.package}/bin/swaync-client";
+  var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
   var_term = lib.getExe config.programs.ghostty.package;
-  var_volumectl = "${config.services.avizo.package}/bin/volumectl";
+  var_volumectl = lib.getExe' config.services.avizo.package "volumectl";
 
 in with config.colorScheme.palette; {
   source = [
@@ -310,6 +310,8 @@ in with config.colorScheme.palette; {
     "prop rounding 0, floating:0, onworkspace:f[1]"
 
     "prop decorate 0, floating:0, onworkspace:w[t1]"
+
+    "group, floating:0"
   ];
 
   workspace = [

@@ -3,7 +3,7 @@
 {
   vars = {
     lockCmd = "${lib.getExe config.programs.hyprlock.package} --grace 2";
-    unlockCmd = "${pkgs.procps}/bin/pkill -SIGUSR1 hyprlock";
+    unlockCmd = "${lib.getExe' pkgs.procps "pkill"} -SIGUSR1 hyprlock";
   };
   programs.hyprlock = {
     enable = true;
@@ -47,7 +47,7 @@
 
       label = with config.colorScheme.palette; [
         {
-          text = "cmd[update:1000] ${pkgs.coreutils}/bin/date +%H:%M:%S";
+          text = "cmd[update:1000] ${lib.getExe' pkgs.coreutils "date"} +%H:%M:%S";
           color = "rgba(${base05}cc)";
           font_size = 150;
           font_family = "${userSettings.default-font.name} Mono ExtraBold";

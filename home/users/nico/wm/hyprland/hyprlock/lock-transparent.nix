@@ -1,7 +1,7 @@
 { config, lib, writeShellScriptBin, writeText, ... }:
 
 writeShellScriptBin "lock-transparent" /* sh */ ''
-  ${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl keyword misc:session_lock_xray true
+  ${lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl"} keyword misc:session_lock_xray true
   systemd-inhibit --what=idle ${lib.getExe config.programs.hyprlock.package} -c ${
     writeText "hyprlock-transp.conf" ''
       general {
@@ -14,5 +14,5 @@ writeShellScriptBin "lock-transparent" /* sh */ ''
       }
     ''
   }
-  ${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl keyword misc:session_lock_xray false
+  ${lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl"} keyword misc:session_lock_xray false
 ''

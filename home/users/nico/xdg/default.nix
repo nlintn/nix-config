@@ -6,10 +6,10 @@
   ];
 
   home.activation.tmpDirs = lib.hm.dag.entryBetween [ "linkGeneration" "createXdgUserDirectories" ] [ "writeBoundary" ] ''
-    ${pkgs.coreutils}/bin/rm -rf ${config.xdg.userDirs.download};
+    ${lib.getExe' pkgs.coreutils "rm"} -rf ${config.xdg.userDirs.download};
     TMPDIR=''${TMPDIR:-/tmp}
-    ${pkgs.coreutils}/bin/mkdir -p $TMPDIR/download$UID &&
-    ${pkgs.coreutils}/bin/ln -s $TMPDIR/download$UID ${config.xdg.userDirs.download}
+    ${lib.getExe' pkgs.coreutils "mkdir"} -p "$TMPDIR/download$UID" &&
+    ${lib.getExe' pkgs.coreutils "ln"} -s "$TMPDIR/download$UID" ${config.xdg.userDirs.download}
   '';
 
   xdg = {

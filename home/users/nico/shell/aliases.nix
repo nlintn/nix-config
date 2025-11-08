@@ -11,7 +11,7 @@
       la = "${ll} -a";
       lt = "${ll} --sort=newest";
       tree = "${ls} --tree";
-      open = "${pkgs.xdg-utils}/bin/xdg-open";
+      open = lib.getExe' pkgs.xdg-utils "xdg-open";
       # xx = "${pkgs.writeShellScript "xx" "$@ >/dev/null >&1 2>&1 & builtin disown"}";
       # xopen = "${pkgs.writeShellScript "xopen" ''${open} "$@" & builtin disown''}";
     }

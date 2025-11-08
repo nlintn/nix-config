@@ -17,7 +17,6 @@ let
   var_pwm = lib.getExe config.programs.keepassxc.package;
   var_rofi = lib.getExe config.programs.rofi.finalPackage;
   var_power-menu = lib.getExe config.programs.wlogout.package;
-  var_scratchpad = lib.getExe (pkgs.hyscratchpad.override { libnotify = null; });
   var_swappy = lib.getExe pkgs.swappy;
   var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
   var_term = lib.getExe config.programs.ghostty.package;
@@ -105,10 +104,6 @@ in with config.colorScheme.palette; {
 
       "P, togglespecialworkspace, pwm"
       "SHIFT, P, movetoworkspacesilent, special:pwm"
-
-      "D,        exec, ${var_scratchpad} -n scratchpad"
-      "SHIFT, D, exec, ${var_scratchpad} -g -l -n scratchpad"
-      "CTRL, D,  togglespecialworkspace, scratchpad"
 
       "K, split:swapactiveworkspaces, current +1"
       "SHIFT, K, split:grabroguewindows"

@@ -1,20 +1,40 @@
-{ lib, lanzaboote, ... }:
+{ config, ... }:
 
 {
-  imports = [
-    lanzaboote.nixosModules.lanzaboote
+  environment.systemPackages = [
+    config.boot.loader.limine.secureBoot.sbctl
   ];
 
-  boot = {
-    lanzaboote = {
+  boot.loader = {
+    timeout = 1;
+    limine = {
       enable = true;
-      pkiBundle = "/var/lib/sbctl";
-    };
-    loader = {
-      efi.canTouchEfiVariables = true;
-      timeout = 0;
+      secureBoot.enable = true;
+      enableEditor = true;
+      panicOnChecksumMismatch = true;
+      maxGenerations = 50;
+      extraConfig = ''
+        quiet: yes
+      '';
+
+      style = with config.colorScheme.palette; {
+        wallpapers = [];
+        wallpaperStyle = "centered";
+        backdrop = "000000";
+        graphicalTerminal = {
+          font.scale = "1x1";
+          background = "ff${base00}";
+          brightBackground = "ff${base02}";
+          foreground = "ff${base05}";
+          brightForeground = "ff${base0E}";
+          palette = builtins.concatStringsSep ";" [ base01 base08 base0B base0A base0D base0E base0C base07 ];
+          brightPalette = builtins.concatStringsSep ";" [ base03 base08 base0B base0A base0D base0E base0C base07 ];
+        };
+        interface = {
+          branding = config.networking.hostName;
+          brandingColor = 6;
+        };
+      };
     };
   };
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-
 }

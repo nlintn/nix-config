@@ -7,7 +7,6 @@
     arp-scan
     powertop
     psmisc
-    sbctl
     tcpdump
   ];
 

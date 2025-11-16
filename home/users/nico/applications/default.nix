@@ -33,6 +33,7 @@
   };
 
   programs = {
+    anki.enable = true;
     chromium = {
       enable = true;
       package = pkgs.ungoogled-chromium;
@@ -41,8 +42,15 @@
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
     evince.enable = true;
+    fd.enable = true;
+    jq.enable = true;
+    fastfetch.enable = true;
+    htop.enable = true;
     java.enable = true;
+    obsidian.enable = true;
+    ripgrep.enable = true;
     zoxide.enable = true;
+    vesktop.enable = true;
   };
 
   services = {

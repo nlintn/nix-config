@@ -16,7 +16,7 @@
       prompt      = "#${base0E}";
       spinner     = "#${base06}";
     };
-    defaultCommand = "${lib.getExe pkgs.fd} -IL";
+    defaultCommand = "${lib.getExe config.programs.fd.package} -IL";
     defaultOptions = [
       "--height 60%"
       "--border"
@@ -26,7 +26,7 @@
     changeDirWidgetOptions = [  #  ALT-C Options
       "--preview '${lib.getExe pkgs.eza} --color=always --follow-symlinks --tree {}'"
     ];
-    fileWidgetCommand = "${lib.getExe pkgs.fd} -IL -t f";
+    fileWidgetCommand = "${lib.getExe config.programs.fd.package} -IL -t f";
     fileWidgetOptions = [       # CTRL-T Options
       "--preview '(${lib.getExe config.programs.bat.package} --paging=never --color=always {} || ${lib.getExe pkgs.tree} -C {}) 2> /dev/null | head -200'"
     ];

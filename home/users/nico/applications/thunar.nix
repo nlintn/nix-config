@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   programs.thunar = {
@@ -12,7 +12,7 @@
       <actions>
       <action>
         <name>Open Terminal Here</name>
-        <command>${lib.getExe pkgs.xdg-terminal-exec}</command>
+        <command>${lib.getExe config.xdg.terminal-exec.package}</command>
         <patterns>*</patterns>
         <directories/>
       </action>

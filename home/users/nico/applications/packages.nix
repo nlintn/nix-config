@@ -26,26 +26,20 @@
     llvmPackages_latest.clang-manpages llvmPackages_latest.llvm-manpages
 
     # Misc
-    anki
     audacity
     blender
-    copyq
     cowsay
     desmume
     dig
-    fastfetch
-    fd
     file
     fractal
     gimp
     gnome-clocks
     hieroglyphic
-    htop
     imagemagick
     image-roll
     inkscape
     ipinfo
-    jq
     libnotify
     libqalculate
     libreoffice-fresh
@@ -56,7 +50,6 @@
     nix-tree
     nixln-edit
     nmap
-    obsidian
     pdfarranger
     pdftk
     poppler-utils
@@ -65,7 +58,6 @@
     protonvpn-gui
     prusa-slicer
     rclone
-    ripgrep
     signal-desktop
     speedread
     spotify
@@ -74,7 +66,6 @@
     telegram-desktop
     unar
     usbutils
-    vesktop
     wev
     wireshark
     wl-clipboard

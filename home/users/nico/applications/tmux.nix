@@ -2,9 +2,9 @@
 
 let
   seshFzf = let
-    fd = lib.getExe pkgs.fd;
+    fd = lib.getExe config.programs.fd.package;
     fzf = lib.getExe config.programs.fzf.package;
-    rg = lib.getExe pkgs.ripgrep;
+    rg = lib.getExe config.programs.ripgrep.package;
     sesh = lib.getExe config.programs.sesh.package;
     tmux = lib.getExe config.programs.tmux.package;
   in pkgs.writeShellScript "sesh-fzf" ''

@@ -25,7 +25,7 @@ let
 in {
   programs.tmux = {
     enable = true;
-    extraConfig = ''
+    extraConfig = with config.colorScheme.palette; ''
       unbind C-b
       set -g prefix C-a
       bind -n C-a send-prefix
@@ -37,7 +37,7 @@ in {
       set -g aggressive-resize off
       set -g clock-mode-style 24
       set -g escape-time 0
-      set -g history-limit 2000
+      set -g history-limit 50000
 
       set -g set-titles on
       set -g set-titles-string '#{pane_title}'
@@ -49,14 +49,24 @@ in {
       set -g status-position top
       set -g status-justify absolute-centre
       set -g status-style "bg=default"
-      set -g window-status-current-style "fg=blue bold"
-      set -g status-left ""
+      set -g window-status-current-style fg=#${base0D},bold
+      set -g status-left "#T "
+      set -g status-left-length 40
+      set -g status-left-style bold
       set -g status-right " #S"
+      set -g status-right-style bold
+      set -g status-right-length 40
 
       set -g default-terminal "tmux-256color"
       set -g allow-passthrough all
       set -ga update-environment TERM
       set -ga update-environment TERM_PROGRAM
+
+      set -g message-style bg=#${base0E},fg=#${base01}
+      set -g message-command-style bg=#${base01},fg=#${base0E}
+      set -g copy-mode-match-style bg=#${base09},fg=#${base01}
+      set -g copy-mode-current-match-style bg=#${base08},fg=#${base01}
+      set -g mode-style bg=#${base0F},fg=#${base00}
 
       # Set new panes to open in current directory
       bind c new-window -c "#{pane_current_path}"
@@ -76,7 +86,7 @@ in {
       bind -T copy-mode-vi v send-keys -X begin-selection
       bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
-      bind -n C-Space display-popup -b rounded -xC -yC -w 65% -h 65% -E ${let
+      bind -n C-Enter display-popup -b rounded -xC -yC -w 65% -h 65% -E ${let
         tmux = lib.getExe config.programs.tmux.package;
       in pkgs.writeShellScript "tmux-popup" ''
         session="_popup_$(${tmux} display -p '#S')_"
@@ -85,14 +95,14 @@ in {
           session_id="$(${tmux} new-session -dP -s "$session" -F '#{session_id}')"
           ${tmux} set-option -s -t "$session_id" key-table _popup
           ${tmux} set-option -s -t "$session_id" status off
-          ${tmux} set-option -s -t "$session_id" prefix None
+          # ${tmux} set-option -s -t "$session_id" prefix None
           ${tmux} set-environment -t "$session_id" FZF_TMUX 1
           session="$session_id"
         fi
 
         builtin exec ${tmux} attach -t "$session" > /dev/null
       ''}
-      bind -T _popup C-Space detach
+      bind -T _popup Enter detach
       bind -T _popup C-[ copy-mode
 
       bind w choose-tree -Z -f '#{?#{m:_popup_*_,#{session_name}},0,1}'
@@ -112,9 +122,9 @@ in {
       };
       session = [
         {
-          name = "nix-config";
+          name = "󱄅 nix-config";
           path = config.home.sessionVariables.NIX_CONFIG_DIR;
-          startup_command = "${lib.getExe config.vars.nvimPackage} -c ':Telescope find_files'";
+          startup_command = " ${lib.getExe config.vars.nvimPackage} -c ':Telescope find_files'";
         }
       ];
     };

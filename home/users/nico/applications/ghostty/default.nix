@@ -8,7 +8,6 @@
     settings = {
       auto-update = "off";
       app-notifications = false;
-      working-directory = "home";
 
       adjust-cursor-thickness = "100%";
       background-opacity = 0.65;

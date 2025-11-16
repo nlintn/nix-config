@@ -32,7 +32,7 @@
         };
         interface = {
           branding = config.networking.hostName;
-          brandingColor = 6;
+          brandingColor = 5;
         };
       };
     };

@@ -19,7 +19,7 @@ let
   var_power-menu = lib.getExe config.programs.wlogout.package;
   var_swappy = lib.getExe pkgs.swappy;
   var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
-  var_term = lib.getExe config.programs.ghostty.package;
+  var_term = lib.getExe config.xdg.terminal-exec.package;
   var_volumectl = lib.getExe' config.services.avizo.package "volumectl";
 
 in with config.colorScheme.palette; {
@@ -144,7 +144,7 @@ in with config.colorScheme.palette; {
       "ALT, right, resizeactive,  20 0"
       "ALT, up,    resizeactive, 0 -20"
       "ALT, down,  resizeactive, 0  20"
-        
+
       "ALT, h, resizeactive, -20 0"
       "ALT, l, resizeactive,  20 0"
       "ALT, k, resizeactive, 0 -20"
@@ -234,11 +234,11 @@ in with config.colorScheme.palette; {
       scrolling = false;
       text_offset = 1;
 
-      "col.active" = "rgba(${base0E}dd)";
+      "col.active" = "rgb(${base0E})";
       font_weight_active = "semibold";
       text_color = "rgb(${base01})";
 
-      "col.inactive" = "rgba(${base00}dd)";
+      "col.inactive" = "rgb(${base00})";
       font_weight_inactive= "normal";
       text_color_inactive = "rgb(${base05})";
     };
@@ -278,7 +278,7 @@ in with config.colorScheme.palette; {
     "float, class:com.github.hluk.copyq"
     "move onscreen cursor, class:com.github.hluk.copyq"
     "pin, class:com.github.hluk.copyq"
-    "size 40%, 40%, class:com.github.hluk.copyq"
+    "size 40% 40%, class:com.github.hluk.copyq"
 
     "prop noscreenshare 1, class:org.keepassxc.KeePassXC"
 
@@ -300,9 +300,7 @@ in with config.colorScheme.palette; {
     "pin, class:dragon-drop"
 
     "prop bordersize 0, floating:0, onworkspace:w[tv1]"
-    "prop rounding 0, floating:0, onworkspace:w[tv1]"
     "prop bordersize 0, floating:0, onworkspace:f[1]"
-    "prop rounding 0, floating:0, onworkspace:f[1]"
 
     "prop decorate 0, floating:0, onworkspace:w[t1]"
 
@@ -312,9 +310,6 @@ in with config.colorScheme.palette; {
   workspace = [
     "special:magic, on-created-empty:${var_term}"
     "special:pwm, on-created-empty:${var_pwm}"
-
-    "w[tv1], gapsout:0, gapsin:0"
-    "f[1], gapsout:0, gapsin:0"
   ];
 
   layerrule = [
@@ -342,8 +337,8 @@ in with config.colorScheme.palette; {
   ];
 
   general = {
-    gaps_in = 0;
-    gaps_out = 0;
+    gaps_in = 1;
+    gaps_out = "0,0,1,0";
     border_size = 1;
     "col.active_border" = "rgba(${base0F}66)";
     "col.inactive_border" = "rgba(${base04}66)";

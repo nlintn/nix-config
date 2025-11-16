@@ -55,7 +55,7 @@
     poppler-utils
     prismlauncher
     protonmail-desktop
-    protonvpn-gui
+    # protonvpn-gui TODO: add back when fixed
     prusa-slicer
     rclone
     signal-desktop

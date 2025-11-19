@@ -17,9 +17,10 @@ let
   var_pwm = lib.getExe config.programs.keepassxc.package;
   var_rofi = lib.getExe config.programs.rofi.finalPackage;
   var_power-menu = lib.getExe config.programs.wlogout.package;
-  var_swappy = lib.getExe pkgs.swappy;
+  var_swappy = lib.getExe config.programs.swappy.package;
   var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
   var_term = lib.getExe config.xdg.terminal-exec.package;
+  var_tmux_term = "${var_term} --command='${config.vars.seshFzf}'";
   var_volumectl = lib.getExe' config.services.avizo.package "volumectl";
 
 in with config.colorScheme.palette; {
@@ -38,6 +39,7 @@ in with config.colorScheme.palette; {
   ];
 
   exec-once = [
+    "[workspace special:dropterm silent] ${var_term}"
     "[workspace special:pwm silent] ${var_pwm}"
   ];
   # "debug:disable_logs" = false;
@@ -52,9 +54,10 @@ in with config.colorScheme.palette; {
       "E, exec, ${var_filemanager}"
       "W, exec, ${var_browser}"
       "Q, exec, ${var_term}"
-      "R, exec, ${var_rofi} -modi drun -show drun -drun-show-actions"
+      "SHIFT, Q, exec, ${var_tmux_term}"
+      "SPACE, exec, ${var_rofi} -modi drun -show drun -drun-show-actions"
       "SHIFT, R, exec, ${hyreload}"
-      "T, exec, ${var_rofi} -modi ssh -show ssh"
+      # "T, exec, ${var_rofi} -modi ssh -show ssh"
       "PERIOD, exec, ${var_rofi} -modi emoji -show emoji -matching normal"
       "V, exec, ${var_copyq} show"
       "BACKSPACE, exec, ${var_lock-cmd}"
@@ -71,10 +74,11 @@ in with config.colorScheme.palette; {
       "SHIFT, Z, exec, ${var_loginctl} terminate-session self"
       "CTRL SHIFT, Z, exit"
       # "P, pseudo,"
-      "SPACE, togglefloating,"
+      "K, togglefloating,"
 
       "G, exec, ${var_hyprtabs}"
       "SHIFT, G, togglegroup,"
+      "CTRL, G, moveoutofgroup,"
 
       "dead_circumflex, workspace, previous_per_monitor"
       "1, workspace, r~1"
@@ -216,6 +220,7 @@ in with config.colorScheme.palette; {
   gestures = {
     workspace_swipe_forever = true;
     workspace_swipe_use_r = true;
+    workspace_swipe_create_new = false;
   };
 
   group = {
@@ -308,7 +313,7 @@ in with config.colorScheme.palette; {
   ];
 
   workspace = [
-    "special:magic, on-created-empty:${var_term}"
+    "special:dropterm, on-created-empty:${var_term}"
     "special:pwm, on-created-empty:${var_pwm}"
   ];
 

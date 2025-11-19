@@ -10,15 +10,8 @@
         ForwardAgent = "no";
         UserKnownHostsFile = "~/.ssh/known_hosts";
       };
-      lxhalle = {
-        Hostname = "halle.cit.tum.de";
-        User = "lintn";
-      };
-      valhalla = {
-        Hostname = "valhalla.fs.tum.de";
-        User = "lintner";
-      };
     };
+    includes = [ "hosts" ];
   };
 
   services.ssh-agent.enable = true;

@@ -30,6 +30,13 @@ in {
 
   programs = {
     nm-applet.enable = true;
+    swappy = {
+      enable = true;
+      settings.Default = {
+        save_dir = "${config.home.homeDirectory}/Pictures/Screenshots";
+        save_filename_format = "screen-%Y%m%d-%H%M%S.png";
+      };
+    };
     swaybg = {
       enable = true;
       image.path = userSettings.wallpaper;
@@ -70,11 +77,7 @@ in {
     };
   };
 
-  # home.activation.hyprlandActivation = lib.hm.dag.entryAfter [ "reloadSystemd" ] "run ${customPkgs.hyreload}";
+  home.sessionVariables.GTK_IM_MODULE = "simple";
 
-  xdg.configFile."swappy/config".text = ''
-    [Default]
-    save_dir=${config.home.homeDirectory}/Pictures/Screenshots
-    save_filename_format=screen-%Y%m%d-%H%M%S.png
-  '';
+  # home.activation.hyprlandActivation = lib.hm.dag.entryAfter [ "reloadSystemd" ] "run ${customPkgs.hyreload}";
 }

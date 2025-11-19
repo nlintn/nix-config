@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+with config.colorScheme.palette; {
   # extensions
   "extensions.autoDisableScopes" = 0;
   "extensions.update.autoUpdateDefault" = false;
@@ -119,7 +119,7 @@
   "privacy.clearOnShutdown.history" = false;
   "privacy.fingerprintingProtection" = true;
   "privacy.fingerprintingProtection.pbmode" = true;
-  "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC";
+  "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC,-FontVisibilityRestrictGenerics";
   "privacy.resistFingerprinting" = false; # unwanted side effects
   "privacy.resistFingerprinting.pbmode" = true;
   "privacy.resistFingerprinting.randomization.canvas.use_siphash" = true;
@@ -150,7 +150,13 @@
   "services.sync.engine.prefs.modified" = false;
   "services.sync.engine.tabs" = true;
 
-  # UI settings
+  # UI colors
+  "ui.textHighlightBackground" = "#${base09}";
+  "ui.textHighlightForeground" = "#${base01}";
+  "ui.textSelectAttentionBackground" = "#${base08}";
+  "ui.textSelectAttentionForeground" = "#${base01}";
+
+  # UI layout settings
   "browser.uiCustomization.state" = let
     extToBrowserAction =
       builtins.map (n: if builtins.typeOf n == "string" then n else (

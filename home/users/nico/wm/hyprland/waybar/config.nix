@@ -36,9 +36,6 @@ in /* json */ '' {
     "disable-scroll": true,
     "on-click": "activate",
     "sort-by-number": true,
-    "persistent-workspaces": {
-      "*": 10
-    },
     "spacing": 0
   },
 

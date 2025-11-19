@@ -22,7 +22,7 @@
       "--border"
       "--layout=reverse"
     ] ++ lib.optional config.programs.tmux.enable "--tmux bottom,75%,60%";
-    changeDirWidgetCommand = "${lib.getExe' pkgs.coreutils "cat"} <(${lib.getExe config.programs.fd.package} <(${lib.getExe config.programs.zoxide.package} query --list) -IL -t d -E .cache)";
+    changeDirWidgetCommand = "${lib.getExe' pkgs.coreutils "cat"} <(${lib.getExe config.programs.fd.package} -IL -t d -E .cache) <(${lib.getExe config.programs.zoxide.package} query --list)";
     changeDirWidgetOptions = [  #  ALT-C Options
       "--preview '${lib.getExe pkgs.eza} --color=always --follow-symlinks --tree {}'"
     ];

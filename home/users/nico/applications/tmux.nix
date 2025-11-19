@@ -1,27 +1,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  seshFzf = let
-    fd = lib.getExe config.programs.fd.package;
-    fzf = lib.getExe config.programs.fzf.package;
-    rg = lib.getExe config.programs.ripgrep.package;
-    sesh = lib.getExe config.programs.sesh.package;
-    tmux = lib.getExe config.programs.tmux.package;
-  in pkgs.writeShellScript "sesh-fzf" ''
-    ${sesh} connect "$(
-      ${sesh} list --icons | (${rg} -v '_popup_.*_' || true) | ${fzf} --tmux center,80%,70% \
-        --no-sort --ansi --border-label ' sesh ' --prompt '󱐋  ' \
-        --header '  󰘴a all 󰘴t tmux 󰘴g configs 󰘴x zoxide 󰘴d kill 󰘴f find' \
-        --bind 'tab:down,btab:up' \
-        --bind 'ctrl-a:change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_" || true)' \
-        --bind 'ctrl-t:change-prompt(  )+reload(${sesh} list -t --icons | ${rg} -v "_popup_.*_" || true)' \
-        --bind 'ctrl-g:change-prompt(  )+reload(${sesh} list -c --icons)' \
-        --bind 'ctrl-x:change-prompt(󰉋  )+reload(${sesh} list -z --icons)' \
-        --bind 'ctrl-f:change-prompt(  )+reload(${fd} -IL -t d . ~)' \
-        --bind 'ctrl-d:execute(${tmux} kill-session -t {2..})+change-prompt(󱐋  )+reload(${sesh} list --icons)' \
-        --preview-window 'right:60%' \
-        --preview '${sesh} preview {}'
-    )"'';
 in {
   programs.tmux = {
     enable = true;
@@ -50,10 +29,10 @@ in {
       set -g status-justify absolute-centre
       set -g status-style "bg=default"
       set -g window-status-current-style fg=#${base0D},bold
-      set -g status-left "#T "
-      set -g status-left-length 40
+      set -g status-left "#S "
       set -g status-left-style bold
-      set -g status-right " #S"
+      set -g status-left-length 40
+      set -g status-right " #T"
       set -g status-right-style bold
       set -g status-right-length 40
 
@@ -78,7 +57,7 @@ in {
       bind ü copy-mode
       bind x kill-pane # skip "kill-pane? (y/n)" prompt
 
-      bind a run-shell "${seshFzf}"
+      bind a run-shell "${config.vars.seshFzf}"
 
       bind g display-popup -b rounded -E -xC -yC -w 90% -h 90% -d "#{pane_current_path}" ${lib.getExe config.programs.lazygit.package}
 
@@ -86,7 +65,7 @@ in {
       bind -T copy-mode-vi v send-keys -X begin-selection
       bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
-      bind -n C-Enter display-popup -b rounded -xC -yC -w 65% -h 65% -E ${let
+      bind Enter display-popup -b rounded -xC -yC -w 65% -h 65% -E ${let
         tmux = lib.getExe config.programs.tmux.package;
       in pkgs.writeShellScript "tmux-popup" ''
         session="_popup_$(${tmux} display -p '#S')_"
@@ -95,20 +74,44 @@ in {
           session_id="$(${tmux} new-session -dP -s "$session" -F '#{session_id}')"
           ${tmux} set-option -s -t "$session_id" key-table _popup
           ${tmux} set-option -s -t "$session_id" status off
-          # ${tmux} set-option -s -t "$session_id" prefix None
+          ${tmux} set-option -s -t "$session_id" prefix None
           ${tmux} set-environment -t "$session_id" FZF_TMUX 1
           session="$session_id"
         fi
 
         builtin exec ${tmux} attach -t "$session" > /dev/null
       ''}
-      bind -T _popup Enter detach
+      bind -T _popup C-a detach
       bind -T _popup C-[ copy-mode
 
       bind w choose-tree -Z -f '#{?#{m:_popup_*_,#{session_name}},0,1}'
       bind s choose-tree -Zs -f '#{?#{m:_popup_*_,#{session_name}},0,1}'
     '';
   };
+
+  vars.seshFzf = let
+    fd = lib.getExe config.programs.fd.package;
+    fzf = lib.getExe config.programs.fzf.package;
+    rg = lib.getExe config.programs.ripgrep.package;
+    sesh = lib.getExe config.programs.sesh.package;
+    tmux = lib.getExe config.programs.tmux.package;
+  in pkgs.writeShellScript "sesh-fzf" ''
+    ${sesh} connect "$(
+      ${sesh} list --icons | (${rg} -v '_popup_.*_' || true) | ${fzf} --tmux center,80%,70% \
+        --no-sort --ansi --border-label ' sesh ' --prompt '󱐋  ' \
+        --header '  󰘴a all 󰘴t tmux 󰘴g configs 󰘴z zoxide 󰘴f find 󰘴d k-sess ^x k-serv' \
+        --bind 'tab:down,btab:up' \
+        --bind 'ctrl-a:change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_" || true)' \
+        --bind 'ctrl-t:change-prompt(  )+reload(${sesh} list -t --icons | ${rg} -v "_popup_.*_" || true)' \
+        --bind 'ctrl-g:change-prompt(  )+reload(${sesh} list -c --icons)' \
+        --bind 'ctrl-z:change-prompt(󰉋  )+reload(${sesh} list -z --icons)' \
+        --bind 'ctrl-f:change-prompt(  )+reload(${fd} -IL -t d . ~)' \
+        --bind 'ctrl-d:execute(${tmux} kill-session -t {2..})+change-prompt(󱐋  )+reload(${sesh} list --icons)' \
+        --bind 'ctrl-x:execute(${tmux} kill-server)+change-prompt(󱐋  )+reload(${sesh} list --icons)' \
+        --preview-window 'right:60%' \
+        --preview '${sesh} preview {}'
+    )"
+  '';
 
   programs.sesh = {
     enable = true;
@@ -130,5 +133,5 @@ in {
     };
   };
 
-  home.shellAliases.s = builtins.toString seshFzf;
+  home.shellAliases.s = builtins.toString config.vars.seshFzf;
 }

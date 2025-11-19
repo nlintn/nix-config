@@ -26,7 +26,7 @@ in /* css */ ''
     }
     :root {
       --newtab-background-color: ${toRGBA base00 0.5} !important;
-      --newtab-background-color-secondary: #${toRGBA base02 0.5} !important;
+      --newtab-background-color-secondary: ${toRGBA base02 0.5} !important;
       --newtab-primary-action-background: #${base0E} !important;
       --newtab-primary-action-background-dimmed: #${base0E} !important;
 
@@ -55,6 +55,8 @@ in /* css */ ''
       --color-accent-primary-active: ${toRGBA base0E 0.6} !important;
       --focus-outline-color: #${base0E} !important;
 
+      --in-content-table-background: #${base00} !important;
+      --in-content-box-border-color: #${base03} !important;
       --in-content-border-color: #${base03} !important;
       --in-content-border-invalid: #${base08} !important;
       --in-content-page-color: #${base05} !important;
@@ -64,6 +66,7 @@ in /* css */ ''
       --text-color: #${base05} !important;
       --text-color-error: #${base08} !important;
       --background-color-box: #${base00} !important;
+      --background-color-box-info: #${base00} !important;
       --background-color-canvas: #${base01} !important;
       --background-color-critical: #${base08} !important;
       --background-color-information: #${base0D} !important;

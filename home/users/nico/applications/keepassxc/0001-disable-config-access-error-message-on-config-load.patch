@@ -1,56 +1,46 @@
-From db488d0e828ffd709f2275ca4005788e60e9cf81 Mon Sep 17 00:00:00 2001
+From acd3292f4c671f6992ea5c12f6cc9c0f70e91743 Mon Sep 17 00:00:00 2001
 From: Nico Lintner <118087966+nlintn@users.noreply.github.com>
-Date: Thu, 24 Jul 2025 16:35:58 +0200
+Date: Thu, 27 Nov 2025 23:15:02 +0100
 Subject: [PATCH 1/2] disable config access error message on config load
 
 ---
- src/gui/ApplicationSettingsWidget.cpp | 8 ++++----
- src/gui/MainWindow.cpp                | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ src/gui/ApplicationSettingsWidget.cpp | 2 ++
+ src/gui/MainWindow.cpp                | 2 ++
+ 2 files changed, 4 insertions(+)
 
 diff --git a/src/gui/ApplicationSettingsWidget.cpp b/src/gui/ApplicationSettingsWidget.cpp
-index 426f37bc..c867765c 100644
+index 9f24bbc8..a1989cc5 100644
 --- a/src/gui/ApplicationSettingsWidget.cpp
 +++ b/src/gui/ApplicationSettingsWidget.cpp
-@@ -189,9 +189,9 @@ void ApplicationSettingsWidget::addSettingsPage(ISettingsPage* page)
+@@ -184,9 +184,11 @@ void ApplicationSettingsWidget::addSettingsPage(ISettingsPage* page)
  
  void ApplicationSettingsWidget::loadSettings()
  {
--    if (config()->hasAccessError()) {
--        showMessage(tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
--    }
-+    // if (config()->hasAccessError()) {
-+    //     showMessage(tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
-+    // }
++    /*
+     if (config()->hasAccessError()) {
+         showMessage(tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
+     }
++    */
  
  #ifdef QT_DEBUG
      m_generalUi->singleInstanceCheckBox->setEnabled(false);
-@@ -623,4 +623,4 @@ void ApplicationSettingsWidget::selectBackupDirectory()
-         m_generalUi->backupFilePath->setText(
-             QDir(backupDirectory).filePath(config()->getDefault(Config::BackupFilePathPattern).toString()));
-     }
--}
-\ No newline at end of file
-+}
 diff --git a/src/gui/MainWindow.cpp b/src/gui/MainWindow.cpp
-index 8355bf23..c7afd684 100644
+index d51588ac..5797be3c 100644
 --- a/src/gui/MainWindow.cpp
 +++ b/src/gui/MainWindow.cpp
-@@ -651,10 +651,10 @@ MainWindow::MainWindow()
+@@ -627,10 +627,12 @@ MainWindow::MainWindow()
      m_trayIconTriggerTimer.setSingleShot(true);
      connect(&m_trayIconTriggerTimer, SIGNAL(timeout()), SLOT(processTrayIconTrigger()));
  
--    if (config()->hasAccessError()) {
--        m_ui->globalMessageWidget->showMessage(tr("Access error for config file %1").arg(config()->getFileName()),
--                                               MessageWidget::Error);
--    }
-+    // if (config()->hasAccessError()) {
-+    //     m_ui->globalMessageWidget->showMessage(tr("Access error for config file %1").arg(config()->getFileName()),
-+    //                                            MessageWidget::Error);
-+    // }
++    /*
+     if (config()->hasAccessError()) {
+         m_ui->globalMessageWidget->showMessage(tr("Access error for config file %1").arg(config()->getFileName()),
+                                                MessageWidget::Error);
+     }
++    */
  
      // Properly shutdown on logoff, restart, and shutdown
      connect(qApp, &QGuiApplication::commitDataRequest, this, [this] { m_appExitCalled = true; });
 -- 
-2.50.1
+2.51.2
 

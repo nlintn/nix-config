@@ -5,16 +5,15 @@ let
 
   var_brightnessctl = "${lib.getExe' config.services.avizo.package "lightctl"} -e 2";
   var_browser = lib.getExe config.programs.firefox.finalPackage;
-  var_copyq = lib.getExe config.services.copyq.package;
   var_filemanager = lib.getExe' config.programs.thunar.finalPackage "thunar";
   var_grimblast = lib.getExe pkgs.grimblast;
   var_hyprpicker = lib.getExe pkgs.hyprpicker;
   var_hyprtabs = lib.getExe (pkgs.callPackage ./scripts/hyprtabs.nix args);
+  var_launcher = lib.getExe config.programs.vicinae.package;
   var_lock-cmd = config.vars.sessionLockCmd;
   var_lock-transparent = lib.getExe (pkgs.callPackage ./hyprlock/lock-transparent.nix args);
   var_loginctl = config.systemd.user.loginctlPath;
   var_playerctl = lib.getExe config.services.playerctld.package;
-  var_rofi = lib.getExe config.programs.rofi.finalPackage;
   var_power-menu = lib.getExe config.programs.wlogout.package;
   var_pwm = lib.getExe config.programs.keepassxc.package;
   var_swappy = lib.getExe config.programs.swappy.package;
@@ -55,11 +54,10 @@ in with config.colorScheme.palette; {
       "W, exec, ${var_browser}"
       "Q, exec, ${var_term}"
       "SHIFT, Q, exec, ${var_tmux_term}"
-      "SPACE, exec, ${var_rofi} -modi drun -show drun -drun-show-actions"
+      "SPACE, exec, ${var_launcher} vicinae://toggle"
       "SHIFT, R, exec, ${hyreload}"
-      # "T, exec, ${var_rofi} -modi ssh -show ssh"
-      "PERIOD, exec, ${var_rofi} -modi emoji -show emoji -matching normal"
-      "V, exec, ${var_copyq} show"
+      "PERIOD, exec, ${var_launcher} vicinae://extensions/vicinae/vicinae/search-emojis"
+      "V, exec, ${var_launcher} vicinae://extensions/vicinae/clipboard/history"
       "BACKSPACE, exec, ${var_lock-cmd}"
       "SHIFT, BACKSPACE, exec, ${var_lock-transparent}"
       "RETURN, exec, ${var_power-menu}"
@@ -113,7 +111,7 @@ in with config.colorScheme.palette; {
       "SHIFT, K, split:grabroguewindows"
     ] ++
     evalBinds "ALT" [] [
-      "TAB, exec, ${var_rofi} -show window"
+      "TAB, exec, ${var_launcher} vicinae://extensions/vicinae/wm/switch-windows"
     ] ++
     evalBinds "CTRL" [ "SHIFT" ] [
       "SHIFT, M, pass, ^vesktop$"
@@ -275,11 +273,6 @@ in with config.colorScheme.palette; {
 
     "float, class:xdg-desktop-portal-gtk"
 
-    "float, class:com.github.hluk.copyq"
-    "move onscreen cursor, class:com.github.hluk.copyq"
-    "pin, class:com.github.hluk.copyq"
-    "size 40% 40%, class:com.github.hluk.copyq"
-
     "prop noscreenshare 1, class:org.keepassxc.KeePassXC"
 
     "float, class:org.keepassxc.KeePassXC, title:Generate Password"
@@ -299,6 +292,8 @@ in with config.colorScheme.palette; {
 
     "pin, class:dragon-drop"
 
+    "prop bordersize 0, floating:1, title:Vicinae.*"
+
     "prop bordersize 0, floating:0, onworkspace:w[tv1]"
     "prop bordersize 0, floating:0, onworkspace:f[1]"
 
@@ -314,10 +309,9 @@ in with config.colorScheme.palette; {
 
   layerrule = [
     "noanim, selection"
-
-    "blur, rofi"
-    "xray off, rofi"
-    "ignorealpha 0.2, rofi"
+    "blur, vicinae"
+    "xray off, vicinae"
+    "ignorealpha 0, vicinae"
 
     "blur, logout_dialog"
     "xray off, logout_dialog"

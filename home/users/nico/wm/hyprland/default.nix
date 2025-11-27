@@ -10,7 +10,7 @@ in {
 
     ../common/avizo.nix
     ../common/gtk-theme.nix
-    ../common/rofi
+    ../common/vicinae.nix
     ../common/swaync
     ../common/wlogout
 
@@ -43,10 +43,6 @@ in {
     };
   };
 
-  services.copyq = {
-    enable = true;
-    forceXWayland = false;
-  };
   services = {
     blueman-applet.enable = true;
     polkit-gnome.enable = true;

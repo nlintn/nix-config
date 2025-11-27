@@ -14,9 +14,9 @@ let
   var_lock-transparent = lib.getExe (pkgs.callPackage ./hyprlock/lock-transparent.nix args);
   var_loginctl = config.systemd.user.loginctlPath;
   var_playerctl = lib.getExe config.services.playerctld.package;
-  var_pwm = lib.getExe config.programs.keepassxc.package;
   var_rofi = lib.getExe config.programs.rofi.finalPackage;
   var_power-menu = lib.getExe config.programs.wlogout.package;
+  var_pwm = lib.getExe config.programs.keepassxc.package;
   var_swappy = lib.getExe config.programs.swappy.package;
   var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
   var_term = lib.getExe config.xdg.terminal-exec.package;
@@ -74,7 +74,7 @@ in with config.colorScheme.palette; {
       "SHIFT, Z, exec, ${var_loginctl} terminate-session self"
       "CTRL SHIFT, Z, exit"
       # "P, pseudo,"
-      "K, togglefloating,"
+      "B, togglefloating,"
 
       "G, exec, ${var_hyprtabs}"
       "SHIFT, G, togglegroup,"
@@ -209,7 +209,6 @@ in with config.colorScheme.palette; {
     };
 
     sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
-    # accel_profile = "flat";
     repeat_rate = 30;
     repeat_delay = 400;
   };
@@ -261,10 +260,6 @@ in with config.colorScheme.palette; {
     key_press_enables_dpms = true;
     mouse_move_enables_dpms = false;
     new_window_takes_over_fullscreen = 2;
-
-    # enable_swallow = false;
-    # swallow_regex = "^(kitty|ghostty)$";
-    # swallow_exception_regex = "^(xopen .*|xx .*|firefox|wev|dragon-drop.*)$";
   };
 
   render.cm_enabled = false;

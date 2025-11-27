@@ -12,8 +12,8 @@
   gtk = {
     enable = true;
     theme = {
-      package = (pkgs.colloid-gtk-theme.override { colorVariants = [ config.colorScheme.variant ]; sizeVariants = [ "compact" ]; tweaks = [ "nord" "rimless" ]; });
-      name = "Colloid-${lib'.capitalizeString config.colorScheme.variant}-Compact-Nord";
+      package = (pkgs.colloid-gtk-theme.override { colorVariants = [ config.colorScheme.variant ]; sizeVariants = [ "compact" ]; tweaks = [ "catppuccin" "rimless" ]; });
+      name = "Colloid-${lib'.capitalizeString config.colorScheme.variant}-Compact-Catppuccin";
     };
 
     iconTheme = {

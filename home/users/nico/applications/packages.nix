@@ -8,6 +8,7 @@
     bear
     bviplus
     coq
+    cyberchef
     ghidra
     ghostscript
     gnumake
@@ -57,7 +58,6 @@
     protonmail-desktop
     protonvpn-gui
     prusa-slicer
-    rclone
     signal-desktop
     speedread
     spotify

@@ -13,7 +13,7 @@
       background-opacity = 0.65;
       font-family = userSettings.default-font.name;
       font-feature = [ "-calt" "-liga" "-dlig" ];
-      font-size = 11;
+      font-size = 10;
       mouse-hide-while-typing = true;
       theme = "base16";
       window-theme = "ghostty";

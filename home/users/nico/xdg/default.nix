@@ -1,16 +1,15 @@
-{ config, lib, pkgs, ... } @ args:
+{ config, ... } @ args:
 
 {
   imports = [
     ./terminal-exec.nix
   ];
 
-  home.activation.tmpDirs = lib.hm.dag.entryBetween [ "linkGeneration" "createXdgUserDirectories" ] [ "writeBoundary" ] ''
-    ${lib.getExe' pkgs.coreutils "rm"} -rf ${config.xdg.userDirs.download};
-    TMPDIR=''${TMPDIR:-/tmp}
-    ${lib.getExe' pkgs.coreutils "mkdir"} -p "$TMPDIR/download$UID" &&
-    ${lib.getExe' pkgs.coreutils "ln"} -s "$TMPDIR/download$UID" ${config.xdg.userDirs.download}
-  '';
+  systemd.user.tmpfiles.rules = [
+    "d ${config.xdg.userDirs.download} - - - 1d -"
+  ];
+
+  home.preferXdgDirectories = true;
 
   xdg = {
     enable = true;

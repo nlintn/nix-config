@@ -13,7 +13,6 @@
     ./git.nix
     ./gpg.nix
     ./keepassxc
-    ./kitty
     ./lazygit.nix
     ./less.nix
     ./neovim.nix
@@ -47,10 +46,15 @@
     fastfetch.enable = true;
     htop.enable = true;
     java.enable = true;
+    man.generateCaches = true;
     obsidian.enable = true;
+    rclone.enable = true;
     ripgrep.enable = true;
-    zoxide.enable = true;
     vesktop.enable = true;
+    zoxide = {
+      enable = true;
+      options = [ "--cmd cd" ];
+    };
   };
 
   services = {
@@ -60,6 +64,7 @@
       package = lib.mkIf (osConfig != null) osConfig.programs.kdeconnect.package;
     };
     playerctld.enable = true;
+    podman.enable = true;
     protonmail-bridge = {
       enable = true;
       enableCfgScript = true;

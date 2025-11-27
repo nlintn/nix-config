@@ -11,9 +11,7 @@
       la = "${ll} -a";
       lt = "${ll} --sort=newest";
       tree = "${ls} --tree";
-      open = lib.getExe' pkgs.xdg-utils "xdg-open";
-      # xx = "${pkgs.writeShellScript "xx" "$@ >/dev/null >&1 2>&1 & builtin disown"}";
-      # xopen = "${pkgs.writeShellScript "xopen" ''${open} "$@" & builtin disown''}";
+      open = "${pkgs.writeShellScript "open" ''${lib.getExe' pkgs.xdg-utils "xdg-open"} "$@" & builtin disown''}";
     }
     (lib.mkIf (!config.submoduleSupport.enable && config.programs.home-manager.enable) {
       hms = "home-manager switch --flake ${configDirectory}";

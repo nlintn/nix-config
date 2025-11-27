@@ -7,13 +7,15 @@ let
   desmume = "org.desmume.DeSmuME.desktop";
   evince = lib.mkIf config.programs.evince.enable "org.gnome.Evince.desktop";
   firefox = lib.mkIf config.programs.firefox.enable config.programs.firefox.finalPackage.desktopItem.name;
+  ghostty = lib.mkIf config.programs.ghostty.enable "ghostty.desktop";
   gimp = "gimp.desktop";
   image-roll = "com.github.weclaw1.ImageRoll.desktop";
   keepassxc = lib.mkIf config.programs.keepassxc.enable "org.keepassxc.KeePassXC.desktop";
+  kitty = lib.mkIf config.programs.kitty.enable "kitty.desktop";
   neovim = lib.mkIf (config.vars ? nvimPackage) "nvim.desktop";
   pdf-arranger = "com.github.jeromerobert.pdfarranger.desktop";
-  prusa-slicer = "PrusaSlicer.desktop";
   prusa-gcode-viewer = "PrusaGcodeviewer.desktop";
+  prusa-slicer = "PrusaSlicer.desktop";
   swayimg = "swayimg.desktop";
   thunar = lib.mkIf config.programs.thunar.enable "thunar.desktop";
   thunderbird = lib.mkIf config.programs.thunderbird.enable config.programs.thunderbird.package.desktopItem.name;
@@ -62,6 +64,7 @@ let
   ];
 
   browsers = f [
+    "text/html"
     "x-scheme-handler/http"
     "x-scheme-handler/https"
     "x-scheme-handler/chrome"
@@ -86,7 +89,7 @@ let
     evince
     pdf-arranger
   ];
-  
+
   folders = f [
     "inode/directory"
   ] [
@@ -154,11 +157,17 @@ let
     wireshark
   ];
 
+  terminal = f [
+    "x-scheme-handler/terminal"
+  ] [
+    ghostty
+    kitty
+  ];
+
   texts = f [
     "text/calendar"
     "text/csv"
     "text/plain"
-    "text/html"
     "application/x-shellscript"
     "application/xml"
   ] [
@@ -215,9 +224,10 @@ in
     folders
     images
     mails
+    media
     models3d
     packetCaptures
+    terminal
     texts
     videos
-    media
   ]) // extraSettings

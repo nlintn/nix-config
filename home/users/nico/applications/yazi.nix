@@ -8,7 +8,6 @@
       mgr.show_hidden = true;
       opener.open = [
         { run = ''${config.home.shellAliases.open} "$@"'';  desc = "Open"; }
-        # { run = ''${config.home.shellAliases.xopen} "$@"''; desc = "XOpen"; }
       ];
     };
     plugins = with pkgs.yaziPlugins; {

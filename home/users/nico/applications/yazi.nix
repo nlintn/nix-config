@@ -1,4 +1,4 @@
-{ config, pkgs, ... } @ args:
+{ config, lib, pkgs, ... } @ args:
 
 {
   programs.yazi = {
@@ -8,6 +8,7 @@
       mgr.show_hidden = true;
       opener.open = [
         { run = ''${config.home.shellAliases.open} "$@"'';  desc = "Open"; }
+        { run = ''${lib.getExe pkgs.dragon-drop} "$@"'';  desc = "Drag and Drop"; }
       ];
     };
     plugins = with pkgs.yaziPlugins; {

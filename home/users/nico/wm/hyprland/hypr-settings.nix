@@ -290,6 +290,8 @@ in with config.colorScheme.palette; {
     "float, class:steam, title:Steam Settings"
     "float, class:steam, title:Friends List"
 
+    "float, class:thunar, title:Rename .*"
+
     "pin, class:dragon-drop"
 
     "prop bordersize 0, floating:1, title:Vicinae.*"

@@ -32,13 +32,15 @@
     cowsay
     desmume
     dig
+    dragon-drop
     file
+    font-manager
     fractal
     gimp
     gnome-clocks
     hieroglyphic
-    imagemagick
     image-roll
+    imagemagick
     inkscape
     ipinfo
     libnotify
@@ -51,6 +53,7 @@
     nix-tree
     nixln-edit
     nmap
+    papers
     pdfarranger
     pdftk
     poppler-utils
@@ -58,6 +61,7 @@
     protonmail-desktop
     protonvpn-gui
     prusa-slicer
+    showtime
     signal-desktop
     speedread
     spotify
@@ -69,7 +73,6 @@
     wev
     wireshark
     wl-clipboard
-    dragon-drop
     xournalpp
     yubioath-flutter
   ];

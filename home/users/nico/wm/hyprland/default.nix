@@ -29,7 +29,6 @@ in {
   ];
 
   programs = {
-    nm-applet.enable = true;
     swappy = {
       enable = true;
       settings.Default = {
@@ -45,6 +44,7 @@ in {
 
   services = {
     blueman-applet.enable = true;
+    network-manager-applet.enable = true;
     polkit-gnome.enable = true;
     wayland-pipewire-idle-inhibit.enable = true;
   };

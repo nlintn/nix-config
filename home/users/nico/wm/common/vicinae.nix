@@ -7,8 +7,8 @@
     useLayerShell = true;
 
     extensions = with pkgs.vicinaeExtensions; [
+      bluetooth
       firefox
-      ssh
       nix
     ];
 

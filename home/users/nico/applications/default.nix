@@ -20,7 +20,7 @@
     ./ssh.nix
     ./thunar.nix
     ./thunderbird.nix
-    ./tmux.nix
+    ./tmux
     ./vlc.nix
     ./yazi.nix
     ./zathura.nix
@@ -40,7 +40,6 @@
     };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
-    evince.enable = true;
     fd.enable = true;
     jq.enable = true;
     fastfetch.enable = true;

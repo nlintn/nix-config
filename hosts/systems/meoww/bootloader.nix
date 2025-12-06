@@ -12,7 +12,7 @@
       secureBoot.enable = true;
       enableEditor = true;
       panicOnChecksumMismatch = true;
-      maxGenerations = 50;
+      maxGenerations = 20;
       extraConfig = ''
         quiet: yes
       '';

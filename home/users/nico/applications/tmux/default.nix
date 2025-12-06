@@ -4,6 +4,9 @@ let
 in {
   programs.tmux = {
     enable = true;
+    package = pkgs.tmux.overrideAttrs (prev: {
+      patches = prev.patches or [] ++ [ ./get-clipboard.patch ];
+    });
     extraConfig = with config.colorScheme.palette; ''
       unbind C-b
       set -g prefix C-a
@@ -38,6 +41,8 @@ in {
 
       set -g default-terminal "tmux-256color"
       set -g allow-passthrough all
+      set -g set-clipboard on
+      set -g get-clipboard both
       set -ga update-environment TERM
       set -ga update-environment TERM_PROGRAM
 
@@ -45,7 +50,9 @@ in {
       set -g message-command-style bg=#${base01},fg=#${base0E}
       set -g copy-mode-match-style bg=#${base09},fg=#${base01}
       set -g copy-mode-current-match-style bg=#${base08},fg=#${base01}
-      set -g mode-style bg=#${base0F},fg=#${base00}
+      set -g copy-mode-position-style bg=#${base0E},fg=#${base01}
+      set -g copy-mode-selection-style bg=#${base0F},fg=#${base01}
+      set -g mode-style bg=#${base0E},fg=#${base01}
 
       # Set new panes to open in current directory
       bind c new-window -c "#{pane_current_path}"
@@ -81,10 +88,10 @@ in {
 
         builtin exec ${tmux} attach -t "$session" > /dev/null
       ''}
-      bind -T _popup C-a detach
-      bind -T _popup C-[ copy-mode
+      # bind -T _popup C-a detach
+      # bind -T _popup C-] copy-mode
 
-      bind w choose-tree -Z -f '#{?#{m:_popup_*_,#{session_name}},0,1}'
+      bind w choose-tree -Zw -f '#{?#{m:_popup_*_,#{session_name}},0,1}'
       bind s choose-tree -Zs -f '#{?#{m:_popup_*_,#{session_name}},0,1}'
     '';
   };

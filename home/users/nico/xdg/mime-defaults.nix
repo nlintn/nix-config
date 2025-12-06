@@ -5,14 +5,15 @@ let
 
   chromium = lib.mkIf config.programs.chromium.enable "chromium-browser.desktop";
   desmume = "org.desmume.DeSmuME.desktop";
-  evince = lib.mkIf config.programs.evince.enable "org.gnome.Evince.desktop";
   firefox = lib.mkIf config.programs.firefox.enable config.programs.firefox.finalPackage.desktopItem.name;
+  font-viewer = "com.github.FontManager.FontViewer.desktop";
   ghostty = lib.mkIf config.programs.ghostty.enable "ghostty.desktop";
   gimp = "gimp.desktop";
   image-roll = "com.github.weclaw1.ImageRoll.desktop";
   keepassxc = lib.mkIf config.programs.keepassxc.enable "org.keepassxc.KeePassXC.desktop";
   kitty = lib.mkIf config.programs.kitty.enable "kitty.desktop";
   neovim = lib.mkIf (config.vars ? nvimPackage) "nvim.desktop";
+  papers = "org.gnome.Papers.desktop";
   pdf-arranger = "com.github.jeromerobert.pdfarranger.desktop";
   prusa-gcode-viewer = "PrusaGcodeviewer.desktop";
   prusa-slicer = "PrusaSlicer.desktop";
@@ -85,9 +86,9 @@ let
     "application/pdf"
     "application/postscript"
   ] [
-    zathura
-    evince
+    papers
     pdf-arranger
+    zathura
   ];
 
   folders = f [
@@ -95,6 +96,18 @@ let
   ] [
     thunar
     yazi
+  ];
+
+  fonts = f [
+    "font/ttf"
+    "font/ttc"
+    "font/otf"
+    "font/sfnt"
+    "application/x-font-ttf"
+    "application/x-font-otf"
+    "application/vnd.ms-opentype"
+  ] [
+    font-viewer
   ];
 
   images = f [
@@ -169,6 +182,7 @@ let
     "text/csv"
     "text/plain"
     "application/x-shellscript"
+    "application/x-zerosize"
     "application/xml"
   ] [
     neovim
@@ -222,6 +236,7 @@ in
     browsers
     documents
     folders
+    fonts
     images
     mails
     media

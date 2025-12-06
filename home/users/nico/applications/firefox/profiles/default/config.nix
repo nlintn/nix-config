@@ -52,6 +52,7 @@ with config.colorScheme.palette; {
   "identity.fxaccounts.enabled" = true;
   "intl.regional_prefs.use_os_locales" = true;
   "media.ffmpeg.vaapi.enabled" = true;
+  "media.webrtc.camera.allow-pipewire" = true;
   "sidebar.revamp" = true;
   "sidebar.revamp.round-content-area" = true;
   "sidebar.verticalTabs" = true;

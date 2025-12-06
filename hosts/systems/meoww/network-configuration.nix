@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   networking = {
@@ -7,8 +7,10 @@
     networkmanager = {
       enable = true;
       wifi.powersave = true;
+      plugins = with pkgs; [
+        networkmanager-openvpn
+      ];
       # dhcp = "dhcpcd";
-      # logLevel = "TRACE";
     };
 
     firewall.enable = true;

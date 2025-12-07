@@ -1,6 +1,21 @@
 { config, lib, pkgs, ... }:
 
 let
+  tmux = lib.getExe config.programs.tmux.package;
+  tmux-popup = pkgs.writeShellScript "tmux-popup" ''
+    session="_popup_$1_$(${tmux} display -p '#S')_"
+
+    if ! ${tmux} has -t "$session" 2> /dev/null; then
+      session_id="$(${tmux} new-session -dP -s "$session" -F '#{session_id}' "$2")"
+      ${tmux} set-option -s -t "$session_id" key-table _popup_pre
+      ${tmux} set-option -s -t "$session_id" status off
+      ${tmux} set-option -s -t "$session_id" prefix None
+      ${tmux} set-environment -t "$session_id" FZF_TMUX 1
+      session="$session_id"
+    fi
+
+    ${tmux} attach -t "$session"
+  '';
 in {
   programs.tmux = {
     enable = true;
@@ -46,12 +61,15 @@ in {
       set -ga update-environment TERM
       set -ga update-environment TERM_PROGRAM
 
-      set -g message-style bg=#${base0E},fg=#${base01}
-      set -g message-command-style bg=#${base01},fg=#${base0E}
+      set -g cursor-color '#${base06}'
+      set -g prompt-cursor-color '#${base06}'
+
+      set -g message-style bg=#${base0B},fg=#${base01}
+      set -g message-command-style bg=#${base0C},fg=#${base01}
       set -g copy-mode-match-style bg=#${base09},fg=#${base01}
       set -g copy-mode-current-match-style bg=#${base08},fg=#${base01}
-      set -g copy-mode-position-style bg=#${base0E},fg=#${base01}
-      set -g copy-mode-selection-style bg=#${base0F},fg=#${base01}
+      set -g copy-mode-position-style bg=#${base0E},fg=#${base01},bold
+      set -g copy-mode-selection-style bg=#${base06},fg=#${base01}
       set -g mode-style bg=#${base0E},fg=#${base01}
 
       # Set new panes to open in current directory
@@ -66,30 +84,21 @@ in {
 
       bind a run-shell "${config.vars.seshFzf}"
 
-      bind g display-popup -b rounded -E -xC -yC -w 90% -h 90% -d "#{pane_current_path}" ${lib.getExe config.programs.lazygit.package}
-
       # vim like selection keys
       bind -T copy-mode-vi v send-keys -X begin-selection
       bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
-      bind Enter display-popup -b rounded -xC -yC -w 65% -h 65% -E ${let
-        tmux = lib.getExe config.programs.tmux.package;
-      in pkgs.writeShellScript "tmux-popup" ''
-        session="_popup_$(${tmux} display -p '#S')_"
+      bind g display-popup -b rounded -E -xC -yC -w 90% -h 90% -d "#{pane_current_path}" '${tmux-popup} lazygit "${lib.getExe config.programs.lazygit.package}"'
 
-        if ! ${tmux} has -t "$session" 2> /dev/null; then
-          session_id="$(${tmux} new-session -dP -s "$session" -F '#{session_id}')"
-          ${tmux} set-option -s -t "$session_id" key-table _popup
-          ${tmux} set-option -s -t "$session_id" status off
-          ${tmux} set-option -s -t "$session_id" prefix None
-          ${tmux} set-environment -t "$session_id" FZF_TMUX 1
-          session="$session_id"
-        fi
+      bind Enter display-popup -b rounded -xC -yC -w 65% -h 65% -E '${tmux-popup} shell "$SHELL"'
 
-        builtin exec ${tmux} attach -t "$session" > /dev/null
-      ''}
-      # bind -T _popup C-a detach
-      # bind -T _popup C-] copy-mode
+      bind -T _popup_pre C-a switch-client -T _popup
+      bind -T _popup a detach
+      bind -T _popup g detach
+      bind -T _popup Enter detach
+      bind -T _popup [ copy-mode
+      bind -T _popup ü copy-mode
+      bind -T _popup x kill-pane
 
       bind w choose-tree -Zw -f '#{?#{m:_popup_*_,#{session_name}},0,1}'
       bind s choose-tree -Zs -f '#{?#{m:_popup_*_,#{session_name}},0,1}'
@@ -104,17 +113,17 @@ in {
     tmux = lib.getExe config.programs.tmux.package;
   in pkgs.writeShellScript "sesh-fzf" ''
     ${sesh} connect "$(
-      ${sesh} list --icons | (${rg} -v '_popup_.*_' || true) | ${fzf} --tmux center,80%,70% \
+      ${sesh} list --icons | (${rg} -v '_popup_.*_' || true) | ${fzf} --tmux center,75%,65% \
         --no-sort --ansi --border-label ' sesh ' --prompt '󱐋  ' \
         --header '  󰘴a all 󰘴t tmux 󰘴g configs 󰘴z zoxide 󰘴f find 󰘴d k-sess ^x k-serv' \
         --bind 'tab:down,btab:up' \
-        --bind 'ctrl-a:change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_" || true)' \
-        --bind 'ctrl-t:change-prompt(  )+reload(${sesh} list -t --icons | ${rg} -v "_popup_.*_" || true)' \
+        --bind 'ctrl-a:change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_.*_" || true)' \
+        --bind 'ctrl-t:change-prompt(  )+reload(${sesh} list -t --icons | ${rg} -v "_popup_.*_.*_" || true)' \
         --bind 'ctrl-g:change-prompt(  )+reload(${sesh} list -c --icons)' \
         --bind 'ctrl-z:change-prompt(󰉋  )+reload(${sesh} list -z --icons)' \
         --bind 'ctrl-f:change-prompt(  )+reload(${fd} -IL -t d . ~)' \
-        --bind 'ctrl-d:execute(${tmux} kill-session -t {2..})+change-prompt(󱐋  )+reload(${sesh} list --icons)' \
-        --bind 'ctrl-x:execute(${tmux} kill-server)+change-prompt(󱐋  )+reload(${sesh} list --icons)' \
+        --bind 'ctrl-d:execute(${tmux} kill-session -t {2..})+change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_.*_" || true)' \
+        --bind 'ctrl-x:execute(${tmux} kill-server)+change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_.*_" || true)' \
         --preview-window 'right:60%' \
         --preview '${sesh} preview {}'
     )"

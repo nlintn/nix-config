@@ -1,6 +1,15 @@
+autoload -U colors
+colors
+
 zstyle ':completion:*' menu select
-bindkey "$terminfo[kcbt]" reverse-menu-complete
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-prompt "$bg[blue]$fg[black]%m %p$reset_color"
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format "${fg[yellow]}%d${reset_color}"
+zstyle ':completion:*:warnings' format "${fg[red]}No matches for:${reset_color} %d"
+
+bindkey "$terminfo[kcbt]" reverse-menu-complete
+
 setopt globdots
 
 autoload -U history-search-end
@@ -18,10 +27,10 @@ bindkey -a "^V" edit-command-line
 
 copy() {
   if [ "$#" = "0" ]; then
-    local formatted="$($base64 -w 0 /dev/stdin)"
+    local formatted="$($_cmd_base64 -w 0 /dev/stdin)"
   else
     local arg="$@"
-    local formatted="$(builtin printf %s $arg | $base64 -w 0)"
+    local formatted="$(builtin printf %s $arg | $_cmd_base64 -w 0)"
   fi
   builtin printf "\e]52;c;%s${terminfo[bel]}" "$formatted"
 }
@@ -43,7 +52,7 @@ paste() {
       builtin printf "${terminfo[dl1]}" > /dev/tty
     fi
 
-    $base64 -dw 0 <<< "${result:7:-1}"
+    $_cmd_base64 -dw 0 <<< "${result:7:-1}"
   fi
 }
 

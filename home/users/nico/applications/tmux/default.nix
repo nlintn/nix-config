@@ -2,11 +2,11 @@
 
 let
   tmux = lib.getExe config.programs.tmux.package;
-  tmux-popup = pkgs.writeShellScript "tmux-popup" ''
-    session="_popup_$1_$(${tmux} display -p '#S')_"
+  tmux-popup = name: exec: pkgs.writeShellScript "tmux-popup" ''
+    session="_popup_${name}_$(${tmux} display -p '#S')_"
 
     if ! ${tmux} has -t "$session" 2> /dev/null; then
-      session_id="$(${tmux} new-session -dP -s "$session" -F '#{session_id}' "$2")"
+      session_id="$(${tmux} new-session -dP -s "$session" -F '#{session_id}' "${exec}; ${tmux} detach")"
       ${tmux} set-option -s -t "$session_id" key-table _popup_pre
       ${tmux} set-option -s -t "$session_id" status off
       ${tmux} set-option -s -t "$session_id" prefix None
@@ -17,6 +17,10 @@ let
     ${tmux} attach -t "$session"
   '';
 in {
+  imports = [
+    ./sesh.nix
+  ];
+
   programs.tmux = {
     enable = true;
     package = pkgs.tmux.overrideAttrs (prev: {
@@ -35,6 +39,7 @@ in {
       set -g clock-mode-style 24
       set -g escape-time 0
       set -g history-limit 50000
+      set -g detach-on-destroy off
 
       set -g set-titles on
       set -g set-titles-string '#{pane_title}'
@@ -60,12 +65,13 @@ in {
       set -g get-clipboard both
       set -ga update-environment TERM
       set -ga update-environment TERM_PROGRAM
+      set -g extended-keys on
 
       set -g cursor-color '#${base06}'
       set -g prompt-cursor-color '#${base06}'
 
       set -g message-style bg=#${base0B},fg=#${base01}
-      set -g message-command-style bg=#${base0C},fg=#${base01}
+      set -g message-command-style bg=#${base0A},fg=#${base01}
       set -g copy-mode-match-style bg=#${base09},fg=#${base01}
       set -g copy-mode-current-match-style bg=#${base08},fg=#${base01}
       set -g copy-mode-position-style bg=#${base0E},fg=#${base01},bold
@@ -73,26 +79,30 @@ in {
       set -g mode-style bg=#${base0E},fg=#${base01}
 
       # Set new panes to open in current directory
-      bind c new-window -c "#{pane_current_path}"
-      bind - split-window -c "#{pane_current_path}"
-      bind | split-window -h -c "#{pane_current_path}"
+      bind -N "Create new window " c new-window -c "#{pane_current_path}"
+      bind -N "Split window vertically " - split-window -c "#{pane_current_path}"
+      bind -N "Split window horizontally " | split-window -h -c "#{pane_current_path}"
 
-      bind r source-file "${config.xdg.configHome}/tmux/tmux.conf"
-      bind b set -g status
-      bind ü copy-mode
-      bind x kill-pane # skip "kill-pane? (y/n)" prompt
+      bind -N "Reload config " r source-file "${config.xdg.configHome}/tmux/tmux.conf"
+      bind -N "Toggle status " b set -g status
+      bind -N "Enter copy mode " ü copy-mode
+      bind -N "Kill current pane " x kill-pane # skip "kill-pane? (y/n)" prompt
+      bind -N "Switch to last session " L run-shell "sesh last"
+      bind -N "Switch to root session " 0 run-shell 'sesh connect --root "$(pwd)"'
 
-      bind a run-shell "${config.vars.seshFzf}"
+      bind -N "Open sesh popup " a run-shell "${config.vars.seshFzf}"
 
       # vim like selection keys
       bind -T copy-mode-vi v send-keys -X begin-selection
       bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
-      bind g display-popup -b rounded -E -xC -yC -w 90% -h 90% -d "#{pane_current_path}" '${tmux-popup} lazygit "${lib.getExe config.programs.lazygit.package}"'
+      bind -N "Open lazygit popup " g display-popup -b rounded -E -xC -yC -w 90% -h 90% -d "#{pane_current_path}" '${tmux-popup "lazygit" (lib.getExe config.programs.lazygit.package)}'
 
-      bind Enter display-popup -b rounded -xC -yC -w 65% -h 65% -E '${tmux-popup} shell "$SHELL"'
+      bind -N "Open shell popup " Enter display-popup -b rounded -xC -yC -w 65% -h 65% -E '${tmux-popup "shell" "$SHELL"}'
 
+      # set prefix in popup
       bind -T _popup_pre C-a switch-client -T _popup
+      bind -T _popup d detach
       bind -T _popup a detach
       bind -T _popup g detach
       bind -T _popup Enter detach
@@ -100,54 +110,8 @@ in {
       bind -T _popup ü copy-mode
       bind -T _popup x kill-pane
 
-      bind w choose-tree -Zw -f '#{?#{m:_popup_*_,#{session_name}},0,1}'
-      bind s choose-tree -Zs -f '#{?#{m:_popup_*_,#{session_name}},0,1}'
+      bind -N "List windows " w choose-tree -Zw -f '#{?#{m:_popup_*_*_,#{session_name}},0,1}'
+      bind -N "List sessions " s choose-tree -Zs -f '#{?#{m:_popup_*_*_,#{session_name}},0,1}'
     '';
   };
-
-  vars.seshFzf = let
-    fd = lib.getExe config.programs.fd.package;
-    fzf = lib.getExe config.programs.fzf.package;
-    rg = lib.getExe config.programs.ripgrep.package;
-    sesh = lib.getExe config.programs.sesh.package;
-    tmux = lib.getExe config.programs.tmux.package;
-  in pkgs.writeShellScript "sesh-fzf" ''
-    ${sesh} connect "$(
-      ${sesh} list --icons | (${rg} -v '_popup_.*_' || true) | ${fzf} --tmux center,75%,65% \
-        --no-sort --ansi --border-label ' sesh ' --prompt '󱐋  ' \
-        --header '  󰘴a all 󰘴t tmux 󰘴g configs 󰘴z zoxide 󰘴f find 󰘴d k-sess ^x k-serv' \
-        --bind 'tab:down,btab:up' \
-        --bind 'ctrl-a:change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_.*_" || true)' \
-        --bind 'ctrl-t:change-prompt(  )+reload(${sesh} list -t --icons | ${rg} -v "_popup_.*_.*_" || true)' \
-        --bind 'ctrl-g:change-prompt(  )+reload(${sesh} list -c --icons)' \
-        --bind 'ctrl-z:change-prompt(󰉋  )+reload(${sesh} list -z --icons)' \
-        --bind 'ctrl-f:change-prompt(  )+reload(${fd} -IL -t d . ~)' \
-        --bind 'ctrl-d:execute(${tmux} kill-session -t {2..})+change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_.*_" || true)' \
-        --bind 'ctrl-x:execute(${tmux} kill-server)+change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_.*_" || true)' \
-        --preview-window 'right:60%' \
-        --preview '${sesh} preview {}'
-    )"
-  '';
-
-  programs.sesh = {
-    enable = true;
-    enableAlias = false;
-    enableTmuxIntegration = false;
-    fzfPackage = config.programs.fzf.package;
-    zoxidePackage = config.programs.zoxide.package;
-    settings = {
-      default_session = {
-        preview_command = "${lib.getExe pkgs.eza} --color=always --follow-symlinks --tree {}";
-      };
-      session = [
-        {
-          name = "󱄅 nix-config";
-          path = config.home.sessionVariables.NIX_CONFIG_DIR;
-          startup_command = " ${lib.getExe config.vars.nvimPackage} -c ':Telescope find_files'";
-        }
-      ];
-    };
-  };
-
-  home.shellAliases.s = builtins.toString config.vars.seshFzf;
 }

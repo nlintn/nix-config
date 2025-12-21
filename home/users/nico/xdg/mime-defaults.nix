@@ -9,23 +9,25 @@ let
   font-viewer = "com.github.FontManager.FontViewer.desktop";
   ghostty = lib.mkIf config.programs.ghostty.enable "ghostty.desktop";
   gimp = "gimp.desktop";
-  image-roll = "com.github.weclaw1.ImageRoll.desktop";
   keepassxc = lib.mkIf config.programs.keepassxc.enable "org.keepassxc.KeePassXC.desktop";
   kitty = lib.mkIf config.programs.kitty.enable "kitty.desktop";
+  mpv = lib.mkIf config.programs.mpv.enable "mpv.desktop";
   neovim = lib.mkIf (config.vars ? nvimPackage) "nvim.desktop";
   papers = "org.gnome.Papers.desktop";
   pdf-arranger = "com.github.jeromerobert.pdfarranger.desktop";
   prusa-gcode-viewer = "PrusaGcodeviewer.desktop";
   prusa-slicer = "PrusaSlicer.desktop";
-  swayimg = "swayimg.desktop";
+  showtime = "org.gnome.showtime.desktop";
+  swayimg = lib.mkIf config.programs.swayimg.enable "swayimg.desktop";
   thunar = lib.mkIf config.programs.thunar.enable "thunar.desktop";
   thunderbird = lib.mkIf config.programs.thunderbird.enable config.programs.thunderbird.package.desktopItem.name;
-  vlc = "vlc.desktop";
   wireshark = "org.wireshark.Wireshark.desktop";
   yazi = lib.mkIf config.programs.yazi.enable "yazi.desktop";
   zathura = lib.mkIf config.programs.zathura.enable "org.pwmt.zathura.desktop";
 
-  audios = f [
+in lib.mergeAttrsList [
+  # audio
+  (f [
     "audio/basic"
     "audio/x-musepack"
     "audio/x-wavpack"
@@ -61,10 +63,11 @@ let
     "audio/x-xm"
     "audio/AMR-WB"
   ] [
-    vlc
-  ];
+    mpv
+  ])
 
-  browsers = f [
+  # browsers
+  (f [
     "text/html"
     "x-scheme-handler/http"
     "x-scheme-handler/https"
@@ -80,25 +83,28 @@ let
   ] [
     firefox
     chromium
-  ];
+  ])
 
-  documents = f [
+  # documents
+  (f [
     "application/pdf"
     "application/postscript"
   ] [
+    zathura
     papers
     pdf-arranger
-    zathura
-  ];
+  ])
 
-  folders = f [
+  # directories
+  (f [
     "inode/directory"
   ] [
     thunar
     yazi
-  ];
+  ])
 
-  fonts = f [
+  # fonts
+  (f [
     "font/ttf"
     "font/ttc"
     "font/otf"
@@ -108,9 +114,10 @@ let
     "application/vnd.ms-opentype"
   ] [
     font-viewer
-  ];
+  ])
 
-  images = f [
+  # images
+  (f [
     "image/webp"
     "image/gif"
     "image/vnd.wap.wbmp"
@@ -131,24 +138,31 @@ let
     "image/svg+xml-compressed"
     "image/png"
   ] [
-    image-roll
     swayimg
-  ];
+    gimp
+  ])
 
-  mails = f [
+  # mails
+  (f [
     "message/rfc822"
   ] [
     thunderbird
-  ];
+  ])
 
-  models3d = f [
+  # 3D models
+  (f [
     "model/3mf"
     "model/stl"
+    "model/step"
+    "model/step+xml"
+    "model/step+zip"
+    "model/step-xml+zip"
   ] [
     prusa-slicer
-  ];
+  ])
 
-  packetCaptures = f [
+  # packetCaptures
+  (f [
     "application/ipfix"
     "application/x-nettl"
     "application/x-lanalyzer"
@@ -168,16 +182,18 @@ let
     "application/x-5view"
   ] [
     wireshark
-  ];
+  ])
 
-  terminal = f [
+  # terminal
+  (f [
     "x-scheme-handler/terminal"
   ] [
     ghostty
     kitty
-  ];
+  ])
 
-  texts = f [
+  # texts
+  (f [
     "text/calendar"
     "text/csv"
     "text/plain"
@@ -186,9 +202,10 @@ let
     "application/xml"
   ] [
     neovim
-  ];
+  ])
 
-  videos = f [
+  # videos
+  (f [
     "video/3gpp2"
     "video/vnd.avi"
     "video/x-flv"
@@ -210,39 +227,47 @@ let
     "video/mp2t"
     "video/x-nsv"
   ] [
-    vlc
-  ];
+    showtime
+    mpv
+  ])
 
-  media = f [
+  # media
+  (f [
     "x-content/audio-cdda"
     "x-content/video-svcd"
     "x-content/video-vcd"
     "x-content/video-dvd"
     "x-content/audio-player"
   ] [
-    vlc
-  ];
+    showtime
+    mpv
+  ])
 
-  extraSettings = {
-    "application/x-keepass2" = keepassxc;
-    "application/x-nintendo-ds-rom" = desmume;
-    "application/x-bgcode" = prusa-gcode-viewer;
-    "image/x-xcf" = gimp;
-  };
+  # keepass
+  (f [
+    "application/x-keepass2"
+  ] [
+    keepassxc
+  ])
 
-in
-  (lib.mergeAttrsList [
-    audios
-    browsers
-    documents
-    folders
-    fonts
-    images
-    mails
-    media
-    models3d
-    packetCaptures
-    terminal
-    texts
-    videos
-  ]) // extraSettings
+  # ds-rom
+  (f [
+    "application/x-nintendo-ds-rom"
+  ] [
+    desmume
+  ])
+
+  # gcode
+  (f [
+    "application/x-bgcode"
+  ] [
+    prusa-gcode-viewer
+  ])
+
+  # xfc
+  (f [
+    "image/x-xcf"
+  ] [
+    gimp
+  ])
+]

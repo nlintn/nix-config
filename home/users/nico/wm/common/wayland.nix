@@ -1,9 +1,9 @@
-{ ... }:
+{ lib, ... }:
 
 {
   vars = {
     waylandSupport = true;
-    x11Support = false;
+    x11Support = lib.mkDefault false;
   };
   home.sessionVariables = {
     CLUTTER_BACKEND = "wayland";

@@ -7,14 +7,13 @@
     atac
     bear
     bviplus
-    coq
     cyberchef
     ghidra
     ghostscript
     gnumake
     jetbrains.idea-ultimate
     ocamlPackages.utop
-    postgresql
+    pgcli
     postman
     (python3.withPackages ( python-pkgs: with python-pkgs; [
       pwntools
@@ -33,13 +32,14 @@
     desmume
     dig
     dragon-drop
+    eza
     file
+    file-roller
     font-manager
     fractal
     gimp
     gnome-clocks
     hieroglyphic
-    image-roll
     imagemagick
     inkscape
     ipinfo
@@ -56,6 +56,7 @@
     papers
     pdfarranger
     pdftk
+    planify
     poppler-utils
     prismlauncher
     protonmail-desktop

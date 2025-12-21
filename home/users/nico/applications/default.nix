@@ -21,7 +21,6 @@
     ./thunar.nix
     ./thunderbird.nix
     ./tmux
-    ./vlc.nix
     ./yazi.nix
     ./zathura.nix
   ];
@@ -31,44 +30,53 @@
     permittedInsecurePackages = [ ];
   };
 
+  programs.chromium = {
+    enable = true;
+    package = pkgs.ungoogled-chromium;
+    commandLineArgs = [ "--no-default-browser-check" ];
+  };
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+  programs.man = {
+    enable = true;
+    generateCaches = true;
+  };
+  programs.zoxide = {
+    enable = true;
+    options = [ "--cmd cd" ];
+  };
+
   programs = {
     anki.enable = true;
-    chromium = {
-      enable = true;
-      package = pkgs.ungoogled-chromium;
-      commandLineArgs = [ "--no-default-browser-check" ];
-    };
-    direnv.enable = true;
-    direnv.nix-direnv.enable = true;
-    fd.enable = true;
-    jq.enable = true;
     fastfetch.enable = true;
+    fd.enable = true;
     htop.enable = true;
     java.enable = true;
-    man.generateCaches = true;
+    jq.enable = true;
+    mpv.enable = true;
     obsidian.enable = true;
     rclone.enable = true;
     ripgrep.enable = true;
+    swayimg.enable = true;
     vesktop.enable = true;
-    zoxide = {
-      enable = true;
-      options = [ "--cmd cd" ];
-    };
+  };
+
+  services.kdeconnect = {
+    enable = true;
+    indicator = true;
+    package = lib.mkIf (osConfig != null) osConfig.programs.kdeconnect.package;
+  };
+  services.protonmail-bridge = {
+    enable = true;
+    enableCfgScript = true;
+    extraPackages = [ config.programs.keepassxc.package ];
   };
 
   services = {
-    kdeconnect = {
-      enable = true;
-      indicator = true;
-      package = lib.mkIf (osConfig != null) osConfig.programs.kdeconnect.package;
-    };
     playerctld.enable = true;
     podman.enable = true;
-    protonmail-bridge = {
-      enable = true;
-      enableCfgScript = true;
-      extraPackages = [ config.programs.keepassxc.package ];
-    };
     systembus-notify.enable = true;
   };
 }

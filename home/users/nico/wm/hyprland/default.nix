@@ -23,7 +23,6 @@ in {
     file-roller
     nwg-displays
     pwvucontrol
-    swayimg
     wl-mirror
     wlr-randr
   ];

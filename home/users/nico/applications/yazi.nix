@@ -1,15 +1,29 @@
 { config, lib, pkgs, ... } @ args:
 
-{
+let
+  editNewTmuxWin = ''${lib.getExe config.programs.tmux.package} new-window -- "$EDITOR" -- "$@"'';
+  dragAndDrop = ''${lib.getExe pkgs.dragon-drop} "$@"'';
+in {
   programs.yazi = {
     enable = true;
     package = pkgs.yazi.override { extraPackages = [ pkgs.exiftool ]; };
     settings = {
       mgr.show_hidden = true;
-      opener.open = [
-        { run = ''${config.home.shellAliases.open} "$@"'';  desc = "Open"; }
-        { run = ''${lib.getExe pkgs.dragon-drop} "$@"'';  desc = "Drag and Drop"; }
-      ];
+      opener = {
+        open = [
+          { run = ''${config.home.shellAliases.open} "$@"''; desc = "Open"; }
+          { run = dragAndDrop; desc = "Drag and Drop"; }
+        ] ++
+          (lib.optional config.programs.tmux.enable
+            { run = editNewTmuxWin; desc = "Edit in new tmux win"; });
+      };
+    };
+    keymap = {
+      mgr.prepend_keymap = [
+        { on = "ü"; run = ''shell -- ${dragAndDrop}''; }
+      ] ++
+        (lib.optional config.programs.tmux.enable
+          { on = "ä"; run = ''shell -- ${editNewTmuxWin}''; });
     };
     plugins = with pkgs.yaziPlugins; {
       inherit full-border;

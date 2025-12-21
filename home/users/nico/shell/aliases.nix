@@ -11,7 +11,7 @@
       la = "${ll} -a";
       lt = "${ll} --sort=newest";
       tree = "${ls} --tree";
-      open = "${pkgs.writeShellScript "open" ''${lib.getExe' pkgs.xdg-utils "xdg-open"} "$@" & builtin disown''}";
+      open = "${pkgs.writeShellScript "open" ''${lib.getExe' pkgs.xdg-utils "xdg-open"} "$@" &> /dev/null & builtin disown''}";
     }
     (lib.mkIf (!config.submoduleSupport.enable && config.programs.home-manager.enable) {
       hms = "home-manager switch --flake ${configDirectory}";
@@ -25,9 +25,5 @@
       ns = "nix shell";
       nr = "nix repl --expr '{ inherit (import <nixpkgs> {}) pkgs lib; }'";
     })
-  ];
-
-  home.packages = with pkgs; [
-    eza
   ];
 }

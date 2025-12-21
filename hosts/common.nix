@@ -53,7 +53,10 @@
     };
   };
 
-  environment.pathsToLink = lib.mkIf (lib.any (u: u.xdg.enable) (builtins.attrValues config.home-manager.users or {})) [ "/share/xdg-desktop-portal" "/share/applications" ];
+  environment.pathsToLink = lib.mkMerge [
+    (lib.mkIf (lib.any (u: u.xdg.enable) (builtins.attrValues config.home-manager.users or {}))
+      [ "/share/xdg-desktop-portal" "/share/applications" ])
+  ];
 
   environment.sessionVariables = {
     CONFIG_STORE_PATH = config-store-path;

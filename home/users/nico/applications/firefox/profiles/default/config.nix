@@ -26,6 +26,7 @@ with config.colorScheme.palette; {
   "browser.fullscreen.autohide" = false;
   "browser.link.open_newwindow.restriction" = 0;
   "browser.messaging-system.whatsNewPanel.enabled" = false;
+  "browser.tabs.groups.smart.userEnabled" = false;
   "browser.ml.chat.enabled" = false;
   "browser.ml.chat.menu" = false;
   "browser.ml.chat.page" = false;

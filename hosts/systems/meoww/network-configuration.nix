@@ -27,7 +27,7 @@
     settings = {
       # query_log.file = "/var/log/dnscrypt-proxy/query.log";
       ipv4_servers = true;
-      ipv6_servers = false;
+      ipv6_servers = true;
       dnscrypt_servers = true;
       doh_servers = true;
       odoh_servers = false;

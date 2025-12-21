@@ -21,6 +21,7 @@ let
   var_term = lib.getExe config.xdg.terminal-exec.package;
   var_tmux_term = "${var_term} --command='${config.vars.seshFzf}'";
   var_volumectl = lib.getExe' config.services.avizo.package "volumectl";
+  var_scratchpad = "${lib.getExe config.programs.ghostty.package} --command='${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"'";
 
 in with config.colorScheme.palette; {
   source = [
@@ -28,7 +29,7 @@ in with config.colorScheme.palette; {
   ];
 
   monitor = [
-    ", preferred, 0x0, 1.25"
+    ", preferred, 0x0, 1"
     "eDP-1, preferred, auto-center-down, 1.6"
   ];
 
@@ -37,10 +38,6 @@ in with config.colorScheme.palette; {
     "HYPRCURSOR_SIZE, ${toString config.home.pointerCursor.size}"
   ];
 
-  exec-once = [
-    "[workspace special:dropterm silent] ${var_term}"
-    "[workspace special:pwm silent] ${var_pwm}"
-  ];
   # "debug:disable_logs" = false;
 
   bind =
@@ -223,6 +220,8 @@ in with config.colorScheme.palette; {
   group = {
     "col.border_active" = "rgba(${base0F}66)";
     "col.border_inactive" = "rgba(${base04}66)";
+    "col.border_locked_active" = "rgba(${base0F}66)";
+    "col.border_locked_inactive" = "rgba(${base04}66)";
     groupbar = {
       font_size = 10;
       gaps_in = 1;
@@ -275,6 +274,8 @@ in with config.colorScheme.palette; {
 
     "prop noscreenshare 1, class:org.keepassxc.KeePassXC"
 
+    "float, class:keepassxc, title:Open .*"
+
     "float, class:org.keepassxc.KeePassXC, title:Generate Password"
 
     "float, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
@@ -290,9 +291,12 @@ in with config.colorScheme.palette; {
     "float, class:steam, title:Steam Settings"
     "float, class:steam, title:Friends List"
 
-    "float, class:thunar, title:Rename .*"
+    "float, class:Thunar, title:Rename .*"
 
     "pin, class:dragon-drop"
+    "noborder, class:dragon-drop"
+    "rounding 6, class:dragon-drop"
+    "group deny, class:dragon-drop"
 
     "prop bordersize 0, floating:1, title:Vicinae.*"
 
@@ -305,7 +309,7 @@ in with config.colorScheme.palette; {
   ];
 
   workspace = [
-    "special:dropterm, on-created-empty:${var_term}"
+    "special:dropterm, on-created-empty:${var_scratchpad}"
     "special:pwm, on-created-empty:${var_pwm}"
   ];
 

@@ -1,13 +1,17 @@
 {
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nixpkgs-overlay, nix-colors, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-stable, agenix, home-manager, nixpkgs-overlay, nix-colors, ... } @ inputs:
     let
       system = "x86_64-linux"; # default system
       lib = nixpkgs.lib;
       libStable = nixpkgs-stable.lib;
       lib' = nixpkgs-overlay.lib;
-      overlays = [ nixpkgs-overlay.overlays.default ];
+      overlays = [
+        agenix.overlays.default
+        nixpkgs-overlay.overlays.default
+      ];
       pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
       assets = builtins.readDir ./assets |> builtins.mapAttrs (n: _: builtins.path { path = "${./assets}/${n}"; });
+      secrets = import ./secrets lib;
       userSettings = {
         colorScheme = nix-colors.colorSchemes.catppuccin-macchiato;
         default-font = {
@@ -20,7 +24,7 @@
         wm = "hyprland";
       };
       specialArgs = {
-        inherit inputs overlays lib' assets userSettings;
+        inherit inputs overlays lib' assets secrets userSettings;
         config-store-path = builtins.path { path = self; };
         hmSubmodules = import ./home/submodules.nix;
       } // inputs;
@@ -49,6 +53,12 @@
     nixpkgs-overlay = {
       url = "github:nlintn/nixpkgs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
 
     disko = {

@@ -1,9 +1,12 @@
-{ config, lib, config-store-path, nixSystemName, nix-colors, overlays, self, ... }:
+{ config, lib, agenix, config-store-path, nixSystemName, nix-colors, overlays, secrets, self, ... }:
 
 {
   imports = [
+    agenix.nixosModules.default
     nix-colors.homeManagerModules.default
   ];
+
+  age.secrets = lib.mkIf (config.age.identityPaths != []) secrets;
 
   nixpkgs = {
     overlays = overlays;

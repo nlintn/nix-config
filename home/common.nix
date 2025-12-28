@@ -1,10 +1,13 @@
-{ config, lib, pkgs, config-store-path, hmUsername, inputs, nixpkgs-overlay, nix-colors, self, userSettings, ... }:
+{ config, lib, pkgs, config-store-path, hmUsername, inputs, agenix, nixpkgs-overlay, nix-colors, secrets, self, userSettings, ... }:
 
 {
   imports = [
     nixpkgs-overlay.homeManagerModule
+    agenix.homeManagerModules.default
     nix-colors.homeManagerModules.default
   ];
+
+  age.secrets = lib.mkIf (config.age.identityPaths != []) secrets;
 
   home = {
     username = lib.mkDefault hmUsername;

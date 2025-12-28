@@ -1,10 +1,6 @@
-{ config, lib, config-store-path, nixSystemName, nix-colors, overlays, self, ... }:
+{ config, lib, config-store-path, nixSystemName, overlays, self, ... }:
 
 {
-  imports = [
-    nix-colors.homeManagerModules.default
-  ];
-
   nixpkgs = {
     overlays = overlays;
   };

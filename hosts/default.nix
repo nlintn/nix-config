@@ -12,6 +12,7 @@ let
         modules = [
           ./systems/${n}
           ./common.nix
+          ./modules.nix
         ];
       }
   ) (builtins.readDir ./systems);
@@ -21,6 +22,7 @@ let
     modules = [
       ./iso
       ./common.nix
+      ./modules.nix
     ];
   };
   isos = {

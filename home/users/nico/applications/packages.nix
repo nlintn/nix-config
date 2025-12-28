@@ -26,6 +26,7 @@
     llvmPackages_latest.clang-manpages llvmPackages_latest.llvm-manpages
 
     # Misc
+    agenix
     audacity
     blender
     cowsay

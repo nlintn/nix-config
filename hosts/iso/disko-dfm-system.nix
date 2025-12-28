@@ -1,5 +1,5 @@
-{ disko-config-path, systemName, disko, lib, writeShellScriptBin }:
+{ disko-config-path, disko, lib, writeShellScriptBin }:
 
-writeShellScriptBin "disko-dfm-${systemName}" ''
+writeShellScriptBin "disko-dfm" ''
   ${lib.getExe disko} --no-deps -m destroy,format,mount ${lib.escapeShellArg disko-config-path} $@
 ''

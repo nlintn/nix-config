@@ -26,7 +26,7 @@
 
   time.timeZone = lib.mkDefault "Europe/Berlin";
   i18n = {
-    defaultLocale = "en_GB.UTF-8";
+    defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
       LC_ADDRESS = "de_DE.UTF-8";
       LC_IDENTIFICATION = "de_DE.UTF-8";
@@ -41,7 +41,7 @@
   };
 
   nix = {
-    registry = lib.mapAttrs (_: flake: { inherit flake; }) self.inputs // {
+    registry = lib.mapAttrs (_: flake: { inherit flake; }) (lib.filterAttrs (n: _: n != "nixpkgs") self.inputs) // {
       "self".flake = self;
     };
     nixPath = lib.mapAttrsToList (n: v: "${n}=flake:${v.flake.outPath or n}") config.nix.registry;

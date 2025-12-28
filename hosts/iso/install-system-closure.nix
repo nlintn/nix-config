@@ -1,5 +1,5 @@
-{ closureStorePath, systemName, writeShellScriptBin }:
+{ closureStorePath, writeShellScriptBin }:
 
-writeShellScriptBin "install-system-${systemName}" ''
+writeShellScriptBin "install-system" ''
   nixos-install --system ${closureStorePath} $@
 ''

@@ -37,5 +37,9 @@
     })
   ]);
 
+  users.users.nixos.openssh.authorizedKeys.keyFiles = [
+    assets."nico_id_ed25519.pub"
+  ];
+
   nix.settings.flake-registry = "";
 }

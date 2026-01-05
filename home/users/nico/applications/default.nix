@@ -60,7 +60,7 @@
     rclone.enable = true;
     ripgrep.enable = true;
     swayimg.enable = true;
-    vesktop.enable = true;
+    # vesktop.enable = true; TODO: add back if not broken anymore
   };
 
   services.kdeconnect = {

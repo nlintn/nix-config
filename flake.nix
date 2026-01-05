@@ -72,11 +72,5 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
-
-    nvim-config = {
-      url = "github:nlintn/nvim-config";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-overlay.follows = "nixpkgs-overlay";
-    };
   };
 }

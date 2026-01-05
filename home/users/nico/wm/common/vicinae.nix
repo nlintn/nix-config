@@ -13,21 +13,53 @@
     ];
 
     settings = {
-      closeOnFocusLoss = true;
-      faviconService = "twenty";
+      close_on_focus_loss = true;
+      search_files_in_root = true;
+      pop_to_root_on_close = false;
+      favicon_service = "twenty";
       font = {
-        normal = userSettings.default-font.name;
-        size = 10;
+        normal = {
+          family = userSettings.default-font.name;
+          size = 10;
+        };
       };
-      popToRootOnClose = false;
       theme = {
-        iconTheme = config.gtk.iconTheme.name;
-        name = "base16";
+        dark = {
+          name = "base16";
+          icon_theme = config.gtk.iconTheme.name;
+        };
+        light = {
+          name = "base16";
+          icon_theme = config.gtk.iconTheme.name;
+        };
       };
-      window = {
-        csd = true;
+      launcher_window = {
         opacity = 0.75;
-        rounding = 10;
+        client_side_decorations = {
+          enabled = true;
+          rounding = 10;
+          border_width = 1;
+        };
+        layer_shell = {
+          enabled = true;
+          scope = "vicinae";
+          keyboard_interactivity = "on_demand";
+          layer = "top";
+        };
+      };
+      providers = {
+        "@Gelei/bluetooth-0" = {
+          preferences = {
+            connectionToggleable = true;
+          };
+        };
+        core = {
+          entrypoints = {
+            inspect-local-storage = {
+              enabled = true;
+            };
+          };
+        };
       };
     };
 
@@ -73,4 +105,5 @@
       };
     };
   };
+  # xdg.configFile."vicinae/settings.json".force = true;
 }

@@ -11,7 +11,7 @@
     ghidra
     ghostscript
     gnumake
-    jetbrains.idea-ultimate
+    jetbrains.idea
     ocamlPackages.utop
     pgcli
     postman

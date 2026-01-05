@@ -10,7 +10,7 @@
       plugins = with pkgs; [
         networkmanager-openvpn
       ];
-      # dhcp = "dhcpcd";
+      dhcp = "dhcpcd";
     };
 
     firewall.enable = true;

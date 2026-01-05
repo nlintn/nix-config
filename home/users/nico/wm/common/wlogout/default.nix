@@ -15,7 +15,7 @@
       }
       {
         "label" = "hibernate";
-        "action" = "${loginctl} hibernate";
+        "action" = "${systemctl} hibernate";
         "text" = "Hibernate";
         "keybind" = "h";
       }

@@ -2,8 +2,8 @@
 
 {
   imports = [
-    nixpkgs-overlay.homeManagerModule
     agenix.homeManagerModules.default
+    nixpkgs-overlay.homeManagerModules.default
     nix-colors.homeManagerModules.default
   ];
 

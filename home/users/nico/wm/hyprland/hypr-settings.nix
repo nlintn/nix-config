@@ -292,6 +292,7 @@ in with config.colorScheme.palette; {
     "float, class:steam, title:Friends List"
 
     "float, class:Thunar, title:Rename .*"
+    "float, class:Thunar, title:File Operation Progress"
 
     "pin, class:dragon-drop"
     "noborder, class:dragon-drop"

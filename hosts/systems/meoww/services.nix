@@ -18,6 +18,7 @@
       HandleLidSwitch = "suspend";
     };
     pcscd.enable = true; # smart cards
+    tailscale.enable = true;
     tumbler.enable = true; # thumbnails
 
     # printing

@@ -256,57 +256,57 @@ in with config.colorScheme.palette; {
     font_family = userSettings.default-font.name;
     key_press_enables_dpms = true;
     mouse_move_enables_dpms = false;
-    new_window_takes_over_fullscreen = 2;
+    on_focus_under_fullscreen = 2;
   };
 
   render.cm_enabled = false;
 
   windowrule = [
-    "suppressevent maximize, class:.*"
+    "suppress_event maximize, match:class .*"
 
-    "group new, class:thunderbird, initialTitle:Mozilla Thunderbird"
+    "group new, match:class thunderbird, match:initial_title Mozilla Thunderbird"
 
-    "float, class:com.saivert.pwvucontrol"
-    "float, class:nm-connection-editor"
-    "float, class:.blueman-manager-wrapped"
+    "float on, match:class com.saivert.pwvucontrol"
+    "float on, match:class nm-connection-editor"
+    "float on, match:class .blueman-manager-wrapped"
 
-    "float, class:xdg-desktop-portal-gtk"
+    "float on, match:class xdg-desktop-portal-gtk"
 
-    "prop noscreenshare 1, class:org.keepassxc.KeePassXC"
+    "no_screen_share 1, match:class org.keepassxc.KeePassXC"
 
-    "float, class:keepassxc, title:Open .*"
+    "float on, match:class keepassxc, match:title Open .*"
 
-    "float, class:org.keepassxc.KeePassXC, title:Generate Password"
+    "float on, match:class org.keepassxc.KeePassXC, match:title Generate Password"
 
-    "float, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
-    "center, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
-    "pin, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
-    "stayfocused, class:org.keepassxc.KeePassXC, title:KeePassXC -  Access Request"
+    "float on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
+    "center on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
+    "pin on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
+    "stay_focused on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
 
-    "float, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
-    "center, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
-    "pin, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
-    "stayfocused, class:org.keepassxc.KeePassXC, title:KeePassXC - Unlock Database"
+    "float on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
+    "center on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
+    "pin on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
+    "stay_focused on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
 
-    "float, class:steam, title:Steam Settings"
-    "float, class:steam, title:Friends List"
+    "float on, match:class steam, match:title Steam Settings"
+    "float on, match:class steam, match:title Friends List"
 
-    "float, class:Thunar, title:Rename .*"
-    "float, class:Thunar, title:File Operation Progress"
+    "float on, match:class Thunar, match:title Rename .*"
+    "float on, match:class Thunar, match:title File Operation Progress"
 
-    "pin, class:dragon-drop"
-    "noborder, class:dragon-drop"
-    "rounding 6, class:dragon-drop"
-    "group deny, class:dragon-drop"
+    "pin on, match:class dragon-drop"
+    "border_size 0, match:class dragon-drop"
+    "rounding 6, match:class dragon-drop"
+    "group deny, match:class dragon-drop"
 
-    "prop bordersize 0, floating:1, title:Vicinae.*"
+    "border_size 0, match:float 1, match:title Vicinae.*"
 
-    "prop bordersize 0, floating:0, onworkspace:w[tv1]"
-    "prop bordersize 0, floating:0, onworkspace:f[1]"
+    "border_size 0, match:float 0, match:workspace w[tv1]"
+    "border_size 0, match:float 0, match:workspace f[1]"
 
-    "prop decorate 0, floating:0, onworkspace:w[t1]"
+    "decorate off, match:float 0, match:workspace w[t1]"
 
-    "group, floating:0"
+    "group set, match:float 0"
   ];
 
   workspace = [
@@ -315,26 +315,22 @@ in with config.colorScheme.palette; {
   ];
 
   layerrule = [
-    "noanim, selection"
-    "blur, vicinae"
-    "xray off, vicinae"
-    "ignorealpha 0, vicinae"
+    "match:namespace selection, no_anim on"
+    "match:namespace vicinae, blur on"
+    "match:namespace vicinae, xray off"
+    "match:namespace vicinae, ignore_alpha 0"
 
-    "blur, logout_dialog"
-    "xray off, logout_dialog"
+    "match:namespace logout_dialog, blur on"
+    "match:namespace logout_dialog, xray off"
 
-    "abovelock, avizo"
-    "blur, avizo"
-    "xray off, avizo"
-    "ignorezero, avizo"
+    "match:namespace avizo, above_lock 1"
+    "match:namespace avizo, blur on"
+    "match:namespace avizo, xray off"
+    "match:namespace avizo, ignore_alpha 0"
 
-    "blur, avizo"
-    "xray off, avizo"
-    "ignorezero, avizo"
-
-    "blur, swaync-.*"
-    "xray off, swaync-.*"
-    "ignorezero, swaync-.*"
+    "match:namespace swaync-.*, blur on"
+    "match:namespace swaync-.*, xray off"
+    "match:namespace swaync-.*, ignore_alpha 0"
   ];
 
   general = {

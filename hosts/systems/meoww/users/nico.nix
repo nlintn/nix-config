@@ -5,7 +5,7 @@
     isNormalUser = true;
     description = "Nico Lintner";
     extraGroups = [
-      "wheel" "seat"
+      "wheel" "seat" "video" "render"
       (lib.mkIf config.networking.networkmanager.enable "networkmanager")
       (lib.mkIf config.programs.wireshark.enable "wireshark")
       (lib.mkIf config.hardware.i2c.enable "i2c")

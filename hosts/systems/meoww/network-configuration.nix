@@ -46,10 +46,11 @@
       timeout = 5000;
       keepalive = 30;
 
+      # log_level = 0;
       use_syslog = true;
 
       bootstrap_resolvers = [ "9.9.9.11:53" "149.112.112.11:53" "[2620:fe::11]:53" "[2620:fe::fe:11]:53" ];
-      ignore_system_dns = true;
+      ignore_system_dns = false;
       netprobe_timeout = 60;
       netprobe_address = "9.9.9.9:53";
 
@@ -59,10 +60,11 @@
       reject_ttl = 10;
 
       forwarding_rules = pkgs.writeText "dnscrypt-forwarding-rules" ''
-        fritz.box             $DHCP
+        fritz.box                 $DHCP
 
-        iceportal.de          $DHCP
-        login.wifionice.de    $DHCP
+        detectportal.firefox.com  $DHCP
+        iceportal.de              $DHCP
+        login.wifionice.de        $DHCP
       '';
 
       cloaking_rules = "/etc/dnscrypt-cloaking-rules";
@@ -126,13 +128,11 @@
       };
     };
   };
+  systemd.tmpfiles.rules = [
+    "f  ${config.services.dnscrypt-proxy.settings.cloaking_rules}  0644  root  root  -  -"
+  ];
   environment.shellAliases."dns-restart" = "${lib.getExe' config.systemd.package "systemctl"} restart dnscrypt-proxy2.service";
   environment.shellAliases."dns-stop" = "${lib.getExe' config.systemd.package "systemctl"} stop dnscrypt-proxy2.service";
-
-  environment.etc."dnscrypt-cloaking-rules" = {
-    text = "";
-    mode = "0644";
-  };
 
   systemd.services.NetworkManager-wait-online.enable = false;
 }

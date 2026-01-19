@@ -18,7 +18,14 @@
       HandleLidSwitch = "suspend";
     };
     pcscd.enable = true; # smart cards
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      disableUpstreamLogging = true;
+      extraSetFlags = [
+        "--operator=nico"
+      ];
+      useRoutingFeatures = "client";
+    };
     tumbler.enable = true; # thumbnails
 
     # printing

@@ -42,9 +42,11 @@
       interface = "wlan0";
     };
     kdeconnect.enable = true;
-    nix-ld.enable = true;
-    # nix-ld.libraries = with pkgs; [];
-    steam.enable = true;
+    # nix-ld.enable = true;
+    steam = {
+      enable = true;
+      extraCompatPackages = [ pkgs.proton-ge-bin ];
+    };
     wireshark.enable = true;
     xfconf.enable = true;
     zsh.enable = true;

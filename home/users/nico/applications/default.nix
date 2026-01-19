@@ -56,11 +56,11 @@
     java.enable = true;
     jq.enable = true;
     mpv.enable = true;
-    obsidian.enable = true;
+    # obsidian.enable = true; TODO: add back when not broken anymore
     rclone.enable = true;
     ripgrep.enable = true;
     swayimg.enable = true;
-    # vesktop.enable = true; TODO: add back if not broken anymore
+    vesktop.enable = true;
   };
 
   services.kdeconnect = {

@@ -58,14 +58,7 @@ in {
     };
 
     plugins = with pkgs.hyprlandPlugins; [
-      (hyprsplit.overrideAttrs {
-        src = pkgs.fetchFromGitHub {
-          owner = "shezdy";
-          repo = "hyprsplit";
-          tag = "v0.53.1";
-          hash = "sha256-seA9mz0Yej4yYZVgzd7yKoHwuueKhfQPu0CyB7EL8No=";
-        };
-      })
+      hyprsplit
     ];
 
     settings = import ./hypr-settings.nix (args // customPkgs);

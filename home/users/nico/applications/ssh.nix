@@ -15,11 +15,4 @@
   };
 
   services.ssh-agent.enable = true;
-
-  # TODO: remove when fixed
-  home.sessionVariablesExtra = ''
-    if [ -z "$SSH_AUTH_SOCK" ]; then
-      export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/${config.services.ssh-agent.socket}
-    fi
-  '';
 }

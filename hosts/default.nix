@@ -1,10 +1,10 @@
-{ lib, libStable, system, specialArgs }:
+{ lib, lib-stable, system, specialArgs }:
 
 let
   systemConfigurations = builtins.mapAttrs (n: _:
     let
       buildConfig = import ./systems/${n}/build-config.nix;
-      lib' = if buildConfig.use-nixpkgs-stable or false then libStable else lib;
+      lib' = if buildConfig.use-nixpkgs-stable or false then lib-stable else lib;
     in
       lib'.nixosSystem {
         system = buildConfig.system;
@@ -12,6 +12,7 @@ let
         modules = [
           ./systems/${n}
           ./common.nix
+          ./options.nix
         ];
       }
   ) (builtins.readDir ./systems);
@@ -21,6 +22,7 @@ let
     modules = [
       ./iso
       ./common.nix
+      ./options.nix
     ];
   };
   isos = {

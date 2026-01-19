@@ -3,13 +3,15 @@
     let
       system = "x86_64-linux"; # default system
       lib = nixpkgs.lib;
-      libStable = nixpkgs-stable.lib;
+      lib-stable = nixpkgs-stable.lib;
       lib' = nixpkgs-overlay.lib;
       overlays = [
         agenix.overlays.default
         nixpkgs-overlay.overlays.default
       ];
-      pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
+      pkgs-unstable = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
+      pkgs-stable  = import nixpkgs-stable { inherit system overlays; config.allowUnfree = true; };
+      pkgs = pkgs-unstable;
       assets = builtins.readDir ./assets |> builtins.mapAttrs (n: _: builtins.path { path = "${./assets}/${n}"; });
       secrets = import ./secrets lib;
       userSettings = {
@@ -24,12 +26,12 @@
         wm = "hyprland";
       };
       specialArgs = {
-        inherit inputs overlays lib' assets secrets userSettings;
+        inherit inputs overlays lib' assets secrets userSettings pkgs-unstable pkgs-stable;
         config-store-path = builtins.path { path = self; };
         hmSubmodules = import ./home/submodules.nix;
       } // inputs;
       hosts = import ./hosts {
-        inherit lib libStable system specialArgs;
+        inherit lib lib-stable system specialArgs;
       };
       home = import ./home {
         inherit home-manager pkgs specialArgs;

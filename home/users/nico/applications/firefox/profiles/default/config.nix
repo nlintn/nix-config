@@ -11,6 +11,20 @@ with config.colorScheme.palette; {
   "browser.tabs.min_inactive_duration_before_unload" = 1800000;
   "browser.tabs.unloadOnLowMemory" = true;
 
+  # disable ml
+  "browser.ml.chat.enabled" = false;
+  "browser.ml.chat.menu" = false;
+  "browser.ml.chat.page" = false;
+  "browser.ml.chat.shortcuts" = false;
+  "browser.ml.chat.sidebar" = false;
+  "browser.ml.enable" = false;
+  "browser.ml.linkPreview.collapsed" = true;
+  "browser.ml.linkPreview.optin" = false;
+  "browser.tabs.groups.smart.enabled" = false;
+  "browser.tabs.groups.smart.userEnabled" = false;
+  "extensions.ml.enabled" = false;
+  "extensions.ml.linkPreview.enabled" = true;
+
   "accessibility.browsewithcaret" = true;
   "browser.aboutConfig.showWarning" = false;
   "browser.bookmarks.addedImportButton" = true;
@@ -26,11 +40,6 @@ with config.colorScheme.palette; {
   "browser.fullscreen.autohide" = false;
   "browser.link.open_newwindow.restriction" = 0;
   "browser.messaging-system.whatsNewPanel.enabled" = false;
-  "browser.tabs.groups.smart.userEnabled" = false;
-  "browser.ml.chat.enabled" = false;
-  "browser.ml.chat.menu" = false;
-  "browser.ml.chat.page" = false;
-  "browser.ml.enable" = false;
   "browser.rights.3.shown" = true;
   "browser.search.separatePrivateDefault" = false;
   "browser.shell.checkDefaultBrowser" = false;
@@ -40,11 +49,12 @@ with config.colorScheme.palette; {
   "browser.tabs.allow_transparent_browser" = true;
   "browser.tabs.closeWindowWithLastTab" = false;
   "browser.tabs.minWidth" = 55;
+  "browser.tabs.splitView.enabled" = true;
   "browser.tabs.warnOnClose" = true;
   "browser.toolbars.bookmarks.visibility" = "never";
   "browser.translations.neverTranslateLanguages" = "de";
   "browser.uitour.enabled" = false;
-  "dom.security.https_only_mode" = true;
+  "dom.security.https_only_mode" = false;
   "extensions.pocket.enabled" = false;
   "extensions.quarantinedDomains.enabled" = false;
   "extensions.webextensions.restrictedDomains" = "";
@@ -57,6 +67,8 @@ with config.colorScheme.palette; {
   "sidebar.revamp" = true;
   "sidebar.revamp.round-content-area" = true;
   "sidebar.verticalTabs" = true;
+  "sidebar.expandOnHover" = true;
+  "sidebar.visibility" = "expand-on-hover";
   "signon.rememberSignons" = false;
   "startup.homepage_override_url" = "";
   "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
@@ -159,6 +171,10 @@ with config.colorScheme.palette; {
   "ui.textSelectAttentionForeground" = "#${base01}";
 
   # UI layout settings
+  "browser.uiCustomization.navBarWhenVerticalTabs" = [
+    "firefox-view-button" "back-button" "forward-button" "vertical-spacer" "urlbar-container" "customizableui-special-spring1"
+    "downloads-button" "keepassxc-browser_keepassxc_org-browser-action" "unified-extensions-button" "fxa-toolbar-menu-button"
+  ];
   "browser.uiCustomization.state" = let
     extToBrowserAction =
       builtins.map (n: if builtins.typeOf n == "string" then n else (
@@ -172,9 +188,12 @@ with config.colorScheme.palette; {
       "widget-overflow-fixed-list" = [];
       "unified-extensions-area" = extToBrowserAction [
         ublock-origin
+        tabwrangler
         darkreader
         vimium-ff
         violentmonkey
+        simplelogin
+        video-downloadhelper
       ];
       "nav-bar" = extToBrowserAction [
         "sidebar-button"

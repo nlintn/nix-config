@@ -6,7 +6,10 @@
     darkreader
     dictionary-german
     keepassxc-browser
+    simplelogin
+    tabwrangler
     ublock-origin
+    video-downloadhelper
     vimium-ff
     violentmonkey
     zen-internet

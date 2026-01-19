@@ -33,7 +33,7 @@
   programs.chromium = {
     enable = true;
     package = pkgs.ungoogled-chromium;
-    commandLineArgs = [ "--no-default-browser-check" ];
+    commandLineArgs = [ "--no-default-browser-check" "--password-store=basic" ];
   };
   programs.direnv = {
     enable = true;
@@ -72,6 +72,10 @@
     enable = true;
     enableCfgScript = true;
     extraPackages = [ config.programs.keepassxc.package ];
+  };
+  services.tailscale-systray = {
+    enable = true;
+    package = lib.mkIf (osConfig != null) osConfig.services.tailscale.package;
   };
 
   services = {

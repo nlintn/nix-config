@@ -15,6 +15,7 @@
     QT_QPA_PLATFORM = "wayland";
   };
   home.packages = with pkgs; [
+    wl-clipboard
     wl-mirror
     wlr-randr
   ];

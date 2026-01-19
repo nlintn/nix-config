@@ -8,7 +8,10 @@ in {
     enable = true;
     package = pkgs.yazi.override { extraPackages = [ pkgs.exiftool ]; };
     settings = {
-      mgr.show_hidden = true;
+      mgr = {
+        linemode = "mtime";
+        show_hidden = true;
+      };
       opener = {
         open = [
           { run = ''${config.home.shellAliases.open} "$@"''; desc = "Open"; }
@@ -35,58 +38,57 @@ in {
       mgr = {
         cwd = { fg = "#${base0C}"; };
 
-        # Hovered
-        hovered         = { fg = "#${base00}"; bg = "#${base0D}"; };
-        preview_hovered = { underline = true; };
+        find_keyword  = { fg = "#${base01}"; bg = "#${base0A}"; };
+        find_position = { fg = "#${base01}"; bg = "#${base08}"; italic = true; };
 
-        # Find
-        find_keyword  = { fg = "#${base0A}"; italic = true; };
-        find_position = { fg = "#${base06}"; bg = "reset"; italic = true; };
-
-        # Marker
         marker_copied   = { fg = "#${base0B}"; bg = "#${base0B}"; };
         marker_cut      = { fg = "#${base08}"; bg = "#${base08}"; };
         marker_selected = { fg = "#${base0E}"; bg = "#${base0E}"; };
 
-        # Tab
-        tab_active   = { fg = "#${base00}"; bg = "#${base05}"; };
+        tab_active   = { fg = "#${base01}"; bg = "#${base05}"; };
         tab_inactive = { fg = "#${base05}"; bg = "#${base03}"; };
         tab_width    = 1;
 
-        # Count
-        count_copied   = { fg = "#${base00}"; bg = "#${base0B}"; };
-        count_cut      = { fg = "#${base00}"; bg = "#${base08}"; };
-        count_selected = { fg = "#${base00}"; bg = "#${base0E}"; };
+        count_copied   = { fg = "#${base01}"; bg = "#${base0B}"; };
+        count_cut      = { fg = "#${base01}"; bg = "#${base08}"; };
+        count_selected = { fg = "#${base01}"; bg = "#${base0E}"; };
 
-        # Border
         border_symbol = "│";
         border_style  = { fg = "#${base04}"; };
 
-        # Highlighting
         syntect_theme = import ./tm-theme.nix args;
       };
 
+      indicator = {
+        parent  = { fg = "#${base00}"; bg = "#${base0D}"; };
+        current = { fg = "#${base00}"; bg = "#${base0D}"; };
+        preview = { underline = true; };
+        padding = { open = "█"; close = "█"; };
+      };
+
+      mode = {
+        normal_main = { fg = "#${base02}"; bg = "#${base0D}"; bold = true; };
+        normal_alt  = { fg = "#${base02}"; bg = "#${base07}"; bold = true; };
+        select_main = { fg = "#${base02}"; bg = "#${base0B}"; bold = true; };
+        select_alt  = { fg = "#${base02}"; bg = "#${base0C}"; bold = true; };
+        unset_main  = { fg = "#${base02}"; bg = "#${base0F}"; bold = true; };
+        unset_alt   = { fg = "#${base02}"; bg = "#${base06}"; bold = true; };
+      };
+
       status = {
-        separator_open  = "";
-        separator_close = "";
-        separator_style = { fg = "#${base03}"; bg = "#${base03}"; };
+        overall   = { bg = "#${base01}"; };
+        sep_left  = { open = ""; close = ""; };
+        sep_right = { open = ""; close = ""; };
 
-        # Mode
-        mode_normal = { fg = "#${base00}"; bg = "#${base0D}"; bold = true; };
-        mode_select = { fg = "#${base00}"; bg = "#${base0B}"; bold = true; };
-        mode_unset  = { fg = "#${base00}"; bg = "#${base0F}"; bold = true; };
-
-        # Progress
         progress_label  = { fg = "#${base04}"; bold = true; };
         progress_normal = { fg = "#${base0D}"; bg = "#${base03}"; };
         progress_error  = { fg = "#${base08}"; bg = "#${base03}"; };
 
-        # Permissions
-        permissions_t = { fg = "#${base0D}"; };
-        permissions_r = { fg = "#${base0A}"; };
-        permissions_w = { fg = "#${base08}"; };
-        permissions_x = { fg = "#${base0B}"; };
-        permissions_s = { fg = "#${base04}"; };
+        perm_type  = { fg = "#${base0C}"; };
+        perm_read  = { fg = "#${base0A}"; };
+        perm_write = { fg = "#${base08}"; };
+        perm_exec  = { fg = "#${base0B}"; };
+        perm_sep   = { fg = "#${base03}"; };
       };
 
       input = {
@@ -113,7 +115,7 @@ in {
         cand            = { fg = "#${base0C}"; };
         rest            = { fg = "#${base07}"; };
         desc            = { fg = "#${base06}"; };
-        separator       = "  ";             
+        separator       = "  ";
         separator_style = { fg = "#${base04}"; };
       };
 
@@ -127,25 +129,26 @@ in {
 
       filetype = {
         rules = [
-          # Images
-          { mime = "image/*"; fg = "#${base0C}"; }
-
-          # Videos
-          { mime = "video/*"; fg = "#${base0A}"; }
-          { mime = "audio/*"; fg = "#${base0A}"; }
+          # Media
+          { mime = "image/*"; fg = "#${base0E}"; }
+          { mime = "video/*"; fg = "#${base0E}"; }
+          { mime = "audio/*"; fg = "#${base0E}"; }
 
           # Archives
-          { mime = "application/zip";             fg = "#${base06}"; }
-          { mime = "application/gzip";            fg = "#${base06}"; }
-          { mime = "application/x-tar";           fg = "#${base06}"; }
-          { mime = "application/x-bzip";          fg = "#${base06}"; }
-          { mime = "application/x-bzip2";         fg = "#${base06}"; }
-          { mime = "application/x-7z-compressed"; fg = "#${base06}"; }
-          { mime = "application/x-rar";           fg = "#${base06}"; }
+          { mime = "application/zip";             fg = "#${base08}"; }
+          { mime = "application/gzip";            fg = "#${base08}"; }
+          { mime = "application/x-tar";           fg = "#${base08}"; }
+          { mime = "application/x-bzip";          fg = "#${base08}"; }
+          { mime = "application/x-bzip2";         fg = "#${base08}"; }
+          { mime = "application/x-7z-compressed"; fg = "#${base08}"; }
+          { mime = "application/x-rar";           fg = "#${base08}"; }
+
+          { url = "*"; is = "link"; fg = "#${base0C}"; }
+          { url = "*"; is = "exec"; fg = "#${base0B}"; }
 
           # Fallback
-          { name = "*"; fg = "#${base05}"; }
-          { name = "*/"; fg = "#${base0D}"; }
+          { url = "*"; fg = "#${base05}"; }
+          { url = "*/"; fg = "#${base0D}"; }
         ];
       };
     };

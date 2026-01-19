@@ -31,19 +31,20 @@
     blender
     cowsay
     desmume
-    dig
+    dnsutils
     dragon-drop
     eza
     file
     file-roller
     font-manager
-    fractal
     gimp
+    gnome-characters
     gnome-clocks
     hieroglyphic
     imagemagick
     inkscape
     ipinfo
+    jellyfin-desktop
     libnotify
     libqalculate
     libreoffice-fresh
@@ -54,6 +55,7 @@
     nix-tree
     nixln-edit
     nmap
+    openssl
     papers
     pdfarranger
     pdftk
@@ -70,11 +72,11 @@
     spotify-tray
     sshfs
     telegram-desktop
+    traceroute
     unar
     usbutils
     wev
     wireshark
-    wl-clipboard
     xournalpp
     yubioath-flutter
   ];

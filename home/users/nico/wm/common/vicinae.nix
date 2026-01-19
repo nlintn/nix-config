@@ -38,7 +38,7 @@
         client_side_decorations = {
           enabled = true;
           rounding = 10;
-          border_width = 1;
+          border_width = 2;
         };
         layer_shell = {
           enabled = true;
@@ -55,9 +55,8 @@
         };
         core = {
           entrypoints = {
-            inspect-local-storage = {
-              enabled = true;
-            };
+            inspect-local-storage.enabled = true;
+            sponsor.enabled = false;
           };
         };
       };

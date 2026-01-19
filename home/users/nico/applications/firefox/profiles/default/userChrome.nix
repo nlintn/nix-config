@@ -67,6 +67,15 @@ in /* css */ ''
     --background-color-warning: #${base09} !important;
     --border-color: #${base03} !important;
   }
+  :root[sidebar-expand-on-hover] {
+    & #sidebar-main {
+      &[sidebar-launcher-expanded], &[sidebar-ongoing-animations]:not([sidebar-launcher-expanded]) {
+        background-color: #${base00} !important;
+        border-radius: 10px !important;
+        width: 17vw !important;
+      }
+    }
+  }
 
   ::selection {
     background-color: #${base0E} !important;

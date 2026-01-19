@@ -53,7 +53,7 @@ in with config.colorScheme.palette; {
       "SHIFT, Q, exec, ${var_tmux_term}"
       "SPACE, exec, ${var_launcher} vicinae://toggle"
       "SHIFT, R, exec, ${hyreload}"
-      "PERIOD, exec, ${var_launcher} vicinae://extensions/vicinae/vicinae/search-emojis"
+      "PERIOD, exec, ${var_launcher} vicinae://extensions/vicinae/core/search-emojis"
       "V, exec, ${var_launcher} vicinae://extensions/vicinae/clipboard/history"
       "BACKSPACE, exec, ${var_lock-cmd}"
       "SHIFT, BACKSPACE, exec, ${var_lock-transparent}"
@@ -262,51 +262,52 @@ in with config.colorScheme.palette; {
   render.cm_enabled = false;
 
   windowrule = [
+    "group set, match:float off"
+
     "suppress_event maximize, match:class .*"
 
     "group new, match:class thunderbird, match:initial_title Mozilla Thunderbird"
 
-    "float on, match:class com.saivert.pwvucontrol"
-    "float on, match:class nm-connection-editor"
-    "float on, match:class .blueman-manager-wrapped"
+    "float on, group unset, match:class com.saivert.pwvucontrol"
+    "float on, group unset, match:class nm-connection-editor"
+    "float on, group unset, match:class .blueman-manager-wrapped"
 
-    "float on, match:class xdg-desktop-portal-gtk"
+    "float on, group unset, match:class xdg-desktop-portal-gtk"
 
     "no_screen_share 1, match:class org.keepassxc.KeePassXC"
 
-    "float on, match:class keepassxc, match:title Open .*"
+    "float on, group unset, match:class keepassxc, match:title Open .*"
 
-    "float on, match:class org.keepassxc.KeePassXC, match:title Generate Password"
+    "float on, group unset, match:class org.keepassxc.KeePassXC, match:title Generate Password"
 
-    "float on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
+    "float on, group unset, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
     "center on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
     "pin on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
     "stay_focused on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
 
-    "float on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
+    "float on, group unset, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
     "center on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
     "pin on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
     "stay_focused on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
 
-    "float on, match:class steam, match:title Steam Settings"
-    "float on, match:class steam, match:title Friends List"
+    "float on, group unset, match:class steam, match:title Steam Settings"
+    "float on, group unset, match:class steam, match:title Friends List"
 
-    "float on, match:class Thunar, match:title Rename .*"
-    "float on, match:class Thunar, match:title File Operation Progress"
+    "float on, group unset, match:class thunar, match:title Rename .*"
+    "float on, group unset, match:class thunar, match:title File Operation Progress"
 
     "pin on, match:class dragon-drop"
     "border_size 0, match:class dragon-drop"
     "rounding 6, match:class dragon-drop"
     "group deny, match:class dragon-drop"
 
-    "border_size 0, match:float 1, match:title Vicinae.*"
+    "border_size 0, match:float on, match:title Vicinae.*"
+    "rounding ${builtins.toString config.programs.vicinae.settings.launcher_window.client_side_decorations.rounding}, match:float on, match:title Vicinae.*"
 
-    "border_size 0, match:float 0, match:workspace w[tv1]"
-    "border_size 0, match:float 0, match:workspace f[1]"
+    "border_size 0, match:float off, match:workspace w[tv1]"
+    "border_size 0, match:float off, match:workspace f[1]"
 
-    "decorate off, match:float 0, match:workspace w[t1]"
-
-    "group set, match:float 0"
+    "decorate off, match:float off, match:workspace w[t1]"
   ];
 
   workspace = [

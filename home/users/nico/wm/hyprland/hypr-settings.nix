@@ -14,7 +14,6 @@ let
   var_lock-transparent = lib.getExe (pkgs.callPackage ./hyprlock/lock-transparent.nix args);
   var_loginctl = config.systemd.user.loginctlPath;
   var_playerctl = lib.getExe config.services.playerctld.package;
-  var_power-menu = lib.getExe config.programs.wlogout.package;
   var_pwm = lib.getExe config.programs.keepassxc.package;
   var_swappy = lib.getExe config.programs.swappy.package;
   var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
@@ -57,7 +56,7 @@ in with config.colorScheme.palette; {
       "V, exec, ${var_launcher} vicinae://extensions/vicinae/clipboard/history"
       "BACKSPACE, exec, ${var_lock-cmd}"
       "SHIFT, BACKSPACE, exec, ${var_lock-transparent}"
-      "RETURN, exec, ${var_power-menu}"
+      "RETURN, exec, ${var_launcher} vicinae://extensions/vicinae/power"
       "PLUS, exec, ${var_swaync-client} --toggle-panel"
       "SHIFT, PLUS, exec, ${var_swaync-client} -C"
       "CTRL, PLUS, exec, ${var_swaync-client} --toggle-dnd"

@@ -12,7 +12,6 @@ in {
     ../common/gtk-theme.nix
     ../common/vicinae.nix
     ../common/swaync
-    ../common/wlogout
 
     ./hypridle.nix
     ./hyprlock

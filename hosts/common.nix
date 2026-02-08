@@ -4,6 +4,8 @@
   imports = [
     agenix.nixosModules.default
     nix-colors.homeManagerModules.default
+
+    ./options.nix
   ];
 
   age.secrets = lib.mkIf (config.age.identityPaths != []) secrets;
@@ -45,9 +47,11 @@
   };
 
   nix = {
-    registry = lib.mapAttrs (_: flake: { inherit flake; }) (lib.filterAttrs (n: _: n != "nixpkgs") self.inputs) // {
-      "self".flake = self;
-    };
+    registry = lib.mkIf config.common.setNixRegistry (
+      lib.mapAttrs (_: flake: { inherit flake; }) (lib.filterAttrs (n: _: n != "nixpkgs") self.inputs) // {
+        "self".flake = self;
+      }
+    );
     nixPath = lib.mapAttrsToList (n: v: "${n}=flake:${v.flake.outPath or n}") config.nix.registry;
     channel.enable = false;
 

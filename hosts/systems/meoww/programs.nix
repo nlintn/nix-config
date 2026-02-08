@@ -27,6 +27,7 @@
         ''--no-first-run''
         ''--new-window''
         ''--incognito''
+        ''--password-store=basic''
         ''--no-default-browser-check''
         ''--no-crash-upload''
         ''--disable-extensions''

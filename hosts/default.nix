@@ -1,6 +1,7 @@
 { lib, lib-stable, system, specialArgs }:
 
 let
+  module-common = import ./common.nix;
   systemConfigurations = builtins.mapAttrs (n: _:
     let
       buildConfig = import ./systems/${n}/build-config.nix;
@@ -8,21 +9,19 @@ let
     in
       lib'.nixosSystem {
         system = buildConfig.system;
-        specialArgs = specialArgs // { inherit specialArgs; nixSystemName = n; };
+        specialArgs = specialArgs // { inherit module-common specialArgs ; nixSystemName = n; };
         modules = [
           ./systems/${n}
-          ./common.nix
-          ./options.nix
+          module-common
         ];
       }
   ) (builtins.readDir ./systems);
   genIso = systemConfiguration: lib.nixosSystem {
     inherit system;
-    specialArgs = specialArgs // { inherit systemConfiguration; nixSystemName = "iso"; };
+    specialArgs = specialArgs // { inherit module-common specialArgs systemConfiguration; nixSystemName = "iso"; };
     modules = [
       ./iso
-      ./common.nix
-      ./options.nix
+      module-common
     ];
   };
   isos = {

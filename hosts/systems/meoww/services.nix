@@ -1,7 +1,8 @@
-{ ... }:
+{ config, lib, ... }:
 
 {
   services = {
+    accounts-daemon.enable = true;
     blueman.enable = true; # bluetooth manager
     earlyoom = {
       enable = true;
@@ -23,7 +24,7 @@
       disableUpstreamLogging = true;
       extraSetFlags = [
         "--operator=nico"
-      ];
+      ] ++ lib.optional config.services.dnscrypt-proxy.enable "--accept-dns=false";
       useRoutingFeatures = "client";
     };
     tumbler.enable = true; # thumbnails

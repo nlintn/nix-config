@@ -2,5 +2,5 @@ lib:
 
 import ./secrets.nix
   |> builtins.attrNames
-  |> builtins.map (n: lib.nameValuePair (lib.removeSuffix ".age" n) { file = ./${n}; })
-  |> builtins.listToAttrs
+  |> builtins.map (n: lib.setAttrByPath (lib.removeSuffix ".age" n |> lib.splitString "/") { file = ./${n}; })
+  |> lib.foldl (acc: s:  lib.recursiveUpdate acc s) {}

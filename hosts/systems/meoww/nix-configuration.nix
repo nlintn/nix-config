@@ -15,7 +15,7 @@
   nix = {
     settings = {
       secret-key-files = [
-        config.age.secrets."meoww/nix-key-meoww".path
+        config.age.secrets."nix-key-meoww".path
       ];
     };
 

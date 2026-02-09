@@ -9,7 +9,8 @@
     ./options.nix
   ];
 
-  age.secrets = lib.mkIf (config.age.identityPaths != []) secrets;
+  age.secrets = lib.mkIf (config.age.identityPaths != [])
+    (lib.filterAttrs (n: _: n == hmUsername || n == "common") secrets |> lib.attrValues |> lib.mergeAttrsList);
 
   home = {
     username = lib.mkDefault hmUsername;

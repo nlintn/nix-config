@@ -8,7 +8,8 @@
     ./options.nix
   ];
 
-  age.secrets = lib.mkIf (config.age.identityPaths != []) secrets;
+  age.secrets = lib.mkIf (config.age.identityPaths != [])
+    (lib.filterAttrs (n: _: n == nixSystemName || n == "common") secrets |> lib.attrValues |> lib.mergeAttrsList);
 
   nixpkgs = {
     overlays = overlays;

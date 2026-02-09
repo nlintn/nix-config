@@ -66,6 +66,35 @@ in /* css */ ''
     --background-color-success: #${base0B} !important;
     --background-color-warning: #${base09} !important;
     --border-color: #${base03} !important;
+
+    --tab-group-color-blue: #${base0D} !important;
+    --tab-group-color-blue-invert: #${base0D} !important;
+    --tab-group-color-blue-pale: #${base05} !important;
+    --tab-group-color-purple: #${base07} !important;
+    --tab-group-color-purple-invert: #${base07} !important;
+    --tab-group-color-purple-pale: #${base05} !important;
+    --tab-group-color-cyan: #${base0C} !important;
+    --tab-group-color-cyan-invert: #${base0C} !important;
+    --tab-group-color-cyan-pale: #${base05} !important;
+    --tab-group-color-orange: #${base09} !important;
+    --tab-group-color-orange-invert: #${base09} !important;
+    --tab-group-color-orange-pale: #${base05} !important;
+    --tab-group-color-yellow: #${base0A} !important;
+    --tab-group-color-yellow-invert: #${base0A} !important;
+    --tab-group-color-yellow-pale: #${base05} !important;
+    --tab-group-color-pink: #${base0E} !important;
+    --tab-group-color-pink-invert: #${base0E} !important;
+    --tab-group-color-pink-pale: #${base05} !important;
+    --tab-group-color-green: #${base0B} !important;
+    --tab-group-color-green-invert: #${base0B} !important;
+    --tab-group-color-green-pale: #${base05} !important;
+    --tab-group-color-red: #${base08} !important;
+    --tab-group-color-red-invert: #${base08} !important;
+    --tab-group-color-red-pale: #${base05} !important;
+    --tab-group-color-gray: #${base04} !important;
+    --tab-group-color-gray-invert: #${base04} !important;
+    --tab-group-color-gray-pale: #${base05} !important;
+    --tab-group-label-text-dark: #${base01} !important;
   }
   :root[sidebar-expand-on-hover] {
     & #sidebar-main {

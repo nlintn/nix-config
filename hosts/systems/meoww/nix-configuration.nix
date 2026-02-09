@@ -1,4 +1,4 @@
-{ self, ... }:
+{ config, self, ... }:
 
 {
   system.autoUpgrade = {
@@ -13,6 +13,12 @@
   };
 
   nix = {
+    settings = {
+      secret-key-files = [
+        config.age.secrets."meoww/nix-key-meoww".path
+      ];
+    };
+
     optimise = {
       automatic = true;
       dates = "weekly";

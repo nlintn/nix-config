@@ -1,4 +1,18 @@
-{ config, lib, pkgs, config-store-path, hmUsername, inputs, agenix, nixpkgs-overlay, nix-colors, secrets, self, userSettings, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  config-store-path,
+  hmUsername,
+  inputs,
+  agenix,
+  nixpkgs-overlay,
+  nix-colors,
+  secrets,
+  self,
+  userSettings,
+  ...
+}:
 
 {
   imports = [
@@ -9,8 +23,11 @@
     ./options.nix
   ];
 
-  age.secrets = lib.mkIf (config.age.identityPaths != [])
-    (lib.filterAttrs (n: _: n == hmUsername || n == "common") secrets |> lib.attrValues |> lib.mergeAttrsList);
+  age.secrets = lib.mkIf (config.age.identityPaths != [ ]) (
+    lib.filterAttrs (n: _: n == hmUsername || n == "common") secrets
+    |> lib.attrValues
+    |> lib.mergeAttrsList
+  );
 
   home = {
     username = lib.mkDefault hmUsername;
@@ -19,11 +36,14 @@
     sessionVariables = {
       NIX_CONFIG_DIR = "${config.home.homeDirectory}/${userSettings.rel-config-path}";
       CONFIG_STORE_PATH = config-store-path;
-    } // lib.optionalAttrs config.nixpkgs.config.allowBroken or false {
+    }
+    // lib.optionalAttrs config.nixpkgs.config.allowBroken or false {
       NIXPKGS_ALLOW_BROKEN = lib.mkDefault "1";
-    } // lib.optionalAttrs config.nixpkgs.config.allowInsecure or false {
+    }
+    // lib.optionalAttrs config.nixpkgs.config.allowInsecure or false {
       NIXPKGS_ALLOW_INSECURE = lib.mkDefault "1";
-    } // lib.optionalAttrs config.nixpkgs.config.allowUnfree or false {
+    }
+    // lib.optionalAttrs config.nixpkgs.config.allowUnfree or false {
       NIXPKGS_ALLOW_UNFREE = lib.mkDefault "1";
     };
   };
@@ -38,7 +58,11 @@
     nixPath = lib.mapAttrsToList (n: v: "${n}=flake:${v.flake.outPath or n}") config.nix.registry;
 
     settings = {
-      experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "pipe-operators"
+      ];
       use-xdg-base-directories = lib.mkIf (!config.submoduleSupport.enable) (lib.mkDefault true);
     };
   };

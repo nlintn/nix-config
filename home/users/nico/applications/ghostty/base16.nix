@@ -1,6 +1,7 @@
 { config, ... }:
 
-with config.colorScheme.palette; {
+with config.colorScheme.palette;
+{
   background = "#${base00}";
   cursor-color = "#${base06}";
   foreground = "#${base05}";

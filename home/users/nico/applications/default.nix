@@ -1,4 +1,10 @@
-{ config, lib, osConfig ? null, pkgs, ... }:
+{
+  config,
+  lib,
+  osConfig ? null,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -33,7 +39,10 @@
   programs.chromium = {
     enable = true;
     package = pkgs.ungoogled-chromium;
-    commandLineArgs = [ "--no-default-browser-check" "--password-store=basic" ];
+    commandLineArgs = [
+      "--no-default-browser-check"
+      "--password-store=basic"
+    ];
   };
   programs.direnv = {
     enable = true;

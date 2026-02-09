@@ -15,15 +15,18 @@
     ocamlPackages.utop
     pgcli
     postman
-    (python3.withPackages ( python-pkgs: with python-pkgs; [
-      pwntools
-      requests
-    ]))
+    (python3.withPackages (
+      python-pkgs: with python-pkgs; [
+        pwntools
+        requests
+      ]
+    ))
     qemu
     quickemu
     texlive.combined.scheme-full
 
-    llvmPackages_latest.clang-manpages llvmPackages_latest.llvm-manpages
+    llvmPackages_latest.clang-manpages
+    llvmPackages_latest.llvm-manpages
 
     # Misc
     agenix

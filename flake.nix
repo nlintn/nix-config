@@ -1,5 +1,15 @@
 {
-  outputs = { self, nixpkgs, nixpkgs-stable, agenix, home-manager, nixpkgs-overlay, nix-colors, ... } @ inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-stable,
+      agenix,
+      home-manager,
+      nixpkgs-overlay,
+      nix-colors,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux"; # default system
       lib = nixpkgs.lib;
@@ -9,10 +19,17 @@
         agenix.overlays.default
         nixpkgs-overlay.overlays.default
       ];
-      pkgs-unstable = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
-      pkgs-stable  = import nixpkgs-stable { inherit system overlays; config.allowUnfree = true; };
+      pkgs-unstable = import nixpkgs {
+        inherit system overlays;
+        config.allowUnfree = true;
+      };
+      pkgs-stable = import nixpkgs-stable {
+        inherit system overlays;
+        config.allowUnfree = true;
+      };
       pkgs = pkgs-unstable;
-      assets = builtins.readDir ./assets |> builtins.mapAttrs (n: _: builtins.path { path = "${./assets}/${n}"; });
+      assets =
+        builtins.readDir ./assets |> builtins.mapAttrs (n: _: builtins.path { path = "${./assets}/${n}"; });
       secrets = import ./secrets lib;
       userSettings = {
         colorScheme = nix-colors.colorSchemes.catppuccin-macchiato;
@@ -26,22 +43,42 @@
         wm = "hyprland";
       };
       specialArgs = {
-        inherit inputs overlays lib' assets secrets userSettings pkgs-unstable pkgs-stable;
+        inherit
+          inputs
+          overlays
+          lib'
+          assets
+          secrets
+          userSettings
+          pkgs-unstable
+          pkgs-stable
+          ;
         config-store-path = builtins.path { path = self; };
         hmSubmodules = import ./home/submodules.nix;
-      } // inputs;
+      }
+      // inputs;
       hosts = import ./hosts {
-        inherit lib lib-stable system specialArgs;
+        inherit
+          lib
+          lib-stable
+          system
+          specialArgs
+          ;
       };
       home = import ./home {
         inherit home-manager pkgs specialArgs;
       };
-    in {
+    in
+    {
       nixosConfigurations = hosts.nixosConfigurations;
       homeConfigurations = home;
-      packages = lib'.eachSystem nixpkgs (_: let
-        isos = builtins.mapAttrs (_: v: v.config.system.build.isoImage) hosts.isos;
-      in isos // { default = isos.isoRaw; });
+      packages = lib'.eachSystem nixpkgs (
+        _:
+        let
+          isos = builtins.mapAttrs (_: v: v.config.system.build.isoImage) hosts.isos;
+        in
+        isos // { default = isos.isoRaw; }
+      );
       checks = lib'.eachSystemPkgs nixpkgs (pkgs: rec {
         build = pkgs.callPackage ./check-build.nix { inherit self; };
         default = build;

@@ -41,11 +41,14 @@ let
         "useObserver" = true;
         "usePredefinedSites" = true;
         "usePasswordGeneratorIcons" = true;
-        "sitePreferences" = [];
+        "sitePreferences" = [ ];
       };
     };
   };
 in
-  builtins.attrNames settings |>
-  builtins.map (n: { name = pkgs.firefoxAddons.${n}.addonId; value = settings.${n}; }) |>
-  builtins.listToAttrs
+builtins.attrNames settings
+|> builtins.map (n: {
+  name = pkgs.firefoxAddons.${n}.addonId;
+  value = settings.${n};
+})
+|> builtins.listToAttrs

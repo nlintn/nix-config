@@ -1,4 +1,4 @@
-{ userSettings, ... } @ args:
+{ userSettings, ... }@args:
 
 {
   programs.ghostty = {
@@ -12,7 +12,11 @@
       adjust-cursor-thickness = "100%";
       background-opacity = 0.65;
       font-family = userSettings.default-font.name;
-      font-feature = [ "-calt" "-liga" "-dlig" ];
+      font-feature = [
+        "-calt"
+        "-liga"
+        "-dlig"
+      ];
       font-size = 10;
       mouse-hide-while-typing = true;
       theme = "base16";

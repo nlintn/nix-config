@@ -1,10 +1,17 @@
-{ config, lib, pkgs, userSettings, ... } @ args:
+{
+  config,
+  lib,
+  pkgs,
+  userSettings,
+  ...
+}@args:
 
 let
   customPkgs = {
     hyreload = pkgs.callPackage ./scripts/hyreload.nix args;
   };
-in {
+in
+{
   imports = [
     ../common/wayland.nix
 
@@ -67,7 +74,10 @@ in {
     enable = lib.mkDefault true;
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ]; # hyprland already auto added
     config."hyprland" = {
-      default = [ "hyprland" "gtk" ];
+      default = [
+        "hyprland"
+        "gtk"
+      ];
     };
   };
 

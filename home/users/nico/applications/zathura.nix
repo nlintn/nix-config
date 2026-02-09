@@ -1,9 +1,11 @@
 { config, nix-colors, ... }:
 
 let
-  toRGBA = RGBhex: alpha:
+  toRGBA =
+    RGBhex: alpha:
     "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex},${builtins.toString alpha})";
-in {
+in
+{
   programs.zathura = {
     enable = true;
     mappings = {

@@ -1,6 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-with config.colorScheme.palette; {
+with config.colorScheme.palette;
+{
   # extensions
   "extensions.autoDisableScopes" = 0;
   "extensions.update.autoUpdateDefault" = false;
@@ -137,7 +143,8 @@ with config.colorScheme.palette; {
   "privacy.clearOnShutdown.history" = false;
   "privacy.fingerprintingProtection" = true;
   "privacy.fingerprintingProtection.pbmode" = true;
-  "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC,-FontVisibilityRestrictGenerics";
+  "privacy.fingerprintingProtection.overrides" =
+    "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC,-FontVisibilityRestrictGenerics";
   "privacy.resistFingerprinting" = false; # unwanted side effects
   "privacy.resistFingerprinting.pbmode" = true;
   "privacy.resistFingerprinting.randomization.canvas.use_siphash" = true;
@@ -176,52 +183,78 @@ with config.colorScheme.palette; {
 
   # UI layout settings
   "browser.uiCustomization.navBarWhenVerticalTabs" = [
-    "firefox-view-button" "back-button" "forward-button" "vertical-spacer" "urlbar-container" "customizableui-special-spring1"
-    "downloads-button" "keepassxc-browser_keepassxc_org-browser-action" "unified-extensions-button" "fxa-toolbar-menu-button"
+    "firefox-view-button"
+    "back-button"
+    "forward-button"
+    "vertical-spacer"
+    "urlbar-container"
+    "customizableui-special-spring1"
+    "downloads-button"
+    "keepassxc-browser_keepassxc_org-browser-action"
+    "unified-extensions-button"
+    "fxa-toolbar-menu-button"
   ];
-  "browser.uiCustomization.state" = let
-    extToBrowserAction =
-      builtins.map (n: if builtins.typeOf n == "string" then n else (
-        n.addonId
-        |> (let replaceChars = [ "{" "}" "@" "." ];
-          in builtins.replaceStrings (replaceChars ++ lib.upperChars) (builtins.genList (_: "_") (builtins.length replaceChars) ++ lib.lowerChars))
-        |> (s: "${s}-browser-action")
-      ));
-  in {
-    "placements" = with pkgs.firefoxAddons; {
-      "widget-overflow-fixed-list" = [];
-      "unified-extensions-area" = extToBrowserAction [
-        ublock-origin
-        tabwrangler
-        darkreader
-        vimium-ff
-        violentmonkey
-        simplelogin
-        video-downloadhelper
-      ];
-      "nav-bar" = extToBrowserAction [
-        "sidebar-button"
-        "firefox-view-button"
-        # "alltabs-button"
-        "back-button"
-        "forward-button"
-        "vertical-spacer"
-        "urlbar-container"
-        "customizableui-special-spring1"
-        "downloads-button"
-        keepassxc-browser
-        "unified-extensions-button"
-        "fxa-toolbar-menu-button"
-        # "developer-button"
-        # "history-panelmenu"
-      ];
-      "toolbar-menubar" = [ "menubar-items" ];
-      "TabsToolbar"= [];
-      "vertical-tabs"= [ "tabbrowser-tabs" ];
-      "PersonalToolbar"= [ "personal-bookmarks" ];
+  "browser.uiCustomization.state" =
+    let
+      extToBrowserAction = builtins.map (
+        n:
+        if builtins.typeOf n == "string" then
+          n
+        else
+          (
+            n.addonId
+            |> (
+              let
+                replaceChars = [
+                  "{"
+                  "}"
+                  "@"
+                  "."
+                ];
+              in
+              builtins.replaceStrings (replaceChars ++ lib.upperChars) (
+                builtins.genList (_: "_") (builtins.length replaceChars) ++ lib.lowerChars
+              )
+            )
+            |> (s: "${s}-browser-action")
+          )
+      );
+    in
+    {
+      "placements" = with pkgs.firefoxAddons; {
+        "widget-overflow-fixed-list" = [ ];
+        "unified-extensions-area" = extToBrowserAction [
+          ublock-origin
+          tabwrangler
+          darkreader
+          vimium-ff
+          violentmonkey
+          simplelogin
+          video-downloadhelper
+        ];
+        "nav-bar" = extToBrowserAction [
+          "sidebar-button"
+          "firefox-view-button"
+          # "alltabs-button"
+          "back-button"
+          "forward-button"
+          "vertical-spacer"
+          "urlbar-container"
+          "customizableui-special-spring1"
+          "downloads-button"
+          keepassxc-browser
+          "unified-extensions-button"
+          "fxa-toolbar-menu-button"
+          # "developer-button"
+          # "history-panelmenu"
+        ];
+        "toolbar-menubar" = [ "menubar-items" ];
+        "TabsToolbar" = [ ];
+        "vertical-tabs" = [ "tabbrowser-tabs" ];
+        "PersonalToolbar" = [ "personal-bookmarks" ];
+      };
+      "dirtyAreaCache" = [ ];
+      "currentVersion" = 23;
+      "newElementCount" = 0;
     };
-    "dirtyAreaCache" = [];
-    "currentVersion" = 23;
-    "newElementCount" = 0;
-  };
 }

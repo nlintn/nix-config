@@ -1,4 +1,12 @@
-{ config, lib, pkgs, lib', userSettings, hyreload, ... } @ args:
+{
+  config,
+  lib,
+  pkgs,
+  lib',
+  userSettings,
+  hyreload,
+  ...
+}@args:
 
 let
   evalBinds = lib'.hyprland.evalBinds;
@@ -22,7 +30,9 @@ let
   var_volumectl = lib.getExe' config.services.avizo.package "volumectl";
   var_scratchpad = "${lib.getExe config.programs.ghostty.package} --command='${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"'";
 
-in with config.colorScheme.palette; {
+in
+with config.colorScheme.palette;
+{
   source = [
     "$HOME/.config/hypr/monitors.conf"
   ];
@@ -41,150 +51,166 @@ in with config.colorScheme.palette; {
 
   bind =
     # SUPER binds
-    evalBinds "SUPER" [ "ALT" "CTRL" "SHIFT" ] [
-      # exec keybinds
-      "A, exec, ${var_grimblast} --freeze save area - | ${var_swappy} -f -"
-      "SHIFT, A, exec, ${var_grimblast} --freeze save output - | ${var_swappy} -f -"
-      "CTRL, A, exec, ${var_hyprpicker} -ar"
-      "E, exec, ${var_filemanager}"
-      "W, exec, ${var_browser}"
-      "Q, exec, ${var_term}"
-      "SHIFT, Q, exec, ${var_tmux_term}"
-      "SPACE, exec, ${var_launcher} vicinae://toggle"
-      "SHIFT, R, exec, ${hyreload}"
-      "PERIOD, exec, ${var_launcher} vicinae://extensions/vicinae/core/search-emojis"
-      "V, exec, ${var_launcher} vicinae://extensions/vicinae/clipboard/history"
-      "BACKSPACE, exec, ${var_lock-cmd}"
-      "SHIFT, BACKSPACE, exec, ${var_lock-transparent}"
-      "RETURN, exec, ${var_launcher} vicinae://extensions/vicinae/power"
-      "PLUS, exec, ${var_swaync-client} --toggle-panel"
-      "SHIFT, PLUS, exec, ${var_swaync-client} -C"
-      "CTRL, PLUS, exec, ${var_swaync-client} --toggle-dnd"
+    evalBinds "SUPER"
+      [ "ALT" "CTRL" "SHIFT" ]
+      [
+        # exec keybinds
+        "A, exec, ${var_grimblast} --freeze save area - | ${var_swappy} -f -"
+        "SHIFT, A, exec, ${var_grimblast} --freeze save output - | ${var_swappy} -f -"
+        "CTRL, A, exec, ${var_hyprpicker} -ar"
+        "E, exec, ${var_filemanager}"
+        "W, exec, ${var_browser}"
+        "Q, exec, ${var_term}"
+        "SHIFT, Q, exec, ${var_tmux_term}"
+        "SPACE, exec, ${var_launcher} vicinae://toggle"
+        "SHIFT, R, exec, ${hyreload}"
+        "PERIOD, exec, ${var_launcher} vicinae://extensions/vicinae/core/search-emojis"
+        "V, exec, ${var_launcher} vicinae://extensions/vicinae/clipboard/history"
+        "BACKSPACE, exec, ${var_lock-cmd}"
+        "SHIFT, BACKSPACE, exec, ${var_lock-transparent}"
+        "RETURN, exec, ${var_launcher} vicinae://extensions/vicinae/power"
+        "PLUS, exec, ${var_swaync-client} --toggle-panel"
+        "SHIFT, PLUS, exec, ${var_swaync-client} -C"
+        "CTRL, PLUS, exec, ${var_swaync-client} --toggle-dnd"
 
-      "C, killactive"
-      "SHIFT, C, forcekillactive"
-      "F, fullscreen, 1"
-      "SHIFT, F, fullscreen, 0"
-      "SHIFT, Z, exec, ${var_loginctl} terminate-session self"
-      "CTRL SHIFT, Z, exit"
-      # "P, pseudo,"
-      "B, togglefloating,"
+        "C, killactive"
+        "SHIFT, C, forcekillactive"
+        "F, fullscreen, 1"
+        "SHIFT, F, fullscreen, 0"
+        "SHIFT, Z, exec, ${var_loginctl} terminate-session self"
+        "CTRL SHIFT, Z, exit"
+        # "P, pseudo,"
+        "B, togglefloating,"
 
-      "G, exec, ${var_hyprtabs}"
-      "SHIFT, G, togglegroup,"
-      "CTRL, G, moveoutofgroup,"
+        "G, exec, ${var_hyprtabs}"
+        "SHIFT, G, togglegroup,"
+        "CTRL, G, moveoutofgroup,"
 
-      "dead_circumflex, workspace, previous_per_monitor"
-      "1, workspace, r~1"
-      "2, workspace, r~2"
-      "3, workspace, r~3"
-      "4, workspace, r~4"
-      "5, workspace, r~5"
-      "6, workspace, r~6"
-      "7, workspace, r~7"
-      "8, workspace, r~8"
-      "9, workspace, r~9"
-      "0, workspace, r~10"
+        "dead_circumflex, workspace, previous_per_monitor"
+        "1, workspace, r~1"
+        "2, workspace, r~2"
+        "3, workspace, r~3"
+        "4, workspace, r~4"
+        "5, workspace, r~5"
+        "6, workspace, r~6"
+        "7, workspace, r~7"
+        "8, workspace, r~8"
+        "9, workspace, r~9"
+        "0, workspace, r~10"
 
-      "SHIFT, 1, movetoworkspacesilent, r~1"
-      "SHIFT, 2, movetoworkspacesilent, r~2"
-      "SHIFT, 3, movetoworkspacesilent, r~3"
-      "SHIFT, 4, movetoworkspacesilent, r~4"
-      "SHIFT, 5, movetoworkspacesilent, r~5"
-      "SHIFT, 6, movetoworkspacesilent, r~6"
-      "SHIFT, 7, movetoworkspacesilent, r~7"
-      "SHIFT, 8, movetoworkspacesilent, r~8"
-      "SHIFT, 9, movetoworkspacesilent, r~9"
-      "SHIFT, 0, movetoworkspacesilent, r~10"
+        "SHIFT, 1, movetoworkspacesilent, r~1"
+        "SHIFT, 2, movetoworkspacesilent, r~2"
+        "SHIFT, 3, movetoworkspacesilent, r~3"
+        "SHIFT, 4, movetoworkspacesilent, r~4"
+        "SHIFT, 5, movetoworkspacesilent, r~5"
+        "SHIFT, 6, movetoworkspacesilent, r~6"
+        "SHIFT, 7, movetoworkspacesilent, r~7"
+        "SHIFT, 8, movetoworkspacesilent, r~8"
+        "SHIFT, 9, movetoworkspacesilent, r~9"
+        "SHIFT, 0, movetoworkspacesilent, r~10"
 
-      "S, togglespecialworkspace, dropterm"
-      "SHIFT, S, movetoworkspacesilent, special:dropterm"
+        "S, togglespecialworkspace, dropterm"
+        "SHIFT, S, movetoworkspacesilent, special:dropterm"
 
-      "P, togglespecialworkspace, pwm"
-      "SHIFT, P, movetoworkspacesilent, special:pwm"
+        "P, togglespecialworkspace, pwm"
+        "SHIFT, P, movetoworkspacesilent, special:pwm"
 
-      "K, split:swapactiveworkspaces, current +1"
-      "SHIFT, K, split:grabroguewindows"
-    ] ++
-    evalBinds "ALT" [] [
-      "TAB, exec, ${var_launcher} vicinae://extensions/vicinae/wm/switch-windows"
-    ] ++
-    evalBinds "CTRL" [ "SHIFT" ] [
-      "SHIFT, M, pass, ^vesktop$"
-    ];
+        "K, split:swapactiveworkspaces, current +1"
+        "SHIFT, K, split:grabroguewindows"
+      ]
+    ++
+      evalBinds "ALT"
+        [ ]
+        [
+          "TAB, exec, ${var_launcher} vicinae://extensions/vicinae/wm/switch-windows"
+        ]
+    ++
+      evalBinds "CTRL"
+        [ "SHIFT" ]
+        [
+          "SHIFT, M, pass, ^vesktop$"
+        ];
 
   bindm =
-    evalBinds "SUPER" [ ] [
-      "mouse:272, movewindow"
-      "mouse:273, resizewindow"
-    ];
+    evalBinds "SUPER"
+      [ ]
+      [
+        "mouse:272, movewindow"
+        "mouse:273, resizewindow"
+      ];
 
   binde =
-    evalBinds "SUPER" [ "ALT" "CTRL" "SHIFT" ] [
-      "left,  movefocus, l"
-      "right, movefocus, r"
-      "up,    movefocus, u"
-      "down,  movefocus, d"
-      "SHIFT, left,  movewindow, l"
-      "SHIFT, right, movewindow, r"
-      "SHIFT, up,    movewindow, u"
-      "SHIFT, down,  movewindow, d"
-      "h, movefocus, l"
-      "l, movefocus, r"
-      "k, movefocus, u"
-      "j, movefocus, d"
-      "SHIFT, h, movewindow, l"
-      "SHIFT, l, movewindow, r"
-      "SHIFT, k, movewindow, u"
-      "SHIFT, j, movewindow, d"
+    evalBinds "SUPER"
+      [ "ALT" "CTRL" "SHIFT" ]
+      [
+        "left,  movefocus, l"
+        "right, movefocus, r"
+        "up,    movefocus, u"
+        "down,  movefocus, d"
+        "SHIFT, left,  movewindow, l"
+        "SHIFT, right, movewindow, r"
+        "SHIFT, up,    movewindow, u"
+        "SHIFT, down,  movewindow, d"
+        "h, movefocus, l"
+        "l, movefocus, r"
+        "k, movefocus, u"
+        "j, movefocus, d"
+        "SHIFT, h, movewindow, l"
+        "SHIFT, l, movewindow, r"
+        "SHIFT, k, movewindow, u"
+        "SHIFT, j, movewindow, d"
 
-      "ALT, left,  resizeactive, -20 0"
-      "ALT, right, resizeactive,  20 0"
-      "ALT, up,    resizeactive, 0 -20"
-      "ALT, down,  resizeactive, 0  20"
+        "ALT, left,  resizeactive, -20 0"
+        "ALT, right, resizeactive,  20 0"
+        "ALT, up,    resizeactive, 0 -20"
+        "ALT, down,  resizeactive, 0  20"
 
-      "ALT, h, resizeactive, -20 0"
-      "ALT, l, resizeactive,  20 0"
-      "ALT, k, resizeactive, 0 -20"
-      "ALT, j, resizeactive, 0  20"
+        "ALT, h, resizeactive, -20 0"
+        "ALT, l, resizeactive,  20 0"
+        "ALT, k, resizeactive, 0 -20"
+        "ALT, j, resizeactive, 0  20"
 
-      "CTRL, RIGHT, split:workspace, r+1"
-      "CTRL, LEFT,  split:workspace, r-1"
-      "CTRL SHIFT, RIGHT, split:movetoworkspace, r+1"
-      "CTRL SHIFT, LEFT,  split:movetoworkspace, r-1"
+        "CTRL, RIGHT, split:workspace, r+1"
+        "CTRL, LEFT,  split:workspace, r-1"
+        "CTRL SHIFT, RIGHT, split:movetoworkspace, r+1"
+        "CTRL SHIFT, LEFT,  split:movetoworkspace, r-1"
 
-      "CTRL, L, split:workspace, r+1"
-      "CTRL, H, split:workspace, r-1"
-      "CTRL SHIFT, L, split:movetoworkspace, r+1"
-      "CTRL SHIFT, H, split:movetoworkspace, r-1"
+        "CTRL, L, split:workspace, r+1"
+        "CTRL, H, split:workspace, r-1"
+        "CTRL SHIFT, L, split:movetoworkspace, r+1"
+        "CTRL SHIFT, H, split:movetoworkspace, r-1"
 
-      "TAB, changegroupactive, f"
+        "TAB, changegroupactive, f"
 
-      "SHIFT, TAB, changegroupactive, b"
+        "SHIFT, TAB, changegroupactive, b"
 
-      "M, focusmonitor, +1"
-      "N, focusmonitor, -1"
-      "SHIFT, M, movewindow, mon:+1"
-      "SHIFT, N, movewindow, mon:-1"
-    ];
+        "M, focusmonitor, +1"
+        "N, focusmonitor, -1"
+        "SHIFT, M, movewindow, mon:+1"
+        "SHIFT, N, movewindow, mon:-1"
+      ];
 
-  bindl = 
-    evalBinds "" [ ] [
-      "XF86AudioMute,    exec, ${var_volumectl} -p toggle-mute"
-      "XF86AudioMicMute, exec, ${var_volumectl} -m -p toogle-mute"
-      "XF86AudioNext,    exec, ${var_playerctl} next"
-      "XF86AudioPrev,    exec, ${var_playerctl} previous"
-      "XF86AudioPlay,    exec, ${var_playerctl} play-pause"
-      "XF86AudioPause,   exec, ${var_playerctl} play-pause"
-    ];
+  bindl =
+    evalBinds ""
+      [ ]
+      [
+        "XF86AudioMute,    exec, ${var_volumectl} -p toggle-mute"
+        "XF86AudioMicMute, exec, ${var_volumectl} -m -p toogle-mute"
+        "XF86AudioNext,    exec, ${var_playerctl} next"
+        "XF86AudioPrev,    exec, ${var_playerctl} previous"
+        "XF86AudioPlay,    exec, ${var_playerctl} play-pause"
+        "XF86AudioPause,   exec, ${var_playerctl} play-pause"
+      ];
 
   bindle =
-    evalBinds "" [ ] [
-      "XF86AudioRaiseVolume,  exec, ${var_volumectl} -p up"
-      "XF86AudioLowerVolume,  exec, ${var_volumectl} -p down"
-      "XF86MonBrightnessUp,   exec, ${var_brightnessctl} up"
-      "XF86MonBrightnessDown, exec, ${var_brightnessctl} down"
-    ];
+    evalBinds ""
+      [ ]
+      [
+        "XF86AudioRaiseVolume,  exec, ${var_volumectl} -p up"
+        "XF86AudioLowerVolume,  exec, ${var_volumectl} -p down"
+        "XF86MonBrightnessUp,   exec, ${var_brightnessctl} up"
+        "XF86MonBrightnessDown, exec, ${var_brightnessctl} down"
+      ];
 
   binds = {
     window_direction_monitor_fallback = false;
@@ -239,7 +265,7 @@ in with config.colorScheme.palette; {
       text_color = "rgb(${base01})";
 
       "col.inactive" = "rgb(${base00})";
-      font_weight_inactive= "normal";
+      font_weight_inactive = "normal";
       text_color_inactive = "rgb(${base05})";
     };
   };

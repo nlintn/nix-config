@@ -1,6 +1,7 @@
 { config, userSettings, ... }:
 
-with config.colorScheme.palette; /* css */ ''
+with config.colorScheme.palette;
+/* css */ ''
   @define-color white #${base05};
   @define-color red #${base08};
   @define-color green #${base0B};
@@ -10,7 +11,7 @@ with config.colorScheme.palette; /* css */ ''
   @define-color flamingo #${base0F};
   @define-color bg #${base00};
   @define-color bg2 #${base01};
-  
+
   * {
     border: none;
     border-radius: 0;
@@ -22,18 +23,18 @@ with config.colorScheme.palette; /* css */ ''
     text-shadow: none;
     -gtk-icon-shadow: none;
   }
-  
+
   #waybar {
     color: @white;
     font-family: ${userSettings.default-font.name};
     font-size: 9pt;
     background: @bg;
   }
-  
+
   #workspaces {
     padding-right: 8pt;
   }
-  
+
   #idle_inhibitor {
     padding-right: 12pt;
   }
@@ -57,14 +58,14 @@ with config.colorScheme.palette; /* css */ ''
   #temperature.warning {
     color: @orange;
   }
-  
+
   #battery.warning.discharging {
     color: @red;
   }
   #battery.charging {
     color: @green;
   }
-  
+
   #window {
     font-size: 7pt;
   }
@@ -74,7 +75,7 @@ with config.colorScheme.palette; /* css */ ''
     color: @magenta;
     background: @bg2;
   }
-  
+
   #workspaces button.empty {
     color: @white;
   }
@@ -95,7 +96,7 @@ with config.colorScheme.palette; /* css */ ''
   #workspaces button:hover {
     color: @flamingo;
   }
-  
+
   #idle_inhibitor,
   #memory,
   #cpu,
@@ -104,7 +105,7 @@ with config.colorScheme.palette; /* css */ ''
     color: @white;
     background: @bg;
   }
-  
+
   #tray,
   #pulseaudio,
   #network,
@@ -112,7 +113,7 @@ with config.colorScheme.palette; /* css */ ''
     color: @white;
     background: @bg;
   }
-  
+
   #clock,
   #custom-notification {
     color: @white;

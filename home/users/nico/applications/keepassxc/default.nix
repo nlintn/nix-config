@@ -1,16 +1,22 @@
 { config, pkgs, ... }:
 
 let
-  pkg_patched = pkgs.keepassxc.overrideAttrs (_: prev: {
-    patches = prev.patches or [] ++ [
-      ./0001-disable-config-access-error-message-on-config-load.patch
-      ./0002-disable-save-changes-modal-on-database-lock.patch
-    ];
-  });
-in {
+  pkg_patched = pkgs.keepassxc.overrideAttrs (
+    _: prev: {
+      patches = prev.patches or [ ] ++ [
+        ./0001-disable-config-access-error-message-on-config-load.patch
+        ./0002-disable-save-changes-modal-on-database-lock.patch
+      ];
+    }
+  );
+in
+{
   programs.keepassxc = {
     enable = true;
-    package = pkg_patched.override { withKeePassKeeShare = false; withKeePassX11 = config.vars.x11Support or true; };
+    package = pkg_patched.override {
+      withKeePassKeeShare = false;
+      withKeePassX11 = config.vars.x11Support or true;
+    };
     # Available Settings: https://github.com/keepassxreboot/keepassxc/blob/647272e9c5542297d3fcf6502e6173c96f12a9a0/src/core/Config.cpp#L49-L223
     settings = {
       General = {

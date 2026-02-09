@@ -1,4 +1,4 @@
-{ config, ... } @ args:
+{ config, ... }@args:
 
 {
   imports = [

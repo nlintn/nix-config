@@ -1,9 +1,12 @@
 { config, nix-colors, ... }:
 
-with config.colorScheme.palette; let
-  toRGBA = RGBhex: alpha:
+with config.colorScheme.palette;
+let
+  toRGBA =
+    RGBhex: alpha:
     "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex},${builtins.toString alpha})";
-in /* css */ ''
+in
+/* css */ ''
   :root:not([chromehidden~="toolbar"]) {
     min-width: 20px !important;
   }

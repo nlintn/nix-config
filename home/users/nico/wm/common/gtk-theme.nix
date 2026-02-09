@@ -1,4 +1,10 @@
-{ config, pkgs, lib', userSettings, ... }:
+{
+  config,
+  pkgs,
+  lib',
+  userSettings,
+  ...
+}:
 
 {
   home.pointerCursor = {
@@ -12,7 +18,16 @@
   gtk = {
     enable = true;
     theme = {
-      package = (pkgs.colloid-gtk-theme.override { colorVariants = [ config.colorScheme.variant ]; sizeVariants = [ "compact" ]; tweaks = [ "catppuccin" "rimless" ]; });
+      package = (
+        pkgs.colloid-gtk-theme.override {
+          colorVariants = [ config.colorScheme.variant ];
+          sizeVariants = [ "compact" ];
+          tweaks = [
+            "catppuccin"
+            "rimless"
+          ];
+        }
+      );
       name = "Colloid-${lib'.capitalizeString config.colorScheme.variant}-Compact-Catppuccin";
     };
 
@@ -28,9 +43,12 @@
     };
   };
   xdg.configFile = {
-    "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-    "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-    "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+    "gtk-4.0/assets".source =
+      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+    "gtk-4.0/gtk.css".source =
+      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+    "gtk-4.0/gtk-dark.css".source =
+      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
   };
 
   dconf.settings = {

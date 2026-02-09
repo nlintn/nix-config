@@ -1,4 +1,12 @@
-{ lib, modulesPath, pkgs, assets, config-store-path, systemConfiguration, ... }:
+{
+  lib,
+  modulesPath,
+  pkgs,
+  assets,
+  config-store-path,
+  systemConfiguration,
+  ...
+}:
 
 {
   system.stateVersion = "25.11";
@@ -25,17 +33,20 @@
     squashfsCompression = "gzip -Xcompression-level 1";
   };
 
-  environment.systemPackages = with pkgs; [
-    disko
-    sbctl
-  ] ++ (lib.optionals (systemConfiguration != null) [
-    (callPackage ./disko-dfm-system.nix {
-      disko-config-path = "${config-store-path}/hosts/systems/${systemConfiguration.n}/disko/disko-config.nix";
-    })
-    (callPackage ./install-system-closure.nix {
-      closureStorePath = systemConfiguration.v.config.system.build.toplevel;
-    })
-  ]);
+  environment.systemPackages =
+    with pkgs;
+    [
+      disko
+      sbctl
+    ]
+    ++ (lib.optionals (systemConfiguration != null) [
+      (callPackage ./disko-dfm-system.nix {
+        disko-config-path = "${config-store-path}/hosts/systems/${systemConfiguration.n}/disko/disko-config.nix";
+      })
+      (callPackage ./install-system-closure.nix {
+        closureStorePath = systemConfiguration.v.config.system.build.toplevel;
+      })
+    ]);
 
   users.users.nixos.openssh.authorizedKeys.keyFiles = [
     assets."nico_id_ed25519.pub"

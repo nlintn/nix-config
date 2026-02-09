@@ -1,9 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.thunar = {
     enable = true;
-    plugins = with pkgs; [ thunar-archive-plugin thunar-media-tags-plugin ];
+    plugins = with pkgs; [
+      thunar-archive-plugin
+      thunar-media-tags-plugin
+    ];
   };
   xdg.configFile."Thunar/uca.xml" = {
     force = true;

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   networking = {
@@ -16,7 +21,10 @@
     firewall.enable = true;
     nftables.enable = true;
 
-    nameservers = [ "127.0.0.1" "::1" ];
+    nameservers = [
+      "127.0.0.1"
+      "::1"
+    ];
     dhcpcd.extraConfig = "nohook resolv.conf";
     networkmanager.dns = "none";
   };
@@ -26,7 +34,10 @@
     enable = true;
     upstreamDefaults = false;
     settings = {
-      listen_addresses = [ "127.0.0.1:53" "[::1]:53" ];
+      listen_addresses = [
+        "127.0.0.1:53"
+        "[::1]:53"
+      ];
       max_clients = 250;
 
       ipv4_servers = true;
@@ -37,7 +48,7 @@
       require_dnssec = true;
       require_nolog = true;
       require_nofilter = true;
-      disabled_server_names = [];
+      disabled_server_names = [ ];
 
       force_tcp = false;
       http3 = true;
@@ -49,7 +60,12 @@
       # log_level = 0;
       use_syslog = true;
 
-      bootstrap_resolvers = [ "9.9.9.11:53" "149.112.112.11:53" "[2620:fe::11]:53" "[2620:fe::fe:11]:53" ];
+      bootstrap_resolvers = [
+        "9.9.9.11:53"
+        "149.112.112.11:53"
+        "[2620:fe::11]:53"
+        "[2620:fe::fe:11]:53"
+      ];
       ignore_system_dns = false;
       netprobe_timeout = 60;
       netprobe_address = "9.9.9.9:53";
@@ -135,8 +151,10 @@
   systemd.tmpfiles.rules = [
     ''f  "${config.services.dnscrypt-proxy.settings.cloaking_rules}"  0644  root  root  -  -''
   ];
-  environment.shellAliases."dns-restart" = "${lib.getExe' config.systemd.package "systemctl"} restart dnscrypt-proxy2.service";
-  environment.shellAliases."dns-stop" = "${lib.getExe' config.systemd.package "systemctl"} stop dnscrypt-proxy2.service";
+  environment.shellAliases."dns-restart" =
+    "${lib.getExe' config.systemd.package "systemctl"} restart dnscrypt-proxy2.service";
+  environment.shellAliases."dns-stop" =
+    "${lib.getExe' config.systemd.package "systemctl"} stop dnscrypt-proxy2.service";
 
   systemd.services.NetworkManager-wait-online.enable = false;
 }

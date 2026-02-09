@@ -1,4 +1,15 @@
-{ config, lib, agenix, config-store-path, nixSystemName, nix-colors, overlays, secrets, self, ... }:
+{
+  config,
+  lib,
+  agenix,
+  config-store-path,
+  nixSystemName,
+  nix-colors,
+  overlays,
+  secrets,
+  self,
+  ...
+}:
 
 {
   imports = [
@@ -8,11 +19,14 @@
     ./options.nix
   ];
 
-  age.secrets = lib.mkIf (config.age.identityPaths != [])
-    (lib.filterAttrs (n: _: n == nixSystemName || n == "common") secrets |> lib.attrValues |> lib.mergeAttrsList);
+  age.secrets = lib.mkIf (config.age.identityPaths != [ ]) (
+    lib.filterAttrs (n: _: n == nixSystemName || n == "common") secrets
+    |> lib.attrValues
+    |> lib.mergeAttrsList
+  );
 
   nixpkgs = {
-    overlays = overlays;
+    inherit overlays;
   };
 
   networking.hostName = lib.mkDefault nixSystemName;
@@ -49,7 +63,8 @@
 
   nix = {
     registry = lib.mkIf config.common.setNixRegistry (
-      lib.mapAttrs (_: flake: { inherit flake; }) (lib.filterAttrs (n: _: n != "nixpkgs") self.inputs) // {
+      lib.mapAttrs (_: flake: { inherit flake; }) (lib.filterAttrs (n: _: n != "nixpkgs") self.inputs)
+      // {
         "self".flake = self;
       }
     );
@@ -57,21 +72,29 @@
     channel.enable = false;
 
     settings = {
-      experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "pipe-operators"
+      ];
       use-xdg-base-directories = true;
     };
   };
 
   environment.pathsToLink = lib.mkMerge [
-    (lib.mkIf (lib.any (u: u.xdg.enable) (builtins.attrValues config.home-manager.users or {}))
-      [ "/share/xdg-desktop-portal" "/share/applications" ])
+    (lib.mkIf (lib.any (u: u.xdg.enable) (builtins.attrValues config.home-manager.users or { })) [
+      "/share/xdg-desktop-portal"
+      "/share/applications"
+    ])
   ];
 
   environment.sessionVariables = {
     CONFIG_STORE_PATH = config-store-path;
 
     NIXPKGS_ALLOW_BROKEN = lib.mkIf (config.nixpkgs.config.allowBroken or false) (lib.mkDefault "1");
-    NIXPKGS_ALLOW_INSECURE = lib.mkIf (config.nixpkgs.config.allowInsecure or false) (lib.mkDefault "1");
+    NIXPKGS_ALLOW_INSECURE = lib.mkIf (config.nixpkgs.config.allowInsecure or false) (
+      lib.mkDefault "1"
+    );
     NIXPKGS_ALLOW_UNFREE = lib.mkIf (config.nixpkgs.config.allowUnfree or false) (lib.mkDefault "1");
   };
 

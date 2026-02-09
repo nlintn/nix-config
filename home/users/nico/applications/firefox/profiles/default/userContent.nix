@@ -1,9 +1,18 @@
-{ config, lib, assets, nix-colors, ... }:
+{
+  config,
+  lib,
+  assets,
+  nix-colors,
+  ...
+}:
 
-with config.colorScheme.palette; let
-  toRGBA = RGBhex: alpha:
+with config.colorScheme.palette;
+let
+  toRGBA =
+    RGBhex: alpha:
     "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex},${builtins.toString alpha})";
-in /* css */ ''
+in
+/* css */ ''
   @-moz-document url-prefix(about:blank), url-prefix(about:home), url-prefix(about:newtab) {
     body, html {
       background-color: transparent !important;
@@ -18,7 +27,9 @@ in /* css */ ''
   }
   @-moz-document url-prefix(about:) {
     .logo {
-      background-image: url('data:image/svg+xml;utf8,${builtins.readFile assets."nix-snowflake-rainbow.svg" |> lib.escapeURL}') !important;
+      background-image: url('data:image/svg+xml;utf8,${
+        builtins.readFile assets."nix-snowflake-rainbow.svg" |> lib.escapeURL
+      }') !important;
     }
     input {
       --input-text-background-color: #${base00} !important;
@@ -108,14 +119,14 @@ in /* css */ ''
     border-radius: 2px !important;
     background-image: none !important;
   }
-  
+
   div > .vimiumHintMarker span {
     font-size: 11px !important;
     font-weight: bold !important;
     text-shadow: none !important;
     color: #${base01} !important;
   }
-  
+
   div > .vimiumHintMarker > .matchingCharacter {
     background-color: #${base00} !important;
     color: #${base05} !important;

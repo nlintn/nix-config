@@ -1,9 +1,17 @@
-{ config, nix-colors, userSettings, ... }:
+{
+  config,
+  nix-colors,
+  userSettings,
+  ...
+}:
 
 let
-  toRGBA = RGBhex: alpha:
+  toRGBA =
+    RGBhex: alpha:
     "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex},${builtins.toString alpha})";
-in with config.colorScheme.palette; /* css */ ''
+in
+with config.colorScheme.palette;
+/* css */ ''
   * {
     all: unset;
     font-size: 14px;

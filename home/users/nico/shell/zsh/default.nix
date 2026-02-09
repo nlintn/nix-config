@@ -1,4 +1,4 @@
-{ config, pkgs, ... } @ args:
+{ config, pkgs, ... }@args:
 
 {
   programs.zsh = {
@@ -7,15 +7,22 @@
     autosuggestion = {
       enable = true;
       highlight = "fg=#${config.colorScheme.palette.base04}";
-      strategy = [ "history" "completion" ];
+      strategy = [
+        "history"
+        "completion"
+      ];
     };
     dotDir = "${config.xdg.configHome}/zsh";
     enableCompletion = true;
     syntaxHighlighting = {
       enable = true;
-      highlighters = [ "main" "cursor" "brackets" ];
+      highlighters = [
+        "main"
+        "cursor"
+        "brackets"
+      ];
       styles = import ./zsh-syntax-highlighting-base16.nix args;
     };
-    initContent = pkgs.callPackage ./init.nix {};
+    initContent = pkgs.callPackage ./init.nix { };
   };
 }

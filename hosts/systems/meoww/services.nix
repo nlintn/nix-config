@@ -24,7 +24,8 @@
       disableUpstreamLogging = true;
       extraSetFlags = [
         "--operator=nico"
-      ] ++ lib.optional config.services.dnscrypt-proxy.enable "--accept-dns=false";
+      ]
+      ++ lib.optional config.services.dnscrypt-proxy.enable "--accept-dns=false";
       useRoutingFeatures = "client";
     };
     tumbler.enable = true; # thumbnails

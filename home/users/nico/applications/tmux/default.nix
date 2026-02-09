@@ -1,22 +1,30 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   tmux = lib.getExe config.programs.tmux.package;
-  tmux-popup = name: exec: pkgs.writeShellScript "tmux-popup" ''
-    session="_popup_${name}_$(${tmux} display -p '#S')_"
+  tmux-popup =
+    name: exec:
+    pkgs.writeShellScript "tmux-popup" ''
+      session="_popup_${name}_$(${tmux} display -p '#S')_"
 
-    if ! ${tmux} has -t "$session" 2> /dev/null; then
-      session_id="$(${tmux} new-session -dP -s "$session" -F '#{session_id}' "${exec}; ${tmux} detach")"
-      ${tmux} set-option -s -t "$session_id" key-table _popup_pre
-      ${tmux} set-option -s -t "$session_id" status off
-      ${tmux} set-option -s -t "$session_id" prefix None
-      ${tmux} set-environment -t "$session_id" FZF_TMUX 1
-      session="$session_id"
-    fi
+      if ! ${tmux} has -t "$session" 2> /dev/null; then
+        session_id="$(${tmux} new-session -dP -s "$session" -F '#{session_id}' "${exec}; ${tmux} detach")"
+        ${tmux} set-option -s -t "$session_id" key-table _popup_pre
+        ${tmux} set-option -s -t "$session_id" status off
+        ${tmux} set-option -s -t "$session_id" prefix None
+        ${tmux} set-environment -t "$session_id" FZF_TMUX 1
+        session="$session_id"
+      fi
 
-    ${tmux} attach -t "$session"
-  '';
-in {
+      ${tmux} attach -t "$session"
+    '';
+in
+{
   imports = [
     ./sesh.nix
   ];
@@ -24,7 +32,7 @@ in {
   programs.tmux = {
     enable = true;
     package = pkgs.tmux.overrideAttrs (prev: {
-      patches = prev.patches or [] ++ [ ./get-clipboard.patch ];
+      patches = prev.patches or [ ] ++ [ ./get-clipboard.patch ];
     });
     extraConfig = with config.colorScheme.palette; ''
       unbind C-b

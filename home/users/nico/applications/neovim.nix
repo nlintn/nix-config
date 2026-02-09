@@ -1,11 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   pkg = pkgs.nvim-custom.override {
     base16-palette = config.colorScheme.palette;
   };
   bin = lib.getExe pkg;
-in {
+in
+{
   vars.nvimPackage = pkg;
   home.sessionVariables = {
     EDITOR = "nvim";

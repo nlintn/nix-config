@@ -1,4 +1,4 @@
-{ ... } @ args:
+{ ... }@args:
 
 {
   services.swaync = {

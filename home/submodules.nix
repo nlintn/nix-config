@@ -1,4 +1,6 @@
-(builtins.readDir ./users) |> builtins.mapAttrs (n: _:
+(builtins.readDir ./users)
+|> builtins.mapAttrs (
+  n: _:
   { home-manager, specialArgs, ... }:
 
   {
@@ -20,4 +22,5 @@
         _module.args.hmUsername = n;
       };
     };
-  })
+  }
+)

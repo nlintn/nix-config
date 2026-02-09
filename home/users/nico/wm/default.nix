@@ -3,8 +3,10 @@
 let
   wmConfig = {
     "hyprland" = [ ./hyprland ];
-    "none" = [];
+    "none" = [ ];
   };
-in {
-  imports = wmConfig.${userSettings.wm} or (builtins.warn "Unsupported window manager: ${userSettings.wm}" []);
+in
+{
+  imports =
+    wmConfig.${userSettings.wm} or (builtins.warn "Unsupported window manager: ${userSettings.wm}" [ ]);
 }

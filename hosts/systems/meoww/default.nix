@@ -1,4 +1,9 @@
-{ config, pkgs, userSettings, ... }:
+{
+  config,
+  pkgs,
+  userSettings,
+  ...
+}:
 
 {
   system.stateVersion = "25.11";
@@ -44,8 +49,22 @@
     # earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
     colors = with config.colorScheme.palette; [
-      base00 base08 base0B base0A base0D base0E base0C base07
-      base04 base08 base0B base0A base0D base0E base0C base05
+      base00
+      base08
+      base0B
+      base0A
+      base0D
+      base0E
+      base0C
+      base07
+      base04
+      base08
+      base0B
+      base0A
+      base0D
+      base0E
+      base0C
+      base05
     ];
   };
 

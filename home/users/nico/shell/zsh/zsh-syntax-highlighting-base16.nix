@@ -1,6 +1,7 @@
 { config, ... }:
 
-with config.colorScheme.palette; {
+with config.colorScheme.palette;
+{
   # main
   comment = "fg=#${base04}";
   alias = "fg=#${base0B}";

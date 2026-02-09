@@ -5,9 +5,12 @@
     enable = true;
     dates = "daily";
     flags = [
-      "--update-input nixpkgs" "--update-input nixpkgs-overlay"
-      "-L" "--no-write-lock-file"
-      "--option max-jobs 1" "--option cores 1"
+      "--update-input nixpkgs"
+      "--update-input nixpkgs-overlay"
+      "-L"
+      "--no-write-lock-file"
+      "--option max-jobs 1"
+      "--option cores 1"
     ];
     flake = self.outPath;
   };

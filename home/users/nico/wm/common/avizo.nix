@@ -1,16 +1,25 @@
-{ config, pkgs, nix-colors, ... }:
+{
+  config,
+  pkgs,
+  nix-colors,
+  ...
+}:
 
 let
-  toRGBA = RGBhex: alpha:
+  toRGBA =
+    RGBhex: alpha:
     "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex},${builtins.toString alpha})";
-in {
+in
+{
   services.avizo = {
     enable = true;
     package = pkgs.avizo.overrideAttrs (p: {
-      patchPhase = /* sh */ ''
-        sed -i 's/#000000/#${config.colorScheme.palette.base05}/g' data/images/*.svg
-        sed -i 's/\.png/.svg/g' {"avizo.gresource.xml","src/avizo_service.vala"}
-      '' + p.patchPhase or "";
+      patchPhase =
+        /* sh */ ''
+          sed -i 's/#000000/#${config.colorScheme.palette.base05}/g' data/images/*.svg
+          sed -i 's/\.png/.svg/g' {"avizo.gresource.xml","src/avizo_service.vala"}
+        ''
+        + p.patchPhase or "";
     });
     settings.default = with config.colorScheme.palette; {
       time = 1.5;

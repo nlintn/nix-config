@@ -5,7 +5,8 @@ let
     source ${pkgs.gdb-ptrfind}/ptrfind.py
   '';
   pkg = pkgs.gdb;
-in {
+in
+{
   home.packages = [
     (pkgs.symlinkJoin {
       inherit (pkg) name meta;

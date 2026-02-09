@@ -1,20 +1,25 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.fzf = {
     enable = true;
     colors = with config.colorScheme.palette; {
-      "bg+"       = "#${base03}";
-      fg          = "#${base05}";
-      "fg+"       = "#${base05}";
-      header      = "#${base08}";
-      hl          = "#${base08}";
-      "hl+"       = "#${base08}";
-      info        = "#${base0E}";
-      marker      = "#${base06}";
-      pointer     = "#${base06}";
-      prompt      = "#${base0E}";
-      spinner     = "#${base06}";
+      "bg+" = "#${base03}";
+      fg = "#${base05}";
+      "fg+" = "#${base05}";
+      header = "#${base08}";
+      hl = "#${base08}";
+      "hl+" = "#${base08}";
+      info = "#${base0E}";
+      marker = "#${base06}";
+      pointer = "#${base06}";
+      prompt = "#${base0E}";
+      spinner = "#${base06}";
     };
     defaultCommand = "${lib.getExe config.programs.fd.package} -IL";
     defaultOptions = [
@@ -22,16 +27,20 @@
       "--border"
       "--layout=reverse"
       "--no-sort"
-    ] ++ lib.optional config.programs.tmux.enable "--tmux bottom,75%,60%";
+    ]
+    ++ lib.optional config.programs.tmux.enable "--tmux bottom,75%,60%";
     changeDirWidgetCommand = "${lib.getExe config.programs.fd.package} -IL -t d -E .cache && ${lib.getExe config.programs.zoxide.package} query --list";
-    changeDirWidgetOptions = [  #  ALT-C Options
+    changeDirWidgetOptions = [
+      # ALT-C Options
       "--preview '${lib.getExe pkgs.eza} --color=always --follow-symlinks --tree {}'"
     ];
     fileWidgetCommand = "${lib.getExe config.programs.fd.package} -IL -t f";
-    fileWidgetOptions = [       # CTRL-T Options
+    fileWidgetOptions = [
+      # CTRL-T Options
       "--preview '(${lib.getExe config.programs.bat.package} --paging=never --color=always {} || ${lib.getExe pkgs.tree} -C {}) 2> /dev/null | head -200'"
     ];
-    historyWidgetOptions = [    # CTRL-R Options
+    historyWidgetOptions = [
+      # CTRL-R Options
     ];
   };
 }

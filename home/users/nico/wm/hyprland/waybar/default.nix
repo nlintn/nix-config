@@ -1,4 +1,4 @@
-{ pkgs, ... } @ args: # `pkgs` needed because otherwise not in `args`
+{ pkgs, ... }@args: # `pkgs` needed because otherwise not in `args`
 
 {
   programs.waybar = {

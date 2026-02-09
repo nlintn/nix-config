@@ -5,6 +5,8 @@
     agenix.homeManagerModules.default
     nixpkgs-overlay.homeManagerModules.default
     nix-colors.homeManagerModules.default
+
+    ./options.nix
   ];
 
   age.secrets = lib.mkIf (config.age.identityPaths != []) secrets;

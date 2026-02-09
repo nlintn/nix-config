@@ -21,6 +21,7 @@
       window-inherit-working-directory = false;
       window-inherit-font-size = true;
 
+      copy-on-select = "clipboard";
       shell-integration-features = "ssh-env, sudo, title, no-cursor";
 
       keybind = [

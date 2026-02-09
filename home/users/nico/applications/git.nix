@@ -6,8 +6,12 @@
     settings = {
       user = {
         name = "Nico Lintner";
-        email = "118087966+nlintn@users.noreply.github.com";
+        email = "git@nlintn.de";
+        signingkey = "620394D5D26C67A8";
       };
+      commit.gpgsign = true;
+      tag.gpgsign = true;
+      push.gpgsign = "if-asked";
 
       pull.ff = "only";
       push.autoSetupRemote = true;
@@ -17,11 +21,6 @@
         prompt = false;
         "nvim".cmd = ''${lib.getExe config.vars.nvimPackage} -c "DiffviewOpen"'';
       };
-
-      user.signingkey = "620394D5D26C67A8";
-      commit.gpgsign = true;
-      tag.gpgsign = true;
-      push.gpgsign = "if-asked";
 
       column.ui = "auto";
       help.autocorrect = "prompt";

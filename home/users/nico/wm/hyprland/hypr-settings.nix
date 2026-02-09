@@ -303,6 +303,8 @@ in with config.colorScheme.palette; {
     "border_size 0, match:float on, match:title Vicinae.*"
     "rounding ${builtins.toString config.programs.vicinae.settings.launcher_window.client_side_decorations.rounding}, match:float on, match:title Vicinae.*"
 
+    "suppress_event fullscreen, match:class org.telegram.desktop"
+
     "border_size 0, match:float off, match:workspace w[tv1]"
     "border_size 0, match:float off, match:workspace f[1]"
 

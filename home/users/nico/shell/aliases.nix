@@ -8,8 +8,9 @@
       cat = lib.mkIf config.programs.bat.enable "${lib.getExe config.programs.bat.package} --paging=never";
       ls = "${lib.getExe pkgs.eza} -g --color=auto --git";
       ll = "${ls} -l --group-directories-first --icons=auto --time-style=long-iso";
-      la = "${ll} -a";
+      la = "${ll} -aa";
       lt = "${ll} --sort=newest";
+      lta = "${la} --sort=newest";
       tree = "${ls} --tree";
       open = "${pkgs.writeShellScript "open" ''${lib.getExe' pkgs.xdg-utils "xdg-open"} "$@" &> /dev/null & builtin disown''}";
     }

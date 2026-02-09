@@ -6,7 +6,7 @@
   ];
 
   systemd.user.tmpfiles.rules = [
-    "d ${config.xdg.userDirs.download} - - - 1d -"
+    ''d  "${config.xdg.userDirs.download}"  -  -  -  1d  -''
   ];
 
   home.preferXdgDirectories = true;
@@ -17,7 +17,7 @@
       enable = true;
       createDirectories = true;
       extraConfig = {
-        XDG_PROJECT_DIR = "${config.home.homeDirectory}/Projects";
+        XDG_SOURCE_DIR = "${config.home.homeDirectory}/Sources";
       };
     };
     mimeApps = {

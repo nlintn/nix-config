@@ -33,19 +33,21 @@
     zoxidePackage = config.programs.zoxide.package;
     settings = let
       ls = if config.home.shellAliases ? ls then config.home.shellAliases.ls else lib.getExe' pkgs.coreutils "ls";
+      scratchpadName = "scratchpad 󱞂 ";
     in {
       dir_length = 2;
       default_session = {
         preview_command = "${lib.getExe pkgs.eza} --color=always --follow-symlinks --tree {}";
         startup_command = ls;
       };
+      blacklist = [ scratchpadName ];
       session = [
         {
           name = "home";
           path = config.home.homeDirectory;
           startup_command = "${pkgs.writeShellScript "test" ''
             tmp="$(${lib.getExe' pkgs.coreutils "mktemp"} -t "yazi-tmux-sesh.XXXXX")"
-            yazi "${config.home.homeDirectory}" --cwd-file="$tmp"
+            ${lib.getExe config.programs.yazi.package} "${config.home.homeDirectory}" --cwd-file="$tmp"
             if cwd="$(<"$tmp")"  && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]
             then
               ${lib.getExe config.programs.sesh.package} connect -- "$cwd"
@@ -61,7 +63,7 @@
           windows = [ "empty" ];
         }
         {
-          name = "scratchpad 󱞂 ";
+          name = scratchpadName;
           path = config.home.homeDirectory;
           startup_command = " ${lib.getExe config.vars.nvimPackage} -- ${config.xdg.userDirs.documents}/scratch.md";
           preview_command = "${lib.getExe config.programs.bat.package} --paging=never --color=always {}";

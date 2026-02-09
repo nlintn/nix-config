@@ -3,6 +3,10 @@
 {
   programs.less = {
     enable = true;
+    options = {
+      ignore-case = true;
+      RAW-CONTROL-CHARS = true;
+    };
     package = let
       pkg = pkgs.less;
     in pkgs.symlinkJoin {

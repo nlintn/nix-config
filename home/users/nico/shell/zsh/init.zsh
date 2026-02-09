@@ -10,6 +10,13 @@ zstyle ':completion:*:warnings' format "${fg[red]}No matches for:${reset_color} 
 
 bindkey "$terminfo[kcbt]" reverse-menu-complete
 
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;3D" backward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[^?" backward-delete-word
+bindkey "^[^H" backward-delete-word
+
 setopt globdots
 
 autoload -U history-search-end

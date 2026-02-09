@@ -25,6 +25,16 @@ with config.colorScheme.palette; {
   "extensions.ml.enabled" = false;
   "extensions.ml.linkPreview.enabled" = true;
 
+  # sidebar
+  "browser.tabs.tabMinWidth" = 55;
+  "sidebar.expandOnHover" = true;
+  "sidebar.main.tools" = "syncedtabs,history,bookmarks";
+  "sidebar.revamp" = true;
+  "sidebar.revamp.round-content-area" = true;
+  "sidebar.verticalTabs" = true;
+  "sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
+  "sidebar.visibility" = "expand-on-hover";
+
   "accessibility.browsewithcaret" = true;
   "browser.aboutConfig.showWarning" = false;
   "browser.bookmarks.addedImportButton" = true;
@@ -37,7 +47,7 @@ with config.colorScheme.palette; {
   "browser.download.lastDir" = config.xdg.userDirs.download;
   "browser.download.panel.shown" = true;
   "browser.feeds.showFirstRunUI" = false;
-  "browser.fullscreen.autohide" = false;
+  "browser.fullscreen.autohide" = true;
   "browser.link.open_newwindow.restriction" = 0;
   "browser.messaging-system.whatsNewPanel.enabled" = false;
   "browser.rights.3.shown" = true;
@@ -48,7 +58,6 @@ with config.colorScheme.palette; {
   "browser.startup.homepage_override.mstone" = "ignore";
   "browser.tabs.allow_transparent_browser" = true;
   "browser.tabs.closeWindowWithLastTab" = false;
-  "browser.tabs.minWidth" = 55;
   "browser.tabs.splitView.enabled" = true;
   "browser.tabs.warnOnClose" = true;
   "browser.toolbars.bookmarks.visibility" = "never";
@@ -64,11 +73,6 @@ with config.colorScheme.palette; {
   "intl.regional_prefs.use_os_locales" = true;
   "media.ffmpeg.vaapi.enabled" = true;
   "media.webrtc.camera.allow-pipewire" = true;
-  "sidebar.revamp" = true;
-  "sidebar.revamp.round-content-area" = true;
-  "sidebar.verticalTabs" = true;
-  "sidebar.expandOnHover" = true;
-  "sidebar.visibility" = "expand-on-hover";
   "signon.rememberSignons" = false;
   "startup.homepage_override_url" = "";
   "toolkit.legacyUserProfileCustomizations.stylesheets" = true;

@@ -1,7 +1,7 @@
 {
   lib,
+  stdenv,
   symlinkJoin,
-  system,
 
   self,
 }:
@@ -13,5 +13,5 @@ symlinkJoin {
     ++ (
       lib.attrsToList self.nixosConfigurations |> builtins.map (s: s.value.config.system.build.toplevel)
     )
-    ++ (lib.attrsToList self.packages.${system} |> builtins.map (s: s.value));
+    ++ (lib.attrsToList self.packages.${stdenv.hostPlatform.system} |> builtins.map (s: s.value));
 }

@@ -72,7 +72,7 @@
     {
       nixosConfigurations = hosts.nixosConfigurations;
       homeConfigurations = home;
-      packages = lib'.eachSystem nixpkgs (
+      packages = lib'.eachSystem (
         _:
         let
           isos = builtins.mapAttrs (_: v: v.config.system.build.isoImage) hosts.isos;

@@ -17,7 +17,7 @@
       enable = true;
       createDirectories = true;
       extraConfig = {
-        XDG_SOURCE_DIR = "${config.home.homeDirectory}/Sources";
+        SOURCE = "${config.home.homeDirectory}/Sources";
       };
     };
     mimeApps = {

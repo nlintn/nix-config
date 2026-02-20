@@ -2,6 +2,7 @@
   config,
   lib,
   nixpkgs,
+  self,
   userSettings,
   ...
 }:
@@ -23,7 +24,7 @@
   home.activation.copyNixConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] (
     with config.home.sessionVariables;
     /* sh */ ''
-      [ -e ${NIX_CONFIG_DIR} ] || cp -r ${CONFIG_STORE_PATH} ${NIX_CONFIG_DIR}
+      [ -e ${NIX_CONFIG_DIR} ] || cp -r ${self.outPath} ${NIX_CONFIG_DIR}
     ''
   );
   common.setNixRegistry = true;

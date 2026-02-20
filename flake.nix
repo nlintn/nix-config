@@ -54,7 +54,6 @@
           pkgs-unstable
           pkgs-stable
           ;
-        config-store-path = builtins.path { path = self; };
         hmSubmodules = import ./home/submodules.nix;
       }
       // inputs;

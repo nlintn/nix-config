@@ -2,7 +2,6 @@
   config,
   lib,
   agenix,
-  config-store-path,
   nixSystemName,
   nix-colors,
   overlays,
@@ -44,6 +43,7 @@
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
+      LANGUAGE = "en_US.UTF-8";
       LC_ADDRESS = "de_DE.UTF-8";
       LC_CTYPE = "C.UTF-8";
       LC_IDENTIFICATION = "de_DE.UTF-8";
@@ -88,8 +88,6 @@
   ];
 
   environment.sessionVariables = {
-    CONFIG_STORE_PATH = config-store-path;
-
     NIXPKGS_ALLOW_BROKEN = lib.mkIf (config.nixpkgs.config.allowBroken or false) (lib.mkDefault "1");
     NIXPKGS_ALLOW_INSECURE = lib.mkIf (config.nixpkgs.config.allowInsecure or false) (
       lib.mkDefault "1"

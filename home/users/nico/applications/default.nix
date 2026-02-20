@@ -31,11 +31,6 @@
     ./zathura.nix
   ];
 
-  nixpkgs.config = lib.mkIf (!(osConfig.home-manager.useGlobalPkgs or false)) {
-    allowUnfree = true;
-    permittedInsecurePackages = [ ];
-  };
-
   programs.chromium = {
     enable = true;
     package = pkgs.ungoogled-chromium;

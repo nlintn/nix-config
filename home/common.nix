@@ -1,8 +1,8 @@
 {
   config,
   lib,
+  osConfig ? null,
   pkgs,
-  config-store-path,
   hmUsername,
   inputs,
   agenix,
@@ -25,13 +25,16 @@
 
   age.secrets = userSecrets hmUsername;
 
+  nixpkgs.config = lib.mkIf (!(osConfig.home-manager.useGlobalPkgs or false)) {
+    allowUnfree = true;
+  };
+
   home = {
     username = lib.mkDefault hmUsername;
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
 
     sessionVariables = {
       NIX_CONFIG_DIR = "${config.home.homeDirectory}/${userSettings.rel-config-path}";
-      CONFIG_STORE_PATH = config-store-path;
     }
     // lib.optionalAttrs config.nixpkgs.config.allowBroken or false {
       NIXPKGS_ALLOW_BROKEN = lib.mkDefault "1";

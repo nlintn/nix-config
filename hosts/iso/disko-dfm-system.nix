@@ -6,5 +6,5 @@
 }:
 
 writeShellScriptBin "disko-dfm" ''
-  ${lib.getExe disko} --no-deps -m destroy,format,mount ${lib.escapeShellArg disko-config-path} $@
+  ${lib.getExe disko} -m destroy,format,mount ${lib.escapeShellArg disko-config-path} $@
 ''

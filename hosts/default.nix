@@ -31,7 +31,7 @@ let
       inherit system;
       specialArgs = specialArgs // {
         inherit module-common specialArgs systemConfiguration;
-        nixSystemName = "iso";
+        nixSystemName = "iso-${systemConfiguration.name or "raw"}";
       };
       modules = [
         ./iso
@@ -42,10 +42,7 @@ let
     isoRaw = genIso null;
   }
   // (lib.mapAttrs' (
-    n: v:
-    lib.nameValuePair "iso-${n}" (genIso {
-      inherit n v;
-    })
+    n: v: lib.nameValuePair "iso-${n}" (genIso (lib.nameValuePair n v))
   ) systemConfigurations);
 in
 {

@@ -1,9 +1,10 @@
 {
+  config,
   lib,
   modulesPath,
   pkgs,
   assets,
-  config-store-path,
+  self,
   systemConfiguration,
   ...
 }:
@@ -12,24 +13,24 @@
   system.stateVersion = "25.11";
 
   imports = [
-    "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+    (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
   ];
 
   nixpkgs.config = {
     allowUnfree = true;
   };
+  system.installer.channel.enable = false;
 
-  networking = {
-    networkmanager.enable = true;
-    wireless.enable = false;
-  };
+  common.setNixRegistry = true;
+
+  networking.networkmanager.enable = true;
 
   services = {
     qemuGuest.enable = true;
   };
 
   isoImage = {
-    edition = "${if systemConfiguration == null then "raw" else systemConfiguration.n}-cmin";
+    edition = "${systemConfiguration.name or "raw"}-cmin";
     squashfsCompression = "gzip -Xcompression-level 1";
   };
 
@@ -41,15 +42,21 @@
     ]
     ++ (lib.optionals (systemConfiguration != null) [
       (callPackage ./disko-dfm-system.nix {
-        disko-config-path = "${config-store-path}/hosts/systems/${systemConfiguration.n}/disko/disko-config.nix";
+        disko-config-path = builtins.path {
+          path = "${self.outPath}/hosts/systems/${systemConfiguration.name}/disko/disko-config.nix";
+        };
       })
       (callPackage ./install-system-closure.nix {
-        closureStorePath = systemConfiguration.v.config.system.build.toplevel;
+        closureStorePath = systemConfiguration.value.config.system.build.toplevel;
       })
     ]);
 
   users.users.nixos.openssh.authorizedKeys.keyFiles = [
     assets."nico_id_ed25519.pub"
+  ];
+
+  systemd.tmpfiles.rules = [
+    "C  ${lib.escapeShellArg config.users.users.nixos.home}/flake  -  -  -  -  ${lib.escapeShellArg self.outPath}"
   ];
 
   nix.settings.flake-registry = "";

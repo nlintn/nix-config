@@ -30,7 +30,7 @@
       pkgs = pkgs-unstable;
       assets =
         builtins.readDir ./assets |> builtins.mapAttrs (n: _: builtins.path { path = "${./assets}/${n}"; });
-      secrets = import ./secrets lib;
+      inherit (import ./secrets lib) hostSecrets userSecrets;
       userSettings = {
         colorScheme = nix-colors.colorSchemes.catppuccin-macchiato;
         default-font = {
@@ -48,7 +48,8 @@
           overlays
           lib'
           assets
-          secrets
+          hostSecrets
+          userSecrets
           userSettings
           pkgs-unstable
           pkgs-stable

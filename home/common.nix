@@ -8,7 +8,7 @@
   agenix,
   nixpkgs-overlay,
   nix-colors,
-  secrets,
+  userSecrets,
   self,
   userSettings,
   ...
@@ -23,11 +23,7 @@
     ./options.nix
   ];
 
-  age.secrets = lib.mkIf (config.age.identityPaths != [ ]) (
-    lib.filterAttrs (n: _: n == hmUsername || n == "common") secrets
-    |> lib.attrValues
-    |> lib.mergeAttrsList
-  );
+  age.secrets = userSecrets hmUsername;
 
   home = {
     username = lib.mkDefault hmUsername;

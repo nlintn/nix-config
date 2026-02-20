@@ -292,37 +292,44 @@ in
             mime = "audio/*";
             fg = "#${base0E}";
           }
-
-          # Archives
           {
-            mime = "application/zip";
+            mime = "application/{zip,gzip,x-tar,x-bzip,x-bzip2,x-7z-compressed,x-rar}";
             fg = "#${base08}";
           }
           {
-            mime = "application/gzip";
-            fg = "#${base08}";
-          }
-          {
-            mime = "application/x-tar";
-            fg = "#${base08}";
-          }
-          {
-            mime = "application/x-bzip";
-            fg = "#${base08}";
-          }
-          {
-            mime = "application/x-bzip2";
-            fg = "#${base08}";
-          }
-          {
-            mime = "application/x-7z-compressed";
-            fg = "#${base08}";
-          }
-          {
-            mime = "application/x-rar";
-            fg = "#${base08}";
+            mime = "vfs/{absent,stale}";
+            fg = "#${base04}";
           }
 
+          {
+            url = "*";
+            is = "dummy";
+            fg = "#${base08}";
+            bg = "#${base01}";
+          }
+          {
+            url = "*/";
+            is = "dummy";
+            fg = "#${base08}";
+            bg = "#${base01}";
+          }
+          {
+            url = "*";
+            is = "orphan";
+            fg = "#${base08}";
+            bg = "#${base01}";
+          }
+          {
+            url = "*/";
+            is = "orphan";
+            fg = "#${base08}";
+            bg = "#${base01}";
+          }
+          {
+            url = "*";
+            is = "exec";
+            fg = "#${base0B}";
+          }
           {
             url = "*";
             is = "link";
@@ -330,18 +337,143 @@ in
           }
           {
             url = "*";
-            is = "exec";
-            fg = "#${base0B}";
-          }
-
-          # Fallback
-          {
-            url = "*";
             fg = "#${base05}";
           }
           {
             url = "*/";
             fg = "#${base0D}";
+          }
+        ];
+      };
+
+      icon = {
+        dirs = [
+          {
+            name = ".config";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = ".git";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = ".github";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = ".npm";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = "Desktop";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = "Development";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = "Documents";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = "Downloads";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = "Library";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = "Movies";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = "Music";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = "Pictures";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = "Public";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            name = "Videos";
+            text = "";
+            fg = "#${base0D}";
+          }
+        ];
+        conds = [
+          {
+            "if" = "orphan";
+            text = "";
+            fg = "#${base08}";
+          }
+          {
+            "if" = "link";
+            text = "";
+            fg = "#${base0C}";
+          }
+          {
+            "if" = "block";
+            text = "";
+            fg = "#${base0A}";
+          }
+          {
+            "if" = "char";
+            text = "";
+            fg = "#${base0A}";
+          }
+          {
+            "if" = "fifo";
+            text = "";
+            fg = "#${base0A}";
+          }
+          {
+            "if" = "sock";
+            text = "";
+            fg = "#${base0A}";
+          }
+          {
+            "if" = "sticky";
+            text = "";
+            fg = "#${base0A}";
+          }
+          {
+            "if" = "dummy";
+            text = "";
+            fg = "#${base08}";
+          }
+          {
+            "if" = "dir";
+            text = "";
+            fg = "#${base0D}";
+          }
+          {
+            "if" = "exec";
+            text = "";
+            fg = "#${base0B}";
+          }
+          {
+            "if" = "!dir";
+            text = "";
+            fg = "#${base05}";
           }
         ];
       };

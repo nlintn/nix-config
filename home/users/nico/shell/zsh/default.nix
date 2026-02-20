@@ -23,6 +23,9 @@
       ];
       styles = import ./zsh-syntax-highlighting-base16.nix args;
     };
+    setOptions = [
+      "globdots"
+    ];
     initContent = pkgs.callPackage ./init.nix { };
   };
 }

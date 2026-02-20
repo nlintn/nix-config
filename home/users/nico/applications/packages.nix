@@ -37,6 +37,7 @@
     dnsutils
     dragon-drop
     eza
+    ferdium
     file
     file-roller
     font-manager
@@ -51,6 +52,7 @@
     libnotify
     libqalculate
     libreoffice-fresh
+    logseq
     lolcat
     nix-diff
     nix-inspect
@@ -68,6 +70,7 @@
     protonmail-desktop
     protonvpn-gui
     prusa-slicer
+    pv
     showtime
     signal-desktop
     speedread

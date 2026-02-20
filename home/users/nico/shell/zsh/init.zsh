@@ -17,8 +17,6 @@ bindkey "^[[1;5D" backward-word
 bindkey "^[^?" backward-delete-word
 bindkey "^[^H" backward-delete-word
 
-setopt globdots
-
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
@@ -33,7 +31,7 @@ zle -N edit-command-line &&
 bindkey -a "^V" edit-command-line
 
 copy() {
-  if [ "$#" = "0" ]; then
+  if [ "${#}" = "0" ]; then
     local formatted="$($_cmd_base64 -w 0 /dev/stdin)"
   else
     local arg="$@"

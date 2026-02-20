@@ -16,8 +16,14 @@ in
       "[index] <Right>" = "zoom expand";
     };
     options = with config.colorScheme.palette; {
-      guioptions = "hsv";
+      guioptions = "cs";
       selection-clipboard = "clipboard";
+      statusbar-home-tilde = true;
+      statusbar-page-percent = true;
+      vertical-center = true;
+      window-title-home-tilde = true;
+      show-directories = true;
+      show-hidden = true;
 
       default-fg = "#${base05}";
       default-bg = toRGBA base00 0.5;
@@ -56,6 +62,11 @@ in
       highlight-fg = "#${base05}";
       highlight-color = toRGBA base09 0.5;
       highlight-active-color = toRGBA base08 0.5;
+
+      show-signature-information = true;
+      signature-error-color = "#${base08}";
+      signature-warning-color = "#${base09}";
+      signature-success-color = "#${base0B}";
     };
   };
 }

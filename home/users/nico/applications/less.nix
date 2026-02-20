@@ -4,8 +4,9 @@
   programs.less = {
     enable = true;
     options = {
-      ignore-case = true;
       RAW-CONTROL-CHARS = true;
+      ignore-case = true;
+      mouse = true;
     };
     package =
       let
@@ -14,9 +15,9 @@
       pkgs.symlinkJoin {
         inherit (pkg) name meta outputs;
         paths = [ pkg ];
-        nativeBuildInputs = [
-          pkgs.makeWrapper
-          pkgs.lndir
+        nativeBuildInputs = with pkgs; [
+          lndir
+          makeWrapper
         ];
         postBuild =
           let

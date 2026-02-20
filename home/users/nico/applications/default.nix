@@ -60,7 +60,6 @@
     java.enable = true;
     jq.enable = true;
     mpv.enable = true;
-    # obsidian.enable = true; TODO: add back when not broken anymore
     rclone.enable = true;
     ripgrep.enable = true;
     swayimg.enable = true;
@@ -76,6 +75,11 @@
     enable = true;
     enableCfgScript = true;
     extraPackages = [ config.programs.keepassxc.package ];
+  };
+  services.taildrop-receive = {
+    enable = true;
+    package = lib.mkIf (osConfig != null) osConfig.services.tailscale.package;
+    directory = "${config.xdg.userDirs.download}/taildrop";
   };
   services.tailscale-systray = {
     enable = true;

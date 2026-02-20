@@ -35,6 +35,8 @@
     allowUnfree = true;
   };
 
+  common.setNixRegistry = true;
+
   boot = {
     # initrd.systemd.enable = true;
     kernelPackages = pkgs.linuxPackages_latest;

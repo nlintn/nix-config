@@ -57,14 +57,17 @@
     };
   };
 
+  nixpkgs.flake.source = lib.mkForce null;
   nix = {
     registry = lib.mkIf config.common.setNixRegistry (
-      lib.mapAttrs (_: flake: { inherit flake; }) (lib.filterAttrs (n: _: n != "nixpkgs") self.inputs)
-      // {
-        "self".flake = self;
-      }
+      lib.mapAttrs (_: v: {
+        to = {
+          type = "path";
+          path = v.outPath;
+        };
+      }) (self.inputs // { inherit self; })
     );
-    nixPath = lib.mapAttrsToList (n: v: "${n}=flake:${v.flake.outPath or n}") config.nix.registry;
+    nixPath = lib.mapAttrsToList (n: v: "${n}=flake:${v.to.path or n}") config.nix.registry;
     channel.enable = false;
 
     settings = {

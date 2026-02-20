@@ -18,7 +18,7 @@
       type = lib.types.attrs;
     };
     common.setNixRegistry = lib.mkOption {
-      default = true;
+      default = false;
       type = lib.types.bool;
     };
   };

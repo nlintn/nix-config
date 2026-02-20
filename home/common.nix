@@ -48,10 +48,15 @@
 
   nix = {
     package = lib.mkDefault pkgs.nix;
-    registry = lib.mapAttrs (_: flake: { inherit flake; }) inputs // {
-      "self".flake = self;
-    };
-    nixPath = lib.mapAttrsToList (n: v: "${n}=flake:${v.flake.outPath or n}") config.nix.registry;
+    registry = lib.mkIf config.common.setNixRegistry (
+      lib.mapAttrs (_: v: {
+        to = {
+          type = "path";
+          path = v;
+        };
+      }) (inputs // { inherit self; })
+    );
+    nixPath = lib.mapAttrsToList (n: v: "${n}=flake:${v.to.path or n}") config.nix.registry;
 
     settings = {
       experimental-features = [

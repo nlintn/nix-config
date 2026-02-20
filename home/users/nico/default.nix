@@ -26,6 +26,7 @@
       [ -e ${NIX_CONFIG_DIR} ] || cp -r ${CONFIG_STORE_PATH} ${NIX_CONFIG_DIR}
     ''
   );
+  common.setNixRegistry = true;
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/bin"

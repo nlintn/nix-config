@@ -90,5 +90,6 @@
     playerctld.enable = true;
     podman.enable = true;
     systembus-notify.enable = true;
+    tumbler.enable = true;
   };
 }

@@ -28,7 +28,6 @@
       ++ lib.optional config.services.dnscrypt-proxy.enable "--accept-dns=false";
       useRoutingFeatures = "client";
     };
-    tumbler.enable = true; # thumbnails
 
     # printing
     printing = {

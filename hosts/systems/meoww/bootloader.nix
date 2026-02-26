@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   environment.systemPackages = [
@@ -27,7 +27,7 @@
           brightBackground = "ff${base02}";
           foreground = "ff${base05}";
           brightForeground = "ff${base0E}";
-          palette = builtins.concatStringsSep ";" [
+          palette = lib.concatStringsSep ";" [
             base01
             base08
             base0B
@@ -37,7 +37,7 @@
             base0C
             base07
           ];
-          brightPalette = builtins.concatStringsSep ";" [
+          brightPalette = lib.concatStringsSep ";" [
             base03
             base08
             base0B

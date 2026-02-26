@@ -92,5 +92,5 @@
       };
   };
 
-  home.shellAliases.s = builtins.toString config.vars.seshFzf;
+  home.shellAliases.s = lib.toString config.vars.seshFzf;
 }

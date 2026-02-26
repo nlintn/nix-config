@@ -10,7 +10,7 @@ with config.colorScheme.palette;
 let
   toRGBA =
     RGBhex: alpha:
-    "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex},${builtins.toString alpha})";
+    "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex},${lib.toString alpha})";
 in
 /* css */ ''
   @-moz-document url-prefix(about:blank), url-prefix(about:home), url-prefix(about:newtab) {
@@ -28,7 +28,7 @@ in
   @-moz-document url-prefix(about:) {
     .logo {
       background-image: url('data:image/svg+xml;utf8,${
-        builtins.readFile assets."nix-snowflake-rainbow.svg" |> lib.escapeURL
+        lib.readFile assets."nix-snowflake-rainbow.svg" |> lib.escapeURL
       }') !important;
     }
     input {

@@ -196,9 +196,9 @@ with config.colorScheme.palette;
   ];
   "browser.uiCustomization.state" =
     let
-      extToBrowserAction = builtins.map (
+      extToBrowserAction = lib.map (
         n:
-        if builtins.typeOf n == "string" then
+        if lib.typeOf n == "string" then
           n
         else
           (
@@ -212,8 +212,8 @@ with config.colorScheme.palette;
                   "."
                 ];
               in
-              builtins.replaceStrings (replaceChars ++ lib.upperChars) (
-                builtins.genList (_: "_") (builtins.length replaceChars) ++ lib.lowerChars
+              lib.replaceStrings (replaceChars ++ lib.upperChars) (
+                lib.genList (_: "_") (lib.length replaceChars) ++ lib.lowerChars
               )
             )
             |> (s: "${s}-browser-action")

@@ -28,8 +28,7 @@
         config.allowUnfree = true;
       };
       pkgs = pkgs-unstable;
-      assets =
-        builtins.readDir ./assets |> builtins.mapAttrs (n: _: builtins.path { path = "${./assets}/${n}"; });
+      assets = lib.readDir ./assets |> lib.mapAttrs (n: _: builtins.path { path = "${./assets}/${n}"; });
       inherit (import ./secrets lib) hostSecrets userSecrets;
       userSettings = {
         colorScheme = nix-colors.colorSchemes.catppuccin-macchiato;
@@ -54,7 +53,7 @@
           pkgs-unstable
           pkgs-stable
           ;
-        hmSubmodules = import ./home/submodules.nix;
+        hmSubmodules = import ./home/submodules.nix lib;
       }
       // inputs;
       hosts = import ./hosts {
@@ -66,7 +65,12 @@
           ;
       };
       home = import ./home {
-        inherit home-manager pkgs specialArgs;
+        inherit
+          home-manager
+          lib
+          pkgs
+          specialArgs
+          ;
       };
     in
     {
@@ -75,7 +79,7 @@
       packages = lib'.eachSystem (
         _:
         let
-          isos = builtins.mapAttrs (_: v: v.config.system.build.isoImage) hosts.isos;
+          isos = lib.mapAttrs (_: v: v.config.system.build.isoImage) hosts.isos;
         in
         isos // { default = isos.isoRaw; }
       );

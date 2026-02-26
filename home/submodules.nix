@@ -1,5 +1,7 @@
-(builtins.readDir ./users)
-|> builtins.mapAttrs (
+lib:
+
+(lib.readDir ./users)
+|> lib.mapAttrs (
   n: _:
   { home-manager, specialArgs, ... }:
 

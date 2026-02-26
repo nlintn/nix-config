@@ -1,4 +1,4 @@
-{ userSettings, ... }:
+{ lib, userSettings, ... }:
 
 let
   wmConfig = {
@@ -8,5 +8,5 @@ let
 in
 {
   imports =
-    wmConfig.${userSettings.wm} or (builtins.warn "Unsupported window manager: ${userSettings.wm}" [ ]);
+    wmConfig.${userSettings.wm} or (lib.warn "Unsupported window manager: ${userSettings.wm}" [ ]);
 }

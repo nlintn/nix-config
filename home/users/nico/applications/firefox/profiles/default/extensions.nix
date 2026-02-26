@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   force = true;
@@ -120,10 +125,10 @@
         };
       };
     in
-    builtins.attrNames settings
-    |> builtins.map (n: {
+    lib.attrNames settings
+    |> lib.map (n: {
       name = pkgs.firefoxAddons.${n}.addonId;
       value = settings.${n};
     })
-    |> builtins.listToAttrs;
+    |> lib.listToAttrs;
 }

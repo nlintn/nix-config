@@ -81,7 +81,7 @@
   };
 
   environment.pathsToLink = lib.mkMerge [
-    (lib.mkIf (lib.any (u: u.xdg.enable) (builtins.attrValues config.home-manager.users or { })) [
+    (lib.mkIf (lib.any (u: u.xdg.enable) (lib.attrValues config.home-manager.users or { })) [
       "/share/xdg-desktop-portal"
       "/share/applications"
     ])

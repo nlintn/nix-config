@@ -1,10 +1,10 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = builtins.mapAttrs (_: v: { extraOptions = v; }) {
+    matchBlocks = lib.mapAttrs (_: v: { extraOptions = v; }) {
       "*" = {
         Compression = "no";
         ForwardAgent = "no";

@@ -7,7 +7,7 @@
 
 let
   module-common = import ./common.nix;
-  systemConfigurations = builtins.mapAttrs (
+  systemConfigurations = lib.mapAttrs (
     n: _:
     let
       buildConfig = import ./systems/${n}/build-config.nix;
@@ -24,7 +24,7 @@ let
         module-common
       ];
     }
-  ) (builtins.readDir ./systems);
+  ) (lib.readDir ./systems);
   genIso =
     systemConfiguration:
     lib.nixosSystem {

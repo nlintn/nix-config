@@ -6,7 +6,7 @@
       default = { };
       apply =
         let
-          f = builtins.mapAttrs (
+          f = lib.mapAttrs (
             n: v:
             let
               val = if v ? _type && v._type == "override" && v ? content then v.content else v;

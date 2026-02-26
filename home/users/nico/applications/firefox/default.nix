@@ -29,7 +29,7 @@
             };
           }
         )
-        |> builtins.listToAttrs
+        |> lib.listToAttrs
       );
   };
 }

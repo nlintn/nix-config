@@ -327,7 +327,7 @@ with config.colorScheme.palette;
     "group deny, match:class dragon-drop"
 
     "border_size 0, match:float on, match:title Vicinae.*"
-    "rounding ${builtins.toString config.programs.vicinae.settings.launcher_window.client_side_decorations.rounding}, match:float on, match:title Vicinae.*"
+    "rounding ${lib.toString config.programs.vicinae.settings.launcher_window.client_side_decorations.rounding}, match:float on, match:title Vicinae.*"
 
     "suppress_event fullscreen, match:class org.telegram.desktop"
 

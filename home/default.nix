@@ -1,11 +1,12 @@
 {
   home-manager,
+  lib,
   pkgs,
   specialArgs,
 }:
 
-(builtins.readDir ./users)
-|> builtins.mapAttrs (
+(lib.readDir ./users)
+|> lib.mapAttrs (
   n: _:
   home-manager.lib.homeManagerConfiguration {
     inherit pkgs;

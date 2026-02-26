@@ -149,7 +149,7 @@
     };
   };
   systemd.tmpfiles.rules = [
-    ''f  "${config.services.dnscrypt-proxy.settings.cloaking_rules}"  0644  root  root  -  -''
+    "f ${lib.escapeShellArg config.services.dnscrypt-proxy.settings.cloaking_rules} 0644 root root - -"
   ];
   environment.shellAliases."dns-restart" =
     "${lib.getExe' config.systemd.package "systemctl"} restart dnscrypt-proxy2.service";

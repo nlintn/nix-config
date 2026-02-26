@@ -56,7 +56,7 @@
   ];
 
   systemd.tmpfiles.rules = [
-    "C  ${lib.escapeShellArg config.users.users.nixos.home}/flake  -  -  -  -  ${lib.escapeShellArg self.outPath}"
+    "C ${lib.escapeShellArg config.users.users.nixos.home}/flake - - - - ${lib.escapeShellArg self.outPath}"
   ];
 
   nix.settings.flake-registry = "";

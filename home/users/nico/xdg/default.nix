@@ -1,4 +1,4 @@
-{ config, ... }@args:
+{ config, lib, ... }@args:
 
 {
   imports = [
@@ -6,7 +6,7 @@
   ];
 
   systemd.user.tmpfiles.rules = [
-    ''d  "${config.xdg.userDirs.download}"  -  -  -  1d  -''
+    "d ${lib.escapeShellArg config.xdg.userDirs.download} - - - 1d -"
   ];
 
   home.preferXdgDirectories = true;

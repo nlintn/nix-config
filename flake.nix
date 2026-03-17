@@ -1,13 +1,13 @@
 {
   outputs =
     {
-      self,
-      nixpkgs,
-      nixpkgs-stable,
       agenix,
       home-manager,
-      nixpkgs-overlay,
       nix-colors,
+      nixpkgs,
+      nixpkgs-overlay,
+      nixpkgs-stable,
+      self,
       ...
     }@inputs:
     let

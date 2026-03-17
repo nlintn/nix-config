@@ -3,7 +3,11 @@ lib:
 (lib.readDir ./users)
 |> lib.mapAttrs (
   n: _:
-  { home-manager, specialArgs, ... }:
+  {
+    home-manager,
+    specialArgs,
+    ...
+  }:
 
   {
     imports = [

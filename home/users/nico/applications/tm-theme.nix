@@ -1,4 +1,8 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
 lib.toFile "base16.tmTheme" (
   with config.colorScheme.palette;

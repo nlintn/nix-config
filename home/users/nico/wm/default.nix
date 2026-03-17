@@ -1,4 +1,8 @@
-{ lib, userSettings, ... }:
+{
+  lib,
+  userSettings,
+  ...
+}:
 
 let
   wmConfig = {

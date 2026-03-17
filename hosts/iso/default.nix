@@ -1,9 +1,9 @@
 {
+  assets,
   config,
   lib,
   modulesPath,
   pkgs,
-  assets,
   self,
   systemConfiguration,
   ...

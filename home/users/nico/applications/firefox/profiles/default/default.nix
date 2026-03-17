@@ -1,4 +1,6 @@
-{ ... }@args:
+{
+  ...
+}@args:
 
 {
   isDefault = true;

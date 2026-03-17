@@ -1,4 +1,8 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
 {
   systemd.user.services."backup-rclone-sync" = {

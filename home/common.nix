@@ -1,15 +1,15 @@
 {
+  agenix,
   config,
-  lib,
-  osConfig ? null,
-  pkgs,
   hmUsername,
   inputs,
-  agenix,
-  nixpkgs-overlay,
+  lib,
   nix-colors,
-  userSecrets,
+  nixpkgs-overlay,
+  osConfig ? null,
+  pkgs,
   self,
+  userSecrets,
   userSettings,
   ...
 }:

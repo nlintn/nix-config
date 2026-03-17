@@ -1,8 +1,8 @@
 {
   lib,
   lib-stable,
-  system,
   specialArgs,
+  system,
 }:
 
 let

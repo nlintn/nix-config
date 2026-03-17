@@ -1,4 +1,7 @@
-{ userSettings, ... }@args:
+{
+  userSettings,
+  ...
+}@args:
 
 {
   programs.ghostty = {

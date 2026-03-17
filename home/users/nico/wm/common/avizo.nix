@@ -1,8 +1,8 @@
 {
   config,
   lib,
-  pkgs,
   nix-colors,
+  pkgs,
   ...
 }:
 

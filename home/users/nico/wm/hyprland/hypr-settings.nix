@@ -1,10 +1,10 @@
 {
   config,
-  lib,
-  pkgs,
-  lib-custom,
-  userSettings,
   hyreload,
+  lib,
+  lib-custom,
+  pkgs,
+  userSettings,
   ...
 }@args:
 

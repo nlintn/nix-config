@@ -1,4 +1,8 @@
-{ lib, pkgs, ... }@args:
+{
+  lib,
+  pkgs,
+  ...
+}@args:
 
 {
   programs.firefox = {
@@ -21,7 +25,10 @@
         |> lib.attrsToList
         |> lib.imap1 (
           i:
-          { name, value }:
+          {
+            name,
+            value,
+          }:
           {
             inherit name;
             value = value // {

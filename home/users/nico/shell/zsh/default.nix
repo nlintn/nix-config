@@ -1,4 +1,8 @@
-{ config, pkgs, ... }@args:
+{
+  config,
+  pkgs,
+  ...
+}@args:
 
 {
   programs.zsh = {

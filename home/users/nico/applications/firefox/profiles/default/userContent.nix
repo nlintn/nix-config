@@ -1,7 +1,7 @@
 {
+  assets,
   config,
   lib,
-  assets,
   nix-colors,
   ...
 }:

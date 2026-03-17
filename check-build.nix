@@ -1,9 +1,8 @@
 {
   lib,
+  self,
   stdenv,
   symlinkJoin,
-
-  self,
 }:
 
 symlinkJoin {

@@ -1,11 +1,11 @@
 {
-  config,
-  lib,
   agenix,
-  nixSystemName,
-  nix-colors,
-  overlays,
+  config,
   hostSecrets,
+  lib,
+  nix-colors,
+  nixSystemName,
+  overlays,
   self,
   ...
 }:

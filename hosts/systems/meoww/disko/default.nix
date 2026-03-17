@@ -1,4 +1,7 @@
-{ disko, ... }:
+{
+  disko,
+  ...
+}:
 
 {
   imports = [

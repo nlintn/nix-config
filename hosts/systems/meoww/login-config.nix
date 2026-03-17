@@ -10,9 +10,9 @@
     HandlePowerKey = "sleep";
     HandleLidSwitch = "sleep";
   };
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=24h
-  '';
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "24h";
+  };
 
   services.greetd = {
     enable = true;

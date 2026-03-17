@@ -65,12 +65,12 @@ in
 
     plugins = with pkgs.hyprlandPlugins; [
       (hyprsplit.overrideAttrs (finalAttrs: {
-        version = "0.53.3";
+        version = "0.54.1";
         src = pkgs.fetchFromGitHub {
           owner = "shezdy";
           repo = "hyprsplit";
-          rev = "1d8ab25e03a68e136a5534c25890da2e5b25488b";
-          hash = "sha256-0/b9n3NvXiA2NGz2Bt/h8TLyBc+twJiHriHyI8JovdI=";
+          rev = "395b780d517ee475e7e94beb149ec9a9fdac292d";
+          hash = "sha256-IksjbT24cgWl2h6ZV4bPxoORmHCQ7h/M/OLQ4epReAE=";
         };
       }))
     ];

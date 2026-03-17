@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  lib',
+  lib-custom,
   userSettings,
   ...
 }:
@@ -28,7 +28,7 @@
           ];
         }
       );
-      name = "Colloid-${lib'.capitalizeString config.colorScheme.variant}-Compact-Catppuccin";
+      name = "Colloid-${lib-custom.capitalizeString config.colorScheme.variant}-Compact-Catppuccin";
     };
 
     iconTheme = {

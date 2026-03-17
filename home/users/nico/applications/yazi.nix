@@ -6,33 +6,35 @@
 }@args:
 
 let
-  editNewTmuxWin = ''${lib.getExe config.programs.tmux.package} new-window -- "$EDITOR" -- "$@"'';
-  dragAndDrop = ''${lib.getExe pkgs.dragon-drop} "$@"'';
+  editNewTmuxWin = "${lib.getExe config.programs.tmux.package} new-window -- \"$EDITOR\" -- $@";
+  dragAndDrop = "${lib.getExe pkgs.dragon-drop} $@";
 in
 {
   programs.yazi = {
     enable = true;
     package = pkgs.yazi.override { extraPackages = [ pkgs.exiftool ]; };
+    shellWrapperName = "y";
     settings = {
       mgr = {
         linemode = "mtime";
         show_hidden = true;
       };
       opener = {
-        open = [
-          {
-            run = ''${config.home.shellAliases.open} "$@"'';
+        open =
+          (lib.optional (config.home.shellAliases ? open) {
+            run = "${config.home.shellAliases.open} \"$@\"";
             desc = "Open";
-          }
-          {
-            run = dragAndDrop;
-            desc = "Drag and Drop";
-          }
-        ]
-        ++ (lib.optional config.programs.tmux.enable {
-          run = editNewTmuxWin;
-          desc = "Edit in new tmux win";
-        });
+          })
+          ++ [
+            {
+              run = dragAndDrop;
+              desc = "Drag and Drop";
+            }
+          ]
+          ++ (lib.optional config.programs.tmux.enable {
+            run = editNewTmuxWin;
+            desc = "Edit in new tmux win";
+          });
       };
     };
     keymap = {
@@ -51,7 +53,7 @@ in
       inherit full-border;
     };
     initLua = /* lua */ ''
-      require("full-border"):setup()
+      require('full-border'):setup()
     '';
     theme = with config.colorScheme.palette; {
       mgr = {
@@ -61,7 +63,7 @@ in
 
         find_keyword = {
           fg = "#${base01}";
-          bg = "#${base0A}";
+          bg = "#${base09}";
         };
         find_position = {
           fg = "#${base01}";

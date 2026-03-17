@@ -19,7 +19,7 @@
       merge.tool = "nvim";
       mergetool = {
         prompt = false;
-        "nvim".cmd = ''${lib.getExe config.vars.nvimPackage} -c "DiffviewOpen"'';
+        "nvim".cmd = "${lib.getExe config.vars.nvimPackage} -c 'DiffviewOpen'";
       };
 
       column.ui = "auto";

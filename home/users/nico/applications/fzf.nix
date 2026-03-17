@@ -5,6 +5,13 @@
   ...
 }:
 
+let
+  bat = lib.getExe config.programs.bat.package;
+  eza = lib.getExe pkgs.eza;
+  fd = lib.getExe config.programs.fd.package;
+  head = lib.getExe' pkgs.coreutils "head";
+  zoxide = lib.getExe config.programs.zoxide.package;
+in
 {
   programs.fzf = {
     enable = true;
@@ -21,7 +28,7 @@
       prompt = "#${base0E}";
       spinner = "#${base06}";
     };
-    defaultCommand = "${lib.getExe config.programs.fd.package} -IL";
+    defaultCommand = "${fd} -IL";
     defaultOptions = [
       "--height 60%"
       "--border"
@@ -29,18 +36,18 @@
       "--no-sort"
     ]
     ++ lib.optional config.programs.tmux.enable "--tmux bottom,75%,60%";
-    changeDirWidgetCommand = "${lib.getExe config.programs.fd.package} -IL -t d -E .cache && ${lib.getExe config.programs.zoxide.package} query --list";
+    # ALT-C Options
+    changeDirWidgetCommand = "${fd} -IL -t d -E .cache && ${zoxide} query --list";
     changeDirWidgetOptions = [
-      # ALT-C Options
-      "--preview '${lib.getExe pkgs.eza} --color=always --follow-symlinks --tree {}'"
+      "--preview '${eza} --color=always --follow-symlinks --tree {}'"
     ];
-    fileWidgetCommand = "${lib.getExe config.programs.fd.package} -IL -t f";
+    # CTRL-T Options
+    fileWidgetCommand = "${fd} -IL -t f";
     fileWidgetOptions = [
-      # CTRL-T Options
-      "--preview '(${lib.getExe config.programs.bat.package} --paging=never --color=always {} || ${lib.getExe pkgs.tree} -C {}) 2> /dev/null | head -200'"
+      "--preview '(${bat} --paging=never --color=always {} || ${eza} --color=always --follow-symlinks --tree {}) 2> /dev/null | ${head} -200'"
     ];
+    # CTRL-R Options
     historyWidgetOptions = [
-      # CTRL-R Options
     ];
   };
 }

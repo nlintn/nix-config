@@ -22,26 +22,31 @@
         ignore_systemd_inhibit = false;
         inhibit_sleep = 3;
       };
-      listener = [
-        {
-          timeout = 180;
-          on-timeout = "${lib.getExe pkgs.brightnessctl} -s set 75%-";
-          on-resume = "${lib.getExe pkgs.brightnessctl} -r";
-        }
-        {
-          timeout = 190;
-          on-timeout = config.vars.sessionLockCmd;
-        }
-        {
-          timeout = 250;
-          on-timeout = "${lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl"} dispatch dpms off";
-          on-resume = "${lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl"} dispatch dpms on";
-        }
-        {
-          timeout = 600;
-          on-timeout = "${config.systemd.user.systemctlPath} suspend";
-        }
-      ];
+      listener =
+        let
+          brightnessctl = lib.getExe pkgs.brightnessctl;
+          hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
+        in
+        [
+          {
+            timeout = 180;
+            on-timeout = "${brightnessctl} -s set 75%-";
+            on-resume = "${brightnessctl} -r";
+          }
+          {
+            timeout = 190;
+            on-timeout = config.vars.sessionLockCmd;
+          }
+          {
+            timeout = 250;
+            on-timeout = "${hyprctl} dispatch dpms off";
+            on-resume = "${hyprctl} dispatch dpms on";
+          }
+          {
+            timeout = 600;
+            on-timeout = "${config.systemd.user.systemctlPath} suspend";
+          }
+        ];
     };
   };
 }

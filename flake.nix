@@ -14,7 +14,7 @@
       system = "x86_64-linux"; # default system
       lib = nixpkgs.lib;
       lib-stable = nixpkgs-stable.lib;
-      lib' = nixpkgs-overlay.lib;
+      lib-custom = nixpkgs-overlay.lib;
       overlays = [
         agenix.overlays.default
         nixpkgs-overlay.overlays.default
@@ -45,7 +45,7 @@
         inherit
           inputs
           overlays
-          lib'
+          lib-custom
           assets
           hostSecrets
           userSecrets
@@ -76,14 +76,14 @@
     {
       nixosConfigurations = hosts.nixosConfigurations;
       homeConfigurations = home;
-      packages = lib'.eachSystem (
+      packages = lib-custom.eachSystem (
         _:
         let
           isos = lib.mapAttrs (_: v: v.config.system.build.isoImage) hosts.isos;
         in
         isos // { default = isos.isoRaw; }
       );
-      checks = lib'.eachSystemPkgs nixpkgs (pkgs: rec {
+      checks = lib-custom.eachSystemPkgs nixpkgs (pkgs: rec {
         build = pkgs.callPackage ./check-build.nix { inherit self; };
         default = build;
       });

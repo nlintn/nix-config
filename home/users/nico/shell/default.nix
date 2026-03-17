@@ -16,8 +16,4 @@
   programs.dircolors = {
     enable = true;
   };
-
-  home.sessionVariables = {
-    GROFF_NO_SGR = "1";
-  };
 }

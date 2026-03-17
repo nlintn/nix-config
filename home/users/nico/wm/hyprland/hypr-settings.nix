@@ -2,14 +2,14 @@
   config,
   lib,
   pkgs,
-  lib',
+  lib-custom,
   userSettings,
   hyreload,
   ...
 }@args:
 
 let
-  evalBinds = lib'.hyprland.evalBinds;
+  evalBinds = lib-custom.hyprland.evalBinds;
 
   var_brightnessctl = "${lib.getExe' config.services.avizo.package "lightctl"} -e 2";
   var_browser = lib.getExe config.programs.firefox.finalPackage;
@@ -23,12 +23,12 @@ let
   var_loginctl = config.systemd.user.loginctlPath;
   var_playerctl = lib.getExe config.services.playerctld.package;
   var_pwm = lib.getExe config.programs.keepassxc.package;
+  var_scratchpad = "${lib.getExe config.programs.ghostty.package} -- ${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"";
   var_swappy = lib.getExe config.programs.swappy.package;
   var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
   var_term = lib.getExe config.xdg.terminal-exec.package;
-  var_tmux_term = "${var_term} --command='${config.vars.seshFzf}'";
+  var_tmux_term = "${var_term} --command=${lib.escapeShellArg config.vars.seshFzf}";
   var_volumectl = lib.getExe' config.services.avizo.package "volumectl";
-  var_scratchpad = "${lib.getExe config.programs.ghostty.package} --command='${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"'";
 
 in
 with config.colorScheme.palette;
@@ -289,47 +289,29 @@ with config.colorScheme.palette;
   windowrule = [
     "group set, match:float off"
 
-    "suppress_event maximize, match:class .*"
+    "suppress_event fullscreen, suppress_event maximize, match:class .*"
 
     "group new, match:class thunderbird, match:initial_title Mozilla Thunderbird"
 
-    "float on, group unset, match:class com.saivert.pwvucontrol"
-    "float on, group unset, match:class nm-connection-editor"
-    "float on, group unset, match:class .blueman-manager-wrapped"
+    "float on, group deny, rounding 6, match:class com\\.saivert\\.pwvucontrol|gtk-ssh-askpass|xdg-desktop-portal-gtk"
+    "float on, group deny, match:class nm-connection-editor|\\.blueman-manager-wrapped"
 
-    "float on, group unset, match:class xdg-desktop-portal-gtk"
+    "float on, group deny, match:class firefox|thunderbird, match:title Password Required - Mozilla (Firefox|Thunderbird)"
 
-    "no_screen_share 1, match:class org.keepassxc.KeePassXC"
+    "no_screen_share 1, match:class org.keepassxc.KeePassXC|keepassxc"
 
-    "float on, group unset, match:class keepassxc, match:title Open .*"
+    "float on, group deny, rounding 6, match:class keepassxc, match:title Open .*|Save attachments|Select files"
 
-    "float on, group unset, match:class org.keepassxc.KeePassXC, match:title Generate Password"
+    "float on, group unset, match:class org.keepassxc.KeePassXC, match:title KeePassXC - ( Access Request|Unlock Database)|Generate Password"
+    "center on, pin on, stay_focused on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - ( Access Request|Unlock Database)"
 
-    "float on, group unset, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
-    "center on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
-    "pin on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
-    "stay_focused on, match:class org.keepassxc.KeePassXC, match:title KeePassXC -  Access Request"
+    "float on, group deny, match:class steam, match:title Steam Settings|Friends List"
 
-    "float on, group unset, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
-    "center on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
-    "pin on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
-    "stay_focused on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - Unlock Database"
+    "float on, group deny, rounding 6, match:class thunar, match:title Rename .*|File Operation Progress"
 
-    "float on, group unset, match:class steam, match:title Steam Settings"
-    "float on, group unset, match:class steam, match:title Friends List"
+    "border_size 0, float on, group deny, pin on, rounding 6, match:class dragon-drop|xdragon"
 
-    "float on, group unset, match:class thunar, match:title Rename .*"
-    "float on, group unset, match:class thunar, match:title File Operation Progress"
-
-    "pin on, match:class dragon-drop"
-    "border_size 0, match:class dragon-drop"
-    "rounding 6, match:class dragon-drop"
-    "group deny, match:class dragon-drop"
-
-    "border_size 0, match:float on, match:title Vicinae.*"
-    "rounding ${lib.toString config.programs.vicinae.settings.launcher_window.client_side_decorations.rounding}, match:float on, match:title Vicinae.*"
-
-    "suppress_event fullscreen, match:class org.telegram.desktop"
+    "border_size 0, rounding ${lib.toString config.programs.vicinae.settings.launcher_window.client_side_decorations.rounding}, match:float on, match:title Vicinae.*"
 
     "border_size 0, match:float off, match:workspace w[tv1]"
     "border_size 0, match:float off, match:workspace f[1]"
@@ -344,21 +326,13 @@ with config.colorScheme.palette;
 
   layerrule = [
     "match:namespace selection, no_anim on"
-    "match:namespace vicinae, blur on"
-    "match:namespace vicinae, xray off"
-    "match:namespace vicinae, ignore_alpha 0"
+    "match:namespace vicinae, blur on, ignore_alpha 0, xray off"
 
-    "match:namespace logout_dialog, blur on"
-    "match:namespace logout_dialog, xray off"
+    "match:namespace logout_dialog, blur on, xray off"
 
-    "match:namespace avizo, above_lock 1"
-    "match:namespace avizo, blur on"
-    "match:namespace avizo, xray off"
-    "match:namespace avizo, ignore_alpha 0"
+    "match:namespace avizo, above_lock 1, blur on, ignore_alpha 0, xray off"
 
-    "match:namespace swaync-.*, blur on"
-    "match:namespace swaync-.*, xray off"
-    "match:namespace swaync-.*, ignore_alpha 0"
+    "match:namespace swaync-.*, blur on, ignore_alpha 0, xray off"
   ];
 
   general = {

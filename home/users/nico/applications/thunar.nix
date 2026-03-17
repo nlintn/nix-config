@@ -20,7 +20,7 @@
       <actions>
       <action>
         <name>Open Terminal Here</name>
-        <command>${lib.getExe config.xdg.terminal-exec.package}</command>
+        <command>${lib.getExe config.xdg.terminal-exec.package |> lib.escapeXML}</command>
         <patterns>*</patterns>
         <directories/>
       </action>

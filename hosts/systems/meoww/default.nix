@@ -12,9 +12,9 @@
     ./audio.nix
     ./bootloader.nix
     ./disko
-    ./displaymanager.nix
     ./hardware-configuration.nix
     ./hardware-extra.nix
+    ./login-config.nix
     ./network-configuration.nix
     ./nix-configuration.nix
     ./programs.nix

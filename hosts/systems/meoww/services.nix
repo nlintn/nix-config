@@ -14,10 +14,6 @@
       mouse.accelProfile = "flat";
       touchpad.accelProfile = "adaptive";
     };
-    logind.settings.Login = {
-      HandlePowerKey = "suspend";
-      HandleLidSwitch = "suspend";
-    };
     pcscd.enable = true; # smart cards
     tailscale = {
       enable = true;

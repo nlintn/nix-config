@@ -6,6 +6,14 @@
 }:
 
 {
+  services.logind.settings.Login = {
+    HandlePowerKey = "sleep";
+    HandleLidSwitch = "sleep";
+  };
+  systemd.sleep.extraConfig = ''
+    HibernateDelaySec=24h
+  '';
+
   services.greetd = {
     enable = true;
     settings = {
@@ -15,7 +23,7 @@
         in
         {
           command = "${lib.getExe pkgs.tuigreet} --time --time-format \"%d. %b %Y %H:%M:%S\" --asterisks --user-menu --remember
-          --remember-user-session --sessions ${session_dir}/wayland-sessions --xsessions ${session_dir}/xsessions
+          --remember-user-session --sessions '${session_dir}/wayland-sessions' --xsessions '${session_dir}/xsessions'
           --session-wrapper false";
         };
     };

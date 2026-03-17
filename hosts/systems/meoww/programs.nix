@@ -21,11 +21,11 @@
     captive-browser = {
       enable = true;
       browser = lib.concatStringsSep " " [
-        ''env XDG_CONFIG_HOME="$PREV_CONFIG_HOME"''
+        "env XDG_CONFIG_HOME=\"$PREV_CONFIG_HOME\""
         "${lib.getExe pkgs.ungoogled-chromium}"
         "--user-data-dir=\${XDG_DATA_HOME:-$HOME/.local/share}/chromium-captive"
-        ''--proxy-server="socks5://$PROXY"''
-        ''--proxy-bypass-list="<-loopback>"''
+        "--proxy-server=\"socks5://$PROXY\""
+        "--proxy-bypass-list='<-loopback>'"
         "--no-first-run"
         "--new-window"
         "--incognito"

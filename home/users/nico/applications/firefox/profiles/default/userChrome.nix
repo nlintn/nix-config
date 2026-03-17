@@ -22,6 +22,9 @@ in
   .titlebar-spacer[type="post-tabs"]{ display:none }
 
   :root {
+    --input-bgcolor: #${base00} !important;
+    --input-color: #${base05} !important;
+
     --toolbox-bgcolor: transparent !important;
     --toolbox-bgcolor-inactive: transparent !important;
     --toolbox-textcolor: #${base05} !important;
@@ -65,6 +68,7 @@ in
     --sidebar-text-color : #${base05} !important;
 
     --color-accent-primary: #${base0E} !important;
+    --color-accent-primary-selected: #${base0E} !important;
     --color-accent-primary-hover: ${toRGBA base0E 0.8} !important;
     --color-accent-primary-active: ${toRGBA base0E 0.6} !important;
     --background-color-box: #${base00} !important;
@@ -164,6 +168,7 @@ in
     treechildren {
       color: #${base05} !important;
       background-color: #${base00} !important;
+      outline: none !important;
     }
     #placesView {
       background-color: #${base01} !important;

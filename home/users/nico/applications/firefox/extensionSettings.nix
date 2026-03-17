@@ -25,7 +25,7 @@ let
         "defaultPasswordManager" = true;
         "defaultGroupAlwaysAsk" = false;
         "downloadFaviconAfterSave" = true;
-        "passkeys" = false;
+        "passkeys" = true;
         "passkeysFallback" = true;
         "redirectAllowance" = 11;
         "saveDomainOnly" = true;

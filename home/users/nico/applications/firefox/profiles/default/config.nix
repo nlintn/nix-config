@@ -18,6 +18,12 @@ with config.colorScheme.palette;
   "browser.tabs.unloadOnLowMemory" = true;
 
   # disable ml
+  "browser.ai.control.default" = "blocked";
+  "browser.ai.control.linkPreviewKeyPoints" = "blocked";
+  "browser.ai.control.pdfjsAltText" = "blocked";
+  "browser.ai.control.sidebarChatbot" = "blocked";
+  "browser.ai.control.smartTabGroups" = "blocked";
+  "browser.ai.control.translations" = "blocked";
   "browser.ml.chat.enabled" = false;
   "browser.ml.chat.menu" = false;
   "browser.ml.chat.page" = false;
@@ -47,7 +53,6 @@ with config.colorScheme.palette;
   "browser.bookmarks.restore_default_bookmarks" = false;
   "browser.ctrlTab.sortByRecentlyUsed" = false;
   "browser.disableResetPrompt" = true;
-  "browser.display.use_system_colors" = true;
   "browser.download.alwaysOpenPanel" = true;
   "browser.download.autohideButton" = false;
   "browser.download.lastDir" = config.xdg.userDirs.download;
@@ -176,10 +181,22 @@ with config.colorScheme.palette;
   "services.sync.engine.tabs" = true;
 
   # UI colors
+  "browser.display.use_system_colors" = true;
+  "browser.active_color" = "#${base08}";
+  "browser.active_color.dark" = "#${base08}";
+  "browser.anchor_color" = "#${base0D}";
+  "browser.anchor_color.dark" = "#${base0D}";
+  "browser.display.background_color" = "#${base00}";
+  "browser.display.background_color.dark" = "#${base00}";
+  "browser.display.foreground_color" = "#${base05}";
+  "browser.display.foreground_color.dark" = "#${base05}";
+  "browser.visited_color" = "#${base0E}";
+  "browser.visited_color.dark" = "#${base0F}";
   "ui.textHighlightBackground" = "#${base09}";
   "ui.textHighlightForeground" = "#${base01}";
   "ui.textSelectAttentionBackground" = "#${base08}";
   "ui.textSelectAttentionForeground" = "#${base01}";
+  "ui.textSelectDisabledBackground" = "#${base05}";
 
   # UI layout settings
   "browser.uiCustomization.navBarWhenVerticalTabs" = [

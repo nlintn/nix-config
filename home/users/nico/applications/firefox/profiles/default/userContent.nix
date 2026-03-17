@@ -25,7 +25,7 @@ in
       color: #${base05} !important;
     }
   }
-  @-moz-document url-prefix(about:) {
+  @-moz-document url-prefix(about:), url-prefix(chrome:) {
     .logo {
       background-image: url('data:image/svg+xml;utf8,${
         lib.readFile assets."nix-snowflake-rainbow.svg" |> lib.escapeURL
@@ -35,7 +35,21 @@ in
       --input-text-background-color: #${base00} !important;
       --input-text-color: #${base05} !important;
     }
-    :root {
+    treechildren::-moz-tree-row(current, focus) {
+      outline: none !important;
+    }
+    dialog {
+      background-color: #${base01} !important;
+    }
+    .search-tooltip {
+      background-color: #${base0A} !important;
+      border-color: #${base0A} !important;
+      color: #${base01} !important;
+    }
+    :root, .dialog-box {
+      --input-bgcolor: #${base00} !important;
+      --input-color: #${base05} !important;
+
       --newtab-background-color: ${toRGBA base00 0.5} !important;
       --newtab-background-color-secondary: ${toRGBA base02 0.5} !important;
       --newtab-primary-action-background: #${base0E} !important;
@@ -62,6 +76,7 @@ in
       --doorhanger-seperator-color: #${base01} !important;
 
       --color-accent-primary: #${base0E} !important;
+      --color-accent-primary-selected: #${base0E} !important;
       --color-accent-primary-hover: ${toRGBA base0E 0.8} !important;
       --color-accent-primary-active: ${toRGBA base0E 0.6} !important;
       --focus-outline-color: #${base0E} !important;

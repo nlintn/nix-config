@@ -11,6 +11,7 @@
     plugins = with pkgs; [
       thunar-archive-plugin
       thunar-media-tags-plugin
+      thunar-volman
     ];
   };
   xdg.configFile."Thunar/uca.xml" = {

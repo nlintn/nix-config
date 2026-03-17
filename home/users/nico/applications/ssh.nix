@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   programs.ssh = {
@@ -15,4 +15,5 @@
   };
 
   services.ssh-agent.enable = true;
+  home.sessionVariables.SSH_ASKPASS = "${pkgs.openssh-askpass}/libexec/gtk-ssh-askpass";
 }

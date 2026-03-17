@@ -8,7 +8,7 @@
 
 {
   vars = {
-    lockCmd = "${lib.getExe config.programs.hyprlock.package} --grace 2";
+    lockCmd = "${lib.getExe config.programs.hyprlock.package}";
     unlockCmd = "${lib.getExe' pkgs.procps "pkill"} -SIGUSR1 hyprlock";
   };
   programs.hyprlock = {

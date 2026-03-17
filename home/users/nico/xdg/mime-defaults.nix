@@ -170,6 +170,7 @@ lib.mergeAttrsList [
   (f
     [
       "message/rfc822"
+      "x-scheme-handler/mailto"
     ]
     [
       thunderbird

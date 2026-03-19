@@ -23,11 +23,11 @@ let
   var_loginctl = config.systemd.user.loginctlPath;
   var_playerctl = lib.getExe config.services.playerctld.package;
   var_pwm = lib.getExe config.programs.keepassxc.package;
-  var_scratchpad = "${lib.getExe config.programs.ghostty.package} -- ${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"";
   var_swappy = lib.getExe config.programs.swappy.package;
   var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
   var_term = lib.getExe config.xdg.terminal-exec.package;
-  var_tmux_term = "${var_term} --command=${lib.escapeShellArg config.vars.seshFzf}";
+  var_term_scratchpad = "${var_term} -- ${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"";
+  var_term_tmux = "${var_term} -- ${config.vars.seshFzf}";
   var_volumectl = lib.getExe' config.services.avizo.package "volumectl";
 
 in
@@ -61,7 +61,7 @@ with config.colorScheme.palette;
         "E, exec, ${var_filemanager}"
         "W, exec, ${var_browser}"
         "Q, exec, ${var_term}"
-        "SHIFT, Q, exec, ${var_tmux_term}"
+        "SHIFT, Q, exec, ${var_term_tmux}"
         "SPACE, exec, ${var_launcher} vicinae://toggle"
         "SHIFT, R, exec, ${hyreload}"
         "PERIOD, exec, ${var_launcher} vicinae://extensions/vicinae/core/search-emojis"
@@ -115,7 +115,6 @@ with config.colorScheme.palette;
         "P, togglespecialworkspace, pwm"
         "SHIFT, P, movetoworkspacesilent, special:pwm"
 
-        "K, split:swapactiveworkspaces, current +1"
         "SHIFT, K, split:grabroguewindows"
       ]
     ++
@@ -255,7 +254,7 @@ with config.colorScheme.palette;
       gradient_rounding = 0;
       height = 14;
       indicator_gap = 0;
-      indicator_height = 0;
+      indicator_height = 1;
       keep_upper_gap = false;
       scrolling = false;
       text_offset = 1;
@@ -286,61 +285,158 @@ with config.colorScheme.palette;
 
   render.cm_enabled = false;
 
-  windowrule = [
-    "group set, match:float off"
+  windowrule =
+    let
+      template = {
+        border_size = 0;
+        float = true;
+        group = "deny";
+        rounding = 10;
+      };
+    in
+    [
+      {
+        name = "group_non_float";
+        "match:float" = false;
+        group = "set";
+      }
+      {
+        name = "supress_fullscreen";
+        "match:class" = ".*";
+        suppress_event = [
+          "fullscreen"
+          "maximize"
+        ];
+      }
+      {
+        name = "disable_screenshare";
+        "match:class" = "keepassxc|org.keepassxc.KeePassXC";
+        no_screen_share = true;
+      }
+      {
+        name = "round_stay_focused_askpass";
+        inherit (template) rounding;
+        stay_focused = true;
+        "match:class" = "gtk-ssh-askpass";
+      }
+      {
+        name = "float_classes";
+        inherit (template) float group;
+        "match:class" = "nm-connection-editor|\\.blueman-manager-wrapped";
+      }
+      {
+        name = "float_round_classes";
+        inherit (template) float group rounding;
+        "match:class" = "com\\.saivert\\.pwvucontrol||xdg-desktop-portal-gtk";
+      }
+      {
+        name = "float_mozilla_pass_popup";
+        inherit (template) float group;
+        "match:class" = "firefox|thunderbird";
+        "match:title" = "Password Required - Mozilla (Firefox|Thunderbird)";
+      }
+      {
+        name = "focus_thunderbird_confirm";
+        stay_focused = true;
+        "match:class" = "thunderbird";
+        "match:title" = "Send Message";
+      }
+      {
+        name = "float_round_keepassxc_file_popup";
+        inherit (template) float group rounding;
+        "match:class" = "keepassxc";
+        "match:title" = "Open .*|Save attachments|Select files";
+      }
+      {
+        name = "float_keepassxc_gen_popup";
+        inherit (template) float group;
+        "match:class" = "org.keepassxc.KeePassXC";
+        "match:title" = "Generate Password";
+      }
+      {
+        name = "float_pin_keepassxc_access_popup";
+        inherit (template) float group;
+        center = true;
+        pin = true;
+        stay_focused = true;
+        "match:class" = "org.keepassxc.KeePassXC";
+        "match:title" = "KeePassXC - ( Access Request|Unlock Database)";
+      }
+      {
+        name = "float_steam_popup";
+        inherit (template) float group;
+        "match:class" = "steam";
+        "match:title" = "Steam Settings|Friends List";
+      }
+      {
+        name = "float_round_thunar_popup";
+        inherit (template) float group rounding;
+        "match:class" = "(t|T)hunar";
+        "match:title" = "Error|File Operation Progress|Rename .*";
+      }
+      {
+        name = "float_round_pin_dragondrop";
+        inherit (template) float group rounding;
+        border_size = 0;
+        pin = true;
+        "match:class" = "dragon-drop|xdragon";
+      }
+      {
+        name = "float_vicinae";
+        inherit (template) float group rounding;
+        border_size = 0;
+        "match:class" = "vicinae";
+      }
 
-    "suppress_event fullscreen, suppress_event maximize, match:class .*"
+      {
+        name = "no_gaps_when_only";
+        border_size = 0;
+        "match:float" = false;
+        "match:workspace" = "w[tv1]";
+      }
+      {
+        name = "no_gaps_when_max";
+        border_size = 0;
+        "match:float" = false;
+        "match:workspace" = "f[1]";
+      }
 
-    "group new, match:class thunderbird, match:initial_title Mozilla Thunderbird"
+      # "match:float off, match:workspace w[t1], decorate off"
+    ];
 
-    "float on, group deny, rounding 6, match:class com\\.saivert\\.pwvucontrol|gtk-ssh-askpass|xdg-desktop-portal-gtk"
-    "float on, group deny, match:class nm-connection-editor|\\.blueman-manager-wrapped"
-
-    "float on, group deny, match:class firefox|thunderbird, match:title Password Required - Mozilla (Firefox|Thunderbird)"
-
-    "no_screen_share 1, match:class org.keepassxc.KeePassXC|keepassxc"
-
-    "float on, group deny, rounding 6, match:class keepassxc, match:title Open .*|Save attachments|Select files"
-
-    "float on, group unset, match:class org.keepassxc.KeePassXC, match:title KeePassXC - ( Access Request|Unlock Database)|Generate Password"
-    "center on, pin on, stay_focused on, match:class org.keepassxc.KeePassXC, match:title KeePassXC - ( Access Request|Unlock Database)"
-
-    "float on, group deny, match:class steam, match:title Steam Settings|Friends List"
-
-    "float on, group deny, rounding 6, match:class thunar, match:title Rename .*|File Operation Progress"
-
-    "border_size 0, float on, group deny, pin on, rounding 6, match:class dragon-drop|xdragon"
-
-    "border_size 0, rounding ${lib.toString config.programs.vicinae.settings.launcher_window.client_side_decorations.rounding}, match:float on, match:title Vicinae.*"
-
-    "border_size 0, match:float off, match:workspace w[tv1]"
-    "border_size 0, match:float off, match:workspace f[1]"
-
-    "decorate off, match:float off, match:workspace w[t1]"
+  layerrule = [
+    {
+      name = "blur_popup";
+      blur = true;
+      ignore_alpha = 0;
+      xray = false;
+      "match:namespace" = "avizo|vicinae|swaync-.*";
+    }
+    {
+      name = "abovelock_avizo";
+      above_lock = true;
+      "match:namespace" = "avizo";
+    }
+    {
+      name = "no_anim_selection";
+      no_anim = true;
+      "match:namespace" = "selection";
+    }
   ];
 
   workspace = [
-    "special:dropterm, on-created-empty:${var_scratchpad}"
+    "special:dropterm, on-created-empty:${var_term_scratchpad}"
     "special:pwm, on-created-empty:${var_pwm}"
-  ];
-
-  layerrule = [
-    "match:namespace selection, no_anim on"
-    "match:namespace vicinae, blur on, ignore_alpha 0, xray off"
-
-    "match:namespace logout_dialog, blur on, xray off"
-
-    "match:namespace avizo, above_lock 1, blur on, ignore_alpha 0, xray off"
-
-    "match:namespace swaync-.*, blur on, ignore_alpha 0, xray off"
   ];
 
   general = {
     gaps_in = 1;
     gaps_out = "0,0,1,0";
     border_size = 1;
-    "col.active_border" = "rgba(${base0F}66)";
-    "col.inactive_border" = "rgba(${base04}66)";
+    "col.active_border" = "rgba(${base0F}aa)";
+    "col.nogroup_border" = "rgba(${base04}aa)";
+    "col.inactive_border" = "rgba(${base04}aa)";
+    "col.nogroup_border_active" = "rgba(${base0F}aa)";
 
     layout = "master";
     allow_tearing = false;

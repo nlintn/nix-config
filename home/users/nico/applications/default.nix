@@ -59,7 +59,7 @@
     htop.enable = true;
     java.enable = true;
     jq.enable = true;
-    mpv.enable = true;
+    # mpv.enable = true; TODO: add back when not broken anymore
     rclone.enable = true;
     ripgrep.enable = true;
     swayimg.enable = true;

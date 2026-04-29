@@ -30,6 +30,7 @@
       );
       name = "Colloid-${lib-custom.capitalizeString config.colorScheme.variant}-Compact-Catppuccin";
     };
+    gtk4.theme = config.gtk.theme;
 
     iconTheme = {
       package = pkgs.kora-icon-theme;

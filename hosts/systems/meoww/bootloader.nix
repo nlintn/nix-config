@@ -14,7 +14,6 @@
     limine = {
       enable = true;
       secureBoot.enable = true;
-      enableEditor = true;
       panicOnChecksumMismatch = true;
       maxGenerations = 20;
       extraConfig = ''

@@ -22,12 +22,12 @@ in
 
     ./hypridle.nix
     ./hyprlock
+    ./hyprmon.nix
     ./waybar
   ];
 
   home.packages = with pkgs; [
     file-roller
-    nwg-displays
     pwvucontrol
     wl-mirror
     wlr-randr
@@ -77,6 +77,10 @@ in
 
     settings = import ./hypr-settings.nix (args // customPkgs);
   };
+
+  systemd.user.tmpfiles.rules = lib.map (
+    f: "f ${lib.escapeShellArg f} - - - - -"
+  ) config.wayland.windowManager.hyprland.settings.source;
 
   xdg.portal = {
     enable = lib.mkDefault true;

@@ -33,10 +33,6 @@ let
 in
 with config.colorScheme.palette;
 {
-  source = [
-    "$HOME/.config/hypr/monitors.conf"
-  ];
-
   monitor = [
     ", preferred, 0x0, 1"
     "eDP-1, preferred, auto-center-down, 1.6"
@@ -249,23 +245,23 @@ with config.colorScheme.palette;
     groupbar = {
       font_size = 10;
       gaps_in = 1;
-      gaps_out = 0;
+      gaps_out = 1;
       gradients = true;
       gradient_rounding = 0;
-      height = 14;
+      height = 15;
       indicator_gap = 0;
-      indicator_height = 1;
+      indicator_height = 0;
       keep_upper_gap = false;
       scrolling = false;
       text_offset = 1;
 
-      "col.active" = "rgb(${base0E})";
+      "col.active" = "rgb(${base00})";
       font_weight_active = "semibold";
-      text_color = "rgb(${base01})";
+      text_color = "rgb(${base05})";
 
-      "col.inactive" = "rgb(${base00})";
-      font_weight_inactive = "normal";
-      text_color_inactive = "rgb(${base05})";
+      "col.inactive" = "rgb(${base01})";
+      font_weight_inactive = "semilight";
+      text_color_inactive = "rgba(${base05}cc)";
     };
   };
 
@@ -303,7 +299,7 @@ with config.colorScheme.palette;
       {
         name = "supress_fullscreen";
         "match:class" = ".*";
-        suppress_event = [
+        suppress_event = lib.concatStringsSep " " [
           "fullscreen"
           "maximize"
         ];
@@ -313,12 +309,7 @@ with config.colorScheme.palette;
         "match:class" = "keepassxc|org.keepassxc.KeePassXC";
         no_screen_share = true;
       }
-      {
-        name = "round_stay_focused_askpass";
-        inherit (template) rounding;
-        stay_focused = true;
-        "match:class" = "gtk-ssh-askpass";
-      }
+
       {
         name = "float_classes";
         inherit (template) float group;
@@ -329,6 +320,19 @@ with config.colorScheme.palette;
         inherit (template) float group rounding;
         "match:class" = "com\\.saivert\\.pwvucontrol||xdg-desktop-portal-gtk";
       }
+      {
+        name = "float_round_pin_classes";
+        inherit (template) float group rounding;
+        pin = true;
+        "match:class" = "dragon-drop|xdragon";
+      }
+      {
+        name = "round_stay_focused_classes";
+        inherit (template) rounding;
+        stay_focused = true;
+        "match:class" = "gcr-prompter|gtk-ssh-askpass|polkit-gnome-authentication-agent-1";
+      }
+
       {
         name = "float_mozilla_pass_popup";
         inherit (template) float group;
@@ -372,20 +376,42 @@ with config.colorScheme.palette;
         name = "float_round_thunar_popup";
         inherit (template) float group rounding;
         "match:class" = "(t|T)hunar";
-        "match:title" = "Error|File Operation Progress|Rename .*";
-      }
-      {
-        name = "float_round_pin_dragondrop";
-        inherit (template) float group rounding;
-        border_size = 0;
-        pin = true;
-        "match:class" = "dragon-drop|xdragon";
+        "match:title" = "negative:.* - Thunar";
       }
       {
         name = "float_vicinae";
         inherit (template) float group rounding;
         border_size = 0;
         "match:class" = "vicinae";
+      }
+      {
+        name = "round_prusaslicer_warning";
+        inherit (template) rounding;
+        "match:class" = "prusa-slicer";
+        "match:title" = "Warning";
+      }
+      {
+        name = "float_round_prusaslicer_file_popup";
+        inherit (template) float group rounding;
+        "match:class" = "prusa-slicer";
+        "match:title" = "Save file as:";
+      }
+      {
+        name = "float_round_telegram_file_popup";
+        inherit (template) float group rounding;
+        "match:class" = ".Telegram-wrapped";
+        "match:title" = "Choose Files|Save File";
+      }
+      {
+        name = "float_round_office_file_popup";
+        inherit (template) float group rounding;
+        "match:class" = "soffice";
+      }
+      {
+        name = "float_round_fileroller_popup";
+        inherit (template) float group rounding;
+        "match:class" = "org.gnome.FileRoller";
+        "match:title" = "Extract|";
       }
 
       {

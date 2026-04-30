@@ -1,163 +1,190 @@
 {
   config,
+  coreutils,
+  formats,
   lib,
-  pkgs,
+  pwvucontrol,
   ...
 }:
 
 let
+  sleep = lib.getExe' coreutils "sleep";
   var_conctl = lib.getExe' config.services.network-manager-applet.package "nm-connection-editor";
-  var_volctl = lib.getExe pkgs.pwvucontrol;
+  var_volctl = lib.getExe pwvucontrol;
   var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
 in
-/* json */ ''
-   {
-    "layer": "top",
-    "position": "bottom",
+(formats.json { }).generate "waybar-config" (
+  with config.colorScheme.palette;
+  {
+    layer = "top";
+    position = "bottom";
 
-    "modules-left": [
-      "hyprland/workspaces",
-      "idle_inhibitor",
-      "memory",
-      "cpu",
-      "temperature",
+    modules-left = [
+      "hyprland/workspaces"
+      "idle_inhibitor"
+      "memory"
+      "custom/delimiter1"
+      "cpu"
+      "custom/delimiter1"
+      "temperature"
+      "custom/delimiter1"
       "battery"
-    ],
+    ];
 
-    "modules-center": [
-      "hyprland/window"
-    ],
+    modules-center = [
+      "network"
+    ];
 
-    "modules-right": [
-      "tray",
-      "pulseaudio",
-      "backlight",
-      "network",
-      "custom/notification",
+    modules-right = [
+      "tray"
+      "custom/delimiter1"
+      "pulseaudio"
+      "custom/delimiter1"
+      "backlight"
+      "custom/delimiter2"
+      "custom/notification"
       "clock"
-    ],
+    ];
 
-    // Modules
+    "custom/delimiter1" = {
+      format = "│";
+      tooltip = false;
+    };
+    "custom/delimiter2" = {
+      format = " ";
+      tooltip = false;
+    };
 
-    "hyprland/workspaces": {
-      "disable-scroll": true,
-      "on-click": "activate",
-      "sort-by-number": true,
-      "spacing": 0
-    },
+    "hyprland/workspaces" = {
+      disable-scroll = true;
+      on-click = "activate";
+      sort-by-number = true;
+      spacing = 0;
+    };
 
-    "idle_inhibitor": {
-      "format": "{icon}",
-      "format-icons": {
-        "activated": "",
-        "deactivated": ""
-      }
-    },
+    idle_inhibitor = {
+      format = "{icon}";
+      format-icons = {
+        activated = "";
+        deactivated = "";
+      };
+    };
 
-    "memory": {
-      "interval": 15,
-      "format": "Mem {percentage}%",
-      "states": {
-        "warning": 70,
-        "critical": 90
-      },
-      "tooltip": true
-    },
+    memory = {
+      interval = 15;
+      format = "Mem {percentage:3}%";
+      states = {
+        warning = 70;
+        critical = 90;
+      };
+      tooltip = true;
+    };
 
-    "cpu": {
-      "interval": 15,
-      "tooltip": true,
-      "format": "CPU {usage}%",
-      "states": {
-        "warning": 70,
-        "critical": 90
-      }
-    },
+    cpu = {
+      interval = 15;
+      format = "CPU {usage:3}%";
+      states = {
+        warning = 70;
+        critical = 90;
+      };
+      tooltip = true;
+    };
 
-    "temperature": {
-      "thermal-zone": 2,
-      "critical-threshold": 80,
-      "interval": 15,
-      "format": "Tmp {temperatureC}°",
-      "tooltip": true
-    },
+    temperature = {
+      thermal-zone = 2;
+      critical-threshold = 80;
+      interval = 15;
+      format = "Tmp {temperatureC:2}°C";
+      tooltip = true;
+    };
 
-    "battery": {
-      "interval": 15,
-      "states": {
-        "warning": 30,
-        "critical": 15
-      },
-      "format": "Bat {capacity}%",
-      "format-charging": "Bat {capacity}%",
-      "tooltip": true
-    },
+    battery = {
+      interval = 15;
+      states = {
+        warning = 30;
+        critical = 15;
+      };
+      format = "Bat {capacity:3}%";
+      format-charging = "Bat {capacity:2}%";
+      tooltip = true;
+    };
 
-    "hyprland/window": {
-      "seperate-outputs": true
-    },
-    
-    "tray": {
-      "icon-size": 15,
-      "spacing": 5,
-      "reverse-direction": true,
-      "show-passive-items": true
-    },
+    tray = {
+      icon-size = 15;
+      spacing = 5;
+      reverse-direction = true;
+      show-passive-items = true;
+    };
 
-    "pulseaudio": {
-      "format": "{volume}% {icon}  {format_source}",
-      "format-bluetooth": "{icon} {volume}%  {format_source}",
-      "format-muted": "{volume}%   {format_source}",
-      "format-source": "{volume}% ",
-      "format-source-muted": "{volume}% ",
-      "format-icons": {
-        "headphone": "",
-        "hands-free": "",
-        "headset": "",
-        "phone": "",
-        "portable": "",
-        "car": "",
-        "default": ["", "", ""]
-      },
-      "scroll-step": 1,
-      "on-click": "${var_volctl}",
-      "tooltip": false
-    },
+    pulseaudio = {
+      format = "{volume:3}% {icon}  <span foreground='#${base03}'>│</span> {format_source}";
+      format-bluetooth = "{volume:3}% {icon} <span foreground='#${base03}'>│</span> {format_source}";
+      format-muted = "{volume:3}%   <span foreground='#${base03}'>│</span> {format_source}";
+      format-source = "{volume:3}% ";
+      format-source-muted = "{volume:3}% ";
+      format-icons = {
+        headphone = "";
+        hands-free = "";
+        headset = "";
+        phone = "";
+        portable = "";
+        car = "";
+        default = [
+          ""
+          ""
+          ""
+        ];
+      };
+      scroll-step = 1;
+      on-click = "${var_volctl}";
+      tooltip = false;
+    };
 
-    "backlight": {
-      "device": "intel_backlight",
-      "format": "{percent}% {icon}",
-      "format-icons": ["", "", "", "", "", "", "", "", ""]
-    },
+    backlight = {
+      device = "intel_backlight";
+      format = "{percent:3}% {icon}";
+      format-icons = [
+        ""
+        ""
+        ""
+        ""
+        ""
+        ""
+        ""
+        ""
+        ""
+      ];
+    };
 
-    "network": {
-      "interval": 15,
-      "format-wifi": "{essid} ({signalStrength}%)",
-      "format-ethernet": "{ifname}",
-      "format-disconnected": "No connection",
-      "tooltip": false,
-      "on-click": "${var_conctl}"
-    },
+    network = {
+      interval = 15;
+      format-wifi = "{essid} - {signalStrength}%: {ipaddr}/{cidr}";
+      format-ethernet = "{ifname}: {ipaddr}/{cidr}";
+      format-disconnected = "No connection";
+      tooltip = false;
+      on-click = "${var_conctl}";
+    };
 
-    "clock": {
-      "interval": 5,
-      "format": "{:%a %d.%m. %H:%M}",
-      "tooltip": false
-    },
+    clock = {
+      interval = 5;
+      format = "{:%a %d.%m. %H:%M}";
+      tooltip = false;
+    };
 
-    "custom/notification": {
-      "tooltip": false,
-      "format": " {icon}",
-      "format-icons": {
-        "notification": "<span foreground='red'><small><sup>⬤</sup></small></span>",
-        "none": " ",
-        "dnd-notification": "<span foreground='red'><small><sup>⬤</sup></small></span>",
-        "dnd-none": " "
-      },
-      "return-type": "json",
-      "exec": "${var_swaync-client} -swb",
-      "on-click": "sleep 0.1 && ${var_swaync-client} -t -sw",
-      "on-click-right": "sleep 0.1 && ${var_swaync-client} -d -sw",
-      "escape": true
-    }
-  } ''
+    "custom/notification" = {
+      tooltip = false;
+      format = " {icon}";
+      format-icons = {
+        notification = "<span foreground='#${base08}'><small><sup>⬤</sup></small></span>";
+        none = " ";
+        dnd-notification = "<span foreground='#${base08}'><small><sup>⬤</sup></small></span>";
+        dnd-none = " ";
+      };
+      return-type = "json";
+      exec = "${var_swaync-client} -swb";
+      on-click = "${sleep} 0.1 && ${var_swaync-client} -t -sw";
+      on-click-right = "${sleep} 0.1 && ${var_swaync-client} -d -sw";
+      escape = true;
+    };
+  }
+)

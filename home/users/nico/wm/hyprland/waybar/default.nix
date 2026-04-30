@@ -1,5 +1,5 @@
 {
-  pkgs, # `pkgs` needed because otherwise not in `args`
+  pkgs,
   ...
 }@args:
 
@@ -9,5 +9,5 @@
     style = import ./style.nix args;
     systemd.enable = true;
   };
-  xdg.configFile."waybar/config".text = import ./config.nix args;
+  xdg.configFile."waybar/config".source = pkgs.callPackage ./config.nix args;
 }

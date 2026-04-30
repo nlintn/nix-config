@@ -15,6 +15,7 @@ with config.colorScheme.palette;
   @define-color flamingo #${base0F};
   @define-color bg #${base00};
   @define-color bg2 #${base01};
+  @define-color grey #${base03};
 
   * {
     border: none;
@@ -35,8 +36,13 @@ with config.colorScheme.palette;
     background: @bg;
   }
 
+  #custom-delimiter1 {
+    color: @grey;
+  }
+
   #workspaces {
     padding-right: 8pt;
+    background: @bg2;
   }
 
   #idle_inhibitor {
@@ -47,7 +53,6 @@ with config.colorScheme.palette;
   #cpu,
   #temperature,
   #battery,
-  #window,
   #tray,
   #pulseaudio,
   #backlight,
@@ -68,10 +73,6 @@ with config.colorScheme.palette;
   }
   #battery.charging {
     color: @green;
-  }
-
-  #window {
-    font-size: 7pt;
   }
 
   #workspaces button {
@@ -101,26 +102,30 @@ with config.colorScheme.palette;
     color: @flamingo;
   }
 
-  #idle_inhibitor,
+  #idle_inhibitor {
+    color: @white;
+    background: @bg2;
+  }
+
   #memory,
   #cpu,
   #temperature,
-  #battery {
-    color: @white;
-    background: @bg;
-  }
-
+  #battery,
   #tray,
   #pulseaudio,
   #network,
   #backlight {
     color: @white;
     background: @bg;
+    padding-left: 6pt;
+    padding-right: 6pt;
   }
 
   #clock,
   #custom-notification {
     color: @white;
     background: @bg2;
+    padding-left: 2pt;
+    padding-right: 6pt;
   }
 ''

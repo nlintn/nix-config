@@ -21,7 +21,7 @@
       <actions>
       <action>
         <name>Open Terminal Here</name>
-        <command>${lib.getExe config.xdg.terminal-exec.package |> lib.escapeXML}</command>
+        <command>${lib.getExe config.xdg.terminal-exec.package |> lib.escapeXML} --dir=%f</command>
         <patterns>*</patterns>
         <directories/>
       </action>

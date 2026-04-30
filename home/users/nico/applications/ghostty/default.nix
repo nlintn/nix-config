@@ -6,6 +6,9 @@
 {
   programs.ghostty = {
     enable = true;
+    systemd.enable = true;
+    installBatSyntax = true;
+
     themes.base16 = import ./base16.nix args;
     clearDefaultKeybinds = true;
     settings = {
@@ -27,6 +30,7 @@
 
       window-inherit-working-directory = false;
       window-inherit-font-size = true;
+      quit-after-last-window-closed = false;
 
       copy-on-select = "clipboard";
       shell-integration-features = "ssh-env, sudo, title, no-cursor";

@@ -21,10 +21,16 @@ in
     enableDefaultConfig = false;
     matchBlocks = lib.mapAttrs (_: v: { extraOptions = v; }) {
       "*" = {
+        AddKeysToAgent = "confirm 8h";
         Compression = "no";
         ForwardAgent = "no";
         UserKnownHostsFile = "~/.ssh/known_hosts";
       };
+    };
+    extraOptionOverrides = {
+      UpdateHostKeys = "ask";
+      VerifyHostKeyDNS = "ask";
+      StrictHostKeyChecking = "ask";
     };
     includes = [ "hosts" ];
   };

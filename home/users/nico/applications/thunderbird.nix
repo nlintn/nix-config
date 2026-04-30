@@ -18,7 +18,7 @@
         "mailnews.default_sort_type" = 35;
         "mailnews.default_news_view_flags" = 1;
         "mailnews.default_view_flags" = 1;
-        "mailnews.start_page.url" = "https://lintn.de";
+        "mailnews.start_page.url" = "https://nlintn.de";
         "browser.display.use_system_colors" = true;
       };
     };

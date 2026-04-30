@@ -38,13 +38,19 @@ in
     treechildren::-moz-tree-row(current, focus) {
       outline: none !important;
     }
-    dialog {
+    .dialogBox {
       background-color: #${base01} !important;
     }
     .search-tooltip {
-      background-color: #${base0A} !important;
-      border-color: #${base0A} !important;
+      background-color: #${base09} !important;
+      border-color: #${base09} !important;
       color: #${base01} !important;
+    }
+    .search-tooltip::after {
+      border-top-color: #${base09} !important;
+    }
+    .search-tooltip::before {
+      border-top-color: #${base09} !important;
     }
     :root, .dialog-box {
       --input-bgcolor: #${base00} !important;

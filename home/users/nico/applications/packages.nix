@@ -51,7 +51,9 @@
     imagemagick
     inkscape
     ipinfo
+    it-tools
     jellyfin-desktop
+    ldapvi
     libnotify
     libqalculate
     libreoffice-fresh
@@ -70,8 +72,8 @@
     planify
     poppler-utils
     prismlauncher
+    proton-vpn
     protonmail-desktop
-    protonvpn-gui
     prusa-slicer
     pv
     showtime

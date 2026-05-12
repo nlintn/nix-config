@@ -7,7 +7,10 @@
 {
   services = {
     accounts-daemon.enable = true;
-    blueman.enable = true; # bluetooth manager
+    blueman = {
+      enable = true; # bluetooth manager
+      withApplet = false;
+    };
     earlyoom = {
       enable = true;
       enableNotifications = true;

@@ -53,7 +53,9 @@
         };
         interface = {
           branding = config.networking.hostName;
-          brandingColor = 5;
+          brandingColor = base0E;
+          helpColor = base0B;
+          helpColorBright = base0B;
         };
       };
     };

@@ -60,11 +60,11 @@ with config.colorScheme.palette;
         "SHIFT, Q, exec, ${var_term_tmux}"
         "SPACE, exec, ${var_launcher} vicinae://toggle"
         "SHIFT, R, exec, ${hyreload}"
-        "PERIOD, exec, ${var_launcher} vicinae://extensions/vicinae/core/search-emojis"
-        "V, exec, ${var_launcher} vicinae://extensions/vicinae/clipboard/history"
+        "PERIOD, exec, ${var_launcher} vicinae://launch/core/search-emojis"
+        "V, exec, ${var_launcher} vicinae://launch/clipboard/history"
         "BACKSPACE, exec, ${var_lock-cmd}"
         "SHIFT, BACKSPACE, exec, ${var_lock-transparent}"
-        "RETURN, exec, ${var_launcher} vicinae://extensions/vicinae/power"
+        "RETURN, exec, ${var_launcher} vicinae://launch/power"
         "PLUS, exec, ${var_swaync-client} --toggle-panel"
         "SHIFT, PLUS, exec, ${var_swaync-client} -C"
         "CTRL, PLUS, exec, ${var_swaync-client} --toggle-dnd"
@@ -117,7 +117,7 @@ with config.colorScheme.palette;
       evalBinds "ALT"
         [ ]
         [
-          "TAB, exec, ${var_launcher} vicinae://extensions/vicinae/wm/switch-windows"
+          "TAB, exec, ${var_launcher} vicinae://launch/wm/switch-windows"
         ]
     ++
       evalBinds "CTRL"

@@ -16,7 +16,7 @@
     gnumake
     jetbrains.idea
     ocamlPackages.utop
-    # pgcli TODO: add back when not broken anymore
+    pgcli
     postman
     (python3.withPackages (
       python-pkgs: with python-pkgs; [

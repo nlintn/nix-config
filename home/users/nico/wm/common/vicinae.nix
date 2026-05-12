@@ -13,6 +13,7 @@
 
     extensions = with pkgs.vicinaeExtensions; [
       bluetooth
+      color-converter
       firefox
       nix
     ];

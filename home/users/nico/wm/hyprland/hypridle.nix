@@ -44,7 +44,7 @@
           }
           {
             timeout = 600;
-            on-timeout = "${config.systemd.user.systemctlPath} suspend";
+            on-timeout = "${config.systemd.user.systemctlPath} sleep";
           }
         ];
     };

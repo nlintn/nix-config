@@ -33,6 +33,7 @@ with config.colorScheme.palette;
     "7=#${base07}"
     "15=#${base07}"
   ];
+  palette-generate = true;
   selection-background = "#${base06}";
   selection-foreground = "#${base01}";
 }

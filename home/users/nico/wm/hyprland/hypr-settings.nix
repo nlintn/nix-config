@@ -311,14 +311,10 @@ with config.colorScheme.palette;
       }
 
       {
-        name = "float_classes";
-        inherit (template) float group;
-        "match:class" = "nm-connection-editor|\\.blueman-manager-wrapped";
-      }
-      {
         name = "float_round_classes";
         inherit (template) float group rounding;
-        "match:class" = "com\\.saivert\\.pwvucontrol||xdg-desktop-portal-gtk";
+        "match:class" =
+          "\\.blueman-manager-wrapped|nm-connection-editor|com\\.saivert\\.pwvucontrol||xdg-desktop-portal-gtk";
       }
       {
         name = "float_round_pin_classes";
@@ -343,7 +339,7 @@ with config.colorScheme.palette;
         name = "focus_thunderbird_confirm";
         stay_focused = true;
         "match:class" = "thunderbird";
-        "match:title" = "Send Message";
+        "match:title" = "Save Message|Send Message";
       }
       {
         name = "float_round_keepassxc_file_popup";
@@ -385,16 +381,10 @@ with config.colorScheme.palette;
         "match:class" = "vicinae";
       }
       {
-        name = "round_prusaslicer_warning";
-        inherit (template) rounding;
-        "match:class" = "prusa-slicer";
-        "match:title" = "Warning";
-      }
-      {
-        name = "float_round_prusaslicer_file_popup";
+        name = "float_round_prusaslicer_popup";
         inherit (template) float group rounding;
         "match:class" = "prusa-slicer";
-        "match:title" = "Save file as:";
+        "match:title" = "|Save file as:|Save G-code file as:|Warning";
       }
       {
         name = "float_round_telegram_file_popup";

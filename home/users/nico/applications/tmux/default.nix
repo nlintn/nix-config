@@ -14,7 +14,7 @@ let
 
       if ! ${tmux} has -t "$session" 2> /dev/null; then
         session_id="$(${tmux} new-session -dP -s "$session" -F '#{session_id}' "${exec}; ${tmux} detach")"
-        ${tmux} set-option -s -t "$session_id" key-table _popup_pre
+        ${tmux} set-option -s -t "$session_id" key-table _popup_root
         ${tmux} set-option -s -t "$session_id" status off
         ${tmux} set-option -s -t "$session_id" prefix None
         ${tmux} set-environment -t "$session_id" FZF_TMUX 1
@@ -109,7 +109,22 @@ in
       bind -N "Open shell popup " Enter display-popup -b rounded -xC -yC -w 65% -h 65% -E '${tmux-popup "shell" "$SHELL"}'
 
       # set prefix in popup
-      bind -T _popup_pre C-a switch-client -T _popup
+      bind -T _popup_root MouseDown1Pane            select-pane -t = \; send-keys -M
+      bind -T _popup_root MouseDown1Status          switch-client -t =
+      bind -T _popup_root MouseDown1ScrollbarUp     copy-mode -u
+      bind -T _popup_root MouseDown1ScrollbarDown   copy-mode -d
+      bind -T _popup_root MouseDown2Pane            select-pane -t = \; if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { paste-buffer -p }
+      bind -T _popup_root MouseDrag1Pane            if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { copy-mode -M }
+      bind -T _popup_root MouseDrag1ScrollbarSlider copy-mode -S
+      bind -T _popup_root MouseDrag1Border          resize-pane -M
+      bind -T _popup_root WheelUpPane               if-shell -F "#{||:#{alternate_on},#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { copy-mode -e }
+      bind -T _popup_root WheelUpStatus             previous-window
+      bind -T _popup_root WheelDownStatus           next-window
+      bind -T _popup_root DoubleClick1Pane          select-pane -t = \; if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { copy-mode -H ; send-keys -X select-word ; run-shell -d 0.3 ; send-keys -X copy-pipe-and-cancel }
+      bind -T _popup_root TripleClick1Pane          select-pane -t = \; if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { copy-mode -H ; send-keys -X select-line ; run-shell -d 0.3 ; send-keys -X copy-pipe-and-cancel }
+
+      bind -T _popup_root C-a switch-client -T _popup
+
       bind -T _popup d detach
       bind -T _popup a detach
       bind -T _popup g detach

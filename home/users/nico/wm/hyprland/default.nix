@@ -65,16 +65,18 @@ in
 
     plugins = with pkgs.hyprlandPlugins; [
       (hyprsplit.overrideAttrs (finalAttrs: {
-        version = "0.54.1";
+        # TODO: switch to lua
+        version = "unstable";
         src = pkgs.fetchFromGitHub {
           owner = "shezdy";
           repo = "hyprsplit";
-          rev = "395b780d517ee475e7e94beb149ec9a9fdac292d";
-          hash = "sha256-IksjbT24cgWl2h6ZV4bPxoORmHCQ7h/M/OLQ4epReAE=";
+          rev = "ea230fc65b4bd591451d2305140a2e3fbce894ca";
+          hash = "sha256-VeVHk55Vg9+0BfUS+GleE7vZfa7ssb4yM+p+noJ349w=";
         };
       }))
     ];
 
+    configType = "hyprlang";
     settings = import ./hypr-settings.nix (args // customPkgs);
   };
 

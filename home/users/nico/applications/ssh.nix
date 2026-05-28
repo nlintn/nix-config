@@ -19,8 +19,8 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = lib.mapAttrs (_: v: { extraOptions = v; }) {
-      "*" = {
+    settings = {
+      "Host *" = {
         AddKeysToAgent = "confirm 8h";
         Compression = "no";
         ForwardAgent = "no";

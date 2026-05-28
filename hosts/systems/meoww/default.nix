@@ -6,7 +6,7 @@
 }:
 
 {
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 
   imports = [
     ./audio.nix
@@ -38,7 +38,6 @@
   common.setNixRegistry = true;
 
   boot = {
-    # initrd.systemd.enable = true;
     kernelPackages = pkgs.linuxPackages_latest;
 
     tmp = {

@@ -6,13 +6,16 @@
 }@args:
 
 let
-  editNewTmuxWin = "${lib.getExe config.programs.tmux.package} new-window -- \"$EDITOR\" -- $@";
-  dragAndDrop = "${lib.getExe pkgs.dragon-drop} $@";
+  exo-open = lib.getExe' pkgs.xfce4-exo "exo-open";
+  exiftool = lib.getExe pkgs.exiftool;
+  mediainfo = lib.getExe pkgs.mediainfo;
+
+  editNewTmuxWin = "${lib.getExe config.programs.tmux.package} new-window -- \"$EDITOR\" -- %s";
+  dragAndDrop = "${lib.getExe pkgs.dragon-drop} %s";
 in
 {
   programs.yazi = {
     enable = true;
-    package = pkgs.yazi.override { extraPackages = [ pkgs.exiftool ]; };
     shellWrapperName = "y";
     settings = {
       mgr = {
@@ -20,33 +23,64 @@ in
         show_hidden = true;
       };
       opener = {
-        open =
-          (lib.optional (config.home.shellAliases ? open) {
-            run = "${config.home.shellAliases.open} \"$@\"";
+        edit = [
+          {
+            run = "${config.home.sessionVariables.EDITOR or "vi"} %s";
+            desc = "$EDITOR";
+            block = true;
+          }
+        ]
+        ++ (lib.optional config.programs.tmux.enable {
+          run = editNewTmuxWin;
+          desc = "Edit in new tmux win";
+          orphan = true;
+        });
+        play = [
+          {
+            run = "${exo-open} %s1";
+            desc = "Play";
+            orphan = true;
+          }
+          {
+            run = "clear; ${mediainfo} %s1; echo 'Press enter to exit'; read _";
+            block = true;
+            desc = "Show media info";
+          }
+        ];
+        open = [
+          {
+            run = "${exo-open} %s";
             desc = "Open";
-          })
-          ++ [
-            {
-              run = dragAndDrop;
-              desc = "Drag and Drop";
-            }
-          ]
-          ++ (lib.optional config.programs.tmux.enable {
-            run = editNewTmuxWin;
-            desc = "Edit in new tmux win";
-          });
+          }
+        ];
+        reveal = [
+          {
+            run = dragAndDrop;
+            desc = "Drag and Drop";
+            orphan = true;
+          }
+          {
+            run = "${exo-open} %d1";
+            desc = "Reveal";
+          }
+          {
+            run = "clear; ${exiftool} %s1; echo 'Press enter to exit'; read _";
+            desc = "Show EXIF";
+            block = true;
+          }
+        ];
       };
     };
     keymap = {
       mgr.prepend_keymap = [
         {
           on = "ü";
-          run = "shell -- ${dragAndDrop}";
+          run = "shell --orphan -- ${dragAndDrop}";
         }
       ]
       ++ (lib.optional config.programs.tmux.enable {
         on = "ä";
-        run = "shell -- ${editNewTmuxWin}";
+        run = "shell --orphan -- ${editNewTmuxWin}";
       });
     };
     plugins = with pkgs.yaziPlugins; {

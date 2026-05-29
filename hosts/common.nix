@@ -19,6 +19,7 @@
   ];
 
   age.secrets = hostSecrets nixSystemName;
+  services.openssh.generateHostKeys = true;
 
   nixpkgs = {
     inherit overlays;

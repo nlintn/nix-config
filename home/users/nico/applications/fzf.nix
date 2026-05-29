@@ -37,7 +37,7 @@ in
     ]
     ++ lib.optional config.programs.tmux.enable "--tmux bottom,75%,60%";
     # ALT-C Options
-    changeDirWidgetCommand = "${fd} -HIL -t d -E .cache && ${zoxide} query --list";
+    changeDirWidgetCommand = "${zoxide} query --list && ${fd} -HIL -t d -E .cache";
     changeDirWidgetOptions = [
       "--preview '${eza} --color=always --follow-symlinks --tree {}'"
     ];

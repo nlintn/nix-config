@@ -47,6 +47,7 @@ in
     --toolbar-field-focus-color: #${base05} !important;
     --toolbar-field-focus-background-color: #${base01} !important;
     --toolbar-field-focus-border-color: ${toRGBA base0E 0.8} !important;
+    --urlbarview-background-color-selected: #${base0E} !important;
     --urlbarView-highlight-background: #${base02} !important;
     --urlbarView-highlight-color: #${base05} !important;
 

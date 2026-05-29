@@ -32,7 +32,7 @@ in
   programs.tmux = {
     enable = true;
     package = pkgs.tmux.overrideAttrs (prev: {
-      patches = prev.patches or [ ] ++ [ ./get-clipboard.patch ];
+      patches = prev.patches or [ ] ++ [ ./patch_tmux_0001-get-clipboard.patch ];
     });
     extraConfig = with config.colorScheme.palette; ''
       unbind C-b

@@ -13,7 +13,10 @@
     timeout = 1;
     limine = {
       enable = true;
-      secureBoot.enable = true;
+      secureBoot = {
+        enable = true;
+        autoGenerateKeys = true;
+      };
       panicOnChecksumMismatch = true;
       maxGenerations = 20;
       extraConfig = ''

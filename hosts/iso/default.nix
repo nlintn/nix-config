@@ -48,6 +48,7 @@
       })
       (callPackage ./install-system-closure.nix {
         closureStorePath = systemConfiguration.value.config.system.build.toplevel;
+        nixos-install = config.system.build.nixos-install;
       })
     ]);
 

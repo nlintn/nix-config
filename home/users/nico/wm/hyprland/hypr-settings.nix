@@ -314,7 +314,7 @@ with config.colorScheme.palette;
         name = "float_round_classes";
         inherit (template) float group rounding;
         "match:class" =
-          "\\.blueman-manager-wrapped|nm-connection-editor|com\\.saivert\\.pwvucontrol||xdg-desktop-portal-gtk";
+          "\\.blueman-manager-wrapped|com\\.saivert\\.pwvucontrol|electron|nm-connection-editor|xdg-desktop-portal-gtk";
       }
       {
         name = "float_round_pin_classes";
@@ -333,13 +333,15 @@ with config.colorScheme.palette;
         name = "float_mozilla_pass_popup";
         inherit (template) float group;
         "match:class" = "firefox|thunderbird";
-        "match:title" = "Password Required - Mozilla (Firefox|Thunderbird)";
+        "match:title" =
+          "About Mozilla (Firefox|Thunderbird)|Library|Page Info — .*|Password Required - Mozilla (Firefox|Thunderbird)";
       }
       {
         name = "focus_thunderbird_confirm";
         stay_focused = true;
         "match:class" = "thunderbird";
-        "match:title" = "Save Message|Send Message";
+        "match:title" =
+          "Confirm|Confirm Deletion|Save Message|Send Message|Source of: .* - Mozilla Thunderbird";
       }
       {
         name = "float_round_keepassxc_file_popup";

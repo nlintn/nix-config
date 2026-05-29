@@ -1,8 +1,10 @@
 {
   closureStorePath,
+  lib,
+  nixos-install,
   writeShellScriptBin,
 }:
 
 writeShellScriptBin "install-system" ''
-  nixos-install --system ${closureStorePath} $@
+  ${lib.getExe nixos-install} --system ${closureStorePath} $@
 ''

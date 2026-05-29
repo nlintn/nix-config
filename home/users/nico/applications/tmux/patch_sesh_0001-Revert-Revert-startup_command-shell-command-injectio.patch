@@ -1,0 +1,671 @@
+From 84645ded4943895f75705826dcdd2515968f0b0f Mon Sep 17 00:00:00 2001
+From: Nico Lintner <git@nlintn.de>
+Date: Thu, 28 May 2026 16:20:41 +0200
+Subject: [PATCH] Revert "Revert startup_command shell-command injection,
+ restore send-keys (#384)"
+
+This reverts commit c6d29872547f139e454d9b7cfeebb01fd5fafa99.
+---
+ README.md                         |  2 +
+ connector/connect_to_tmux_test.go | 52 ++++++++++++++++++++
+ connector/tmux.go                 | 22 +++++++--
+ seshcli/deps.go                   |  2 +-
+ seshcli/window.go                 |  2 +-
+ startup/config_wildcard_test.go   |  3 ++
+ startup/exec_test.go              | 43 ++++++++++++++++
+ startup/resolve_command_test.go   | 82 +++++++++++++++++++++++++++++++
+ startup/shellquote.go             |  9 ++++
+ startup/shellquote_test.go        | 27 ++++++++++
+ startup/startup.go                | 73 ++++++++++++++++++++-------
+ startup/wrap_for_shell_test.go    | 47 ++++++++++++++++++
+ tmux/new_win.go                   |  7 ++-
+ tmux/select_win.go                |  2 +-
+ tmux/select_win_test.go           |  2 +-
+ tmux/switch_or_attach_test.go     | 18 ++++++-
+ tmux/tmux.go                      | 22 ++++++---
+ 17 files changed, 381 insertions(+), 34 deletions(-)
+ create mode 100644 connector/connect_to_tmux_test.go
+ create mode 100644 startup/exec_test.go
+ create mode 100644 startup/resolve_command_test.go
+ create mode 100644 startup/shellquote.go
+ create mode 100644 startup/shellquote_test.go
+ create mode 100644 startup/wrap_for_shell_test.go
+
+diff --git a/README.md b/README.md
+index 9476121..4d0f236 100644
+--- a/README.md
++++ b/README.md
+@@ -646,6 +646,8 @@ A startup command is a command that is run when a session is created. It is usef
+ 
+ **Note:** If you use the `--command/-c` flag, then the startup script will not be run.
+ 
++**How startup commands run:** sesh injects your `startup_command` (and any window `startup_script`) as the pane's initial shell command via `$SHELL -i -c '<cmd>; exec $SHELL -i'`. This means the command executes as part of pane creation — no more races with slow shell init — but it also means the command is **not typed at a prompt** and **not added to shell history**. When the command exits, the pane drops into a fresh interactive `$SHELL`.
++
+ I like to use a command that opens nvim on session startup.
+ 
+ You can also define a preview command to display the contents of a specific file using [bat](https://github.com/sharkdp/bat) or any another file previewer of your choice.
+diff --git a/connector/connect_to_tmux_test.go b/connector/connect_to_tmux_test.go
+new file mode 100644
+index 0000000..69524d2
+--- /dev/null
++++ b/connector/connect_to_tmux_test.go
+@@ -0,0 +1,52 @@
++package connector
++
++import (
++	"errors"
++	"testing"
++
++	"github.com/joshmedeski/sesh/v2/dir"
++	"github.com/joshmedeski/sesh/v2/home"
++	"github.com/joshmedeski/sesh/v2/lister"
++	"github.com/joshmedeski/sesh/v2/model"
++	"github.com/joshmedeski/sesh/v2/namer"
++	"github.com/joshmedeski/sesh/v2/startup"
++	"github.com/joshmedeski/sesh/v2/tmux"
++	"github.com/joshmedeski/sesh/v2/tmuxinator"
++	"github.com/joshmedeski/sesh/v2/zoxide"
++	"github.com/stretchr/testify/assert"
++)
++
++func TestConnectToTmuxReturnsStartupExecError(t *testing.T) {
++	mockStartup := new(startup.MockStartup)
++	mockTmux := new(tmux.MockTmux)
++
++	c := &RealConnector{
++		config:     model.Config{},
++		dir:        new(dir.MockDir),
++		home:       new(home.MockHome),
++		lister:     new(lister.MockLister),
++		namer:      new(namer.MockNamer),
++		startup:    mockStartup,
++		tmux:       mockTmux,
++		zoxide:     new(zoxide.MockZoxide),
++		tmuxinator: new(tmuxinator.MockTmuxinator),
++	}
++
++	connection := model.Connection{
++		New: true,
++		Session: model.SeshSession{
++			Name: "demo",
++			Path: "/tmp",
++		},
++	}
++
++	mockStartup.On("ResolveCommand", connection.Session).Return("", nil)
++	mockStartup.On("WrapForShell", "").Return("")
++	mockTmux.On("NewSession", "demo", "/tmp", "").Return("", nil)
++	mockStartup.On("Exec", connection.Session).Return("", errors.New("boom"))
++
++	msg, err := connectToTmux(c, connection, model.ConnectOpts{})
++	assert.Equal(t, "", msg)
++	assert.EqualError(t, err, "boom")
++	mockTmux.AssertNotCalled(t, "SwitchOrAttach", "demo", model.ConnectOpts{})
++}
+diff --git a/connector/tmux.go b/connector/tmux.go
+index eaff6fa..375fd68 100644
+--- a/connector/tmux.go
++++ b/connector/tmux.go
+@@ -17,11 +17,27 @@ func tmuxStrategy(c *RealConnector, name string) (model.Connection, error) {
+ 
+ func connectToTmux(c *RealConnector, connection model.Connection, opts model.ConnectOpts) (string, error) {
+ 	if connection.New {
+-		c.tmux.NewSession(connection.Session.Name, connection.Session.Path)
++		// Resolve the startup command BEFORE creating the session so we can
++		// inject it as the pane's initial shell-command. This eliminates the
++		// send-keys race with slow shell init
++		var rawCmd string
+ 		if opts.Command != "" {
+-			c.tmux.SendKeys(connection.Session.Name, opts.Command)
++			rawCmd = opts.Command
+ 		} else {
+-			c.startup.Exec(connection.Session)
++			resolved, err := c.startup.ResolveCommand(connection.Session)
++			if err != nil {
++				return "", err
++			}
++			rawCmd = resolved
++		}
++		shellCmd := c.startup.WrapForShell(rawCmd)
++		if _, err := c.tmux.NewSession(connection.Session.Name, connection.Session.Path, shellCmd); err != nil {
++			return "", err
++		}
++		if opts.Command == "" {
++			if _, err := c.startup.Exec(connection.Session); err != nil {
++				return "", err
++			}
+ 		}
+ 	}
+ 	return c.tmux.SwitchOrAttach(connection.Session.Name, opts)
+diff --git a/seshcli/deps.go b/seshcli/deps.go
+index d3d0293..3663d0f 100644
+--- a/seshcli/deps.go
++++ b/seshcli/deps.go
+@@ -121,7 +121,7 @@ func (b *BaseDeps) BuildAll(configPath string) (*Deps, error) {
+ 		usedLister = cachedLi
+ 	}
+ 
+-	s := startup.NewStartup(config, usedLister, t, b.Home, b.Replacer)
++	s := startup.NewStartup(b.Os, config, usedLister, t, b.Home, b.Replacer)
+ 	n := namer.NewNamer(b.Path, b.Git, b.Home, config)
+ 	c := connector.NewConnector(config, b.Dir, b.Home, usedLister, n, s, t, b.Zoxide, b.Tmuxinator)
+ 	ic := icon.NewIcon(config)
+diff --git a/seshcli/window.go b/seshcli/window.go
+index 6b6e22b..b3d9e07 100644
+--- a/seshcli/window.go
++++ b/seshcli/window.go
+@@ -92,7 +92,7 @@ func NewWindowCommand(base *BaseDeps) *cobra.Command {
+ 			}
+ 
+ 			windowName := filepath.Base(absPath)
+-			if _, err := deps.Tmux.NewWindowInSession(windowName, absPath, targetSession); err != nil {
++			if _, err := deps.Tmux.NewWindowInSession(windowName, absPath, targetSession, ""); err != nil {
+ 				return fmt.Errorf("failed to create window: %w", err)
+ 			}
+ 			return nil
+diff --git a/startup/config_wildcard_test.go b/startup/config_wildcard_test.go
+index ddcc5d8..a51636e 100644
+--- a/startup/config_wildcard_test.go
++++ b/startup/config_wildcard_test.go
+@@ -6,18 +6,21 @@ import (
+ 	"github.com/joshmedeski/sesh/v2/home"
+ 	"github.com/joshmedeski/sesh/v2/lister"
+ 	"github.com/joshmedeski/sesh/v2/model"
++	"github.com/joshmedeski/sesh/v2/oswrap"
+ 	"github.com/joshmedeski/sesh/v2/replacer"
+ 	"github.com/joshmedeski/sesh/v2/tmux"
+ 	"github.com/stretchr/testify/assert"
+ )
+ 
+ func TestConfigWildcardStartupStrategy(t *testing.T) {
++	mockOs := new(oswrap.MockOs)
+ 	mockLister := new(lister.MockLister)
+ 	mockTmux := new(tmux.MockTmux)
+ 	mockHome := new(home.MockHome)
+ 	mockReplacer := new(replacer.MockReplacer)
+ 
+ 	s := &RealStartup{
++		os:       mockOs,
+ 		lister:   mockLister,
+ 		tmux:     mockTmux,
+ 		config:   model.Config{},
+diff --git a/startup/exec_test.go b/startup/exec_test.go
+new file mode 100644
+index 0000000..24a47d7
+--- /dev/null
++++ b/startup/exec_test.go
+@@ -0,0 +1,43 @@
++package startup
++
++import (
++	"testing"
++
++	"github.com/joshmedeski/sesh/v2/home"
++	"github.com/joshmedeski/sesh/v2/lister"
++	"github.com/joshmedeski/sesh/v2/model"
++	"github.com/joshmedeski/sesh/v2/oswrap"
++	"github.com/joshmedeski/sesh/v2/replacer"
++	"github.com/joshmedeski/sesh/v2/tmux"
++	"github.com/stretchr/testify/assert"
++)
++
++func TestExecCreatesWindowsInTargetSession(t *testing.T) {
++	mockOs := new(oswrap.MockOs)
++	mockLister := new(lister.MockLister)
++	mockTmux := new(tmux.MockTmux)
++	mockHome := new(home.MockHome)
++	mockReplacer := new(replacer.MockReplacer)
++
++	s := &RealStartup{
++		os:       mockOs,
++		lister:   mockLister,
++		tmux:     mockTmux,
++		config:   model.Config{WindowConfigs: []model.WindowConfig{{Name: "editor", StartupScript: "echo hi"}}},
++		home:     mockHome,
++		replacer: mockReplacer,
++	}
++	session := model.SeshSession{Name: "demo", Path: "/tmp", WindowNames: []string{"editor"}}
++
++	mockHome.On("ExpandPath", "/tmp").Return("/tmp", nil)
++	mockOs.On("Getenv", "SHELL").Return("/bin/zsh")
++	mockTmux.On("NewWindowInSession", "editor", "/tmp", "demo", `'/bin/zsh' -i -c 'echo hi'`).Return("", nil)
++	mockTmux.On("SelectWindow", "demo:^").Return("", nil)
++	mockLister.On("FindConfigSession", "demo").Return(model.SeshSession{}, false)
++	mockLister.On("FindConfigWildcard", "/tmp").Return(model.WildcardConfig{}, false)
++
++	msg, err := s.Exec(session)
++	assert.Nil(t, err)
++	assert.Equal(t, "", msg)
++	mockTmux.AssertNotCalled(t, "NewWindow", "/tmp", "editor", `'/bin/zsh' -i -c 'echo hi'`)
++}
+diff --git a/startup/resolve_command_test.go b/startup/resolve_command_test.go
+new file mode 100644
+index 0000000..d8d57a5
+--- /dev/null
++++ b/startup/resolve_command_test.go
+@@ -0,0 +1,82 @@
++package startup
++
++import (
++	"testing"
++
++	"github.com/joshmedeski/sesh/v2/home"
++	"github.com/joshmedeski/sesh/v2/lister"
++	"github.com/joshmedeski/sesh/v2/model"
++	"github.com/joshmedeski/sesh/v2/oswrap"
++	"github.com/joshmedeski/sesh/v2/replacer"
++	"github.com/joshmedeski/sesh/v2/tmux"
++	"github.com/stretchr/testify/assert"
++)
++
++func TestResolveCommand(t *testing.T) {
++	newStartup := func(config model.Config) (*RealStartup, *lister.MockLister, *replacer.MockReplacer) {
++		mockLister := new(lister.MockLister)
++		mockReplacer := new(replacer.MockReplacer)
++		s := &RealStartup{
++			os:       new(oswrap.MockOs),
++			lister:   mockLister,
++			tmux:     new(tmux.MockTmux),
++			config:   config,
++			home:     new(home.MockHome),
++			replacer: mockReplacer,
++		}
++		return s, mockLister, mockReplacer
++	}
++
++	session := model.SeshSession{Name: "proj", Path: "/p"}
++
++	t.Run("returns session-level config command first", func(t *testing.T) {
++		s, mockLister, mockReplacer := newStartup(model.Config{})
++		mockLister.On("FindConfigSession", "proj").Return(model.SeshSession{
++			Name:           "proj",
++			Path:           "/p",
++			StartupCommand: "nvim",
++		}, true)
++		mockReplacer.On("Replace", "nvim", map[string]string{"{}": "/p"}).Return("nvim")
++
++		cmd, err := s.ResolveCommand(session)
++		assert.Nil(t, err)
++		assert.Equal(t, "nvim", cmd)
++	})
++
++	t.Run("falls through to wildcard when no session config", func(t *testing.T) {
++		s, mockLister, mockReplacer := newStartup(model.Config{})
++		mockLister.On("FindConfigSession", "proj").Return(model.SeshSession{}, false)
++		mockLister.On("FindConfigWildcard", "/p").Return(model.WildcardConfig{
++			Pattern:        "/*",
++			StartupCommand: "htop",
++		}, true)
++		mockReplacer.On("Replace", "htop", map[string]string{"{}": "/p"}).Return("htop")
++
++		cmd, err := s.ResolveCommand(session)
++		assert.Nil(t, err)
++		assert.Equal(t, "htop", cmd)
++	})
++
++	t.Run("falls through to default when no session/wildcard match", func(t *testing.T) {
++		s, mockLister, mockReplacer := newStartup(model.Config{
++			DefaultSessionConfig: model.DefaultSessionConfig{StartupCommand: "lazygit"},
++		})
++		mockLister.On("FindConfigSession", "proj").Return(model.SeshSession{}, false)
++		mockLister.On("FindConfigWildcard", "/p").Return(model.WildcardConfig{}, false)
++		mockReplacer.On("Replace", "lazygit", map[string]string{"{}": "/p"}).Return("lazygit")
++
++		cmd, err := s.ResolveCommand(session)
++		assert.Nil(t, err)
++		assert.Equal(t, "lazygit", cmd)
++	})
++
++	t.Run("returns empty when no strategy yields a command", func(t *testing.T) {
++		s, mockLister, _ := newStartup(model.Config{})
++		mockLister.On("FindConfigSession", "proj").Return(model.SeshSession{}, false)
++		mockLister.On("FindConfigWildcard", "/p").Return(model.WildcardConfig{}, false)
++
++		cmd, err := s.ResolveCommand(session)
++		assert.Nil(t, err)
++		assert.Equal(t, "", cmd)
++	})
++}
+diff --git a/startup/shellquote.go b/startup/shellquote.go
+new file mode 100644
+index 0000000..0eb568f
+--- /dev/null
++++ b/startup/shellquote.go
+@@ -0,0 +1,9 @@
++package startup
++
++import "strings"
++
++// posixSingleQuote wraps s in POSIX single quotes so every byte is literal.
++// Safe for use as an argument to sh/bash/zsh/fish via -c.
++func posixSingleQuote(s string) string {
++	return "'" + strings.ReplaceAll(s, "'", `'\''`) + "'"
++}
+diff --git a/startup/shellquote_test.go b/startup/shellquote_test.go
+new file mode 100644
+index 0000000..806f110
+--- /dev/null
++++ b/startup/shellquote_test.go
+@@ -0,0 +1,27 @@
++package startup
++
++import "testing"
++
++func TestPosixSingleQuote(t *testing.T) {
++	cases := []struct {
++		name, in, want string
++	}{
++		{"empty", "", "''"},
++		{"plain", "hello", "'hello'"},
++		{"spaces", "echo hi there", "'echo hi there'"},
++		{"dollar-stays-literal", "$USER", "'$USER'"},
++		{"backslash-stays-literal", `a\b`, `'a\b'`},
++		{"single-quote", "it's", `'it'\''s'`},
++		{"multiple-quotes", "a'b'c", `'a'\''b'\''c'`},
++		{"newline", "a\nb", "'a\nb'"},
++		{"double-quote-stays-literal", `say "hi"`, `'say "hi"'`},
++	}
++	for _, tc := range cases {
++		t.Run(tc.name, func(t *testing.T) {
++			got := posixSingleQuote(tc.in)
++			if got != tc.want {
++				t.Errorf("posixSingleQuote(%q) = %q, want %q", tc.in, got, tc.want)
++			}
++		})
++	}
++}
+diff --git a/startup/startup.go b/startup/startup.go
+index b80d749..601a483 100644
+--- a/startup/startup.go
++++ b/startup/startup.go
+@@ -6,15 +6,19 @@ import (
+ 	"github.com/joshmedeski/sesh/v2/home"
+ 	"github.com/joshmedeski/sesh/v2/lister"
+ 	"github.com/joshmedeski/sesh/v2/model"
++	"github.com/joshmedeski/sesh/v2/oswrap"
+ 	"github.com/joshmedeski/sesh/v2/replacer"
+ 	"github.com/joshmedeski/sesh/v2/tmux"
+ )
+ 
+ type Startup interface {
+ 	Exec(session model.SeshSession) (string, error)
++	ResolveCommand(session model.SeshSession) (string, error)
++	WrapForShell(command string) string
+ }
+ 
+ type RealStartup struct {
++	os       oswrap.Os
+ 	lister   lister.Lister
+ 	tmux     tmux.Tmux
+ 	config   model.Config
+@@ -23,18 +27,50 @@ type RealStartup struct {
+ }
+ 
+ func NewStartup(
+-	config model.Config, lister lister.Lister, tmux tmux.Tmux, home home.Home, replacer replacer.Replacer,
++	os oswrap.Os, config model.Config, lister lister.Lister, tmux tmux.Tmux, home home.Home, replacer replacer.Replacer,
+ ) Startup {
+-	return &RealStartup{lister, tmux, config, home, replacer}
++	return &RealStartup{os, lister, tmux, config, home, replacer}
+ }
+ 
+-func (s *RealStartup) Exec(session model.SeshSession) (string, error) {
++// ResolveCommand walks the strategy chain (per-session config → wildcard →
++// default) and returns the first non-empty startup command without executing
++// it. Returns "" when no strategy applies.
++func (s *RealStartup) ResolveCommand(session model.SeshSession) (string, error) {
+ 	strategies := []func(*RealStartup, model.SeshSession) (string, error){
+ 		configStrategy,
+ 		configWildcardStartupStrategy,
+ 		defaultConfigStrategy,
+ 	}
++	for _, strategy := range strategies {
++		command, err := strategy(s, session)
++		if err != nil {
++			return "", fmt.Errorf("failed to determine startup command: %w", err)
++		}
++		if command != "" {
++			return command, nil
++		}
++	}
++	return "", nil
++}
+ 
++// WrapForShell returns a shell-command string suitable for passing as the
++// trailing positional argument to `tmux new-session` / `tmux new-window`.
++// The resulting pane runs $SHELL interactively and executes command as part
++// of pane creation, avoiding send-keys races without re-running shell init a
++// second time after the command exits.
++// Returns "" for empty input so callers can detect "no command".
++func (s *RealStartup) WrapForShell(command string) string {
++	if command == "" {
++		return ""
++	}
++	shellPath := s.os.Getenv("SHELL")
++	if shellPath == "" {
++		shellPath = "/bin/sh"
++	}
++	return posixSingleQuote(shellPath) + " -i -c " + posixSingleQuote(command)
++}
++
++func (s *RealStartup) Exec(session model.SeshSession) (string, error) {
+ 	windows := make(model.SeshWindowMap)
+ 	for _, window := range s.config.WindowConfigs {
+ 		key := lister.ConfigKey(window.Name)
+@@ -67,24 +103,27 @@ func (s *RealStartup) Exec(session model.SeshSession) (string, error) {
+ 			windowConfig.Path = path
+ 		}
+ 
+-		// create the new window
+-		if ret, err := s.tmux.NewWindow(windowConfig.Path, windowConfig.Name); err != nil {
+-			return ret, err
+-		}
+-		if ret, err := s.tmux.SendKeys(session.Name, windowConfig.StartupScript); err != nil {
++		// Inject the window's startup_script as its initial shell-command so
++		// it runs reliably regardless of shell-init speed (issue #188).
++		wrapped := s.WrapForShell(windowConfig.StartupScript)
++		if ret, err := s.tmux.NewWindowInSession(windowConfig.Name, windowConfig.Path, session.Name, wrapped); err != nil {
+ 			return ret, err
+ 		}
+ 	}
+-	s.tmux.NextWindow()
+-
+-	for _, strategy := range strategies {
+-		if command, err := strategy(s, session); err != nil {
+-			return "", fmt.Errorf("failed to determine startup command: %w", err)
+-		} else if command != "" {
+-			s.tmux.SendKeys(session.Name, command)
+-			return fmt.Sprintf("executing startup command: %s", command), nil
++	if len(session.WindowNames) > 0 {
++		if _, err := s.tmux.SelectWindow(session.Name + ":^"); err != nil {
++			return "", err
+ 		}
+ 	}
+ 
+-	return "", nil // no command to run
++	// The main startup_command is injected into `tmux new-session` by the
++	// connector (before Exec runs). Here we only resolve it for logging.
++	command, err := s.ResolveCommand(session)
++	if err != nil {
++		return "", err
++	}
++	if command != "" {
++		return fmt.Sprintf("resolved startup command: %s", command), nil
++	}
++	return "", nil
+ }
+diff --git a/startup/wrap_for_shell_test.go b/startup/wrap_for_shell_test.go
+new file mode 100644
+index 0000000..5ab9d51
+--- /dev/null
++++ b/startup/wrap_for_shell_test.go
+@@ -0,0 +1,47 @@
++package startup
++
++import (
++	"testing"
++
++	"github.com/joshmedeski/sesh/v2/oswrap"
++	"github.com/stretchr/testify/assert"
++)
++
++func TestWrapForShell(t *testing.T) {
++	t.Run("returns empty for empty command", func(t *testing.T) {
++		mockOs := new(oswrap.MockOs)
++		s := &RealStartup{os: mockOs}
++		assert.Equal(t, "", s.WrapForShell(""))
++		mockOs.AssertNotCalled(t, "Getenv")
++	})
++
++	t.Run("wraps command with $SHELL from env", func(t *testing.T) {
++		mockOs := new(oswrap.MockOs)
++		mockOs.On("Getenv", "SHELL").Return("/bin/zsh")
++		s := &RealStartup{os: mockOs}
++
++		got := s.WrapForShell("nvim")
++		want := `'/bin/zsh' -i -c 'nvim'`
++		assert.Equal(t, want, got)
++	})
++
++	t.Run("falls back to /bin/sh when $SHELL unset", func(t *testing.T) {
++		mockOs := new(oswrap.MockOs)
++		mockOs.On("Getenv", "SHELL").Return("")
++		s := &RealStartup{os: mockOs}
++
++		got := s.WrapForShell("ls")
++		want := `'/bin/sh' -i -c 'ls'`
++		assert.Equal(t, want, got)
++	})
++
++	t.Run("escapes single quotes in command", func(t *testing.T) {
++		mockOs := new(oswrap.MockOs)
++		mockOs.On("Getenv", "SHELL").Return("/bin/zsh")
++		s := &RealStartup{os: mockOs}
++
++		got := s.WrapForShell("echo 'hi'")
++		want := `'/bin/zsh' -i -c 'echo '\''hi'\'''`
++		assert.Equal(t, want, got)
++	})
++}
+diff --git a/tmux/new_win.go b/tmux/new_win.go
+index b73365a..82dc7d7 100644
+--- a/tmux/new_win.go
++++ b/tmux/new_win.go
+@@ -1,9 +1,12 @@
+ package tmux
+ 
+-func (t *RealTmux) NewWindowInSession(name string, startDir string, targetSession string) (string, error) {
++func (t *RealTmux) NewWindowInSession(name string, startDir string, targetSession string, shellCommand string) (string, error) {
+ 	args := []string{"new-window", "-n", name, "-c", startDir}
+ 	if targetSession != "" {
+ 		args = append(args, "-t", targetSession)
+ 	}
+-	return t.shell.Cmd("tmux", args...)
++	if shellCommand != "" {
++		args = append(args, shellCommand)
++	}
++	return t.shell.Cmd(t.bin, args...)
+ }
+diff --git a/tmux/select_win.go b/tmux/select_win.go
+index a66ab5f..4176ae1 100644
+--- a/tmux/select_win.go
++++ b/tmux/select_win.go
+@@ -1,5 +1,5 @@
+ package tmux
+ 
+ func (t *RealTmux) SelectWindow(targetWindow string) (string, error) {
+-	return t.shell.Cmd("tmux", "select-window", "-t", targetWindow)
++	return t.shell.Cmd(t.bin, "select-window", "-t", targetWindow)
+ }
+diff --git a/tmux/select_win_test.go b/tmux/select_win_test.go
+index 334bf0e..bb9c433 100644
+--- a/tmux/select_win_test.go
++++ b/tmux/select_win_test.go
+@@ -10,7 +10,7 @@ import (
+ func TestSelectWindow(t *testing.T) {
+ 	t.Run("calls tmux select-window", func(t *testing.T) {
+ 		mockShell := &shell.MockShell{}
+-		tmux := &RealTmux{shell: mockShell}
++		tmux := &RealTmux{shell: mockShell, bin: "tmux"}
+ 		mockShell.EXPECT().Cmd("tmux", "select-window", "-t", "editor").Return("", nil)
+ 		result, err := tmux.SelectWindow("editor")
+ 		assert.Nil(t, err)
+diff --git a/tmux/switch_or_attach_test.go b/tmux/switch_or_attach_test.go
+index 926c846..08230f1 100644
+--- a/tmux/switch_or_attach_test.go
++++ b/tmux/switch_or_attach_test.go
+@@ -63,7 +63,7 @@ func TestCustomBin(t *testing.T) {
+ 
+ 	t.Run("uses psmux binary for new session", func(t *testing.T) {
+ 		mockShell.On("Cmd", "psmux", "new-session", "-d", "-s", "dotfiles", "-c", "/home/user/dotfiles").Return("", nil)
+-		_, err := psmux.NewSession("dotfiles", "/home/user/dotfiles")
++		_, err := psmux.NewSession("dotfiles", "/home/user/dotfiles", "")
+ 		assert.Nil(t, err)
+ 		mockShell.AssertCalled(t, "Cmd", "psmux", "new-session", "-d", "-s", "dotfiles", "-c", "/home/user/dotfiles")
+ 	})
+@@ -87,4 +87,20 @@ func TestCustomBin(t *testing.T) {
+ 		assert.Equal(t, "attaching to tmux session: dotfiles", response)
+ 		mockShell.AssertCalled(t, "Cmd", "psmux", "attach-session", "-t", "dotfiles")
+ 	})
++
++	t.Run("uses psmux binary for new window in session", func(t *testing.T) {
++		mockShell.ExpectedCalls = nil
++		mockShell.On("Cmd", "psmux", "new-window", "-n", "editor", "-c", "/home/user/dotfiles", "-t", "dotfiles").Return("", nil)
++		_, err := psmux.NewWindowInSession("editor", "/home/user/dotfiles", "dotfiles", "")
++		assert.Nil(t, err)
++		mockShell.AssertCalled(t, "Cmd", "psmux", "new-window", "-n", "editor", "-c", "/home/user/dotfiles", "-t", "dotfiles")
++	})
++
++	t.Run("uses psmux binary for select window", func(t *testing.T) {
++		mockShell.ExpectedCalls = nil
++		mockShell.On("Cmd", "psmux", "select-window", "-t", "dotfiles:^").Return("", nil)
++		_, err := psmux.SelectWindow("dotfiles:^")
++		assert.Nil(t, err)
++		mockShell.AssertCalled(t, "Cmd", "psmux", "select-window", "-t", "dotfiles:^")
++	})
+ }
+diff --git a/tmux/tmux.go b/tmux/tmux.go
+index eeddf34..637db5f 100644
+--- a/tmux/tmux.go
++++ b/tmux/tmux.go
+@@ -9,9 +9,9 @@ import (
+ type Tmux interface {
+ 	ListSessions() ([]*model.TmuxSession, error)
+ 	ListWindows(targetSession string) ([]*model.TmuxWindow, error)
+-	NewSession(sessionName string, startDir string) (string, error)
+-	NewWindow(startDir string, name string) (string, error)
+-	NewWindowInSession(name string, startDir string, targetSession string) (string, error)
++	NewSession(sessionName string, startDir string, shellCommand string) (string, error)
++	NewWindow(startDir string, name string, shellCommand string) (string, error)
++	NewWindowInSession(name string, startDir string, targetSession string, shellCommand string) (string, error)
+ 	IsAttached() bool
+ 	AttachSession(targetSession string) (string, error)
+ 	SendKeys(name string, command string) (string, error)
+@@ -50,12 +50,20 @@ func (t *RealTmux) SendKeys(targetPane string, keys string) (string, error) {
+ 	return t.shell.Cmd(t.bin, "send-keys", "-t", targetPane, keys, "Enter")
+ }
+ 
+-func (t *RealTmux) NewSession(sessionName string, startDir string) (string, error) {
+-	return t.shell.Cmd(t.bin, "new-session", "-d", "-s", sessionName, "-c", startDir)
++func (t *RealTmux) NewSession(sessionName string, startDir string, shellCommand string) (string, error) {
++	args := []string{"new-session", "-d", "-s", sessionName, "-c", startDir}
++	if shellCommand != "" {
++		args = append(args, shellCommand)
++	}
++	return t.shell.Cmd(t.bin, args...)
+ }
+ 
+-func (t *RealTmux) NewWindow(startDir string, name string) (string, error) {
+-	return t.shell.Cmd(t.bin, "new-window", "-n", name, "-c", startDir)
++func (t *RealTmux) NewWindow(startDir string, name string, shellCommand string) (string, error) {
++	args := []string{"new-window", "-n", name, "-c", startDir}
++	if shellCommand != "" {
++		args = append(args, shellCommand)
++	}
++	return t.shell.Cmd(t.bin, args...)
+ }
+ 
+ func (t *RealTmux) CapturePane(targetSession string) (string, error) {
+-- 
+2.53.0
+

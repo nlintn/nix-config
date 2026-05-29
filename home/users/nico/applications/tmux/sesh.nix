@@ -34,6 +34,11 @@
 
   programs.sesh = {
     enable = true;
+    package = pkgs.sesh.overrideAttrs (prev: {
+      patches = prev.patches or [ ] ++ [
+        ./patch_sesh_0001-Revert-Revert-startup_command-shell-command-injectio.patch
+      ];
+    });
     enableAlias = false;
     enableTmuxIntegration = false;
     fzfPackage = config.programs.fzf.package;
@@ -51,7 +56,7 @@
         dir_length = 2;
         default_session = {
           preview_command = "${lib.getExe pkgs.eza} --color=always --follow-symlinks --tree {}";
-          startup_command = ls;
+          startup_command = "${ls}; builtin exec \"$SHELL\"";
         };
         blacklist = [ scratchpadName ];
         session = [
@@ -71,14 +76,14 @@
           {
             name = "nix-config 󱄅 ";
             path = config.home.sessionVariables.NIX_CONFIG_DIR;
-            startup_command = " ${lib.getExe config.vars.nvimPackage} -c ':Telescope find_files'";
+            startup_command = "${lib.getExe config.vars.nvimPackage} -c ':Telescope find_files'";
             preview_command = "${lib.getExe pkgs.eza} --color=always --follow-symlinks --tree {}";
             windows = [ "empty" ];
           }
           {
             name = scratchpadName;
             path = config.home.homeDirectory;
-            startup_command = " ${lib.getExe config.vars.nvimPackage} -- ${config.xdg.userDirs.documents}/scratch.md";
+            startup_command = "${lib.getExe config.vars.nvimPackage} -- ${config.xdg.userDirs.documents}/scratch.md";
             preview_command = "${lib.getExe config.programs.bat.package} --paging=never --color=always {}";
             windows = [ "empty" ];
           }

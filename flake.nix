@@ -76,12 +76,12 @@
     {
       nixosConfigurations = hosts.nixosConfigurations;
       homeConfigurations = home;
-      packages = lib-custom.eachSystem (
-        _:
-        let
-          isos = lib.mapAttrs (_: v: v.config.system.build.isoImage) hosts.isos;
-        in
-        isos // { default = isos.isoRaw; }
+      packages = lib-custom.eachSystemPkgs nixpkgs (
+        pkgs:
+        pkgs.callPackages ./packages.nix {
+          inherit (hosts) isos;
+          inherit self;
+        }
       );
       checks = lib-custom.eachSystemPkgs nixpkgs (pkgs: rec {
         build = pkgs.callPackage ./check-build.nix { inherit self; };

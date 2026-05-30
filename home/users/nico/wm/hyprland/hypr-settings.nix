@@ -11,24 +11,24 @@
 let
   evalBinds = lib-custom.hyprland.evalBinds;
 
-  var_brightnessctl = "${lib.getExe' config.services.avizo.package "lightctl"} -e 2";
-  var_browser = lib.getExe config.programs.firefox.finalPackage;
-  var_filemanager = lib.getExe' config.programs.thunar.finalPackage "thunar";
-  var_grimblast = lib.getExe pkgs.grimblast;
-  var_hyprpicker = lib.getExe pkgs.hyprpicker;
-  var_hyprtabs = lib.getExe (pkgs.callPackage ./scripts/hyprtabs.nix args);
-  var_launcher = lib.getExe config.programs.vicinae.package;
-  var_lock-cmd = config.vars.sessionLockCmd;
-  var_lock-transparent = lib.getExe (pkgs.callPackage ./hyprlock/lock-transparent.nix args);
-  var_loginctl = config.systemd.user.loginctlPath;
-  var_playerctl = lib.getExe config.services.playerctld.package;
-  var_pwm = lib.getExe config.programs.keepassxc.package;
-  var_swappy = lib.getExe config.programs.swappy.package;
-  var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
-  var_term = lib.getExe config.xdg.terminal-exec.package;
-  var_term_scratchpad = "${var_term} -- ${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"";
-  var_term_tmux = "${var_term} -- ${config.vars.seshFzf}";
-  var_volumectl = lib.getExe' config.services.avizo.package "volumectl";
+  brightnessctl = "${lib.getExe' config.services.avizo.package "lightctl"} -e 2";
+  browser = lib.getExe config.programs.firefox.finalPackage;
+  filemanager = lib.getExe' config.programs.thunar.finalPackage "thunar";
+  grimblast = lib.getExe pkgs.grimblast;
+  hyprpicker = lib.getExe pkgs.hyprpicker;
+  hyprtabs = lib.getExe (pkgs.callPackage ./scripts/hyprtabs.nix args);
+  lock-cmd = config.vars.sessionLockCmd;
+  lock-transparent = lib.getExe (pkgs.callPackage ./hyprlock/lock-transparent.nix args);
+  loginctl = config.systemd.user.loginctlPath;
+  playerctl = lib.getExe config.services.playerctld.package;
+  pwm = lib.getExe config.programs.keepassxc.package;
+  swappy = lib.getExe config.programs.swappy.package;
+  swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
+  term_tmux_scratchpad = "${xdg-terminal-exec} -- ${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"";
+  term_tmux_sesh = "${xdg-terminal-exec} -- ${config.vars.seshFzf}";
+  vicinae = lib.getExe config.programs.vicinae.package;
+  volumectl = lib.getExe' config.services.avizo.package "volumectl";
+  xdg-terminal-exec = lib.getExe config.xdg.terminal-exec.package;
 
 in
 with config.colorScheme.palette;
@@ -51,34 +51,34 @@ with config.colorScheme.palette;
       [ "ALT" "CTRL" "SHIFT" ]
       [
         # exec keybinds
-        "A, exec, ${var_grimblast} --freeze save area - | ${var_swappy} -f -"
-        "SHIFT, A, exec, ${var_grimblast} --freeze save output - | ${var_swappy} -f -"
-        "CTRL, A, exec, ${var_hyprpicker} -ar"
-        "E, exec, ${var_filemanager}"
-        "W, exec, ${var_browser}"
-        "Q, exec, ${var_term}"
-        "SHIFT, Q, exec, ${var_term_tmux}"
-        "SPACE, exec, ${var_launcher} vicinae://toggle"
+        "A, exec, ${grimblast} --freeze save area - | ${swappy} -f -"
+        "SHIFT, A, exec, ${grimblast} --freeze save output - | ${swappy} -f -"
+        "CTRL, A, exec, ${hyprpicker} -ar"
+        "E, exec, ${filemanager}"
+        "W, exec, ${browser}"
+        "Q, exec, ${xdg-terminal-exec}"
+        "SHIFT, Q, exec, ${term_tmux_sesh}"
+        "SPACE, exec, ${vicinae} vicinae://toggle"
         "SHIFT, R, exec, ${hyreload}"
-        "PERIOD, exec, ${var_launcher} vicinae://launch/core/search-emojis"
-        "V, exec, ${var_launcher} vicinae://launch/clipboard/history"
-        "BACKSPACE, exec, ${var_lock-cmd}"
-        "SHIFT, BACKSPACE, exec, ${var_lock-transparent}"
-        "RETURN, exec, ${var_launcher} vicinae://launch/power"
-        "PLUS, exec, ${var_swaync-client} --toggle-panel"
-        "SHIFT, PLUS, exec, ${var_swaync-client} -C"
-        "CTRL, PLUS, exec, ${var_swaync-client} --toggle-dnd"
+        "PERIOD, exec, ${vicinae} vicinae://launch/core/search-emojis"
+        "V, exec, ${vicinae} vicinae://launch/clipboard/history"
+        "BACKSPACE, exec, ${lock-cmd}"
+        "SHIFT, BACKSPACE, exec, ${lock-transparent}"
+        "RETURN, exec, ${vicinae} vicinae://launch/power"
+        "PLUS, exec, ${swaync-client} --toggle-panel"
+        "SHIFT, PLUS, exec, ${swaync-client} -C"
+        "CTRL, PLUS, exec, ${swaync-client} --toggle-dnd"
 
         "C, killactive"
         "SHIFT, C, forcekillactive"
         "F, fullscreen, 1"
         "SHIFT, F, fullscreen, 0"
-        "SHIFT, Z, exec, ${var_loginctl} terminate-session self"
+        "SHIFT, Z, exec, ${loginctl} terminate-session self"
         "CTRL SHIFT, Z, exit"
         # "P, pseudo,"
         "B, togglefloating,"
 
-        "G, exec, ${var_hyprtabs}"
+        "G, exec, ${hyprtabs}"
         "SHIFT, G, togglegroup,"
         "CTRL, G, moveoutofgroup,"
 
@@ -117,7 +117,7 @@ with config.colorScheme.palette;
       evalBinds "ALT"
         [ ]
         [
-          "TAB, exec, ${var_launcher} vicinae://launch/wm/switch-windows"
+          "TAB, exec, ${vicinae} vicinae://launch/wm/switch-windows"
         ]
     ++
       evalBinds "CTRL"
@@ -189,22 +189,22 @@ with config.colorScheme.palette;
     evalBinds ""
       [ ]
       [
-        "XF86AudioMute,    exec, ${var_volumectl} -p toggle-mute"
-        "XF86AudioMicMute, exec, ${var_volumectl} -m -p toogle-mute"
-        "XF86AudioNext,    exec, ${var_playerctl} next"
-        "XF86AudioPrev,    exec, ${var_playerctl} previous"
-        "XF86AudioPlay,    exec, ${var_playerctl} play-pause"
-        "XF86AudioPause,   exec, ${var_playerctl} play-pause"
+        "XF86AudioMute,    exec, ${volumectl} -p toggle-mute"
+        "XF86AudioMicMute, exec, ${volumectl} -m -p toogle-mute"
+        "XF86AudioNext,    exec, ${playerctl} next"
+        "XF86AudioPrev,    exec, ${playerctl} previous"
+        "XF86AudioPlay,    exec, ${playerctl} play-pause"
+        "XF86AudioPause,   exec, ${playerctl} play-pause"
       ];
 
   bindle =
     evalBinds ""
       [ ]
       [
-        "XF86AudioRaiseVolume,  exec, ${var_volumectl} -p up"
-        "XF86AudioLowerVolume,  exec, ${var_volumectl} -p down"
-        "XF86MonBrightnessUp,   exec, ${var_brightnessctl} up"
-        "XF86MonBrightnessDown, exec, ${var_brightnessctl} down"
+        "XF86AudioRaiseVolume,  exec, ${volumectl} -p up"
+        "XF86AudioLowerVolume,  exec, ${volumectl} -p down"
+        "XF86MonBrightnessUp,   exec, ${brightnessctl} up"
+        "XF86MonBrightnessDown, exec, ${brightnessctl} down"
       ];
 
   binds = {
@@ -443,8 +443,8 @@ with config.colorScheme.palette;
   ];
 
   workspace = [
-    "special:dropterm, on-created-empty:${var_term_scratchpad}"
-    "special:pwm, on-created-empty:${var_pwm}"
+    "special:dropterm, on-created-empty:${term_tmux_scratchpad}"
+    "special:pwm, on-created-empty:${pwm}"
   ];
 
   general = {

@@ -1,6 +1,5 @@
 {
   config,
-  hyreload,
   lib,
   lib-custom,
   pkgs,
@@ -11,24 +10,24 @@
 let
   evalBinds = lib-custom.hyprland.evalBinds;
 
-  brightnessctl = "${lib.getExe' config.services.avizo.package "lightctl"} -e 2";
-  browser = lib.getExe config.programs.firefox.finalPackage;
-  filemanager = lib.getExe' config.programs.thunar.finalPackage "thunar";
-  grimblast = lib.getExe pkgs.grimblast;
-  hyprpicker = lib.getExe pkgs.hyprpicker;
-  hyprtabs = lib.getExe (pkgs.callPackage ./scripts/hyprtabs.nix args);
-  lock-cmd = config.vars.sessionLockCmd;
-  lock-transparent = lib.getExe (pkgs.callPackage ./hyprlock/lock-transparent.nix args);
-  loginctl = config.systemd.user.loginctlPath;
-  playerctl = lib.getExe config.services.playerctld.package;
-  pwm = lib.getExe config.programs.keepassxc.package;
-  swappy = lib.getExe config.programs.swappy.package;
-  swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
-  term_tmux_scratchpad = "${xdg-terminal-exec} -- ${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"";
-  term_tmux_sesh = "${xdg-terminal-exec} -- ${config.vars.seshFzf}";
-  vicinae = lib.getExe config.programs.vicinae.package;
-  volumectl = lib.getExe' config.services.avizo.package "volumectl";
-  xdg-terminal-exec = lib.getExe config.xdg.terminal-exec.package;
+  inherit (config.vars) launchPrefix;
+
+  brightnessctl = "${launchPrefix} ${lib.getExe' config.services.avizo.package "lightctl"} -e 2";
+  browser = "${launchPrefix} ${lib.getExe config.programs.firefox.finalPackage}";
+  filemanager = "${launchPrefix} ${lib.getExe' config.programs.thunar.finalPackage "thunar"}";
+  hyprpicker = "${launchPrefix} ${lib.getExe pkgs.hyprpicker}";
+  hyprtabs = "${launchPrefix} ${lib.getExe (pkgs.callPackage ./scripts/hyprtabs.nix args)}";
+  hyreload = "${launchPrefix} ${pkgs.callPackage ./scripts/hyreload.nix args}";
+  lock-transparent = "${launchPrefix} ${lib.getExe (pkgs.callPackage ./hyprlock/lock-transparent.nix args)}";
+  playerctl = "${launchPrefix} ${lib.getExe config.services.playerctld.package}";
+  pwm = "${launchPrefix} ${lib.getExe config.programs.keepassxc.package}";
+  screenshot = "${launchPrefix} ${pkgs.callPackage ./scripts/screenshot.nix args}";
+  swaync-client = "${launchPrefix} ${lib.getExe' config.services.swaync.package "swaync-client"}";
+  term_tmux_scratchpad = "${launchPrefix} ${xdg-terminal-exec} -- ${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"";
+  term_tmux_sesh = "${launchPrefix} ${xdg-terminal-exec} -- ${config.vars.seshFzf}";
+  vicinae = "${launchPrefix} ${lib.getExe config.programs.vicinae.package}";
+  volumectl = "${launchPrefix} ${lib.getExe' config.services.avizo.package "volumectl"}";
+  xdg-terminal-exec = "${launchPrefix} ${lib.getExe config.xdg.terminal-exec.package}";
 
 in
 with config.colorScheme.palette;
@@ -51,8 +50,8 @@ with config.colorScheme.palette;
       [ "ALT" "CTRL" "SHIFT" ]
       [
         # exec keybinds
-        "A, exec, ${grimblast} --freeze save area - | ${swappy} -f -"
-        "SHIFT, A, exec, ${grimblast} --freeze save output - | ${swappy} -f -"
+        "A, exec, ${screenshot} area"
+        "SHIFT, A, exec, ${screenshot} output"
         "CTRL, A, exec, ${hyprpicker} -ar"
         "E, exec, ${filemanager}"
         "W, exec, ${browser}"
@@ -62,7 +61,7 @@ with config.colorScheme.palette;
         "SHIFT, R, exec, ${hyreload}"
         "PERIOD, exec, ${vicinae} vicinae://launch/core/search-emojis"
         "V, exec, ${vicinae} vicinae://launch/clipboard/history"
-        "BACKSPACE, exec, ${lock-cmd}"
+        "BACKSPACE, exec, ${config.vars.sessionLockCmd}"
         "SHIFT, BACKSPACE, exec, ${lock-transparent}"
         "RETURN, exec, ${vicinae} vicinae://launch/power"
         "PLUS, exec, ${swaync-client} --toggle-panel"
@@ -73,9 +72,7 @@ with config.colorScheme.palette;
         "SHIFT, C, forcekillactive"
         "F, fullscreen, 1"
         "SHIFT, F, fullscreen, 0"
-        "SHIFT, Z, exec, ${loginctl} terminate-session self"
         "CTRL SHIFT, Z, exit"
-        # "P, pseudo,"
         "B, togglefloating,"
 
         "G, exec, ${hyprtabs}"

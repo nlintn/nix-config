@@ -14,6 +14,8 @@
     HibernateDelaySec = "24h";
   };
 
+  xdg.autostart.enable = lib.mkForce false;
+
   services.greetd = {
     enable = true;
     settings = {

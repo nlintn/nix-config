@@ -59,6 +59,12 @@
             connectionToggleable = true;
           };
         };
+        applications = {
+          preferences = {
+            defaultAction = "launch";
+            inherit (config.vars) launchPrefix;
+          };
+        };
         core = {
           entrypoints = {
             inspect-local-storage.enabled = true;

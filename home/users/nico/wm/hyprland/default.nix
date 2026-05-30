@@ -1,16 +1,12 @@
 {
   config,
   lib,
+  osConfig ? null,
   pkgs,
   userSettings,
   ...
 }@args:
 
-let
-  customPkgs = {
-    hyreload = pkgs.callPackage ./scripts/hyreload.nix args;
-  };
-in
 {
   imports = [
     ../common/wayland.nix
@@ -59,7 +55,7 @@ in
 
     xwayland.enable = true;
     systemd = {
-      enable = true;
+      enable = !(osConfig.programs.hyprland.withUWSM or false);
       variables = [ "--all" ];
     };
 
@@ -77,7 +73,7 @@ in
     ];
 
     configType = "hyprlang";
-    settings = import ./hypr-settings.nix (args // customPkgs);
+    settings = import ./hypr-settings.nix args;
   };
 
   systemd.user.tmpfiles.rules = lib.map (
@@ -96,6 +92,4 @@ in
   };
 
   home.sessionVariables.GTK_IM_MODULE = "simple";
-
-  # home.activation.hyprlandActivation = lib.hm.dag.entryAfter [ "reloadSystemd" ] "run ${customPkgs.hyreload}";
 }

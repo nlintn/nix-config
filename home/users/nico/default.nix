@@ -2,6 +2,7 @@
   config,
   lib,
   nixpkgs,
+  pkgs,
   self,
   userSettings,
   ...
@@ -36,6 +37,8 @@
     "${config.home.homeDirectory}/.local/bin"
   ];
 
+  vars.launchPrefix = lib.optionalString config.systemd.user.enable "${lib.getExe pkgs.runapp} -- ";
+
   nix = {
     registry = {
       "n".flake = nixpkgs;
@@ -55,4 +58,5 @@
       options = "--delete-older-than 14d";
     };
   };
+
 }

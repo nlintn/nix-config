@@ -1,6 +1,5 @@
 {
   config,
-  coreutils,
   formats,
   lib,
   pwvucontrol,
@@ -8,10 +7,13 @@
 }:
 
 let
-  sleep = lib.getExe' coreutils "sleep";
-  var_conctl = lib.getExe' config.services.network-manager-applet.package "nm-connection-editor";
-  var_volctl = lib.getExe pwvucontrol;
-  var_swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
+  inherit (config.vars) launchPrefix;
+
+  conctl =
+    launchPrefix + lib.getExe' config.services.network-manager-applet.package "nm-connection-editor";
+  volctl = launchPrefix + lib.getExe pwvucontrol;
+  swaync-client-raw = lib.getExe' config.services.swaync.package "swaync-client";
+  swaync-client = launchPrefix + swaync-client-raw;
 in
 (formats.json { }).generate "waybar-config" (
   with config.colorScheme.palette;
@@ -136,7 +138,7 @@ in
         ];
       };
       scroll-step = 1;
-      on-click = "${var_volctl}";
+      on-click = "${volctl}";
       tooltip = false;
     };
 
@@ -162,7 +164,7 @@ in
       format-ethernet = "{ifname}: {ipaddr}/{cidr}";
       format-disconnected = "No connection";
       tooltip = false;
-      on-click = "${var_conctl}";
+      on-click = "${conctl}";
     };
 
     clock = {
@@ -181,9 +183,9 @@ in
         dnd-none = " ";
       };
       return-type = "json";
-      exec = "${var_swaync-client} -swb";
-      on-click = "${sleep} 0.1 && ${var_swaync-client} -t -sw";
-      on-click-right = "${sleep} 0.1 && ${var_swaync-client} -d -sw";
+      exec = "${swaync-client-raw} -swb";
+      on-click = "${swaync-client} -t -sw";
+      on-click-right = "${swaync-client} -d -sw";
       escape = true;
     };
   }

@@ -8,7 +8,7 @@
 
 {
   vars = {
-    lockCmd = "${lib.getExe config.programs.hyprlock.package}";
+    lockCmd = config.vars.launchPrefix + lib.getExe config.programs.hyprlock.package;
     unlockCmd = "${lib.getExe' pkgs.procps "pkill"} -SIGUSR1 hyprlock";
   };
   programs.hyprlock = {

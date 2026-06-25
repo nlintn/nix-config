@@ -38,7 +38,7 @@ in
     treechildren::-moz-tree-row(current, focus) {
       outline: none !important;
     }
-    .dialogBox {
+    dialog, .dialogBox {
       background-color: #${base01} !important;
     }
     .search-tooltip {
@@ -111,6 +111,11 @@ in
       --button-text-color-primary: #${base01} !important;
 
       --table-row-background-color-alternate: var(--background-color-box) !important;
+    }
+
+    moz-message-bar {
+      --message-bar-text-color: #${base01} !important;
+      --message-bar-icon-color: #${base01} !important;
     }
   }
   :root {

@@ -22,13 +22,13 @@ in
   .titlebar-spacer[type="post-tabs"]{ display:none }
 
   :root {
-    --input-bgcolor: #${base00} !important;
+    --input-background-color: #${base00} !important;
     --input-color: #${base05} !important;
 
-    --toolbox-bgcolor: transparent !important;
-    --toolbox-bgcolor-inactive: transparent !important;
-    --toolbox-textcolor: #${base05} !important;
-    --toolbox-textcolor-inactive: ${toRGBA base05 0.8} !important;
+    --toolbox-background-color: transparent !important;
+    --toolbox-background-color-inactive: transparent !important;
+    --toolbox-text-color: #${base05} !important;
+    --toolbox-text-color-inactive: ${toRGBA base05 0.8} !important;
     --tabpanel-background-color: ${toRGBA base02 0.3} !important;
     --arrowpanel-background: #${base00} !important;
     --arrowpanel-color: #${base05} !important;
@@ -38,16 +38,18 @@ in
     --lwt-sidebar-background-color: #${base00} !important;
     --lwt-sidebar-text-color: #${base05} !important;
     --tab-selected-textcolor: #${base0E} !important;
-    --tab-selected-bgcolor: transparent !important;
+    --tab-background-color-selected: transparent !important;
     --tab-selected-outline-color: #${base0E} !important;
     --tab-loading-fill: #${base0E} !important;
     --toolbarbutton-icon-fill-attention: #${base0E} !important;
     --toolbar-field-color: #${base05} !important;
-    --toolbar-field-background-color: #${base01} !important;
-    --toolbar-field-focus-color: #${base05} !important;
-    --toolbar-field-focus-background-color: #${base01} !important;
-    --toolbar-field-focus-border-color: ${toRGBA base0E 0.8} !important;
+    --toolbar-field-background-color: #${base00} !important;
+    --toolbar-field-text-color: #${base05} !important;
+    --toolbar-field-text-color-focus: #${base05} !important;
+    --toolbar-field-background-color-focus: #${base00} !important;
+    --toolbar-field-border-color-focus: ${toRGBA base0E 0.8} !important;
     --urlbarview-background-color-selected: #${base0E} !important;
+    --urlbarview-text-color-selected: #${base01} !important;
     --urlbarView-highlight-background: #${base02} !important;
     --urlbarView-highlight-color: #${base05} !important;
 
@@ -61,7 +63,7 @@ in
     --button-text-color: #${base05} !important;
     --button-text-color-primary: #${base01} !important;
 
-    --toolbar-bgcolor: ${toRGBA base02 0.5} !important;
+    --toolbar-background-color: ${toRGBA base02 0.5} !important;
     --toolbar-color: #${base05} !important;
 
     --sidebar-background-color : ${toRGBA base00 0.5} !important;
@@ -141,6 +143,10 @@ in
       background-color: #${base02} !important;
     }
   }
+  panelmultiview {
+    background-color: #${base00};
+    color: #${base05};
+  }
   splitter#sidebar-tools-and-extensions-splitter {
     border-color: #${base03} !important;
   }
@@ -151,6 +157,10 @@ in
   }
   .autocomplete-richlistbox {
     color: #${base05} !important;
+  }
+  .tab-preview-content-main {
+    background-color: #${base02};
+    color: #${base05};
   }
 
   @-moz-document url(chrome://browser/content/places/places.xhtml) {

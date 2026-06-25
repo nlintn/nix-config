@@ -63,12 +63,17 @@ with config.colorScheme.palette;
   "browser.messaging-system.whatsNewPanel.enabled" = false;
   "browser.rights.3.shown" = true;
   "browser.search.separatePrivateDefault" = false;
+  "browser.settings-redesign.enabled" = true;
+  "browser.settings-redesign.promo.dismissed" = true;
   "browser.shell.checkDefaultBrowser" = false;
   "browser.shell.defaultBrowserCheckCount" = 1;
   "browser.startup.couldRestoreSession.count" = 2;
   "browser.startup.homepage_override.mstone" = "ignore";
   "browser.tabs.allow_transparent_browser" = true;
   "browser.tabs.closeWindowWithLastTab" = false;
+  "browser.tabs.groups.hoverPreview.enabled" = true;
+  "browser.tabs.hoverPreview.enabled" = true;
+  "browser.tabs.hoverPreview.showThumbnails" = true;
   "browser.tabs.insertAfterCurrent" = true;
   "browser.tabs.insertAfterCurrentExceptPinned" = true;
   "browser.tabs.insertRelatedAfterCurrent" = true;
@@ -116,6 +121,7 @@ with config.colorScheme.palette;
   "datareporting.healthreport.uploadEnabled" = false;
   "datareporting.policy.dataSubmissionEnabled" = false;
   "datareporting.sessions.current.clean" = true;
+  "datareporting.usage.uploadEnabled" = false;
   "devtools.onboarding.telemetry.logged" = false;
   "toolkit.telemetry.archive.enabled" = false;
   "toolkit.telemetry.bhrPing.enabled" = false;
@@ -255,7 +261,7 @@ with config.colorScheme.palette;
         "nav-bar" = extToBrowserAction [
           "sidebar-button"
           "firefox-view-button"
-          # "alltabs-button"
+          "stop-reload-button"
           "back-button"
           "forward-button"
           "vertical-spacer"

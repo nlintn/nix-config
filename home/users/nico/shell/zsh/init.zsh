@@ -1,14 +1,15 @@
 autoload -U colors
 colors
 
-zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-prompt "$bg[blue]$fg[black]%m %p$reset_color"
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*:descriptions' format "${fg[yellow]}%d${reset_color}"
+zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*:warnings' format "${fg[red]}No matches for:${reset_color} %d"
 
-bindkey "$terminfo[kcbt]" reverse-menu-complete
+zstyle ':fzf-tab:complete:*:*' fzf-preview 'builtin echo -e "$group\n"; (builtin test -e "$realpath" && ($_cmd_bat --paging=never --color=always "${realpath}" || $_cmd_eza --color=always --follow-symlinks --tree "$realpath") || <<< "$desc") 2> /dev/null | $_cmd_head -98'
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+zstyle ':fzf-tab:*' fzf-flags --border-label ' command ' --exact --height '~-2' --preview-window 'right:40%,~2'
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;5C" forward-word
@@ -16,6 +17,8 @@ bindkey "^[[1;3D" backward-word
 bindkey "^[[1;5D" backward-word
 bindkey "^[^?" backward-delete-word
 bindkey "^[^H" backward-delete-word
+bindkey "^[[3;3~" delete-word
+bindkey "^[[3;6~" delete-word
 
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end

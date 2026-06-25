@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }@args:
@@ -30,6 +31,21 @@
     setOptions = [
       "globdots"
     ];
-    initContent = pkgs.callPackage ./init.nix { };
+    localVariables = lib.mkMerge [
+      {
+        _cmd_base64 = lib.getExe' pkgs.coreutils "base64";
+        _cmd_bat = lib.getExe config.programs.bat.package;
+        _cmd_eza = lib.getExe pkgs.eza;
+        _cmd_head = lib.getExe' pkgs.coreutils "head";
+      }
+      (lib.mapAttrs' (n: v: lib.nameValuePair "_col_${n}" v) config.colorScheme.palette)
+    ];
+    initContent = lib.readFile ./init.zsh;
+    plugins = [
+      {
+        name = "fzf-tab";
+        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+      }
+    ];
   };
 }

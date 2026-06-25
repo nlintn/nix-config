@@ -17,6 +17,7 @@
         "mailnews.default_news_view_flags" = 1;
         "mailnews.default_view_flags" = 1;
         "mailnews.start_page.url" = "https://nlintn.de";
+        "mail.shell.checkDefaultClient" = false;
         "browser.display.use_system_colors" = true;
       };
     };

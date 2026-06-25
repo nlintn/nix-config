@@ -24,8 +24,8 @@ let
         "colorTheme" = "system";
         "credentialSorting" = "sortByGroupAndTitle";
         "debugLogging" = false;
-        "defaultGroup" = "";
-        "defaultPasskeyGroup" = "";
+        "defaultGroup" = "KeePassXC-Browser Passwords";
+        "defaultPasskeyGroup" = "KeePassXC-Browser Passwords";
         "defaultPasswordManager" = true;
         "defaultGroupAlwaysAsk" = false;
         "downloadFaviconAfterSave" = true;

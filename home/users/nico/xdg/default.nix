@@ -21,9 +21,6 @@
       enable = true;
       createDirectories = true;
       setSessionVariables = true;
-      extraConfig = {
-        SOURCE = "${config.home.homeDirectory}/Sources";
-      };
     };
     mimeApps = {
       enable = true;

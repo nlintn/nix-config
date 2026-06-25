@@ -7,10 +7,14 @@
 }:
 
 {
-  vars = {
-    lockCmd = config.vars.launchPrefix + lib.getExe config.programs.hyprlock.package;
-    unlockCmd = "${lib.getExe' pkgs.procps "pkill"} -SIGUSR1 hyprlock";
-  };
+  vars =
+    let
+      hyprlockPkg = config.programs.hyprlock.package;
+    in
+    {
+      lockCmd = "${lib.getExe' pkgs.procps "pidof"} ${hyprlockPkg.NIX_MAIN_PROGRAM} || ${lib.getExe hyprlockPkg}";
+      unlockCmd = "${lib.getExe' pkgs.procps "pkill"} -SIGUSR1 ${hyprlockPkg.NIX_MAIN_PROGRAM}";
+    };
   programs.hyprlock = {
     enable = true;
 

@@ -139,18 +139,18 @@ with config.colorScheme.palette;
         "right, movefocus, r"
         "up,    movefocus, u"
         "down,  movefocus, d"
-        "SHIFT, left,  movewindow, l"
-        "SHIFT, right, movewindow, r"
-        "SHIFT, up,    movewindow, u"
-        "SHIFT, down,  movewindow, d"
+        "SHIFT, left,  movewindoworgroup, l"
+        "SHIFT, right, movewindoworgroup, r"
+        "SHIFT, up,    movewindoworgroup, u"
+        "SHIFT, down,  movewindoworgroup, d"
         "h, movefocus, l"
         "l, movefocus, r"
         "k, movefocus, u"
         "j, movefocus, d"
-        "SHIFT, h, movewindow, l"
-        "SHIFT, l, movewindow, r"
-        "SHIFT, k, movewindow, u"
-        "SHIFT, j, movewindow, d"
+        "SHIFT, h, movewindoworgroup, l"
+        "SHIFT, l, movewindoworgroup, r"
+        "SHIFT, k, movewindoworgroup, u"
+        "SHIFT, j, movewindoworgroup, d"
 
         "ALT, left,  resizeactive, -20 0"
         "ALT, right, resizeactive,  20 0"
@@ -311,7 +311,12 @@ with config.colorScheme.palette;
         name = "float_round_classes";
         inherit (template) float group rounding;
         "match:class" =
-          "\\.blueman-manager-wrapped|com\\.saivert\\.pwvucontrol|electron|nm-connection-editor|xdg-desktop-portal-gtk";
+          "\\.blueman-manager-wrapped|com\\.saivert\\.pwvucontrol|electron|exo-open|nm-applet|nm-connection-editor|xdg-desktop-portal-gtk";
+      }
+      {
+        name = "float_round_titles";
+        inherit (template) float group rounding;
+        "match:title" = "Print";
       }
       {
         name = "float_round_pin_classes";
@@ -429,7 +434,7 @@ with config.colorScheme.palette;
     }
     {
       name = "abovelock_avizo";
-      above_lock = true;
+      above_lock = 1;
       "match:namespace" = "avizo";
     }
     {

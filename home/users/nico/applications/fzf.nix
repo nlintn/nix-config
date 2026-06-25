@@ -20,8 +20,8 @@ in
       fg = "#${base05}";
       "fg+" = "#${base05}";
       header = "#${base08}";
-      hl = "#${base08}";
-      "hl+" = "#${base08}";
+      hl = "-1:reverse:bold";
+      "hl+" = "-1:reverse:bold";
       info = "#${base0E}";
       marker = "#${base06}";
       pointer = "#${base06}";
@@ -30,8 +30,9 @@ in
     };
     defaultCommand = "${fd} -IL";
     defaultOptions = [
+      "--border=rounded"
+      "--cycle"
       "--height 60%"
-      "--border"
       "--layout=reverse"
       "--no-sort"
     ]
@@ -39,15 +40,18 @@ in
     # ALT-C Options
     changeDirWidgetCommand = "${zoxide} query --list && ${fd} -HIL -t d -E .cache";
     changeDirWidgetOptions = [
+      "--border-label ' cd '"
       "--preview '${eza} --color=always --follow-symlinks --tree {}'"
     ];
     # CTRL-T Options
     fileWidgetCommand = "${fd} -IL -t f";
     fileWidgetOptions = [
+      "--border-label ' file '"
       "--preview '(${bat} --paging=never --color=always {} || ${eza} --color=always --follow-symlinks --tree {}) 2> /dev/null | ${head} -200'"
     ];
     # CTRL-R Options
     historyWidgetOptions = [
+      "--border-label ' history '"
     ];
   };
 }

@@ -68,7 +68,8 @@ with config.colorScheme.palette;
     color: @orange;
   }
 
-  #battery.warning.discharging {
+  #battery.warning.discharging,
+  #battery.critical.discharging {
     color: @red;
   }
   #battery.charging {

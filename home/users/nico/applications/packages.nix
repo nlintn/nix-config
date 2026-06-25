@@ -57,7 +57,7 @@
     libnotify
     libqalculate
     libreoffice-fresh
-    logseq
+    # logseq TODO: add back after electron version upgrade
     lolcat
     nix-diff
     nix-inspect

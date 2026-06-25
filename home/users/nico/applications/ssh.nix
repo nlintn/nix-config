@@ -28,9 +28,10 @@ in
       };
     };
     extraOptionOverrides = {
+      CheckHostIP = "yes";
+      StrictHostKeyChecking = "ask";
       UpdateHostKeys = "ask";
       VerifyHostKeyDNS = "ask";
-      StrictHostKeyChecking = "ask";
     };
     includes = [ "hosts" ];
   };

@@ -135,6 +135,24 @@ in
 
       bind -N "List windows " w choose-tree -Zw -f '#{?#{m:_popup_*_*_,#{session_name}},0,1}'
       bind -N "List sessions " s choose-tree -Zs -f '#{?#{m:_popup_*_*_,#{session_name}},0,1}'
+
+      bind -T copy-mode-vi i switch-client -T copy-mode-vi-seq-i
+      bind -T copy-mode-vi-seq-i w send-keys -X select-word
+      bind -T copy-mode-vi-seq-i W send-keys -X clear-selection \; send-keys -X previous-space \; send-keys -X begin-selection \; send-keys -X next-space-end
+      bind -T copy-mode-vi-seq-i b send-keys -X clear-selection \; send-keys -X jump-to-backward '(' \; send-keys -X begin-selection \; send-keys -X jump-to-forward ')'
+      bind -T copy-mode-vi-seq-i ( send-keys -X clear-selection \; send-keys -X jump-to-backward '(' \; send-keys -X begin-selection \; send-keys -X jump-to-forward ')'
+      bind -T copy-mode-vi-seq-i ) send-keys -X clear-selection \; send-keys -X jump-to-backward '(' \; send-keys -X begin-selection \; send-keys -X jump-to-forward ')'
+      bind -T copy-mode-vi-seq-i B send-keys -X clear-selection \; send-keys -X jump-to-backward '{' \; send-keys -X begin-selection \; send-keys -X jump-to-forward '}'
+      bind -T copy-mode-vi-seq-i \{ send-keys -X clear-selection \; send-keys -X jump-to-backward '{' \; send-keys -X begin-selection \; send-keys -X jump-to-forward '}'
+      bind -T copy-mode-vi-seq-i \} send-keys -X clear-selection \; send-keys -X jump-to-backward '{' \; send-keys -X begin-selection \; send-keys -X jump-to-forward '}'
+      bind -T copy-mode-vi-seq-i [ send-keys -X clear-selection \; send-keys -X jump-to-backward '[' \; send-keys -X begin-selection \; send-keys -X jump-to-forward ']'
+      bind -T copy-mode-vi-seq-i ] send-keys -X clear-selection \; send-keys -X jump-to-backward '[' \; send-keys -X begin-selection \; send-keys -X jump-to-forward ']'
+      bind -T copy-mode-vi-seq-i < send-keys -X clear-selection \; send-keys -X jump-to-backward '<' \; send-keys -X begin-selection \; send-keys -X jump-to-forward '>'
+      bind -T copy-mode-vi-seq-i > send-keys -X clear-selection \; send-keys -X jump-to-backward '<' \; send-keys -X begin-selection \; send-keys -X jump-to-forward '>'
+      bind -T copy-mode-vi-seq-i ` send-keys -X clear-selection \; send-keys -X jump-to-backward '`' \; send-keys -X begin-selection \; send-keys -X jump-to-forward '`'
+      bind -T copy-mode-vi-seq-i \' send-keys -X clear-selection \; send-keys -X jump-to-backward "'" \; send-keys -X begin-selection \; send-keys -X jump-to-forward "'"
+      bind -T copy-mode-vi-seq-i \" send-keys -X clear-selection \; send-keys -X jump-to-backward '"' \; send-keys -X begin-selection \; send-keys -X jump-to-forward '"'
+      bind -T copy-mode-vi-seq-i l send-keys -X clear-selection \; send-keys -X back-to-indentation \; send-keys -X begin-selection \; send-keys -X end-of-line \; send-keys -X cursor-left \; send-keys -X other-end
     '';
   };
 }

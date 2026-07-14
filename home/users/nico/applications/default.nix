@@ -22,6 +22,7 @@
     ./lazygit.nix
     ./less.nix
     ./neovim.nix
+    ./nix-search-tv.nix
     ./obs-studio.nix
     ./ssh.nix
     ./thunar.nix

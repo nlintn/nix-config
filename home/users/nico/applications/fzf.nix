@@ -38,20 +38,26 @@ in
     ]
     ++ lib.optional config.programs.tmux.enable "--tmux bottom,75%,60%";
     # ALT-C Options
-    changeDirWidgetCommand = "${zoxide} query --list && ${fd} -HIL -t d -E .cache";
-    changeDirWidgetOptions = [
-      "--border-label ' cd '"
-      "--preview '${eza} --color=always --follow-symlinks --tree {}'"
-    ];
+    changeDirWidget = {
+      command = "${zoxide} query --list && ${fd} -HIL -t d -E .cache";
+      options = [
+        "--border-label ' cd '"
+        "--preview '${eza} --color=always --follow-symlinks --tree {}'"
+      ];
+    };
     # CTRL-T Options
-    fileWidgetCommand = "${fd} -IL -t f";
-    fileWidgetOptions = [
-      "--border-label ' file '"
-      "--preview '(${bat} --paging=never --color=always {} || ${eza} --color=always --follow-symlinks --tree {}) 2> /dev/null | ${head} -200'"
-    ];
+    fileWidget = {
+      command = "${fd} -IL -t f";
+      options = [
+        "--border-label ' file '"
+        "--preview '(${bat} --paging=never --color=always {} || ${eza} --color=always --follow-symlinks --tree {}) 2> /dev/null | ${head} -200'"
+      ];
+    };
     # CTRL-R Options
-    historyWidgetOptions = [
-      "--border-label ' history '"
-    ];
+    historyWidget = {
+      options = [
+        "--border-label ' history '"
+      ];
+    };
   };
 }

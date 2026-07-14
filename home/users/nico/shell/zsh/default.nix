@@ -31,16 +31,10 @@
     setOptions = [
       "globdots"
     ];
-    localVariables = lib.mkMerge [
-      {
-        _cmd_base64 = lib.getExe' pkgs.coreutils "base64";
-        _cmd_bat = lib.getExe config.programs.bat.package;
-        _cmd_eza = lib.getExe pkgs.eza;
-        _cmd_head = lib.getExe' pkgs.coreutils "head";
-      }
-      (lib.mapAttrs' (n: v: lib.nameValuePair "_col_${n}" v) config.colorScheme.palette)
-    ];
-    initContent = lib.readFile ./init.zsh;
+    localVariables = {
+      _cmd_base64 = lib.getExe' pkgs.coreutils "base64";
+    };
+    initContent = import ./init args;
     plugins = [
       {
         name = "fzf-tab";

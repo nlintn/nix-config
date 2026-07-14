@@ -5,9 +5,6 @@
 
 with config.colorScheme.palette;
 {
-  background = "#${base00}";
-  cursor-color = "#${base06}";
-  foreground = "#${base05}";
   palette = [
     "0=#${base01}"
     "8=#${base03}"
@@ -34,6 +31,15 @@ with config.colorScheme.palette;
     "15=#${base07}"
   ];
   palette-generate = true;
+
+  background = "#${base00}";
+  cursor-color = "#${base06}";
+  cursor-text = "#${base01}";
+  foreground = "#${base05}";
+  search-background = "#${base09}";
+  search-foreground = "#${base01}";
+  search-selected-background = "#${base08}";
+  search-selected-foreground = "#${base01}";
   selection-background = "#${base06}";
   selection-foreground = "#${base01}";
 }

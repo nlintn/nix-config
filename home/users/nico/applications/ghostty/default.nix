@@ -38,7 +38,9 @@
       keybind = [
         "ctrl+shift+a=select_all"
         "ctrl+shift+c=copy_to_clipboard"
+        "ctrl+shift+f=start_search"
         "ctrl+shift+i=inspector:toggle"
+        "ctrl+shift+l=clear_screen"
         "ctrl+shift+n=new_window"
         "ctrl+shift+p=toggle_command_palette"
         "ctrl+shift+page_down=jump_to_prompt:1"
@@ -46,6 +48,7 @@
         "ctrl+shift+q=quit"
         "ctrl+shift+r=reload_config"
         "ctrl+shift+v=paste_from_clipboard"
+        "ctrl+shift+ü=write_scrollback_file:open"
 
         "ctrl+shift+t=new_tab"
         "ctrl+shift+w=close_tab:this"

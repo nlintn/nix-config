@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -34,16 +35,12 @@
       enable = true;
       browsing = true;
       defaultShared = true;
-      # drivers = [ pkgs.cupsDrivers.generic ];
+      drivers = [ pkgs.canon-cups-ufr2 ];
     };
     avahi = {
       enable = true;
       nssmdns4 = true;
       openFirewall = true;
-      publish = {
-        enable = true;
-        userServices = true;
-      };
     };
   };
 }

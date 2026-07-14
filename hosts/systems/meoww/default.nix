@@ -77,5 +77,7 @@
 
   security.polkit.enable = true;
 
+  security.apparmor.enable = true;
+
   systemd.oomd.enableUserSlices = true;
 }

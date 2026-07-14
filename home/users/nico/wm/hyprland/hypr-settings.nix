@@ -278,151 +278,163 @@ with config.colorScheme.palette;
 
   render.cm_enabled = false;
 
-  windowrule =
-    let
-      template = {
-        border_size = 0;
-        float = true;
-        group = "deny";
-        rounding = 10;
-      };
-    in
-    [
-      {
-        name = "group_non_float";
-        "match:float" = false;
-        group = "set";
-      }
-      {
-        name = "supress_fullscreen";
-        "match:class" = ".*";
-        suppress_event = lib.concatStringsSep " " [
-          "fullscreen"
-          "maximize"
-        ];
-      }
-      {
-        name = "disable_screenshare";
-        "match:class" = "keepassxc|org.keepassxc.KeePassXC";
-        no_screen_share = true;
-      }
+  windowrule = [
+    {
+      name = "group_non_float";
+      "match:float" = false;
+      group = "set";
+    }
+    {
+      name = "round_float";
+      "match:float" = true;
+      group = "deny";
+      rounding = 10;
+    }
 
-      {
-        name = "float_round_classes";
-        inherit (template) float group rounding;
-        "match:class" =
-          "\\.blueman-manager-wrapped|com\\.saivert\\.pwvucontrol|electron|exo-open|nm-applet|nm-connection-editor|xdg-desktop-portal-gtk";
-      }
-      {
-        name = "float_round_titles";
-        inherit (template) float group rounding;
-        "match:title" = "Print";
-      }
-      {
-        name = "float_round_pin_classes";
-        inherit (template) float group rounding;
-        pin = true;
-        "match:class" = "dragon-drop|xdragon";
-      }
-      {
-        name = "round_stay_focused_classes";
-        inherit (template) rounding;
-        stay_focused = true;
-        "match:class" = "gcr-prompter|gtk-ssh-askpass|polkit-gnome-authentication-agent-1";
-      }
+    {
+      name = "disable_screenshare_classes";
+      "match:class" = "keepassxc|org.keepassxc.KeePassXC";
+      no_screen_share = true;
+    }
 
-      {
-        name = "float_mozilla_pass_popup";
-        inherit (template) float group;
-        "match:class" = "firefox|thunderbird";
-        "match:title" =
-          "About Mozilla (Firefox|Thunderbird)|Library|Page Info — .*|Password Required - Mozilla (Firefox|Thunderbird)";
-      }
-      {
-        name = "focus_thunderbird_confirm";
-        stay_focused = true;
-        "match:class" = "thunderbird";
-        "match:title" =
-          "Confirm|Confirm Deletion|Save Message|Send Message|Source of: .* - Mozilla Thunderbird";
-      }
-      {
-        name = "float_round_keepassxc_file_popup";
-        inherit (template) float group rounding;
-        "match:class" = "keepassxc";
-        "match:title" = "Open .*|Save attachments|Select files";
-      }
-      {
-        name = "float_keepassxc_gen_popup";
-        inherit (template) float group;
-        "match:class" = "org.keepassxc.KeePassXC";
-        "match:title" = "Generate Password";
-      }
-      {
-        name = "float_pin_keepassxc_access_popup";
-        inherit (template) float group;
-        center = true;
-        pin = true;
-        stay_focused = true;
-        "match:class" = "org.keepassxc.KeePassXC";
-        "match:title" = "KeePassXC - ( Access Request|Unlock Database)";
-      }
-      {
-        name = "float_steam_popup";
-        inherit (template) float group;
-        "match:class" = "steam";
-        "match:title" = "Steam Settings|Friends List";
-      }
-      {
-        name = "float_round_thunar_popup";
-        inherit (template) float group rounding;
-        "match:class" = "(t|T)hunar";
-        "match:title" = "negative:.* - Thunar";
-      }
-      {
-        name = "float_vicinae";
-        inherit (template) float group rounding;
-        border_size = 0;
-        "match:class" = "vicinae";
-      }
-      {
-        name = "float_round_prusaslicer_popup";
-        inherit (template) float group rounding;
-        "match:class" = "prusa-slicer";
-        "match:title" = "|Save file as:|Save G-code file as:|Warning";
-      }
-      {
-        name = "float_round_telegram_file_popup";
-        inherit (template) float group rounding;
-        "match:class" = ".Telegram-wrapped";
-        "match:title" = "Choose Files|Save File";
-      }
-      {
-        name = "float_round_office_file_popup";
-        inherit (template) float group rounding;
-        "match:class" = "soffice";
-      }
-      {
-        name = "float_round_fileroller_popup";
-        inherit (template) float group rounding;
-        "match:class" = "org.gnome.FileRoller";
-        "match:title" = "Extract|";
-      }
+    {
+      name = "float_classes";
+      float = true;
+      group = "deny";
+      "match:class" = lib.concatStringsSep "|" [
+        "\\.blueman-manager-wrapped"
+        "com\\.saivert\\.pwvucontrol"
+        "nm-applet"
+        "nm-connection-editor"
+      ];
+    }
+    {
+      name = "float_fileroller_popup";
+      float = true;
+      group = "deny";
+      "match:class" = "org.gnome.FileRoller";
+      "match:title" = lib.concatStringsSep "|" [
+        "Extract"
+        "Select App"
+        ""
+      ];
+    }
+    {
+      name = "float_keepassxc_popups";
+      float = true;
+      group = "deny";
+      "match:class" = "keepassxc|org.keepassxc.KeePassXC";
+      "match:title" = lib.concatStringsSep "|" [
+        "Generate Password"
+        "KeePassXC -  Access Request"
+        "Open .*"
+        "Save attachments"
+        "Select files"
+      ];
+    }
+    {
+      name = "float_mozilla_popup";
+      float = true;
+      group = "deny";
+      "match:class" = "firefox|thunderbird";
+      "match:title" = lib.concatStringsSep "|" [
+        "About Mozilla (Firefox|Thunderbird)"
+        "Library"
+        "OpenPGP Key Manager"
+        "Page Info — .*"
+        "Password Required - Mozilla (Firefox|Thunderbird)"
+      ];
+    }
+    {
+      name = "float_steam_popup";
+      float = true;
+      group = "deny";
+      "match:class" = "steam";
+      "match:title" = lib.concatStringsSep "|" [
+        "Steam Settings"
+        "Friends List"
+      ];
+    }
 
-      {
-        name = "no_gaps_when_only";
-        border_size = 0;
-        "match:float" = false;
-        "match:workspace" = "w[tv1]";
-      }
-      {
-        name = "no_gaps_when_max";
-        border_size = 0;
-        "match:float" = false;
-        "match:workspace" = "f[1]";
-      }
+    {
+      name = "no_border_classes";
+      border_size = 0;
+      "match:class" = lib.concatStringsSep "|" [
+        "vicinae"
+      ];
+    }
 
-      # "match:float off, match:workspace w[t1], decorate off"
-    ];
+    {
+      name = "pin_classes";
+      pin = true;
+      group = "deny";
+      "match:class" = lib.concatStringsSep "|" [
+        "dragon-drop"
+        "xdragon"
+      ];
+    }
+
+    {
+      name = "pin_stay_focused_keepassxc_popups";
+      center = true;
+      pin = true;
+      stay_focused = true;
+      "match:class" = "keepassxc|org.keepassxc.KeePassXC";
+      "match:title" = lib.concatStringsSep "|" [
+        "KeePassXC -  Access Request"
+        "KeePassXC - Browser Access Request"
+        "Unlock Database - KeePassXC"
+      ];
+    }
+
+    {
+      name = "stay_focused_classes";
+      stay_focused = true;
+      "match:class" = lib.concatStringsSep "|" [
+        "exo-open"
+        "gcr-prompter"
+        "gtk-ssh-askpass"
+        "polkit-gnome-authentication-agent-1"
+      ];
+    }
+
+    {
+      name = "stay_focused_thunderbird_confirm";
+      stay_focused = true;
+      "match:class" = "thunderbird";
+      "match:title" = lib.concatStringsSep "|" [
+        "Confirm"
+        "Confirm Deletion"
+        "Save Message"
+        "Send Message"
+        "Source of: .* - Mozilla Thunderbird"
+      ];
+    }
+
+    {
+      name = "supress_fullscreen_all";
+      "match:class" = ".*";
+      suppress_event = lib.concatStringsSep " " [
+        "fullscreen"
+        "maximize"
+      ];
+    }
+
+    {
+      name = "no_gaps_when_only";
+      border_size = 0;
+      "match:float" = false;
+      "match:workspace" = "w[tv1]";
+    }
+    {
+      name = "no_gaps_when_max";
+      border_size = 0;
+      "match:float" = false;
+      "match:workspace" = "f[1]";
+    }
+
+    # "match:float off, match:workspace w[t1], decorate off"
+  ];
 
   layerrule = [
     {

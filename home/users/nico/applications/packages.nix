@@ -5,31 +5,15 @@
 
 {
   home.packages = with pkgs; [
-    # Coding stuff
+    agenix
     ansible
     atac
-    bear
-    bviplus
-    cyberchef
-    ghidra
-    ghostscript
-    gnumake
-    jetbrains.idea
-    ocamlPackages.utop
-    pgcli
-    postman
-    qemu
-    quickemu
-    texlive.combined.scheme-full
-
-    llvmPackages_latest.clang-manpages
-    llvmPackages_latest.llvm-manpages
-
-    # Misc
-    agenix
     audacity
+    bear
     blender
+    bviplus
     cowsay
+    cyberchef
     desmume
     dnsutils
     dragon-drop
@@ -38,19 +22,24 @@
     file
     file-roller
     font-manager
+    ghidra
+    ghostscript
     gimp
     gnome-characters
     gnome-clocks
+    gnumake
     hieroglyphic
     imagemagick
     inkscape
     ipinfo
-    it-tools
     jellyfin-desktop
+    jetbrains.idea
     ldapvi
     libnotify
     libqalculate
     libreoffice-fresh
+    llvmPackages_latest.clang-manpages
+    llvmPackages_latest.llvm-manpages
     # logseq TODO: add back after electron version upgrade
     lolcat
     nix-diff
@@ -59,17 +48,22 @@
     nix-tree
     nixln-edit
     nmap
+    ocamlPackages.utop
     openssl
     papers
     pdfarranger
     pdftk
+    pgcli
     planify
     poppler-utils
+    postman
     prismlauncher
     proton-vpn
     protonmail-desktop
     prusa-slicer
     pv
+    qemu
+    quickemu
     showtime
     signal-desktop
     speedread
@@ -77,6 +71,7 @@
     spotify-tray
     sshfs
     telegram-desktop
+    texliveMedium
     traceroute
     unar
     usbutils

@@ -20,6 +20,7 @@
         "mail.shell.checkDefaultClient" = false;
         "browser.display.use_system_colors" = true;
       };
+      withExternalGnupg = true;
     };
   };
 }

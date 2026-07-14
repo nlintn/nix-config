@@ -28,6 +28,7 @@
     ./thunar.nix
     ./thunderbird.nix
     ./tmux
+    ./uv.nix
     ./yazi.nix
     ./zathura.nix
   ];

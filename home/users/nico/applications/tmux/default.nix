@@ -31,9 +31,6 @@ in
 
   programs.tmux = {
     enable = true;
-    package = pkgs.tmux.overrideAttrs (prev: {
-      patches = prev.patches or [ ] ++ [ ./patch_tmux_0001-get-clipboard.patch ];
-    });
     extraConfig = with config.colorScheme.palette; ''
       unbind C-b
       set -g prefix C-a
@@ -48,6 +45,7 @@ in
       set -g escape-time 0
       set -g history-limit 50000
       set -g detach-on-destroy off
+      set -g copy-mode-line-numbers hybrid
 
       set -g set-titles on
       set -g set-titles-string '#{pane_title}'
@@ -70,7 +68,7 @@ in
       set -g default-terminal "tmux-256color"
       set -g allow-passthrough all
       set -g set-clipboard on
-      set -g get-clipboard both
+      set -g get-clipboard request
       set -ga update-environment TERM
       set -ga update-environment TERM_PROGRAM
       set -g extended-keys on

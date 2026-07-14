@@ -1,6 +1,6 @@
 {
   config,
-  lib-custom,
+  lib,
   pkgs,
   userSettings,
   ...
@@ -8,6 +8,7 @@
 
 {
   home.pointerCursor = {
+    enable = true;
     gtk.enable = true;
     x11.enable = true;
     package = pkgs.bibata-cursors;
@@ -17,19 +18,27 @@
 
   gtk = {
     enable = true;
-    theme = {
-      package = (
-        pkgs.colloid-gtk-theme.override {
-          colorVariants = [ config.colorScheme.variant ];
-          sizeVariants = [ "compact" ];
-          tweaks = [
-            "catppuccin"
-            "rimless"
-          ];
-        }
-      );
-      name = "Colloid-${lib-custom.capitalizeString config.colorScheme.variant}-Compact-Catppuccin";
-    };
+    theme =
+      let
+        accent = "catppuccin";
+        size = "compact";
+        tweaks = [
+          accent
+          "rimless"
+        ];
+        variant = "purple";
+      in
+      {
+        package = (
+          pkgs.colloid-gtk-theme.override {
+            themeVariants = [ variant ];
+            colorVariants = [ config.colorScheme.variant ];
+            sizeVariants = [ size ];
+            inherit tweaks;
+          }
+        );
+        name = "Colloid-${lib.toSentenceCase variant}-${lib.toSentenceCase config.colorScheme.variant}-${lib.toSentenceCase size}-${lib.toSentenceCase accent}";
+      };
     gtk4.theme = config.gtk.theme;
 
     iconTheme = {
@@ -43,13 +52,13 @@
       size = 10;
     };
   };
-  xdg.configFile = {
+  xdg.configFile = lib.mkIf (config.gtk.gtk4.theme != null) {
     "gtk-4.0/assets".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+      "${config.gtk.gtk4.theme.package}/share/themes/${config.gtk.gtk4.theme.name}/gtk-4.0/assets";
     "gtk-4.0/gtk.css".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+      "${config.gtk.gtk4.theme.package}/share/themes/${config.gtk.gtk4.theme.name}/gtk-4.0/gtk.css";
     "gtk-4.0/gtk-dark.css".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+      "${config.gtk.gtk4.theme.package}/share/themes/${config.gtk.gtk4.theme.name}/gtk-4.0/gtk-dark.css";
   };
 
   dconf.settings = {

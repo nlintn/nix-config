@@ -33,10 +33,6 @@
       "C ${escapeShellArg NIX_CONFIG_DIR} - - - - ${escapeShellArg self.outPath}"
     ];
 
-  home.sessionPath = [
-    "${config.home.homeDirectory}/.local/bin"
-  ];
-
   vars.launchPrefix = lib.optionalString config.systemd.user.enable "${lib.getExe pkgs.runapp} -- ";
 
   nix = {

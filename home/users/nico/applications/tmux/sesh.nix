@@ -45,11 +45,7 @@
     zoxidePackage = config.programs.zoxide.package;
     settings =
       let
-        ls =
-          if config.home.shellAliases ? ls then
-            config.home.shellAliases.ls
-          else
-            lib.getExe' pkgs.coreutils "ls";
+        ls = config.home.shellAliases.ls or (lib.getExe' pkgs.coreutils "ls");
         scratchpadName = "scratchpad 󱞂 ";
       in
       {

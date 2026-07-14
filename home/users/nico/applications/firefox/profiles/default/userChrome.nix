@@ -30,9 +30,11 @@ in
     --toolbox-text-color: #${base05} !important;
     --toolbox-text-color-inactive: ${toRGBA base05 0.8} !important;
     --tabpanel-background-color: ${toRGBA base02 0.3} !important;
-    --arrowpanel-background: #${base00} !important;
-    --arrowpanel-color: #${base05} !important;
-    --arrowpanel-border-color: #${base03} !important;
+
+    --panel-background-color: #${base00} !important;
+    --panel-border-color: #${base03} !important;
+    --panel-color: #${base05} !important;
+
     --lwt-accent-color: transparent !important;
     --lwt-accent-color-inactive: transparent !important;
     --lwt-sidebar-background-color: #${base00} !important;
@@ -52,6 +54,7 @@ in
     --urlbarview-text-color-selected: #${base01} !important;
     --urlbarView-highlight-background: #${base02} !important;
     --urlbarView-highlight-color: #${base05} !important;
+    --link-color: #${base0E} !important;
 
     --in-content-page-color: #${base05} !important;
     --in-content-page-background: #${base00} !important;
@@ -132,9 +135,10 @@ in
     border-color: ${toRGBA base03 0.5} !important;
   }
 
-  menupopup {
-    --panel-background: #${base00} !important;
-    --panel-color: #${base05} !important;
+  #PopupAutoComplete, menupopup, panel {
+    --test: red;
+    --panel-background-color: #${base00} !important;
+    --panel-text-color: #${base05} !important;
     --panel-border-color: #${base03} !important;
   }
   menu, menuitem {
@@ -150,17 +154,26 @@ in
   splitter#sidebar-tools-and-extensions-splitter {
     border-color: #${base03} !important;
   }
-  #PopupAutoComplete {
-    --panel-color: #${base05} !important;
-    --panel-background: #${base02} !important;
-    --panel-border-color: #${base03} !important;
-  }
   .autocomplete-richlistbox {
     color: #${base05} !important;
   }
   .tab-preview-content-main {
     background-color: #${base02};
     color: #${base05};
+  }
+  richlistitem[selected="true"] {
+    background-color: #${base0E} !important;
+    color: #${base01} !important;
+  }
+  #statuspanel-label {
+    background-color: #${base02} !important;
+    border-color: #${base03} !important;
+    color: #${base05} !important;
+  }
+  tooltip {
+    background-color: #${base02} !important;
+    border-color: #${base03} !important;
+    color: #${base05} !important;
   }
 
   @-moz-document url(chrome://browser/content/places/places.xhtml) {

@@ -95,6 +95,8 @@ in
       --in-content-primary-button-text-color: #${base01} !important;
 
       --outline-color-error: #${base08} !important;
+      --info-bar-background-color: #${base00} !important;
+      --info-bar-text-color: #${base05} !important;
       --text-color: #${base05} !important;
       --text-color-error: #${base08} !important;
       --background-color-box: #${base00} !important;

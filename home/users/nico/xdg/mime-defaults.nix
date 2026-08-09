@@ -35,40 +35,40 @@ lib.mergeAttrsList [
   # audio
   (f
     [
-      "audio/basic"
-      "audio/x-musepack"
-      "audio/x-wavpack"
-      "audio/x-adpcm"
-      "audio/x-scpls"
-      "audio/vnd.dts.hd"
-      "audio/x-gsm"
-      "audio/vnd.wave"
-      "audio/x-s3m"
+      "audio/AMR"
+      "audio/AMR-WB"
+      "audio/aac"
       "audio/ac3"
+      "audio/basic"
+      "audio/flac"
+      "audio/midi"
+      "audio/mp2"
+      "audio/mp4"
       "audio/mpeg"
-      "audio/x-tta"
+      "audio/ogg"
+      "audio/vnd.dts"
+      "audio/vnd.dts.hd"
+      "audio/vnd.rn-realaudio"
+      "audio/vnd.wave"
+      "audio/webm"
+      "audio/x-adpcm"
+      "audio/x-aiff"
+      "audio/x-ape"
+      "audio/x-gsm"
+      "audio/x-it"
       "audio/x-matroska"
       "audio/x-mod"
       "audio/x-mpegurl"
-      "audio/x-ms-wma"
-      "audio/x-aiff"
-      "audio/AMR"
-      "audio/x-it"
-      "audio/x-ape"
-      "audio/vnd.rn-realaudio"
-      "audio/ogg"
-      "audio/midi"
-      "audio/vnd.dts"
       "audio/x-ms-asx"
-      "audio/x-vorbis+ogg"
-      "audio/flac"
-      "audio/mp2"
+      "audio/x-ms-wma"
+      "audio/x-musepack"
+      "audio/x-s3m"
+      "audio/x-scpls"
       "audio/x-speex"
-      "audio/webm"
-      "audio/mp4"
-      "audio/aac"
+      "audio/x-tta"
+      "audio/x-vorbis+ogg"
+      "audio/x-wavpack"
       "audio/x-xm"
-      "audio/AMR-WB"
     ]
     [
       mpv
@@ -78,22 +78,32 @@ lib.mergeAttrsList [
   # browsers
   (f
     [
-      "text/html"
-      "x-scheme-handler/http"
-      "x-scheme-handler/https"
-      "x-scheme-handler/chrome"
-      "x-scheme-handler/about"
-      "x-scheme-handler/unknown"
       "application/x-extension-htm"
       "application/x-extension-html"
       "application/x-extension-shtml"
-      "application/xhtml+xml"
-      "application/x-extension-xhtml"
       "application/x-extension-xht"
+      "application/x-extension-xhtml"
+      "application/xhtml+xml"
+      "text/html"
+      "x-scheme-handler/about"
+      "x-scheme-handler/chrome"
+      "x-scheme-handler/http"
+      "x-scheme-handler/https"
+      "x-scheme-handler/unknown"
     ]
     [
       firefox
       chromium
+    ]
+  )
+
+  # calendars
+  (f
+    [
+      "text/calendar"
+    ]
+    [
+      thunderbird
     ]
   )
 
@@ -124,13 +134,13 @@ lib.mergeAttrsList [
   # fonts
   (f
     [
-      "font/ttf"
-      "font/ttc"
+      "application/vnd.ms-opentype"
+      "application/x-font-otf"
+      "application/x-font-ttf"
       "font/otf"
       "font/sfnt"
-      "application/x-font-ttf"
-      "application/x-font-otf"
-      "application/vnd.ms-opentype"
+      "font/ttc"
+      "font/ttf"
     ]
     [
       font-viewer
@@ -140,25 +150,25 @@ lib.mergeAttrsList [
   # images
   (f
     [
-      "image/webp"
+      "image/bmp"
       "image/gif"
-      "image/vnd.wap.wbmp"
-      "image/x-portable-graymap"
-      "image/x-tga"
-      "image/x-xpixmap"
+      "image/jpeg"
+      "image/png"
       "image/svg+xml"
+      "image/svg+xml-compressed"
       "image/tiff"
       "image/vnd.microsoft.icon"
-      "image/x-portable-bitmap"
-      "image/x-portable-anymap"
-      "image/x-portable-pixmap"
-      "image/jpeg"
-      "image/bmp"
+      "image/vnd.wap.wbmp"
       "image/vnd.zbrush.pcx"
-      "image/x-xbitmap"
+      "image/webp"
       "image/x-icns"
-      "image/svg+xml-compressed"
-      "image/png"
+      "image/x-portable-anymap"
+      "image/x-portable-bitmap"
+      "image/x-portable-graymap"
+      "image/x-portable-pixmap"
+      "image/x-tga"
+      "image/x-xbitmap"
+      "image/x-xpixmap"
     ]
     [
       swayimg
@@ -171,6 +181,7 @@ lib.mergeAttrsList [
     [
       "message/rfc822"
       "x-scheme-handler/mailto"
+      "x-scheme-handler/mid"
     ]
     [
       thunderbird
@@ -181,11 +192,11 @@ lib.mergeAttrsList [
   (f
     [
       "model/3mf"
-      "model/stl"
       "model/step"
       "model/step+xml"
       "model/step+zip"
       "model/step-xml+zip"
+      "model/stl"
     ]
     [
       prusa-slicer
@@ -196,22 +207,22 @@ lib.mergeAttrsList [
   (f
     [
       "application/ipfix"
-      "application/x-nettl"
-      "application/x-lanalyzer"
-      "application/x-snoop"
-      "application/x-pcapng"
+      "application/vnd.tcpdump.pcap"
+      "application/x-5view"
       "application/x-apple-packetlogger"
       "application/x-endace-erf"
-      "application/x-iptrace"
-      "application/x-netinstobserver"
-      "application/x-micropross-mplog"
-      "application/x-radcom"
-      "application/x-ixia-vwr"
       "application/x-etherpeek"
-      "application/vnd.tcpdump.pcap"
+      "application/x-iptrace"
+      "application/x-ixia-vwr"
+      "application/x-lanalyzer"
+      "application/x-micropross-mplog"
+      "application/x-netinstobserver"
+      "application/x-nettl"
+      "application/x-pcapng"
+      "application/x-radcom"
+      "application/x-snoop"
       "application/x-tektronix-rf5"
       "application/x-visualnetworks"
-      "application/x-5view"
     ]
     [
       wireshark
@@ -232,12 +243,12 @@ lib.mergeAttrsList [
   # texts
   (f
     [
-      "text/calendar"
-      "text/csv"
-      "text/plain"
+      "application/json"
       "application/x-shellscript"
       "application/x-zerosize"
       "application/xml"
+      "text/csv"
+      "text/plain"
     ]
     [
       neovim
@@ -247,26 +258,26 @@ lib.mergeAttrsList [
   # videos
   (f
     [
-      "video/3gpp2"
-      "video/vnd.avi"
-      "video/x-flv"
-      "video/x-anim"
-      "video/mpeg"
-      "video/dv"
-      "video/vnd.rn-realvideo"
       "video/3gpp"
-      "video/ogg"
-      "video/x-ogm+ogg"
-      "video/x-matroska"
-      "video/vnd.mpegurl"
-      "video/quicktime"
-      "video/x-ms-wmv"
-      "video/mp4"
-      "video/webm"
-      "video/x-flic"
-      "video/x-theora+ogg"
+      "video/3gpp2"
+      "video/dv"
       "video/mp2t"
+      "video/mp4"
+      "video/mpeg"
+      "video/ogg"
+      "video/quicktime"
+      "video/vnd.avi"
+      "video/vnd.mpegurl"
+      "video/vnd.rn-realvideo"
+      "video/webm"
+      "video/x-anim"
+      "video/x-flic"
+      "video/x-flv"
+      "video/x-matroska"
+      "video/x-ms-wmv"
       "video/x-nsv"
+      "video/x-ogm+ogg"
+      "video/x-theora+ogg"
     ]
     [
       showtime
@@ -278,10 +289,10 @@ lib.mergeAttrsList [
   (f
     [
       "x-content/audio-cdda"
+      "x-content/audio-player"
+      "x-content/video-dvd"
       "x-content/video-svcd"
       "x-content/video-vcd"
-      "x-content/video-dvd"
-      "x-content/audio-player"
     ]
     [
       showtime

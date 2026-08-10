@@ -58,12 +58,13 @@ with config.colorScheme.palette;
         "Q, exec, ${xdg-terminal-exec}"
         "SHIFT, Q, exec, ${term_tmux_sesh}"
         "SPACE, exec, ${vicinae} vicinae://toggle"
+        "SHIFT, SPACE, exec, ${vicinae} vicinae://pop_to_root"
         "SHIFT, R, exec, ${hyreload}"
-        "PERIOD, exec, ${vicinae} vicinae://launch/core/search-emojis"
-        "V, exec, ${vicinae} vicinae://launch/clipboard/history"
+        "PERIOD, exec, ${vicinae} vicinae://launch/core/search-emojis?toggle=true"
+        "V, exec, ${vicinae} vicinae://launch/clipboard/history?toggle=true"
         "BACKSPACE, exec, ${config.vars.sessionLockCmd}"
         "SHIFT, BACKSPACE, exec, ${lock-transparent}"
-        "RETURN, exec, ${vicinae} vicinae://launch/power"
+        "RETURN, exec, ${vicinae} vicinae://launch/power?toggle=true"
         "PLUS, exec, ${swaync-client} --toggle-panel"
         "SHIFT, PLUS, exec, ${swaync-client} -C"
         "CTRL, PLUS, exec, ${swaync-client} --toggle-dnd"
@@ -80,16 +81,16 @@ with config.colorScheme.palette;
         "CTRL, G, moveoutofgroup,"
 
         "dead_circumflex, workspace, previous_per_monitor"
-        "1, workspace, r~1"
-        "2, workspace, r~2"
-        "3, workspace, r~3"
-        "4, workspace, r~4"
-        "5, workspace, r~5"
-        "6, workspace, r~6"
-        "7, workspace, r~7"
-        "8, workspace, r~8"
-        "9, workspace, r~9"
-        "0, workspace, r~10"
+        "1, focusworkspaceoncurrentmonitor, r~1"
+        "2, focusworkspaceoncurrentmonitor, r~2"
+        "3, focusworkspaceoncurrentmonitor, r~3"
+        "4, focusworkspaceoncurrentmonitor, r~4"
+        "5, focusworkspaceoncurrentmonitor, r~5"
+        "6, focusworkspaceoncurrentmonitor, r~6"
+        "7, focusworkspaceoncurrentmonitor, r~7"
+        "8, focusworkspaceoncurrentmonitor, r~8"
+        "9, focusworkspaceoncurrentmonitor, r~9"
+        "0, focusworkspaceoncurrentmonitor, r~10"
 
         "SHIFT, 1, movetoworkspacesilent, r~1"
         "SHIFT, 2, movetoworkspacesilent, r~2"
@@ -114,7 +115,7 @@ with config.colorScheme.palette;
       evalBinds "ALT"
         [ ]
         [
-          "TAB, exec, ${vicinae} vicinae://launch/wm/switch-windows"
+          "TAB, exec, ${vicinae} vicinae://launch/wm/switch-windows?toggle=true"
         ]
     ++
       evalBinds "CTRL"
@@ -240,6 +241,7 @@ with config.colorScheme.palette;
     "col.border_locked_active" = "rgba(${base0F}66)";
     "col.border_locked_inactive" = "rgba(${base04}66)";
     groupbar = {
+      disable_when_only = true;
       font_size = 10;
       gaps_in = 1;
       gaps_out = 1;
@@ -252,12 +254,12 @@ with config.colorScheme.palette;
       scrolling = false;
       text_offset = 1;
 
-      "col.active" = "rgb(${base00})";
-      font_weight_active = "semibold";
-      text_color = "rgb(${base05})";
+      "col.active" = "rgb(${base0D})";
+      font_weight_active = "bold";
+      text_color = "rgb(${base01})";
 
-      "col.inactive" = "rgb(${base01})";
-      font_weight_inactive = "semilight";
+      "col.inactive" = "rgb(${base00})";
+      font_weight_inactive = "normal";
       text_color_inactive = "rgba(${base05}cc)";
     };
   };
@@ -278,163 +280,185 @@ with config.colorScheme.palette;
 
   render.cm_enabled = false;
 
-  windowrule = [
-    {
-      name = "group_non_float";
-      "match:float" = false;
-      group = "set";
-    }
-    {
-      name = "round_float";
-      "match:float" = true;
-      group = "deny";
-      rounding = 10;
-    }
+  windowrule =
+    let
+      floatPreset = lib.recursiveUpdate {
+        float = true;
+        group = "deny";
+        persistent_size = true;
+        max_size = "monitor_w monitor_h-20";
+      };
+    in
+    [
+      {
+        name = "group_non_float";
+        "match:float" = false;
+        group = "set";
+      }
+      {
+        name = "round_float";
+        "match:float" = true;
+        group = "deny";
+        rounding = 10;
+      }
 
-    {
-      name = "disable_screenshare_classes";
-      "match:class" = "keepassxc|org.keepassxc.KeePassXC";
-      no_screen_share = true;
-    }
+      {
+        name = "disable_screenshare_classes";
+        "match:initial_class" = "keepassxc|org.keepassxc.KeePassXC";
+        no_screen_share = true;
+      }
 
-    {
-      name = "float_classes";
-      float = true;
-      group = "deny";
-      "match:class" = lib.concatStringsSep "|" [
-        "\\.blueman-manager-wrapped"
-        "com\\.saivert\\.pwvucontrol"
-        "nm-applet"
-        "nm-connection-editor"
-      ];
-    }
-    {
-      name = "float_fileroller_popup";
-      float = true;
-      group = "deny";
-      "match:class" = "org.gnome.FileRoller";
-      "match:title" = lib.concatStringsSep "|" [
-        "Extract"
-        "Select App"
-        ""
-      ];
-    }
-    {
-      name = "float_keepassxc_popups";
-      float = true;
-      group = "deny";
-      "match:class" = "keepassxc|org.keepassxc.KeePassXC";
-      "match:title" = lib.concatStringsSep "|" [
-        "Generate Password"
-        "KeePassXC -  Access Request"
-        "Open .*"
-        "Save attachments"
-        "Select files"
-      ];
-    }
-    {
-      name = "float_mozilla_popup";
-      float = true;
-      group = "deny";
-      "match:class" = "firefox|thunderbird";
-      "match:title" = lib.concatStringsSep "|" [
-        "About Mozilla (Firefox|Thunderbird)"
-        "Library"
-        "OpenPGP Key Manager"
-        "Page Info — .*"
-        "Password Required - Mozilla (Firefox|Thunderbird)"
-      ];
-    }
-    {
-      name = "float_steam_popup";
-      float = true;
-      group = "deny";
-      "match:class" = "steam";
-      "match:title" = lib.concatStringsSep "|" [
-        "Steam Settings"
-        "Friends List"
-      ];
-    }
+      (floatPreset {
+        name = "float_classes";
+        "match:initial_class" = lib.concatStringsSep "|" [
+          "\\.blueman-.*"
+          "com\\.saivert\\.pwvucontrol"
+          "io\\.github\\.finefindus\\.Hieroglyphic"
+          "nm-applet"
+          "nm-connection-editor"
+          "xdg-desktop-portal-gnome"
+          "xdg-desktop-portal-gtk"
+        ];
+      })
+      (floatPreset {
+        name = "float_fileroller_popup";
+        "match:initial_class" = "org\\.gnome\\.FileRoller";
+        "match:initial_title" = lib.concatStringsSep "|" [
+          "Extract"
+          "Select App"
+          ""
+        ];
+      })
+      (floatPreset {
+        name = "float_keepassxc_popups";
+        "match:initial_class" = "keepassxc|org\\.keepassxc\\.KeePassXC";
+        "match:initial_title" = lib.concatStringsSep "|" [
+          "Generate Password"
+          "KeePassXC -  Access Request"
+          "Open .*"
+          "Save attachments"
+          "Select files"
+        ];
+      })
+      (floatPreset {
+        name = "float_mozilla_popup";
+        "match:initial_class" = "firefox|thunderbird";
+        "match:initial_title" = lib.concatStringsSep "|" [
+          ""
+          "About Mozilla (Firefox|Thunderbird)"
+          "Add calendar"
+          "Alert"
+          "Authentication Required - Mozilla (Firefox|Thunderbird)"
+          "Calendar Reminders"
+          "Compact Folders"
+          "Download Messages"
+          "Edit Item"
+          "Library"
+          "OpenPGP Key Manager"
+          "Password Required - Mozilla (Firefox|Thunderbird)"
+        ];
+      })
+      (floatPreset {
+        name = "float_nautilus_popup";
+        "match:initial_class" = "org\\.gnome\\.Nautilus";
+        "match:initial_title" = lib.concatStringsSep "|" [
+          "Open Directory"
+        ];
+      })
+      (floatPreset {
+        name = "float_steam_popup";
+        "match:initial_class" = "steam";
+        "match:initial_title" = lib.concatStringsSep "|" [
+          "Steam Settings"
+          "Friends List"
+        ];
+      })
+      (floatPreset {
+        name = "float_thunar_popup";
+        "match:initial_class" = "Thunar";
+        "match:initial_title" = lib.concatStringsSep "|" [
+          "File Operation Progress"
+          "Rename .*"
+        ];
+      })
 
-    {
-      name = "no_border_classes";
-      border_size = 0;
-      "match:class" = lib.concatStringsSep "|" [
-        "vicinae"
-      ];
-    }
+      {
+        name = "no_border_classes";
+        border_size = 0;
+        "match:initial_class" = lib.concatStringsSep "|" [
+          "vicinae"
+        ];
+      }
 
-    {
-      name = "pin_classes";
-      pin = true;
-      group = "deny";
-      "match:class" = lib.concatStringsSep "|" [
-        "dragon-drop"
-        "xdragon"
-      ];
-    }
+      {
+        name = "pin_classes";
+        pin = true;
+        group = "deny";
+        "match:initial_class" = lib.concatStringsSep "|" [
+          "dragon-drop"
+          "xdragon"
+        ];
+      }
 
-    {
-      name = "pin_stay_focused_keepassxc_popups";
-      center = true;
-      pin = true;
-      stay_focused = true;
-      "match:class" = "keepassxc|org.keepassxc.KeePassXC";
-      "match:title" = lib.concatStringsSep "|" [
-        "KeePassXC -  Access Request"
-        "KeePassXC - Browser Access Request"
-        "Unlock Database - KeePassXC"
-      ];
-    }
+      {
+        name = "pin_stay_focused_keepassxc_popups";
+        pin = true;
+        stay_focused = true;
+        "match:initial_class" = "keepassxc|org\\.keepassxc\\.KeePassXC";
+        "match:initial_title" = lib.concatStringsSep "|" [
+          "KeePassXC -  Access Request"
+          "KeePassXC - Browser Access Request"
+          "Unlock Database - KeePassXC"
+        ];
+      }
 
-    {
-      name = "stay_focused_classes";
-      stay_focused = true;
-      "match:class" = lib.concatStringsSep "|" [
-        "exo-open"
-        "gcr-prompter"
-        "gtk-ssh-askpass"
-        "polkit-gnome-authentication-agent-1"
-      ];
-    }
+      {
+        name = "stay_focused_classes";
+        stay_focused = true;
+        "match:initial_class" = lib.concatStringsSep "|" [
+          "exo-open"
+          "gcr-prompter"
+          "gtk-ssh-askpass"
+          "polkit-gnome-authentication-agent-1"
+        ];
+      }
 
-    {
-      name = "stay_focused_thunderbird_confirm";
-      stay_focused = true;
-      "match:class" = "thunderbird";
-      "match:title" = lib.concatStringsSep "|" [
-        "Confirm"
-        "Confirm Deletion"
-        "Save Message"
-        "Send Message"
-        "Source of: .* - Mozilla Thunderbird"
-      ];
-    }
+      {
+        name = "stay_focused_thunderbird_confirm";
+        stay_focused = true;
+        "match:initial_class" = "thunderbird";
+        "match:initial_title" = lib.concatStringsSep "|" [
+          "Confirm"
+          "Confirm Deletion"
+          "Delete Folder"
+          "Link Properties"
+          "Save Message"
+          "Send Message"
+        ];
+      }
 
-    {
-      name = "supress_fullscreen_all";
-      "match:class" = ".*";
-      suppress_event = lib.concatStringsSep " " [
-        "fullscreen"
-        "maximize"
-      ];
-    }
+      {
+        name = "supress_fullscreen_all";
+        "match:initial_class" = ".*";
+        suppress_event = lib.concatStringsSep " " [
+          "fullscreen"
+          "maximize"
+        ];
+      }
 
-    {
-      name = "no_gaps_when_only";
-      border_size = 0;
-      "match:float" = false;
-      "match:workspace" = "w[tv1]";
-    }
-    {
-      name = "no_gaps_when_max";
-      border_size = 0;
-      "match:float" = false;
-      "match:workspace" = "f[1]";
-    }
-
-    # "match:float off, match:workspace w[t1], decorate off"
-  ];
+      {
+        name = "no_gaps_when_only";
+        border_size = 0;
+        "match:float" = false;
+        "match:workspace" = "w[tv1]";
+      }
+      {
+        name = "no_gaps_when_max";
+        border_size = 0;
+        "match:float" = false;
+        "match:workspace" = "f[1]";
+      }
+    ];
 
   layerrule = [
     {

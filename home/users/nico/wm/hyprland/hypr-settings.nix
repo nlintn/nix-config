@@ -18,7 +18,7 @@ let
   hyprpicker = "${launchPrefix} ${lib.getExe pkgs.hyprpicker}";
   hyprtabs = "${launchPrefix} ${lib.getExe (pkgs.callPackage ./scripts/hyprtabs.nix args)}";
   hyreload = "${launchPrefix} ${pkgs.callPackage ./scripts/hyreload.nix args}";
-  lock-transparent = "${launchPrefix} ${lib.getExe (pkgs.callPackage ./hyprlock/lock-transparent.nix args)}";
+  lock-transparent = "${launchPrefix} ${lib.getExe (pkgs.callPackage ./swaylock/lock-transparent.nix args)}";
   playerctl = "${launchPrefix} ${lib.getExe config.services.playerctld.package}";
   pwm = "${launchPrefix} ${lib.getExe config.programs.keepassxc.package}";
   screenshot = "${launchPrefix} ${pkgs.callPackage ./scripts/screenshot.nix args}";

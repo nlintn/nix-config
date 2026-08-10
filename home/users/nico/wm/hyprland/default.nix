@@ -17,8 +17,8 @@
     ../common/swaync
 
     ./hypridle.nix
-    ./hyprlock
     ./hyprmon.nix
+    ./swaylock
     ./waybar
   ];
 

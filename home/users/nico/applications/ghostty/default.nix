@@ -48,7 +48,8 @@
         "ctrl+shift+q=quit"
         "ctrl+shift+r=reload_config"
         "ctrl+shift+v=paste_from_clipboard"
-        "ctrl+shift+ü=write_scrollback_file:open"
+        "ctrl+shift+j=write_screen_file:paste"
+        "ctrl+shift+k=write_scrollback_file:paste"
 
         "ctrl+shift+t=new_tab"
         "ctrl+shift+w=close_tab:this"

@@ -89,6 +89,7 @@
         "gtk"
       ];
     };
+    xdgOpenUsePortal = true;
   };
 
   home.sessionVariables.GTK_IM_MODULE = "simple";

@@ -9,6 +9,7 @@
     privateDefault = "ddg";
     force = true;
   };
+  storeId = "f66680ba";
 
   extensions = import ./extensions.nix args;
 

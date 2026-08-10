@@ -74,20 +74,20 @@
             path = config.home.sessionVariables.NIX_CONFIG_DIR;
             startup_command = "${lib.getExe config.vars.nvimPackage} -c ':Telescope find_files'";
             preview_command = "${lib.getExe pkgs.eza} --color=always --follow-symlinks --tree {}";
-            windows = [ "empty" ];
+            windows = [ "" ];
           }
           {
             name = scratchpadName;
             path = config.home.homeDirectory;
             startup_command = "${lib.getExe config.vars.nvimPackage} -- ${config.xdg.userDirs.documents}/scratch.md";
             preview_command = "${lib.getExe config.programs.bat.package} --paging=never --color=always {}";
-            windows = [ "empty" ];
+            windows = [ "" ];
           }
         ];
         window = [
           {
-            name = "empty";
-            startup_script = ls;
+            name = "";
+            startup_script = "${ls}; builtin exec \"$SHELL\"";
           }
         ];
       };

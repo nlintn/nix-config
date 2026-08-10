@@ -20,6 +20,8 @@
       battery_id = "BAT1";
       clear_password = true;
       clock = "%a %Y/%m/%d %H:%M";
+      # ly_log = null; TODO: add when available
+      session_log = ".local/state/ly-session.log";
 
       animation = "colormix";
       animation_frame_delay = 50;

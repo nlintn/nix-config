@@ -12,6 +12,7 @@
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "mail.server.default.check_all_folders_for_new" = true;
+        "mail.spam.markAsReadOnSpam" = false;
         "mailnews.default_news_sort_order" = 2;
         "mailnews.default_sort_order" = 2;
         "mailnews.default_news_view_flags" = 1;

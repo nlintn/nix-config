@@ -6,7 +6,7 @@
 }@args:
 
 let
-  exo-open = lib.getExe' pkgs.xfce4-exo "exo-open";
+  xdg-open = lib.getExe' pkgs.xdg-utils "xdg-open";
   exiftool = lib.getExe pkgs.exiftool;
   mediainfo = lib.getExe pkgs.mediainfo;
 
@@ -37,7 +37,7 @@ in
         });
         play = [
           {
-            run = "${exo-open} %s1";
+            run = "${xdg-open} %s1";
             desc = "Play";
             orphan = true;
           }
@@ -49,7 +49,7 @@ in
         ];
         open = [
           {
-            run = "${exo-open} %s";
+            run = "${xdg-open} %s";
             desc = "Open";
           }
         ];
@@ -60,7 +60,7 @@ in
             orphan = true;
           }
           {
-            run = "${exo-open} %d1";
+            run = "${xdg-open} %d1";
             desc = "Reveal";
           }
           {

@@ -66,11 +66,12 @@ in
       set -g status-right-length 40
 
       set -g default-terminal "tmux-256color"
-      set -g allow-passthrough all
+      set -g allow-passthrough on
       set -g set-clipboard on
       set -g get-clipboard request
       set -ga update-environment TERM
       set -ga update-environment TERM_PROGRAM
+      set -ga update-environment HYPRLAND_INSTANCE_SIGNATURE
       set -g extended-keys on
 
       set -g cursor-color '#${base06}'

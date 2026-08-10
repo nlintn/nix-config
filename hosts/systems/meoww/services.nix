@@ -13,7 +13,6 @@
       enable = true;
       enableNotifications = true;
     };
-    gvfs.enable = true; # for hot plugging usb storage etc
     libinput = {
       enable = true;
       mouse.accelProfile = "flat";
@@ -29,6 +28,10 @@
       ++ lib.optional config.services.dnscrypt-proxy.enable "--accept-dns=false";
       useRoutingFeatures = "client";
     };
+
+    # fs stuff
+    gvfs.enable = true; # for trash etc
+    udisks2.enable = true; # for hot plugging usb storage etc
 
     # printing
     printing = {

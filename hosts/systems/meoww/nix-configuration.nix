@@ -26,10 +26,6 @@
       ];
     };
 
-    optimise = {
-      automatic = true;
-      dates = "weekly";
-    };
     gc = {
       automatic = true;
       dates = "weekly";

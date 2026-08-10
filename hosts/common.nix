@@ -72,6 +72,7 @@
     channel.enable = false;
 
     settings = {
+      auto-optimise-store = true;
       experimental-features = [
         "nix-command"
         "flakes"
@@ -82,10 +83,16 @@
   };
 
   environment.pathsToLink = lib.mkMerge [
-    (lib.mkIf (lib.any (u: u.xdg.enable) (lib.attrValues config.home-manager.users or { })) [
-      "/share/xdg-desktop-portal"
-      "/share/applications"
-    ])
+    (lib.mkIf
+      (
+        lib.any (u: u.xdg.portal.enable) (lib.attrValues config.home-manager.users or { })
+        && config.home-manager.useUserPackages or false
+      )
+      [
+        "/share/xdg-desktop-portal"
+        "/share/applications"
+      ]
+    )
   ];
 
   environment.sessionVariables = {

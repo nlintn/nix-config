@@ -15,6 +15,7 @@
     cowsay
     cyberchef
     desmume
+    diebahn
     dnsutils
     dragon-drop
     eza
@@ -49,6 +50,7 @@
     nixln-edit
     nmap
     ocamlPackages.utop
+    openldap
     openssl
     papers
     pdfarranger

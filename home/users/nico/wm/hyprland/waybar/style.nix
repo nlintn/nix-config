@@ -85,16 +85,12 @@ with config.colorScheme.palette;
   #workspaces button.empty {
     color: @white;
   }
-  #workspaces button.visible {
+  #workspaces button.visible.hosting-monitor {
     color: @bg2;
     background: @magenta;
   }
-  #workspaces button.visible:hover {
+  #workspaces button.visible.hosting-monitor:hover {
     color: @bg2;
-  }
-  #workspaces button.focused {
-    color: @bg2;
-    background: @magenta;
   }
   #workspaces button.urgent {
     color: @red;

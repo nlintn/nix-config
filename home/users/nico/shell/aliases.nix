@@ -20,7 +20,7 @@
         ls = "${eza} -g --color=auto --git";
         lt = "${ll} --sort=newest";
         lta = "${la} --sort=newest";
-        open = "${lib.getExe' pkgs.xfce4-exo "exo-open"}";
+        open = "${lib.getExe' pkgs.xdg-utils "xdg-open"}";
         tree = "${ls} --tree";
       }
       (lib.mkIf config.nix.enable {

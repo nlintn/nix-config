@@ -413,10 +413,19 @@ with config.colorScheme.palette;
       }
 
       {
+        name = "pin_stay_focused_open_with_popup";
+        pin = true;
+        stay_focused = true;
+        "match:initial_class" = "xdg-desktop-portal-gnome";
+        "match:initial_title" = lib.concatStringsSep "|" [
+          "Open With"
+        ];
+      }
+
+      {
         name = "stay_focused_classes";
         stay_focused = true;
         "match:initial_class" = lib.concatStringsSep "|" [
-          "exo-open"
           "gcr-prompter"
           "gtk-ssh-askpass"
           "polkit-gnome-authentication-agent-1"

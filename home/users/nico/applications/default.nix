@@ -31,7 +31,6 @@
     ./thunar.nix
     ./thunderbird.nix
     ./tmux
-    ./uv.nix
     ./yazi.nix
     ./zathura.nix
   ];
@@ -67,6 +66,7 @@
     mpv.enable = true;
     rclone.enable = true;
     ripgrep.enable = true;
+    uv.enable = true;
     vesktop.enable = true;
   };
 

@@ -58,10 +58,13 @@ in
     };
 
     "hyprland/workspaces" = {
+      all-outputs = true;
+      persistent-workspaces = lib.genAttrs (lib.genList (x: x + 1 |> toString) 10) (_: [ ]);
       disable-scroll = true;
       on-click = "activate";
       sort-by-number = true;
       spacing = 0;
+      move-to-monitor = true;
     };
 
     idle_inhibitor = {

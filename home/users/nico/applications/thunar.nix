@@ -29,6 +29,20 @@
         <patterns>*</patterns>
         <directories/>
       </action>
+      <action>
+        <icon></icon>
+        <name>Open Terminal Here</name>
+        <submenu></submenu>
+        <command>${lib.getExe config.xdg.terminal-exec.package |> lib.escapeXML} --dir=%d</command>
+        <description></description>
+        <range></range>
+        <patterns>*</patterns>
+        <audio-files/>
+        <image-files/>
+        <other-files/>
+        <text-files/>
+        <video-files/>
+      </action>
       </actions>
     '';
   };

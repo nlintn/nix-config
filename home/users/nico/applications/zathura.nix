@@ -16,9 +16,6 @@ in
     mappings = {
       "<Return>" = "navigate next";
       "<S-Return>" = "navigate previous";
-
-      "[index] <Left>" = "zoom collapse";
-      "[index] <Right>" = "zoom expand";
     };
     options = with config.colorScheme.palette; {
       guioptions = "cs";

@@ -25,6 +25,7 @@
     ./nix-search-tv.nix
     ./obs-studio.nix
     ./ssh.nix
+    ./swayimg.nix
     ./thunar.nix
     ./thunderbird.nix
     ./tmux
@@ -64,7 +65,6 @@
     mpv.enable = true;
     rclone.enable = true;
     ripgrep.enable = true;
-    swayimg.enable = true;
     vesktop.enable = true;
   };
 

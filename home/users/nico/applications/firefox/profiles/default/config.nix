@@ -257,6 +257,7 @@ with config.colorScheme.palette;
           violentmonkey
           simplelogin
           video-downloadhelper
+          vicinae
         ];
         "nav-bar" = extToBrowserAction [
           "sidebar-button"

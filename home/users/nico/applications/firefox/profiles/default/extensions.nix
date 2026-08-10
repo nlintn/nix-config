@@ -10,10 +10,11 @@
   packages = with pkgs.firefoxAddons; [
     darkreader
     dictionary-german
-    keepassxc-browser
+    (lib.mkIf config.programs.keepassxc.enable keepassxc-browser)
     simplelogin
     tabwrangler
     ublock-origin
+    (lib.mkIf config.programs.vicinae.enable vicinae)
     video-downloadhelper
     vimium-ff
     violentmonkey

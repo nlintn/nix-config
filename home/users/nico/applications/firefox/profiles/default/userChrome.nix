@@ -23,7 +23,18 @@ in
 
   :root {
     --input-background-color: #${base00} !important;
+    --input-bgcolor: #${base00} !important;
     --input-color: #${base05} !important;
+    --input-text-background-color: #${base02} !important;
+    --input-text-color: #${base05} !important;
+    --input-border-color: #${base03} !important;
+
+    --info-bar-background-color: #${base02} !important;
+    --info-bar-text-color: #${base05} !important;
+    --info-bar-icon-color: #${base0E} !important;
+    --message-bar-background-color: #${base02} !important;
+    --message-bar-text-color: #${base05} !important;
+    --message-bar-icon-color: #${base0E} !important;
 
     --toolbox-background-color: transparent !important;
     --toolbox-background-color-inactive: transparent !important;
@@ -68,6 +79,7 @@ in
 
     --toolbar-background-color: ${toRGBA base02 0.5} !important;
     --toolbar-color: #${base05} !important;
+    --toolbar-text-color: #${base05} !important;
 
     --sidebar-background-color : ${toRGBA base00 0.5} !important;
     --sidebar-border-color : ${toRGBA base03 0.5} !important;
@@ -115,11 +127,10 @@ in
     --tab-group-label-text-dark: #${base01} !important;
   }
   :root[sidebar-expand-on-hover] {
-    & #sidebar-main {
-      &[sidebar-launcher-expanded], &[sidebar-ongoing-animations]:not([sidebar-launcher-expanded]) {
+    #sidebar-container {
+      &[sidebar-launcher-expanded],
+      &[sidebar-ongoing-animations]:not([sidebar-launcher-expanded]) {
         background-color: #${base00} !important;
-        border-radius: 10px !important;
-        width: 17vw !important;
       }
     }
   }
@@ -136,7 +147,6 @@ in
   }
 
   #PopupAutoComplete, menupopup, panel {
-    --test: red;
     --panel-background-color: #${base00} !important;
     --panel-text-color: #${base05} !important;
     --panel-border-color: #${base03} !important;
@@ -162,7 +172,7 @@ in
     color: #${base05};
   }
   richlistitem[selected="true"] {
-    background-color: #${base0E} !important;
+    background-color: ${toRGBA base0E 0.8} !important;
     color: #${base01} !important;
   }
   #statuspanel-label {

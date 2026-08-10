@@ -81,35 +81,33 @@ with config.colorScheme.palette;
         "CTRL, G, moveoutofgroup,"
 
         "dead_circumflex, workspace, previous_per_monitor"
-        "1, focusworkspaceoncurrentmonitor, r~1"
-        "2, focusworkspaceoncurrentmonitor, r~2"
-        "3, focusworkspaceoncurrentmonitor, r~3"
-        "4, focusworkspaceoncurrentmonitor, r~4"
-        "5, focusworkspaceoncurrentmonitor, r~5"
-        "6, focusworkspaceoncurrentmonitor, r~6"
-        "7, focusworkspaceoncurrentmonitor, r~7"
-        "8, focusworkspaceoncurrentmonitor, r~8"
-        "9, focusworkspaceoncurrentmonitor, r~9"
-        "0, focusworkspaceoncurrentmonitor, r~10"
+        "1, focusworkspaceoncurrentmonitor, 1"
+        "2, focusworkspaceoncurrentmonitor, 2"
+        "3, focusworkspaceoncurrentmonitor, 3"
+        "4, focusworkspaceoncurrentmonitor, 4"
+        "5, focusworkspaceoncurrentmonitor, 5"
+        "6, focusworkspaceoncurrentmonitor, 6"
+        "7, focusworkspaceoncurrentmonitor, 7"
+        "8, focusworkspaceoncurrentmonitor, 8"
+        "9, focusworkspaceoncurrentmonitor, 9"
+        "0, focusworkspaceoncurrentmonitor, 10"
 
-        "SHIFT, 1, movetoworkspacesilent, r~1"
-        "SHIFT, 2, movetoworkspacesilent, r~2"
-        "SHIFT, 3, movetoworkspacesilent, r~3"
-        "SHIFT, 4, movetoworkspacesilent, r~4"
-        "SHIFT, 5, movetoworkspacesilent, r~5"
-        "SHIFT, 6, movetoworkspacesilent, r~6"
-        "SHIFT, 7, movetoworkspacesilent, r~7"
-        "SHIFT, 8, movetoworkspacesilent, r~8"
-        "SHIFT, 9, movetoworkspacesilent, r~9"
-        "SHIFT, 0, movetoworkspacesilent, r~10"
+        "SHIFT, 1, movetoworkspacesilent, 1"
+        "SHIFT, 2, movetoworkspacesilent, 2"
+        "SHIFT, 3, movetoworkspacesilent, 3"
+        "SHIFT, 4, movetoworkspacesilent, 4"
+        "SHIFT, 5, movetoworkspacesilent, 5"
+        "SHIFT, 6, movetoworkspacesilent, 6"
+        "SHIFT, 7, movetoworkspacesilent, 7"
+        "SHIFT, 8, movetoworkspacesilent, 8"
+        "SHIFT, 9, movetoworkspacesilent, 9"
+        "SHIFT, 0, movetoworkspacesilent, 10"
 
         "S, togglespecialworkspace, dropterm"
         "SHIFT, S, movetoworkspacesilent, special:dropterm"
 
         "P, togglespecialworkspace, pwm"
         "SHIFT, P, movetoworkspacesilent, special:pwm"
-
-        "SHIFT, K, split:grabroguewindows"
       ]
     ++
       evalBinds "ALT"
@@ -163,15 +161,15 @@ with config.colorScheme.palette;
         "ALT, k, resizeactive, 0 -20"
         "ALT, j, resizeactive, 0  20"
 
-        "CTRL, RIGHT, split:workspace, r+1"
-        "CTRL, LEFT,  split:workspace, r-1"
-        "CTRL SHIFT, RIGHT, split:movetoworkspace, r+1"
-        "CTRL SHIFT, LEFT,  split:movetoworkspace, r-1"
+        "CTRL, RIGHT, focusworkspaceoncurrentmonitor, +1"
+        "CTRL, LEFT,  focusworkspaceoncurrentmonitor, -1"
+        "CTRL SHIFT, RIGHT, movetoworkspace, +1"
+        "CTRL SHIFT, LEFT,  movetoworkspace, -1"
 
-        "CTRL, L, split:workspace, r+1"
-        "CTRL, H, split:workspace, r-1"
-        "CTRL SHIFT, L, split:movetoworkspace, r+1"
-        "CTRL SHIFT, H, split:movetoworkspace, r-1"
+        "CTRL, L, focusworkspaceoncurrentmonitor, +1"
+        "CTRL, H, focusworkspaceoncurrentmonitor, -1"
+        "CTRL SHIFT, L, movetoworkspace, +1"
+        "CTRL SHIFT, H, movetoworkspace, -1"
 
         "TAB, changegroupactive, f"
 
@@ -534,12 +532,5 @@ with config.colorScheme.palette;
   ecosystem = {
     no_update_news = true;
     no_donation_nag = true;
-  };
-
-  plugin = {
-    hyprsplit = {
-      num_workspaces = 10;
-      persistent_workspaces = true;
-    };
   };
 }

@@ -59,19 +59,6 @@
       variables = [ "--all" ];
     };
 
-    plugins = with pkgs.hyprlandPlugins; [
-      (hyprsplit.overrideAttrs (finalAttrs: {
-        # TODO: switch to lua
-        version = "unstable";
-        src = pkgs.fetchFromGitHub {
-          owner = "shezdy";
-          repo = "hyprsplit";
-          rev = "ea230fc65b4bd591451d2305140a2e3fbce894ca";
-          hash = "sha256-VeVHk55Vg9+0BfUS+GleE7vZfa7ssb4yM+p+noJ349w=";
-        };
-      }))
-    ];
-
     configType = "hyprlang";
     settings = import ./hypr-settings.nix args;
   };

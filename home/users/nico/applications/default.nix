@@ -10,6 +10,8 @@
   imports = [
     ./packages.nix
 
+    ./scripts
+
     ./bat.nix
     ./element-desktop.nix
     ./firefox

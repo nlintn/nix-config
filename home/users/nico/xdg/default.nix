@@ -6,6 +6,7 @@
 
 {
   imports = [
+    ./extra-session-vars.nix
     ./terminal-exec.nix
   ];
 

@@ -19,10 +19,20 @@
     };
     dotDir = "${config.xdg.configHome}/zsh";
     enableCompletion = true;
+    completionInit =
+      let
+        dir = "${config.xdg.cacheHome}/zsh";
+      in
+      "mkdir -p ${dir} && autoload -U compinit && compinit -d ${dir}/zcompdump";
+    history = {
+      append = true;
+      extended = true;
+      path = "${config.xdg.stateHome}/zsh/history";
+      share = false;
+    };
     syntaxHighlighting = {
       enable = true;
       highlighters = [
-        "main"
         "cursor"
         "brackets"
       ];

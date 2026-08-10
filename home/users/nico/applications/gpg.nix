@@ -1,4 +1,5 @@
 {
+  config,
   osConfig ? null,
   pkgs,
   ...
@@ -7,6 +8,7 @@
 {
   programs.gpg = {
     enable = true;
+    homedir = "${config.xdg.dataHome}/gnupg";
     scdaemonSettings = {
       disable-ccid = (osConfig.services.pcscd.enable or false);
     };

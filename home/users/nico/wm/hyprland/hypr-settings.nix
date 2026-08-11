@@ -14,7 +14,7 @@ let
 
   brightnessctl = "${launchPrefix} ${lib.getExe' config.services.avizo.package "lightctl"} -e 2";
   browser = "${launchPrefix} ${lib.getExe config.programs.firefox.finalPackage}";
-  filemanager = "${launchPrefix} ${lib.getExe' config.programs.thunar.finalPackage "thunar"}";
+  filemanager = "${launchPrefix} ${lib.getExe config.programs.nautilus.package}";
   hyprpicker = "${launchPrefix} ${lib.getExe pkgs.hyprpicker}";
   hyprtabs = "${launchPrefix} ${lib.getExe (pkgs.callPackage ./scripts/hyprtabs.nix args)}";
   hyreload = "${launchPrefix} ${pkgs.callPackage ./scripts/hyreload.nix args}";
@@ -369,14 +369,6 @@ with config.colorScheme.palette;
         "match:initial_title" = lib.concatStringsSep "|" [
           "Steam Settings"
           "Friends List"
-        ];
-      })
-      (floatPreset {
-        name = "float_thunar_popup";
-        "match:initial_class" = "Thunar";
-        "match:initial_title" = lib.concatStringsSep "|" [
-          "File Operation Progress"
-          "Rename .*"
         ];
       })
 

@@ -17,6 +17,7 @@ let
   keepassxc = lib.mkIf config.programs.keepassxc.enable "org.keepassxc.KeePassXC.desktop";
   kitty = lib.mkIf config.programs.kitty.enable "kitty.desktop";
   mpv = lib.mkIf config.programs.mpv.enable "mpv.desktop";
+  nautilus = lib.mkIf config.programs.nautilus.enable "nautilus.desktop";
   neovim = lib.mkIf (config.vars ? nvimPackage) "nvim.desktop";
   papers = "org.gnome.Papers.desktop";
   pdf-arranger = "com.github.jeromerobert.pdfarranger.desktop";
@@ -24,7 +25,6 @@ let
   prusa-slicer = "PrusaSlicer.desktop";
   showtime = "org.gnome.showtime.desktop";
   swayimg = lib.mkIf config.programs.swayimg.enable "swayimg.desktop";
-  thunar = lib.mkIf config.programs.thunar.enable "thunar.desktop";
   thunderbird = lib.mkIf config.programs.thunderbird.enable config.programs.thunderbird.package.desktopItem.name;
   wireshark = "org.wireshark.Wireshark.desktop";
   yazi = lib.mkIf config.programs.yazi.enable "yazi.desktop";
@@ -126,7 +126,7 @@ lib.mergeAttrsList [
       "inode/directory"
     ]
     [
-      thunar
+      nautilus
       yazi
     ]
   )

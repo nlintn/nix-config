@@ -69,10 +69,14 @@
 
   xdg.portal = {
     enable = lib.mkDefault true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ]; # hyprland already auto added
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gnome
+      xdg-desktop-portal-gtk
+    ]; # hyprland already auto added
     config."hyprland" = {
       default = [
         "hyprland"
+        "gnome"
         "gtk"
       ];
     };

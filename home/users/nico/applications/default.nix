@@ -23,12 +23,12 @@
     ./keepassxc
     ./lazygit.nix
     ./less.nix
+    ./nautilus.nix
     ./neovim.nix
     ./nix-search-tv.nix
     ./obs-studio.nix
     ./ssh.nix
     ./swayimg.nix
-    ./thunar.nix
     ./thunderbird.nix
     ./tmux
     ./yazi.nix

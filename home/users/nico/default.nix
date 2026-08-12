@@ -14,6 +14,7 @@
   imports = [
     ./applications
     ./fonts.nix
+    ./locale.nix
     ./shell
     ./xdg
 

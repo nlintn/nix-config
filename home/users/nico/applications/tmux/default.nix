@@ -6,8 +6,12 @@
 }:
 
 let
+  fzf = lib.getExe config.programs.fzf.package;
+  rg = lib.getExe config.programs.ripgrep.package;
   tmux = lib.getExe config.programs.tmux.package;
-  tmux-popup =
+  xdg-open = lib.getExe' pkgs.xdg-utils "xdg-open";
+
+  genTmuxPopup =
     name: exec:
     pkgs.writeShellScript "tmux-popup" ''
       session="_popup_${name}_$(${tmux} display -p '#S')_"
@@ -23,6 +27,13 @@ let
 
       ${tmux} attach -t "$session"
     '';
+
+  searchUrls = pkgs.writeShellScript "tmux-search-urls" /* sh */ ''
+    tmux capture-pane -Jp \
+      | ${rg} -o --color=never '.*?((?:\w+:\/|~)?\/[\w()@:%\+-.~#?&\/=]+)' -r '$1' \
+      | ${fzf} --ansi --border-label ' url ' --header '  ^y copy ^o open' --bind 'ctrl-o:execute(${xdg-open} {})' --bind 'ctrl-y:execute(${tmux} set-buffer -w {})' \
+      || :
+  '';
 in
 {
   imports = [
@@ -31,11 +42,12 @@ in
 
   programs.tmux = {
     enable = true;
+    terminal = "tmux-256color";
     extraConfig = with config.colorScheme.palette; ''
       unbind C-b
       set -g prefix C-a
       bind -n C-a send-prefix
-      set -g status-keys vi
+      set -g status-keys emacs
       set -g mode-keys vi
       set -g mouse on
 
@@ -65,7 +77,6 @@ in
       set -g status-right-style bold
       set -g status-right-length 40
 
-      set -g default-terminal "tmux-256color"
       set -g allow-passthrough on
       set -g set-clipboard on
       set -g get-clipboard request
@@ -103,9 +114,9 @@ in
       bind -T copy-mode-vi v send-keys -X begin-selection
       bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
-      bind -N "Open lazygit popup " g display-popup -b rounded -E -xC -yC -w 90% -h 90% -d "#{pane_current_path}" '${tmux-popup "lazygit" (lib.getExe config.programs.lazygit.package)}'
+      bind -N "Open lazygit popup " g display-popup -b rounded -E -xC -yC -w 90% -h 90% -d "#{pane_current_path}" '${genTmuxPopup "lazygit" (lib.getExe config.programs.lazygit.package)}'
 
-      bind -N "Open shell popup " Enter display-popup -b rounded -xC -yC -w 65% -h 65% -E '${tmux-popup "shell" "$SHELL"}'
+      bind -N "Open shell popup " Enter display-popup -b rounded -xC -yC -w 65% -h 65% -E '${genTmuxPopup "shell" "$SHELL"}'
 
       # set prefix in popup
       bind -T _popup_root MouseDown1Pane            select-pane -t = \; send-keys -M
@@ -152,6 +163,8 @@ in
       bind -T copy-mode-vi-seq-i \' send-keys -X clear-selection \; send-keys -X jump-to-backward "'" \; send-keys -X begin-selection \; send-keys -X jump-to-forward "'"
       bind -T copy-mode-vi-seq-i \" send-keys -X clear-selection \; send-keys -X jump-to-backward '"' \; send-keys -X begin-selection \; send-keys -X jump-to-forward '"'
       bind -T copy-mode-vi-seq-i l send-keys -X clear-selection \; send-keys -X back-to-indentation \; send-keys -X begin-selection \; send-keys -X end-of-line \; send-keys -X cursor-left \; send-keys -X other-end
+
+      bind -N "Search pane for URLs " f run-shell -b ${searchUrls}
     '';
   };
 }

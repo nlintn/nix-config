@@ -8,7 +8,7 @@
     enable = true;
     withUWSM = true;
   };
-  security.pam.services."hyprlock" = {
+  security.pam.services."swaylock" = {
     enable = true;
     enableGnomeKeyring = config.services.gnome.gnome-keyring.enable;
   };

@@ -1,5 +1,4 @@
 {
-  lib,
   ...
 }:
 
@@ -12,15 +11,13 @@
     HibernateDelaySec = "24h";
   };
 
-  xdg.autostart.enable = lib.mkForce false;
-
   services.displayManager.ly = {
     enable = true;
     settings = {
       battery_id = "BAT1";
       clear_password = true;
       clock = "%a %Y/%m/%d %H:%M";
-      # ly_log = null; TODO: add when available
+      # ly_log = null; TODO: add after ly v1.5.0
       session_log = ".local/state/ly-session.log";
 
       animation = "colormix";

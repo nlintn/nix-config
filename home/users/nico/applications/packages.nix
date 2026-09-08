@@ -19,7 +19,6 @@
     dnsutils
     dragon-drop
     eza
-    ferdium
     file
     file-roller
     font-manager
@@ -35,13 +34,14 @@
     ipinfo
     jellyfin-desktop
     jetbrains.idea
+    karere
     ldapvi
     libnotify
     libqalculate
     libreoffice-fresh
     llvmPackages_latest.clang-manpages
     llvmPackages_latest.llvm-manpages
-    # logseq TODO: add back after electron version upgrade
+    # logseq TODO: add back after v2 release
     lolcat
     nix-diff
     nix-inspect
@@ -73,7 +73,7 @@
     spotify-tray
     sshfs
     telegram-desktop
-    texliveMedium
+    # texliveMedium TODO: add back when fixed
     traceroute
     unar
     usbutils

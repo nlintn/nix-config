@@ -46,6 +46,10 @@ with config.colorScheme.palette;
   ];
 
   # "debug:disable_logs" = false;
+  debug = {
+    disable_logs = false;
+    enable_stdout_logs = true;
+  };
 
   bind =
     # SUPER binds
@@ -385,6 +389,7 @@ with config.colorScheme.palette;
 
       {
         name = "pin_classes";
+        border_size = 0;
         pin = true;
         group = "deny";
         "match:initial_class" = lib.concatStringsSep "|" [

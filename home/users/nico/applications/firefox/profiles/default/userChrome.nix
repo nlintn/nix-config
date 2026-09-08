@@ -85,6 +85,7 @@ in
     --sidebar-border-color : ${toRGBA base03 0.5} !important;
     --sidebar-text-color : #${base05} !important;
 
+    --color-accent-attention: #${base0E} !important;
     --color-accent-primary: #${base0E} !important;
     --color-accent-primary-selected: #${base0E} !important;
     --color-accent-primary-hover: ${toRGBA base0E 0.8} !important;

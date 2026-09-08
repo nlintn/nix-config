@@ -33,7 +33,7 @@
       quit-after-last-window-closed = false;
 
       copy-on-select = "clipboard";
-      shell-integration-features = "ssh-env, sudo, title, no-cursor";
+      shell-integration-features = "ssh-env, title, no-cursor";
 
       keybind = [
         "ctrl+shift+a=select_all"

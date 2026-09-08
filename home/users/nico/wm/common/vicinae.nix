@@ -21,7 +21,6 @@ in
       firefox
       nerdfont-search
       nix
-      player-pilot
     ];
 
     settings = {
@@ -29,6 +28,10 @@ in
       pop_to_root_on_close = false;
       favicon_service = "twenty";
       search_files_in_root = true;
+      tray.enabled = false;
+      global_shortcuts = {
+        toggle = "";
+      };
       font = {
         normal = {
           family = userSettings.default-font.name;
@@ -77,6 +80,9 @@ in
             defaultAction = "launch";
             launchPrefix = config.vars.launchPrefix;
           };
+        };
+        calculator.preferences = {
+          backend = "qalculate";
         };
         core = {
           entrypoints = {

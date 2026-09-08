@@ -15,7 +15,6 @@
       plugins = with pkgs; [
         networkmanager-openvpn
       ];
-      dhcp = "dhcpcd";
     };
 
     firewall.enable = true;
@@ -155,6 +154,4 @@
     "${lib.getExe' config.systemd.package "systemctl"} restart dnscrypt-proxy2.service";
   environment.shellAliases."dns-stop" =
     "${lib.getExe' config.systemd.package "systemctl"} stop dnscrypt-proxy2.service";
-
-  systemd.services.NetworkManager-wait-online.enable = false;
 }

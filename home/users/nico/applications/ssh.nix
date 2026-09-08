@@ -25,6 +25,10 @@ in
         Compression = "no";
         ForwardAgent = "no";
         UserKnownHostsFile = "~/.ssh/known_hosts";
+
+        ControlMaster = "auto";
+        ControlPath = "\${XDG_RUNTIME_DIR}/ssh-mux-%C";
+        ControlPersist = "30s";
       };
     };
     extraOptionOverrides = {
@@ -42,4 +46,13 @@ in
     "SSH_ASKPASS=${askpassWrapper}"
   ];
   home.sessionVariables.SSH_ASKPASS = askpass;
+
+  home.sessionVariables.NIX_SSHOPTS =
+    [
+      "ControlMaster"
+      "ControlPath"
+      "ControlPersist"
+    ]
+    |> lib.map (o: "-o ${o}=${config.programs.ssh.settings."Host *".data.${o}}")
+    |> lib.concatStringsSep " ";
 }

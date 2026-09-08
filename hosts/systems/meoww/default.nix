@@ -75,8 +75,18 @@
     dev.enable = true;
   };
 
-  security.polkit.enable = true;
-
+  system.tools.nixos-rebuild.enableRun0Elevation = true;
+  security = {
+    polkit = {
+      enable = true;
+      enablePkexecWrapper = true;
+    };
+    run0 = {
+      enable = true;
+      persistentAuth.enable = true;
+    };
+    sudo.enable = false;
+  };
   security.apparmor.enable = true;
 
   systemd.oomd.enableUserSlices = true;

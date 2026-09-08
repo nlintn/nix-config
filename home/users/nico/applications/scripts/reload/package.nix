@@ -20,7 +20,7 @@ in
 writeShellScriptBin "reload" (
   if osConfig.system.tools.nixos-rebuild.enable or false && config.submoduleSupport.enable then
     /* sh */ ''
-      ${lib.getExe nixos-rebuild-nom} switch --flake ${configDirectory} "${inputOverrides}" --sudo $@
+      ${lib.getExe nixos-rebuild-nom} switch --flake ${configDirectory} "${inputOverrides}" --elevate run0 $@
     ''
   else if config.programs.home-manager.enable && !config.submoduleSupport.enable then
     /* sh */ ''

@@ -56,7 +56,7 @@
       timeout = 5000;
       keepalive = 30;
 
-      # log_level = 0;
+      log_level = 2;
       use_syslog = true;
 
       bootstrap_resolvers = [
@@ -65,8 +65,7 @@
         "[2620:fe::11]:53"
         "[2620:fe::fe:11]:53"
       ];
-      ignore_system_dns = false;
-      netprobe_timeout = 60;
+      netprobe_timeout = 0;
       netprobe_address = "9.9.9.9:53";
 
       block_ipv6 = false;
@@ -75,11 +74,20 @@
       reject_ttl = 10;
 
       forwarding_rules = pkgs.writeText "dnscrypt-forwarding-rules" ''
-        fritz.box                 $DHCP
+        ${
+          let
+            file = "/var/run/NetworkManager/resolv.conf";
+          in
+          lib.optionalString true ''
+            fritz.box                 $RESOLVCONF:${file}
 
-        detectportal.firefox.com  $DHCP
-        iceportal.de              $DHCP
-        login.wifionice.de        $DHCP
+            detectportal.firefox.com  $RESOLVCONF:${file}
+            hotsplots.de              $RESOLVCONF:${file}
+            hotspot.vodafone.de       $RESOLVCONF:${file}
+            login.wifionice.de        $RESOLVCONF:${file}
+          ''
+        }
+
         ${lib.optionalString (lib.elem "--accept-dns=false" config.services.tailscale.extraSetFlags) ''
           ts.net                    100.100.100.100
           100.in-addr.arpa          100.100.100.100
@@ -150,8 +158,15 @@
   systemd.tmpfiles.rules = [
     "f ${lib.escapeShellArg config.services.dnscrypt-proxy.settings.cloaking_rules} 0644 root root - -"
   ];
+  systemd.services.dnscrypt-proxy = {
+    after = [ "systemd-tmpfiles-setup.service" ];
+    wants = [ "systemd-tmpfiles-setup.service" ];
+  };
+
   environment.shellAliases."dns-restart" =
     "${lib.getExe' config.systemd.package "systemctl"} restart dnscrypt-proxy2.service";
+  environment.shellAliases."dns-status" =
+    "${lib.getExe' config.systemd.package "systemctl"} status dnscrypt-proxy2.service";
   environment.shellAliases."dns-stop" =
     "${lib.getExe' config.systemd.package "systemctl"} stop dnscrypt-proxy2.service";
 }

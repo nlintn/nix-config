@@ -19,7 +19,10 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
+                mountOptions = [
+                  "umask=0077"
+                  "noatime"
+                ];
               };
             };
             luks = {
@@ -59,6 +62,7 @@
               mountOptions = [
                 "defaults"
                 "x-systemd.device-timeout=infinity"
+                "noatime"
               ];
             };
           };

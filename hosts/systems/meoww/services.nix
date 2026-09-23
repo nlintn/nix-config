@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -21,11 +19,12 @@
     pcscd.enable = true; # smart cards
     tailscale = {
       enable = true;
+      openFirewall = true;
       disableUpstreamLogging = true;
       extraSetFlags = [
+        "--accept-routes"
         "--operator=nico"
-      ]
-      ++ lib.optional config.services.dnscrypt-proxy.enable "--accept-dns=false";
+      ];
       useRoutingFeatures = "client";
     };
 

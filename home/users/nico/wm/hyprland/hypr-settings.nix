@@ -317,6 +317,7 @@ with config.colorScheme.palette;
         name = "float_classes";
         "match:initial_class" = lib.concatStringsSep "|" [
           "\\.blueman-.*"
+          "blueman-.*"
           "com\\.saivert\\.pwvucontrol"
           "io\\.github\\.finefindus\\.Hieroglyphic"
           "nm-applet"

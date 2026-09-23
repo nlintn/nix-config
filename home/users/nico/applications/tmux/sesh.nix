@@ -28,17 +28,12 @@
           --bind 'ctrl-x:execute(${tmux} kill-session -t {2..})+change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_.*_" || true)' \
           --bind 'ctrl-backspace:execute(${tmux} kill-server)+change-prompt(󱐋  )+reload(${sesh} list --icons | ${rg} -v "_popup_.*_.*_" || true)' \
           --preview-window 'right:60%' \
-          --preview '${sesh} preview {}'
+          --preview '${sesh} preview -w {}'
       )"
     '';
 
   programs.sesh = {
     enable = true;
-    package = pkgs.sesh.overrideAttrs (prev: {
-      patches = prev.patches or [ ] ++ [
-        ./patch_sesh_0001-Revert-Revert-startup_command-shell-command-injectio.patch
-      ];
-    });
     enableAlias = false;
     enableTmuxIntegration = false;
     fzfPackage = config.programs.fzf.package;

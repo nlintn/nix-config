@@ -7,6 +7,15 @@
 
 with config.colorScheme.palette;
 {
+  # force xdg portal
+  "widget.use-xdg-desktop-portal.file-picker" = 1;
+  "widget.use-xdg-desktop-portal.location" = 1;
+  "widget.use-xdg-desktop-portal.mime-handler" = 1;
+  "widget.use-xdg-desktop-portal.native-messaging" = 1;
+  "widget.use-xdg-desktop-portal.notification" = 1;
+  "widget.use-xdg-desktop-portal.open-uri" = 1;
+  "widget.use-xdg-desktop-portal.settings" = 1;
+
   # extensions
   "extensions.autoDisableScopes" = 0;
   "extensions.update.autoUpdateDefault" = false;

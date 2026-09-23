@@ -1,3 +1,4 @@
+WORDCHARS='*?_-.[]~&;!#$%^{}<>'
 bindkey -v "^[[1;3C" forward-word
 bindkey -v "^[[1;5C" forward-word
 bindkey -v "^[[1;3D" backward-word

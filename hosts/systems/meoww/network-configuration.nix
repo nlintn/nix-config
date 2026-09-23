@@ -87,11 +87,6 @@
             login.wifionice.de        $RESOLVCONF:${file}
           ''
         }
-
-        ${lib.optionalString (lib.elem "--accept-dns=false" config.services.tailscale.extraSetFlags) ''
-          ts.net                    100.100.100.100
-          100.in-addr.arpa          100.100.100.100
-        ''}
       '';
 
       cloaking_rules = "/etc/dnscrypt-cloaking-rules";

@@ -38,9 +38,9 @@
     ldapvi
     libnotify
     libqalculate
-    libreoffice-fresh
-    llvmPackages_latest.clang-manpages
-    llvmPackages_latest.llvm-manpages
+    libreoffice
+    # llvmPackages_latest.clang-manpages TODO: add back when not broken anymore
+    # llvmPackages_latest.llvm-manpages TODO: "
     # logseq TODO: add back after v2 release
     lolcat
     nix-diff
@@ -73,7 +73,7 @@
     spotify-tray
     sshfs
     telegram-desktop
-    # texliveMedium TODO: add back when fixed
+    texliveMedium
     traceroute
     unar
     usbutils

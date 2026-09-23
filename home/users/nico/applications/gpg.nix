@@ -19,5 +19,5 @@
     pinentry.package = pkgs.pinentry-gnome3;
   };
 
-  dbus.packages = [ pkgs.gcr ]; # necessary for `pinentry-gnome3`
+  dbus.packages = [ pkgs.gcr_3 ]; # necessary for `pinentry-gnome3`
 }

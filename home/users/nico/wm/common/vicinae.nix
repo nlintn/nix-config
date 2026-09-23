@@ -26,6 +26,7 @@ in
     settings = {
       close_on_focus_loss = true;
       pop_to_root_on_close = false;
+      wrap_navigation = true;
       favicon_service = "twenty";
       search_files_in_root = true;
       tray.enabled = false;
@@ -69,7 +70,7 @@ in
         "files:search"
       ];
       providers = {
-        "@Gelei/vicinae-extension-bluetooth-unstable" = {
+        "@Gelei/vicinae-extension-bluetooth-0" = {
           preferences.connectionToggleable = true;
         };
         "@knoopx/vicinae-extension-firefox-0" = {
@@ -96,7 +97,11 @@ in
           excludedIndexingPaths = [ config.xdg.cacheHome ];
           indexingPaths = [ config.home.homeDirectory ];
         };
-        system.entrypoints.browse-apps.enabled = true;
+        system.entrypoints = {
+          browse-apps.enabled = true;
+          set-default-browser.enabled = false;
+          set-default-terminal.enabled = false;
+        };
         theme.entrypoints.set.enabled = false;
       };
     };

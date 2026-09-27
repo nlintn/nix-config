@@ -15,7 +15,7 @@
     ./hardware-configuration.nix
     ./hardware-extra.nix
     ./login-config.nix
-    ./network-configuration.nix
+    ./networking
     ./nix-configuration.nix
     ./programs.nix
     ./services.nix

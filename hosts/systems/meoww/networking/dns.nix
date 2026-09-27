@@ -5,21 +5,11 @@
   ...
 }:
 
+let
+  cfg = config.services.dnscrypt-proxy;
+in
 {
   networking = {
-    usePredictableInterfaceNames = false;
-
-    networkmanager = {
-      enable = true;
-      wifi.powersave = true;
-      plugins = with pkgs; [
-        networkmanager-openvpn
-      ];
-    };
-
-    firewall.enable = true;
-    nftables.enable = true;
-
     nameservers = [
       "127.0.0.1"
       "::1"
@@ -150,6 +140,7 @@
       };
     };
   };
+
   systemd.tmpfiles.rules = [
     "f ${lib.escapeShellArg config.services.dnscrypt-proxy.settings.cloaking_rules} 0644 root root - -"
   ];

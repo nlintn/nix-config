@@ -17,15 +17,11 @@
       touchpad.accelProfile = "adaptive";
     };
     pcscd.enable = true; # smart cards
-    tailscale = {
+
+    usbguard = {
       enable = true;
-      openFirewall = true;
-      disableUpstreamLogging = true;
-      extraSetFlags = [
-        "--accept-routes"
-        "--operator=nico"
-      ];
-      useRoutingFeatures = "client";
+      dbus.enable = true;
+      IPCAllowedGroups = [ "wheel" ];
     };
 
     # fs stuff

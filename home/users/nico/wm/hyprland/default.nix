@@ -22,13 +22,6 @@
     ./waybar
   ];
 
-  home.packages = with pkgs; [
-    file-roller
-    pwvucontrol
-    wl-mirror
-    wlr-randr
-  ];
-
   programs = {
     swappy = {
       enable = true;

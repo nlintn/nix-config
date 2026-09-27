@@ -63,17 +63,32 @@
     htop.enable = true;
     java.enable = true;
     jq.enable = true;
+    libreoffice.enable = true;
     mpv.enable = true;
+    pgcli.enable = true;
+    prismlauncher.enable = true;
+    qalculate.enable = true;
     rclone.enable = true;
     ripgrep.enable = true;
     uv.enable = true;
     vesktop.enable = true;
   };
 
+  services.batsignal = {
+    enable = true;
+    extraArgs = [
+      "-d0"
+      "-e"
+      "-f0"
+      "-m30"
+      "-p"
+    ];
+  };
   services.kdeconnect = {
     enable = true;
     indicator = true;
-    package = lib.mkIf (osConfig != null) osConfig.programs.kdeconnect.package;
+    package = lib.mkIf (osConfig.services.kdeconnect.enable or false
+    ) osConfig.programs.kdeconnect.package;
   };
   services.protonmail-bridge = {
     enable = true;
@@ -95,5 +110,6 @@
     podman.enable = true;
     systembus-notify.enable = true;
     tumbler.enable = true;
+    usbguard-notifier.enable = true;
   };
 }

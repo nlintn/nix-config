@@ -7,11 +7,9 @@
   home.packages = with pkgs; [
     agenix
     ansible
-    atac
     audacity
     bear
     blender
-    bviplus
     cowsay
     cyberchef
     desmume
@@ -37,10 +35,6 @@
     karere
     ldapvi
     libnotify
-    libqalculate
-    libreoffice
-    # llvmPackages_latest.clang-manpages TODO: add back when not broken anymore
-    # llvmPackages_latest.llvm-manpages TODO: "
     # logseq TODO: add back after v2 release
     lolcat
     nix-diff
@@ -55,20 +49,20 @@
     papers
     pdfarranger
     pdftk
-    pgcli
     planify
     poppler-utils
     postman
-    prismlauncher
     proton-vpn
+    proton-vpn-cli
     protonmail-desktop
     prusa-slicer
     pv
+    pwvucontrol
+    pwgen
     qemu
     quickemu
     showtime
     signal-desktop
-    speedread
     spotify
     spotify-tray
     sshfs
@@ -78,7 +72,6 @@
     unar
     usbutils
     wev
-    wireshark
     xournalpp
     yubioath-flutter
   ];

@@ -36,6 +36,10 @@ in
       };
       FdoSecrets = {
         Enabled = true;
+        ShowNotification = true;
+        ConfirmAccessItem = false;
+        ConfirmDeleteItem = true;
+        UnlockBeforeSearch = true;
       };
       GUI = {
         AdvancedSettings = true;

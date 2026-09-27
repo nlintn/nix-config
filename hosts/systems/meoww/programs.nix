@@ -48,7 +48,6 @@
       ];
       interface = "wlan0";
     };
-    kdeconnect.enable = true;
     nix-ld.enable = true;
     steam = {
       enable = true;

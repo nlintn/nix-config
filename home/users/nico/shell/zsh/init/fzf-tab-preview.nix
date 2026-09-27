@@ -14,7 +14,7 @@ let
     reset
     ;
 
-  bat = "${lib.getExe config.programs.bat.package} --paging=never --color=always";
+  bat = "${lib.getExe config.programs.bat.package} --paging=never --color=always -S";
   bat_man = "${bat} -lman --style grid";
   eza = lib.getExe pkgs.eza;
   git = lib.getExe config.programs.git.package;

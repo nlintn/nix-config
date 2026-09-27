@@ -22,8 +22,10 @@
         '';
       };
     config = {
-      theme = "base16";
+      italic-text = "always";
       paging = "always";
+      theme = "base16";
+      wrap = "never";
     };
     themes = {
       "base16".src = import ./tm-theme.nix args;

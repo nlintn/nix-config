@@ -11,7 +11,7 @@ with config.colorScheme.palette;
   "widget.use-xdg-desktop-portal.file-picker" = 1;
   "widget.use-xdg-desktop-portal.location" = 1;
   "widget.use-xdg-desktop-portal.mime-handler" = 1;
-  "widget.use-xdg-desktop-portal.native-messaging" = 1;
+  "widget.use-xdg-desktop-portal.native-messaging" = 2;
   "widget.use-xdg-desktop-portal.notification" = 1;
   "widget.use-xdg-desktop-portal.open-uri" = 1;
   "widget.use-xdg-desktop-portal.settings" = 1;

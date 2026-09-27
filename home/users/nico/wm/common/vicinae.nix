@@ -19,8 +19,11 @@ in
       bluetooth
       color-converter
       firefox
+      kde-connect
       nerdfont-search
       nix
+      protonvpn
+      screen-mirror
     ];
 
     settings = {
@@ -83,7 +86,7 @@ in
           };
         };
         calculator.preferences = {
-          backend = "qalculate";
+          backend = lib.mkIf config.programs.qalculate.enable "qalculate";
         };
         core = {
           entrypoints = {

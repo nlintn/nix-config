@@ -6,7 +6,7 @@
 }:
 
 let
-  genCfgDest = "${config.xdg.configHome}/hypr/gen-monitors.conf";
+  genCfgDest = "${config.xdg.configHome}/hypr/gen-monitors.lua";
   pkg = pkgs.hyprmon;
 in
 {
@@ -21,5 +21,7 @@ in
     })
   ];
 
-  wayland.windowManager.hyprland.settings.source = [ genCfgDest ];
+  wayland.windowManager.hyprland.extraConfig = "require(\"gen-monitors\")";
+
+  systemd.user.tmpfiles.rules = [ "f ${lib.escapeShellArg genCfgDest} - - - - -" ];
 }

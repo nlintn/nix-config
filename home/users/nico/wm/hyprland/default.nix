@@ -59,13 +59,8 @@
       variables = [ "--all" ];
     };
 
-    configType = "hyprlang";
     settings = import ./hypr-settings.nix args;
   };
-
-  systemd.user.tmpfiles.rules = lib.map (
-    f: "f ${lib.escapeShellArg f} - - - - -"
-  ) config.wayland.windowManager.hyprland.settings.source;
 
   xdg.portal = {
     enable = lib.mkDefault true;

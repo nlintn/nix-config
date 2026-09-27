@@ -8,7 +8,7 @@
 }@args:
 
 let
-  evalBinds = lib-custom.hyprland.evalBinds;
+  inherit (lib-custom.hyprland) mkBinds mkBindsExec mkEnv;
 
   inherit (config.vars) launchPrefix;
 
@@ -36,256 +36,454 @@ in
 with config.colorScheme.palette;
 {
   monitor = [
-    ", preferred, 0x0, 1"
-    "eDP-1, preferred, auto-center-down, 1.6"
+    {
+      output = "";
+      mode = "preferred";
+      position = "0x0";
+      scale = "1";
+    }
+    {
+      output = "eDP-1";
+      mode = "preferred";
+      position = "auto-center-down";
+      scale = "1.6";
+    }
   ];
 
-  env = [
-    "HYPRCURSOR_THEME, ${config.home.pointerCursor.name}"
-    "HYPRCURSOR_SIZE, ${toString config.home.pointerCursor.size}"
-  ];
-
-  # "debug:disable_logs" = false;
-  debug = {
-    disable_logs = false;
-    enable_stdout_logs = true;
+  env = mkEnv {
+    HYPRCURSOR_THEME = config.home.pointerCursor.name;
+    HYPRCURSOR_SIZE = config.home.pointerCursor.size;
   };
 
   bind =
-    # SUPER binds
-    evalBinds "SUPER"
-      [ "ALT" "CTRL" "SHIFT" ]
-      [
-        # exec keybinds
-        "A, exec, ${screenshot} area"
-        "SHIFT, A, exec, ${screenshot} output"
-        "CTRL, A, exec, ${hyprpicker} -ar"
-        "E, exec, ${filemanager}"
-        "W, exec, ${browser}"
-        "Q, exec, ${xdg-terminal-exec}"
-        "SHIFT, Q, exec, ${term_tmux_sesh}"
-        "SPACE, exec, ${vicinae} vicinae://toggle"
-        "SHIFT, SPACE, exec, ${vicinae} vicinae://pop_to_root"
-        "SHIFT, R, exec, ${hyreload}"
-        "PERIOD, exec, ${vicinae} vicinae://launch/core/search-emojis?toggle=true"
-        "V, exec, ${vicinae} vicinae://launch/clipboard/history?toggle=true"
-        "BACKSPACE, exec, ${config.vars.sessionLockCmd}"
-        "SHIFT, BACKSPACE, exec, ${lock-transparent}"
-        "RETURN, exec, ${vicinae} vicinae://launch/power?toggle=true"
-        "PLUS, exec, ${swaync-client} --toggle-panel"
-        "SHIFT, PLUS, exec, ${swaync-client} -C"
-        "CTRL, PLUS, exec, ${swaync-client} --toggle-dnd"
+    mkBindsExec {
+      "SUPER + A" = "${screenshot} area";
+      "SUPER + SHIFT + A" = "${screenshot} output";
+      "SUPER + CTRL + A" = "${hyprpicker} -ar";
+      "SUPER + E" = filemanager;
+      "SUPER + W" = browser;
+      "SUPER + Q" = xdg-terminal-exec;
+      "SUPER + SHIFT + Q" = term_tmux_sesh;
+      "SUPER + SPACE" = "${vicinae} vicinae://toggle";
+      "SUPER + SHIFT + SPACE" = "${vicinae} vicinae://pop_to_root";
+      "SUPER + SHIFT + R" = hyreload;
+      "SUPER + PERIOD" = "${vicinae} vicinae://launch/core/search-emojis?toggle=true";
+      "SUPER + V" = "${vicinae} vicinae://launch/clipboard/history?toggle=true";
+      "SUPER + BACKSPACE" = config.vars.sessionLockCmd;
+      "SUPER + SHIFT + BACKSPACE" = lock-transparent;
+      "SUPER + RETURN" = "${vicinae} vicinae://launch/power?toggle=true";
+      "SUPER + PLUS" = "${swaync-client} --toggle-panel";
+      "SUPER + SHIFT + PLUS" = "${swaync-client} -C";
+      "SUPER + CTRL + PLUS" = "${swaync-client} --toggle-dnd";
+      "SUPER + G" = hyprtabs;
 
-        "C, killactive"
-        "SHIFT, C, forcekillactive"
-        "F, fullscreen, 1"
-        "SHIFT, F, fullscreen, 0"
-        "CTRL SHIFT, Z, exit"
-        "B, togglefloating,"
+      "ALT + TAB" = "${vicinae} vicinae://launch/wm/switch-windows?toggle=true";
+    }
+    ++ mkBinds [
+      {
+        keys = "SUPER + C";
+        dispatcher = "hl.dsp.window.close()";
+      }
+      {
+        keys = "SUPER + SHIFT + C";
+        dispatcher = "hl.dsp.window.kill()";
+      }
+      {
+        keys = "SUPER + F";
+        dispatcher = "hl.dsp.window.fullscreen({ mode = \"maximized\", action = \"toggle\" })";
+      }
+      {
+        keys = "SUPER + SHIFT + F";
+        dispatcher = "hl.dsp.window.fullscreen({ mode = \"fullscreen\", action = \"toggle\" })";
+      }
+      {
+        keys = "SUPER + CTRL + SHIFT + Z";
+        dispatcher = "hl.dsp.exit()";
+      }
+      {
+        keys = "SUPER + B";
+        dispatcher = "hl.dsp.window.float({ action = \"toggle\" })";
+      }
+      {
+        keys = "SUPER + SHIFT + G";
+        dispatcher = "hl.dsp.group.toggle()";
+      }
+      {
+        keys = "SUPER + CTRL + G";
+        dispatcher = "hl.dsp.window.move({ out_of_group = true })";
+      }
+      {
+        keys = "SUPER + dead_circumflex";
+        dispatcher = "hl.dsp.focus({ workspace = \"previous_per_monitor\" })";
+      }
+      {
+        keys = "SUPER + 1";
+        dispatcher = "hl.dsp.focus({ workspace = 1, on_current_monitor = true })";
+      }
+      {
+        keys = "SUPER + 2";
+        dispatcher = "hl.dsp.focus({ workspace = 2, on_current_monitor = true })";
+      }
+      {
+        keys = "SUPER + 3";
+        dispatcher = "hl.dsp.focus({ workspace = 3, on_current_monitor = true })";
+      }
+      {
+        keys = "SUPER + 4";
+        dispatcher = "hl.dsp.focus({ workspace = 4, on_current_monitor = true })";
+      }
+      {
+        keys = "SUPER + 5";
+        dispatcher = "hl.dsp.focus({ workspace = 5, on_current_monitor = true })";
+      }
+      {
+        keys = "SUPER + 6";
+        dispatcher = "hl.dsp.focus({ workspace = 6, on_current_monitor = true })";
+      }
+      {
+        keys = "SUPER + 7";
+        dispatcher = "hl.dsp.focus({ workspace = 7, on_current_monitor = true })";
+      }
+      {
+        keys = "SUPER + 8";
+        dispatcher = "hl.dsp.focus({ workspace = 8, on_current_monitor = true })";
+      }
+      {
+        keys = "SUPER + 9";
+        dispatcher = "hl.dsp.focus({ workspace = 9, on_current_monitor = true })";
+      }
+      {
+        keys = "SUPER + 0";
+        dispatcher = "hl.dsp.focus({ workspace = 10, on_current_monitor = true })";
+      }
+      {
+        keys = "SUPER + SHIFT + 1";
+        dispatcher = "hl.dsp.window.move({ workspace = 1, follow = false })";
+      }
+      {
+        keys = "SUPER + SHIFT + 2";
+        dispatcher = "hl.dsp.window.move({ workspace = 2, follow = false })";
+      }
+      {
+        keys = "SUPER + SHIFT + 3";
+        dispatcher = "hl.dsp.window.move({ workspace = 3, follow = false })";
+      }
+      {
+        keys = "SUPER + SHIFT + 4";
+        dispatcher = "hl.dsp.window.move({ workspace = 4, follow = false })";
+      }
+      {
+        keys = "SUPER + SHIFT + 5";
+        dispatcher = "hl.dsp.window.move({ workspace = 5, follow = false })";
+      }
+      {
+        keys = "SUPER + SHIFT + 6";
+        dispatcher = "hl.dsp.window.move({ workspace = 6, follow = false })";
+      }
+      {
+        keys = "SUPER + SHIFT + 7";
+        dispatcher = "hl.dsp.window.move({ workspace = 7, follow = false })";
+      }
+      {
+        keys = "SUPER + SHIFT + 8";
+        dispatcher = "hl.dsp.window.move({ workspace = 8, follow = false })";
+      }
+      {
+        keys = "SUPER + SHIFT + 9";
+        dispatcher = "hl.dsp.window.move({ workspace = 9, follow = false })";
+      }
+      {
+        keys = "SUPER + SHIFT + 0";
+        dispatcher = "hl.dsp.window.move({ workspace = 10, follow = false })";
+      }
+      {
+        keys = "SUPER + S";
+        dispatcher = "hl.dsp.workspace.toggle_special(\"dropterm\")";
+      }
+      {
+        keys = "SUPER + SHIFT + S";
+        dispatcher = "hl.dsp.window.move({ workspace = \"special:dropterm\", follow = false })";
+      }
+      {
+        keys = "SUPER + P";
+        dispatcher = "hl.dsp.workspace.toggle_special(\"pwm\")";
+      }
+      {
+        keys = "SUPER + SHIFT + P";
+        dispatcher = "hl.dsp.window.move({ workspace = \"special:pwm\", follow = false })";
+      }
 
-        "G, exec, ${hyprtabs}"
-        "SHIFT, G, togglegroup,"
-        "CTRL, G, moveoutofgroup,"
+      {
+        keys = "SUPER + mouse:272";
+        dispatcher = "hl.dsp.window.drag()";
+      }
+      {
+        keys = "SUPER + mouse:273";
+        dispatcher = "hl.dsp.window.resize()";
+      }
 
-        "dead_circumflex, workspace, previous_per_monitor"
-        "1, focusworkspaceoncurrentmonitor, 1"
-        "2, focusworkspaceoncurrentmonitor, 2"
-        "3, focusworkspaceoncurrentmonitor, 3"
-        "4, focusworkspaceoncurrentmonitor, 4"
-        "5, focusworkspaceoncurrentmonitor, 5"
-        "6, focusworkspaceoncurrentmonitor, 6"
-        "7, focusworkspaceoncurrentmonitor, 7"
-        "8, focusworkspaceoncurrentmonitor, 8"
-        "9, focusworkspaceoncurrentmonitor, 9"
-        "0, focusworkspaceoncurrentmonitor, 10"
+      {
+        keys = "SUPER + left";
+        dispatcher = "hl.dsp.focus({ direction = \"left\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + right";
+        dispatcher = "hl.dsp.focus({ direction = \"right\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + up";
+        dispatcher = "hl.dsp.focus({ direction = \"up\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + down";
+        dispatcher = "hl.dsp.focus({ direction = \"down\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + left";
+        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"l\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + right";
+        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"r\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + up";
+        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"u\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + down";
+        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"d\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + h";
+        dispatcher = "hl.dsp.focus({ direction = \"left\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + l";
+        dispatcher = "hl.dsp.focus({ direction = \"right\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + k";
+        dispatcher = "hl.dsp.focus({ direction = \"up\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + j";
+        dispatcher = "hl.dsp.focus({ direction = \"down\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + h";
+        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"l\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + l";
+        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"r\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + k";
+        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"u\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + j";
+        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"d\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + ALT + left";
+        dispatcher = "hl.dsp.window.resize({ x = -20, y = 0, relative = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + ALT + right";
+        dispatcher = "hl.dsp.window.resize({ x = 20, y = 0, relative = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + ALT + up";
+        dispatcher = "hl.dsp.window.resize({ x = 0, y = -20, relative = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + ALT + down";
+        dispatcher = "hl.dsp.window.resize({ x = 0, y = 20, relative = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + ALT + h";
+        dispatcher = "hl.dsp.window.resize({ x = -20, y = 0, relative = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + ALT + l";
+        dispatcher = "hl.dsp.window.resize({ x = 20, y = 0, relative = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + ALT + k";
+        dispatcher = "hl.dsp.window.resize({ x = 0, y = -20, relative = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + ALT + j";
+        dispatcher = "hl.dsp.window.resize({ x = 0, y = 20, relative = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + CTRL + RIGHT";
+        dispatcher = "hl.dsp.focus({ workspace = \"+1\", on_current_monitor = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + CTRL + LEFT";
+        dispatcher = "hl.dsp.focus({ workspace = -1, on_current_monitor = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + CTRL + SHIFT + RIGHT";
+        dispatcher = "hl.dsp.window.move({ workspace = \"+1\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + CTRL + SHIFT + LEFT";
+        dispatcher = "hl.dsp.window.move({ workspace = -1 })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + CTRL + L";
+        dispatcher = "hl.dsp.focus({ workspace = \"+1\", on_current_monitor = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + CTRL + H";
+        dispatcher = "hl.dsp.focus({ workspace = -1, on_current_monitor = true })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + CTRL + SHIFT + L";
+        dispatcher = "hl.dsp.window.move({ workspace = \"+1\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + CTRL + SHIFT + H";
+        dispatcher = "hl.dsp.window.move({ workspace = -1 })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + TAB";
+        dispatcher = "hl.dsp.group.next()";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + TAB";
+        dispatcher = "hl.dsp.group.prev()";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + M";
+        dispatcher = "hl.dsp.focus({ monitor = \"+1\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + N";
+        dispatcher = "hl.dsp.focus({ monitor = -1 })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + M";
+        dispatcher = "hl.dsp.window.move({ monitor = \"+1\" })";
+        flags.repeating = true;
+      }
+      {
+        keys = "SUPER + SHIFT + N";
+        dispatcher = "hl.dsp.window.move({ monitor = \"-1\" })";
+        flags.repeating = true;
+      }
 
-        "SHIFT, 1, movetoworkspacesilent, 1"
-        "SHIFT, 2, movetoworkspacesilent, 2"
-        "SHIFT, 3, movetoworkspacesilent, 3"
-        "SHIFT, 4, movetoworkspacesilent, 4"
-        "SHIFT, 5, movetoworkspacesilent, 5"
-        "SHIFT, 6, movetoworkspacesilent, 6"
-        "SHIFT, 7, movetoworkspacesilent, 7"
-        "SHIFT, 8, movetoworkspacesilent, 8"
-        "SHIFT, 9, movetoworkspacesilent, 9"
-        "SHIFT, 0, movetoworkspacesilent, 10"
+      {
+        keys = "XF86AudioMute";
+        dispatcher = "hl.dsp.exec_cmd(\"${volumectl} -p toggle-mute\")";
+        flags.locked = true;
+      }
+      {
+        keys = "XF86AudioMute";
+        dispatcher = "hl.dsp.exec_cmd(\"${volumectl} -p toggle-mute\")";
+        flags.locked = true;
+      }
+      {
+        keys = "XF86AudioMicMute";
+        dispatcher = "hl.dsp.exec_cmd(\"${volumectl} -m -p toggle-mute\")";
+        flags.locked = true;
+      }
+      {
+        keys = "XF86AudioNext";
+        dispatcher = "hl.dsp.exec_cmd(\"${playerctl} next\")";
+        flags.locked = true;
+      }
+      {
+        keys = "XF86AudioPrev";
+        dispatcher = "hl.dsp.exec_cmd(\"${playerctl} previous\")";
+        flags.locked = true;
+      }
+      {
+        keys = "XF86AudioPlay";
+        dispatcher = "hl.dsp.exec_cmd(\"${playerctl} play-pause\")";
+        flags.locked = true;
+      }
+      {
+        keys = "XF86AudioPause";
+        dispatcher = "hl.dsp.exec_cmd(\"${playerctl} play-pause\")";
+        flags.locked = true;
+      }
 
-        "S, togglespecialworkspace, dropterm"
-        "SHIFT, S, movetoworkspacesilent, special:dropterm"
-
-        "P, togglespecialworkspace, pwm"
-        "SHIFT, P, movetoworkspacesilent, special:pwm"
-      ]
-    ++
-      evalBinds "ALT"
-        [ ]
-        [
-          "TAB, exec, ${vicinae} vicinae://launch/wm/switch-windows?toggle=true"
-        ]
-    ++
-      evalBinds "CTRL"
-        [ "SHIFT" ]
-        [
-          "SHIFT, M, pass, ^vesktop$"
-        ];
-
-  bindm =
-    evalBinds "SUPER"
-      [ ]
-      [
-        "mouse:272, movewindow"
-        "mouse:273, resizewindow"
-      ];
-
-  binde =
-    evalBinds "SUPER"
-      [ "ALT" "CTRL" "SHIFT" ]
-      [
-        "left,  movefocus, l"
-        "right, movefocus, r"
-        "up,    movefocus, u"
-        "down,  movefocus, d"
-        "SHIFT, left,  movewindoworgroup, l"
-        "SHIFT, right, movewindoworgroup, r"
-        "SHIFT, up,    movewindoworgroup, u"
-        "SHIFT, down,  movewindoworgroup, d"
-        "h, movefocus, l"
-        "l, movefocus, r"
-        "k, movefocus, u"
-        "j, movefocus, d"
-        "SHIFT, h, movewindoworgroup, l"
-        "SHIFT, l, movewindoworgroup, r"
-        "SHIFT, k, movewindoworgroup, u"
-        "SHIFT, j, movewindoworgroup, d"
-
-        "ALT, left,  resizeactive, -20 0"
-        "ALT, right, resizeactive,  20 0"
-        "ALT, up,    resizeactive, 0 -20"
-        "ALT, down,  resizeactive, 0  20"
-
-        "ALT, h, resizeactive, -20 0"
-        "ALT, l, resizeactive,  20 0"
-        "ALT, k, resizeactive, 0 -20"
-        "ALT, j, resizeactive, 0  20"
-
-        "CTRL, RIGHT, focusworkspaceoncurrentmonitor, +1"
-        "CTRL, LEFT,  focusworkspaceoncurrentmonitor, -1"
-        "CTRL SHIFT, RIGHT, movetoworkspace, +1"
-        "CTRL SHIFT, LEFT,  movetoworkspace, -1"
-
-        "CTRL, L, focusworkspaceoncurrentmonitor, +1"
-        "CTRL, H, focusworkspaceoncurrentmonitor, -1"
-        "CTRL SHIFT, L, movetoworkspace, +1"
-        "CTRL SHIFT, H, movetoworkspace, -1"
-
-        "TAB, changegroupactive, f"
-
-        "SHIFT, TAB, changegroupactive, b"
-
-        "M, focusmonitor, +1"
-        "N, focusmonitor, -1"
-        "SHIFT, M, movewindow, mon:+1"
-        "SHIFT, N, movewindow, mon:-1"
-      ];
-
-  bindl =
-    evalBinds ""
-      [ ]
-      [
-        "XF86AudioMute,    exec, ${volumectl} -p toggle-mute"
-        "XF86AudioMicMute, exec, ${volumectl} -m -p toogle-mute"
-        "XF86AudioNext,    exec, ${playerctl} next"
-        "XF86AudioPrev,    exec, ${playerctl} previous"
-        "XF86AudioPlay,    exec, ${playerctl} play-pause"
-        "XF86AudioPause,   exec, ${playerctl} play-pause"
-      ];
-
-  bindle =
-    evalBinds ""
-      [ ]
-      [
-        "XF86AudioRaiseVolume,  exec, ${volumectl} -p up"
-        "XF86AudioLowerVolume,  exec, ${volumectl} -p down"
-        "XF86MonBrightnessUp,   exec, ${brightnessctl} up"
-        "XF86MonBrightnessDown, exec, ${brightnessctl} down"
-      ];
-
-  binds = {
-    window_direction_monitor_fallback = false;
-    workspace_back_and_forth = true;
-  };
-
-  input = {
-    kb_layout = "de,de";
-    kb_variant = ",neo_qwertz";
-    kb_options = "grp:alt_space_toggle";
-    follow_mouse = 2;
-
-    touchpad = {
-      natural_scroll = true;
-      tap-to-click = true;
-    };
-
-    sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
-    repeat_rate = 30;
-    repeat_delay = 400;
-  };
+      {
+        keys = "XF86AudioRaiseVolume";
+        dispatcher = "hl.dsp.exec_cmd(\"${volumectl} -p up\")";
+        flags.locked = true;
+        flags.repeating = true;
+      }
+      {
+        keys = "XF86AudioLowerVolume";
+        dispatcher = "hl.dsp.exec_cmd(\"${volumectl} -p down\")";
+        flags.locked = true;
+        flags.repeating = true;
+      }
+      {
+        keys = "XF86MonBrightnessUp";
+        dispatcher = "hl.dsp.exec_cmd(\"${brightnessctl} up\")";
+        flags.locked = true;
+        flags.repeating = true;
+      }
+      {
+        keys = "XF86MonBrightnessDown";
+        dispatcher = "hl.dsp.exec_cmd(\"${brightnessctl} down\")";
+        flags.locked = true;
+        flags.repeating = true;
+      }
+    ];
 
   gesture = [
-    "3, horizontal, workspace"
+    {
+      fingers = 3;
+      direction = "horizontal";
+      action = "workspace";
+    }
   ];
-  gestures = {
-    workspace_swipe_forever = true;
-    workspace_swipe_use_r = true;
-    workspace_swipe_create_new = false;
-  };
 
-  group = {
-    "col.border_active" = "rgba(${base0F}66)";
-    "col.border_inactive" = "rgba(${base04}66)";
-    "col.border_locked_active" = "rgba(${base0F}66)";
-    "col.border_locked_inactive" = "rgba(${base04}66)";
-    groupbar = {
-      disable_when_only = true;
-      font_size = 10;
-      gaps_in = 1;
-      gaps_out = 1;
-      gradients = true;
-      gradient_rounding = 0;
-      height = 15;
-      indicator_gap = 0;
-      indicator_height = 0;
-      keep_upper_gap = false;
-      scrolling = false;
-      text_offset = 1;
-
-      "col.active" = "rgb(${base0D})";
-      font_weight_active = "bold";
-      text_color = "rgb(${base01})";
-
-      "col.inactive" = "rgb(${base00})";
-      font_weight_inactive = "normal";
-      text_color_inactive = "rgba(${base05}cc)";
-    };
-  };
-
-  misc = {
-    allow_session_lock_restore = true;
-    anr_missed_pings = 3;
-    close_special_on_empty = false;
-    disable_autoreload = true;
-    disable_hyprland_logo = true;
-    disable_splash_rendering = true;
-    focus_on_activate = true;
-    font_family = userSettings.default-font.name;
-    key_press_enables_dpms = true;
-    mouse_move_enables_dpms = false;
-    on_focus_under_fullscreen = 2;
-  };
-
-  render.cm_enabled = false;
-
-  windowrule =
+  window_rule =
     let
       floatPreset = lib.recursiveUpdate {
         float = true;
@@ -297,25 +495,25 @@ with config.colorScheme.palette;
     [
       {
         name = "group_non_float";
-        "match:float" = false;
+        match.float = false;
         group = "set";
       }
       {
         name = "round_float";
-        "match:float" = true;
+        match.float = true;
         group = "deny";
         rounding = 10;
       }
 
       {
         name = "disable_screenshare_classes";
-        "match:initial_class" = "keepassxc|org.keepassxc.KeePassXC";
+        match.initial_class = "keepassxc|org\\.keepassxc\\.KeePassXC";
         no_screen_share = true;
       }
 
       (floatPreset {
         name = "float_classes";
-        "match:initial_class" = lib.concatStringsSep "|" [
+        match.initial_class = lib.concatStringsSep "|" [
           "\\.blueman-.*"
           "blueman-.*"
           "com\\.saivert\\.pwvucontrol"
@@ -328,8 +526,8 @@ with config.colorScheme.palette;
       })
       (floatPreset {
         name = "float_fileroller_popup";
-        "match:initial_class" = "org\\.gnome\\.FileRoller";
-        "match:initial_title" = lib.concatStringsSep "|" [
+        match.initial_class = "org\\.gnome\\.FileRoller";
+        match.initial_title = lib.concatStringsSep "|" [
           "Extract"
           "Select App"
           ""
@@ -337,8 +535,8 @@ with config.colorScheme.palette;
       })
       (floatPreset {
         name = "float_keepassxc_popups";
-        "match:initial_class" = "keepassxc|org\\.keepassxc\\.KeePassXC";
-        "match:initial_title" = lib.concatStringsSep "|" [
+        match.initial_class = "keepassxc|org\\.keepassxc\\.KeePassXC";
+        match.initial_title = lib.concatStringsSep "|" [
           "Generate Password"
           "KeePassXC -  Access Request"
           "Open .*"
@@ -348,8 +546,8 @@ with config.colorScheme.palette;
       })
       (floatPreset {
         name = "float_mozilla_popup";
-        "match:initial_class" = "firefox|thunderbird";
-        "match:initial_title" = lib.concatStringsSep "|" [
+        match.initial_class = "firefox|thunderbird";
+        match.initial_title = lib.concatStringsSep "|" [
           ""
           "About Mozilla (Firefox|Thunderbird)"
           "Add calendar"
@@ -366,15 +564,15 @@ with config.colorScheme.palette;
       })
       (floatPreset {
         name = "float_nautilus_popup";
-        "match:initial_class" = "org\\.gnome\\.Nautilus";
-        "match:initial_title" = lib.concatStringsSep "|" [
+        match.initial_class = "org\\.gnome\\.Nautilus";
+        match.initial_title = lib.concatStringsSep "|" [
           "Open Directory"
         ];
       })
       (floatPreset {
         name = "float_steam_popup";
-        "match:initial_class" = "steam";
-        "match:initial_title" = lib.concatStringsSep "|" [
+        match.initial_class = "steam";
+        match.initial_title = lib.concatStringsSep "|" [
           "Steam Settings"
           "Friends List"
         ];
@@ -383,7 +581,7 @@ with config.colorScheme.palette;
       {
         name = "no_border_classes";
         border_size = 0;
-        "match:initial_class" = lib.concatStringsSep "|" [
+        match.initial_class = lib.concatStringsSep "|" [
           "vicinae"
         ];
       }
@@ -393,7 +591,7 @@ with config.colorScheme.palette;
         border_size = 0;
         pin = true;
         group = "deny";
-        "match:initial_class" = lib.concatStringsSep "|" [
+        match.initial_class = lib.concatStringsSep "|" [
           "dragon-drop"
           "xdragon"
         ];
@@ -403,10 +601,11 @@ with config.colorScheme.palette;
         name = "pin_stay_focused_keepassxc_popups";
         pin = true;
         stay_focused = true;
-        "match:initial_class" = "keepassxc|org\\.keepassxc\\.KeePassXC";
-        "match:initial_title" = lib.concatStringsSep "|" [
+        match.initial_class = "keepassxc|org\\.keepassxc\\.KeePassXC";
+        match.initial_title = lib.concatStringsSep "|" [
           "KeePassXC -  Access Request"
           "KeePassXC - Browser Access Request"
+          "KeePassXC - Passkey credentials"
           "Unlock Database - KeePassXC"
         ];
       }
@@ -415,8 +614,8 @@ with config.colorScheme.palette;
         name = "pin_stay_focused_open_with_popup";
         pin = true;
         stay_focused = true;
-        "match:initial_class" = "xdg-desktop-portal-gnome";
-        "match:initial_title" = lib.concatStringsSep "|" [
+        match.initial_class = "xdg-desktop-portal-gnome";
+        match.initial_title = lib.concatStringsSep "|" [
           "Open With"
         ];
       }
@@ -424,7 +623,7 @@ with config.colorScheme.palette;
       {
         name = "stay_focused_classes";
         stay_focused = true;
-        "match:initial_class" = lib.concatStringsSep "|" [
+        match.initial_class = lib.concatStringsSep "|" [
           "gcr-prompter"
           "gtk-ssh-askpass"
           "polkit-gnome-authentication-agent-1"
@@ -434,8 +633,8 @@ with config.colorScheme.palette;
       {
         name = "stay_focused_thunderbird_confirm";
         stay_focused = true;
-        "match:initial_class" = "thunderbird";
-        "match:initial_title" = lib.concatStringsSep "|" [
+        match.initial_class = "thunderbird";
+        match.initial_title = lib.concatStringsSep "|" [
           "Confirm"
           "Confirm Deletion"
           "Delete Folder"
@@ -447,7 +646,7 @@ with config.colorScheme.palette;
 
       {
         name = "supress_fullscreen_all";
-        "match:initial_class" = ".*";
+        match.initial_class = ".*";
         suppress_event = lib.concatStringsSep " " [
           "fullscreen"
           "maximize"
@@ -457,81 +656,172 @@ with config.colorScheme.palette;
       {
         name = "no_gaps_when_only";
         border_size = 0;
-        "match:float" = false;
-        "match:workspace" = "w[tv1]";
+        match.float = false;
+        match.workspace = "w[tv1]";
       }
       {
         name = "no_gaps_when_max";
         border_size = 0;
-        "match:float" = false;
-        "match:workspace" = "f[1]";
+        match.float = false;
+        match.workspace = "f[1]";
       }
     ];
 
-  layerrule = [
+  layer_rule = [
     {
       name = "blur_popup";
+      match.namespace = "avizo|vicinae|swaync-.*";
       blur = true;
       ignore_alpha = 0;
       xray = false;
-      "match:namespace" = "avizo|vicinae|swaync-.*";
     }
     {
       name = "abovelock_avizo";
+      match.namespace = "avizo";
       above_lock = 1;
-      "match:namespace" = "avizo";
     }
     {
       name = "no_anim_selection";
+      match.namespace = "selection";
       no_anim = true;
-      "match:namespace" = "selection";
     }
   ];
 
-  workspace = [
-    "special:dropterm, on-created-empty:${term_tmux_scratchpad}"
-    "special:pwm, on-created-empty:${pwm}"
+  workspace_rule = [
+    {
+      workspace = "special:dropterm";
+      on_created_empty = term_tmux_scratchpad;
+    }
+    {
+      workspace = "special:pwm";
+      on_created_empty = pwm;
+    }
   ];
 
-  general = {
-    gaps_in = 1;
-    gaps_out = "0,0,1,0";
-    border_size = 1;
-    "col.active_border" = "rgba(${base0F}aa)";
-    "col.nogroup_border" = "rgba(${base04}aa)";
-    "col.inactive_border" = "rgba(${base04}aa)";
-    "col.nogroup_border_active" = "rgba(${base0F}aa)";
+  config = {
+    animations.enabled = false;
 
-    layout = "master";
-    allow_tearing = false;
-
-    snap.enabled = true;
-  };
-
-  decoration = {
-    rounding = 0;
-
-    blur = {
-      enabled = true;
-      size = 7;
-      passes = 2;
-      xray = false;
+    binds = {
+      window_direction_monitor_fallback = false;
+      workspace_back_and_forth = true;
     };
-    shadow.enabled = false;
-  };
 
-  animations.enabled = false;
+    debug = {
+      disable_logs = false;
+      enable_stdout_logs = true;
+    };
 
-  master = {
-    new_status = "slave";
-    new_on_top = true;
-    mfact = 0.65;
-  };
+    decoration = {
+      rounding = 0;
+      blur = {
+        enabled = true;
+        size = 7;
+        passes = 2;
+        xray = false;
+      };
+      shadow.enabled = false;
+    };
 
-  xwayland.force_zero_scaling = true;
+    ecosystem = {
+      no_update_news = true;
+      no_donation_nag = true;
+    };
 
-  ecosystem = {
-    no_update_news = true;
-    no_donation_nag = true;
+    general = {
+      gaps_in = 1;
+      gaps_out = {
+        top = 0;
+        right = 0;
+        bottom = 1;
+        left = 0;
+      };
+      border_size = 1;
+      col = {
+        active_border = "rgba(${base0F}aa)";
+        nogroup_border = "rgba(${base04}aa)";
+        inactive_border = "rgba(${base04}aa)";
+        nogroup_border_active = "rgba(${base0F}aa)";
+      };
+      layout = "master";
+      allow_tearing = false;
+      snap.enabled = true;
+    };
+
+    gestures = {
+      workspace_swipe_forever = true;
+      workspace_swipe_use_r = true;
+      workspace_swipe_create_new = false;
+    };
+
+    group = {
+      col = {
+        border_active = "rgba(${base0F}66)";
+        border_inactive = "rgba(${base04}66)";
+        border_locked_active = "rgba(${base0F}66)";
+        border_locked_inactive = "rgba(${base04}66)";
+      };
+      groupbar = {
+        disable_when_only = true;
+        font_size = 10;
+        gaps_in = 1;
+        gaps_out = 1;
+        gradients = true;
+        gradient_rounding = 0;
+        height = 15;
+        indicator_gap = 0;
+        indicator_height = 0;
+        keep_upper_gap = false;
+        scrolling = false;
+        text_offset = 1;
+
+        col.active = "rgb(${base0D})";
+        font_weight_active = "bold";
+        text_color = "rgb(${base01})";
+
+        col.inactive = "rgb(${base00})";
+        font_weight_inactive = "normal";
+        text_color_inactive = "rgba(${base05}cc)";
+      };
+    };
+
+    input = {
+      kb_layout = "de,de";
+      kb_variant = ",neo_qwertz";
+      kb_options = "grp:alt_space_toggle";
+      follow_mouse = 2;
+
+      touchpad = {
+        natural_scroll = true;
+        tap_to_click = true;
+      };
+
+      sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+      repeat_rate = 30;
+      repeat_delay = 400;
+    };
+
+    master = {
+      new_status = "slave";
+      new_on_top = true;
+      mfact = 0.65;
+    };
+
+    misc = {
+      allow_session_lock_restore = true;
+      anr_missed_pings = 3;
+      close_special_on_empty = false;
+      disable_autoreload = true;
+      disable_hyprland_logo = true;
+      disable_splash_rendering = true;
+      focus_on_activate = true;
+      font_family = userSettings.default-font.name;
+      key_press_enables_dpms = true;
+      mouse_move_enables_dpms = false;
+      on_focus_under_fullscreen = 2;
+    };
+
+    render.cm_enabled = false;
+
+    xwayland.force_zero_scaling = true;
   };
 }

@@ -15,6 +15,8 @@
 
   settings = import ./config.nix args;
 
+  handlers = import ./handlers.nix args;
+
   userChrome = import ./userChrome.nix args;
 
   userContent = import ./userContent.nix args;

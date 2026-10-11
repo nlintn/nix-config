@@ -39,8 +39,8 @@
           }
           {
             timeout = 250;
-            on-timeout = "${hyprctl} dispatch dpms off";
-            on-resume = "${hyprctl} dispatch dpms on";
+            on-timeout = "${hyprctl} dispatch 'hl.dsp.dpms()'";
+            on-resume = "${hyprctl} dispatch 'hl.dsp.dpms()'";
           }
           {
             timeout = 600;

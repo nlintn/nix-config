@@ -71,6 +71,12 @@
     };
   };
 
+  mozilla = {
+    firefoxNativeMessagingHosts = lib.mkIf (!config.programs.firefox.enable) (lib.mkForce [ ]);
+    librewolfNativeMessagingHosts = lib.mkIf (!config.programs.librewolf.enable) (lib.mkForce [ ]);
+    thunderbirdNativeMessagingHosts = lib.mkIf (!config.programs.thunderbird.enable) (lib.mkForce [ ]);
+  };
+
   programs.home-manager.enable = lib.mkDefault true;
   news.display = lib.mkDefault "silent";
 }

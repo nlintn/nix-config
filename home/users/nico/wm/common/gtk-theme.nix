@@ -57,4 +57,8 @@
     enable = true;
     platformTheme.name = "gtk3";
   };
+
+  xdg.systemDirs.data = [
+    "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}"
+  ];
 }

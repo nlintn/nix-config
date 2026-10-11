@@ -69,12 +69,14 @@ in
             file = "/var/run/NetworkManager/resolv.conf";
           in
           lib.optionalString true ''
-            fritz.box                 $RESOLVCONF:${file}
+            fritz.box                     $RESOLVCONF:${file}
 
-            detectportal.firefox.com  $RESOLVCONF:${file}
-            hotsplots.de              $RESOLVCONF:${file}
-            hotspot.vodafone.de       $RESOLVCONF:${file}
-            login.wifionice.de        $RESOLVCONF:${file}
+            detectportal.firefox.com      $RESOLVCONF:${file}
+            firefox-portal-detection.com  $RESOLVCONF:${file}
+            hotsplots.de                  $RESOLVCONF:${file}
+            hotspot.vodafone.de           $RESOLVCONF:${file}
+            login.wifionice.de            $RESOLVCONF:${file}
+            railnet.oebb.at               $RESOLVCONF:${file}
           ''
         }
       '';

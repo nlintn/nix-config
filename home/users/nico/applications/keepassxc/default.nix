@@ -28,6 +28,7 @@ in
         AutoSaveOnExit = false;
         AutoSaveNonDataChanges = false;
         BackupBeforeSave = true;
+        BackupFilePathPattern = "{DB_FILENAME}.{TIME:yyyy_MM_dd}.kdbx";
       };
       Browser = {
         Enabled = true;

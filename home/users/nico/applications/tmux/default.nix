@@ -31,7 +31,7 @@ let
   searchUrls = pkgs.writeShellScript "tmux-search-urls" /* sh */ ''
     tmux capture-pane -Jp \
       | ${rg} -o --color=never '.*?((?:\w+:\/|~)?\/[\w()@:%\+-.~#?&\/=]+)' -r '$1' \
-      | ${fzf} --ansi --border-label ' url ' --header '  ^y copy ^o open' --bind 'ctrl-o:execute(${xdg-open} {})' --bind 'ctrl-y:execute(${tmux} set-buffer -w {})' \
+      | ${fzf} --tac --ansi --border-label ' url ' --header '  ^y copy ^o open' --bind 'ctrl-o:execute(${xdg-open} {})' --bind 'ctrl-y:execute(${tmux} set-buffer -w {})' \
       || :
   '';
 in

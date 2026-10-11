@@ -19,4 +19,6 @@
     firewall.enable = true;
     nftables.enable = true;
   };
+
+  systemd.services.NetworkManager-wait-online.enable = false;
 }

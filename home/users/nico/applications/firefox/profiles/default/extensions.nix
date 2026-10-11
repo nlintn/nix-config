@@ -18,7 +18,6 @@
     video-downloadhelper
     vimium-ff
     violentmonkey
-    zen-internet
   ];
 
   settings =
@@ -54,6 +53,11 @@
           ];
           "uiAccentCustom" = true;
           "uiAccentCustom0" = "#${base0E}";
+          "hostnameSwitchesString" = "no-csp-reports: * true\nno-large-media: behind-the-scene false";
+          "advancedUserEnabled" = true;
+          "dynamicFilteringString" =
+            "* * 3p-script block\n* * 3p-frame block\nbehind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop";
+          "popupPanelSections" = 31;
         };
         violentmonkey.settings = {
           "options" = {
@@ -98,31 +102,6 @@
           "code:1" = /* js */ ''
             (function() { document.documentElement.setAttribute('data-bs-theme', 'dark'); })();
           '';
-        };
-        zen-internet.settings = {
-          "transparentZenSettings" = {
-            "enableStyling" = true;
-            "autoUpdate" = false;
-            "forceStyling" = false;
-            "whitelistMode" = false;
-            "whitelistStyleMode" = false;
-            "disableTransparency" = false;
-            "disableHover" = true;
-            "disableFooter" = true;
-            "fallbackBackgroundList" = [ ];
-            "lastFetchedTime" = 0;
-            "welcomeShown" = true;
-          };
-          "skipForceThemingList" = [ ];
-          "skipThemingList" = [ ];
-          "fallbackBackgroundList" = [
-            "wikipedia.org"
-            "de.wikipedia.org"
-            "en.wikipedia.org"
-            "stackoverflow.com"
-          ];
-          "stylesRepositoryUrl" = "";
-          "styles" = pkgs.firefoxAddons.zen-internet.styles;
         };
       };
     in

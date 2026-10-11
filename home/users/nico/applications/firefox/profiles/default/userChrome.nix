@@ -21,111 +21,113 @@ in
   .titlebar-buttonbox-container{ display:none } /* Remove close button */
   .titlebar-spacer[type="post-tabs"]{ display:none }
 
-  :root {
-    --input-background-color: #${base00} !important;
-    --input-bgcolor: #${base00} !important;
-    --input-color: #${base05} !important;
-    --input-text-background-color: #${base02} !important;
-    --input-text-color: #${base05} !important;
-    --input-border-color: #${base03} !important;
+  :root, :host {
+    @layer tokens-foundation {
+      --input-background-color: #${base00} !important;
+      --input-bgcolor: #${base00} !important;
+      --input-color: #${base05} !important;
+      --input-text-background-color: #${base02} !important;
+      --input-text-color: #${base05} !important;
+      --input-border-color: #${base03} !important;
 
-    --info-bar-background-color: #${base02} !important;
-    --info-bar-text-color: #${base05} !important;
-    --info-bar-icon-color: #${base0E} !important;
-    --message-bar-background-color: #${base02} !important;
-    --message-bar-text-color: #${base05} !important;
-    --message-bar-icon-color: #${base0E} !important;
+      --info-bar-background-color: #${base02} !important;
+      --info-bar-text-color: #${base05} !important;
+      --info-bar-icon-color: #${base0E} !important;
+      --message-bar-background-color: #${base02} !important;
+      --message-bar-text-color: #${base05} !important;
+      --message-bar-icon-color: #${base0E} !important;
 
-    --toolbox-background-color: transparent !important;
-    --toolbox-background-color-inactive: transparent !important;
-    --toolbox-text-color: #${base05} !important;
-    --toolbox-text-color-inactive: ${toRGBA base05 0.8} !important;
-    --tabpanel-background-color: ${toRGBA base02 0.3} !important;
+      --toolbox-background-color: transparent !important;
+      --toolbox-background-color-inactive: transparent !important;
+      --toolbox-text-color: #${base05} !important;
+      --toolbox-text-color-inactive: ${toRGBA base05 0.8} !important;
+      --tabpanel-background-color: ${toRGBA base02 0.3} !important;
 
-    --panel-background-color: #${base00} !important;
-    --panel-border-color: #${base03} !important;
-    --panel-color: #${base05} !important;
+      --panel-background-color: #${base00} !important;
+      --panel-border-color: #${base03} !important;
+      --panel-color: #${base05} !important;
 
-    --lwt-accent-color: transparent !important;
-    --lwt-accent-color-inactive: transparent !important;
-    --lwt-sidebar-background-color: #${base00} !important;
-    --lwt-sidebar-text-color: #${base05} !important;
-    --tab-selected-textcolor: #${base0E} !important;
-    --tab-background-color-selected: transparent !important;
-    --tab-selected-outline-color: #${base0E} !important;
-    --tab-loading-fill: #${base0E} !important;
-    --toolbarbutton-icon-fill-attention: #${base0E} !important;
-    --toolbar-field-color: #${base05} !important;
-    --toolbar-field-background-color: #${base00} !important;
-    --toolbar-field-text-color: #${base05} !important;
-    --toolbar-field-text-color-focus: #${base05} !important;
-    --toolbar-field-background-color-focus: #${base00} !important;
-    --toolbar-field-border-color-focus: ${toRGBA base0E 0.8} !important;
-    --urlbarview-background-color-selected: #${base0E} !important;
-    --urlbarview-text-color-selected: #${base01} !important;
-    --urlbarView-highlight-background: #${base02} !important;
-    --urlbarView-highlight-color: #${base05} !important;
-    --link-color: #${base0E} !important;
+      --lwt-accent-color: transparent !important;
+      --lwt-accent-color-inactive: transparent !important;
+      --lwt-sidebar-background-color: #${base00} !important;
+      --lwt-sidebar-text-color: #${base05} !important;
+      --tab-selected-textcolor: #${base0E} !important;
+      --tab-background-color-selected: transparent !important;
+      --tab-border-color-selected: #${base0E} !important;
+      --tab-loading-fill: #${base0E} !important;
+      --toolbarbutton-icon-fill-attention: #${base0E} !important;
+      --toolbar-field-color: #${base05} !important;
+      --toolbar-field-background-color: #${base00} !important;
+      --toolbar-field-text-color: #${base05} !important;
+      --toolbar-field-text-color-focus: #${base05} !important;
+      --toolbar-field-background-color-focus: #${base00} !important;
+      --toolbar-field-border-color-focus: ${toRGBA base0E 0.8} !important;
+      --urlbarview-background-color-selected: #${base0E} !important;
+      --urlbarview-text-color-selected: #${base01} !important;
+      --urlbarView-highlight-background: #${base02} !important;
+      --urlbarView-highlight-color: #${base05} !important;
+      --link-color: #${base0E} !important;
 
-    --in-content-page-color: #${base05} !important;
-    --in-content-page-background: #${base00} !important;
-    --in-content-primary-button-background: #${base0E} !important;
-    --in-content-primary-button-background-hover: ${toRGBA base0E 0.8} !important;
-    --in-content-primary-button-background-active: ${toRGBA base0E 0.6} !important;
-    --in-content-primary-button-text-color: #${base01} !important;
+      --in-content-page-color: #${base05} !important;
+      --in-content-page-background: #${base00} !important;
+      --in-content-primary-button-background: #${base0E} !important;
+      --in-content-primary-button-background-hover: ${toRGBA base0E 0.8} !important;
+      --in-content-primary-button-background-active: ${toRGBA base0E 0.6} !important;
+      --in-content-primary-button-text-color: #${base01} !important;
 
-    --button-text-color: #${base05} !important;
-    --button-text-color-primary: #${base01} !important;
+      --button-text-color: #${base05} !important;
+      --button-text-color-primary: #${base01} !important;
 
-    --toolbar-background-color: ${toRGBA base02 0.5} !important;
-    --toolbar-color: #${base05} !important;
-    --toolbar-text-color: #${base05} !important;
+      --toolbar-background-color: ${toRGBA base02 0.5} !important;
+      --toolbar-color: #${base05} !important;
+      --toolbar-text-color: #${base05} !important;
 
-    --sidebar-background-color : ${toRGBA base00 0.5} !important;
-    --sidebar-border-color : ${toRGBA base03 0.5} !important;
-    --sidebar-text-color : #${base05} !important;
+      --sidebar-background-color : ${toRGBA base00 0.5} !important;
+      --sidebar-border-color : ${toRGBA base03 0.5} !important;
+      --sidebar-text-color : #${base05} !important;
 
-    --color-accent-attention: #${base0E} !important;
-    --color-accent-primary: #${base0E} !important;
-    --color-accent-primary-selected: #${base0E} !important;
-    --color-accent-primary-hover: ${toRGBA base0E 0.8} !important;
-    --color-accent-primary-active: ${toRGBA base0E 0.6} !important;
-    --background-color-box: #${base00} !important;
-    --background-color-canvas: #${base01} !important;
-    --background-color-critical: #${base08} !important;
-    --background-color-information: #${base0D} !important;
-    --background-color-success: #${base0B} !important;
-    --background-color-warning: #${base09} !important;
-    --border-color: #${base03} !important;
+      --color-accent-attention: #${base0E} !important;
+      --color-accent-primary: #${base0E} !important;
+      --color-accent-primary-selected: #${base0E} !important;
+      --color-accent-primary-hover: ${toRGBA base0E 0.8} !important;
+      --color-accent-primary-active: ${toRGBA base0E 0.6} !important;
+      --background-color-box: #${base00} !important;
+      --background-color-canvas: #${base01} !important;
+      --background-color-critical: #${base08} !important;
+      --background-color-information: #${base0D} !important;
+      --background-color-success: #${base0B} !important;
+      --background-color-warning: #${base09} !important;
+      --border-color: #${base03} !important;
 
-    --tab-group-color-blue: #${base0D} !important;
-    --tab-group-color-blue-invert: #${base0D} !important;
-    --tab-group-color-blue-pale: #${base05} !important;
-    --tab-group-color-purple: #${base07} !important;
-    --tab-group-color-purple-invert: #${base07} !important;
-    --tab-group-color-purple-pale: #${base05} !important;
-    --tab-group-color-cyan: #${base0C} !important;
-    --tab-group-color-cyan-invert: #${base0C} !important;
-    --tab-group-color-cyan-pale: #${base05} !important;
-    --tab-group-color-orange: #${base09} !important;
-    --tab-group-color-orange-invert: #${base09} !important;
-    --tab-group-color-orange-pale: #${base05} !important;
-    --tab-group-color-yellow: #${base0A} !important;
-    --tab-group-color-yellow-invert: #${base0A} !important;
-    --tab-group-color-yellow-pale: #${base05} !important;
-    --tab-group-color-pink: #${base0E} !important;
-    --tab-group-color-pink-invert: #${base0E} !important;
-    --tab-group-color-pink-pale: #${base05} !important;
-    --tab-group-color-green: #${base0B} !important;
-    --tab-group-color-green-invert: #${base0B} !important;
-    --tab-group-color-green-pale: #${base05} !important;
-    --tab-group-color-red: #${base08} !important;
-    --tab-group-color-red-invert: #${base08} !important;
-    --tab-group-color-red-pale: #${base05} !important;
-    --tab-group-color-gray: #${base04} !important;
-    --tab-group-color-gray-invert: #${base04} !important;
-    --tab-group-color-gray-pale: #${base05} !important;
-    --tab-group-label-text-dark: #${base01} !important;
+      --tab-group-color-blue: #${base0D} !important;
+      --tab-group-color-blue-invert: #${base0D} !important;
+      --tab-group-color-blue-pale: #${base05} !important;
+      --tab-group-color-purple: #${base07} !important;
+      --tab-group-color-purple-invert: #${base07} !important;
+      --tab-group-color-purple-pale: #${base05} !important;
+      --tab-group-color-cyan: #${base0C} !important;
+      --tab-group-color-cyan-invert: #${base0C} !important;
+      --tab-group-color-cyan-pale: #${base05} !important;
+      --tab-group-color-orange: #${base09} !important;
+      --tab-group-color-orange-invert: #${base09} !important;
+      --tab-group-color-orange-pale: #${base05} !important;
+      --tab-group-color-yellow: #${base0A} !important;
+      --tab-group-color-yellow-invert: #${base0A} !important;
+      --tab-group-color-yellow-pale: #${base05} !important;
+      --tab-group-color-pink: #${base0E} !important;
+      --tab-group-color-pink-invert: #${base0E} !important;
+      --tab-group-color-pink-pale: #${base05} !important;
+      --tab-group-color-green: #${base0B} !important;
+      --tab-group-color-green-invert: #${base0B} !important;
+      --tab-group-color-green-pale: #${base05} !important;
+      --tab-group-color-red: #${base08} !important;
+      --tab-group-color-red-invert: #${base08} !important;
+      --tab-group-color-red-pale: #${base05} !important;
+      --tab-group-color-gray: #${base04} !important;
+      --tab-group-color-gray-invert: #${base04} !important;
+      --tab-group-color-gray-pale: #${base05} !important;
+      --tab-group-label-text-dark: #${base01} !important;
+    }
   }
   :root[sidebar-expand-on-hover] {
     #sidebar-container {
@@ -167,10 +169,6 @@ in
   }
   .autocomplete-richlistbox {
     color: #${base05} !important;
-  }
-  .tab-preview-content-main {
-    background-color: #${base02};
-    color: #${base05};
   }
   richlistitem[selected="true"] {
     background-color: ${toRGBA base0E 0.8} !important;

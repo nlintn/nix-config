@@ -56,7 +56,7 @@ in
     # CTRL-R Options
     historyWidget = {
       options = [
-        "--border-label ' history '"
+        "--border-label ' history ' --exact"
       ];
     };
   };

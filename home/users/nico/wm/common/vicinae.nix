@@ -13,7 +13,6 @@ in
   programs.vicinae = {
     enable = true;
     systemd.enable = true;
-    useLayerShell = true;
 
     extensions = with pkgs.vicinaeExtensions; [
       bluetooth

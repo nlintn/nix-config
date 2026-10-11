@@ -73,6 +73,7 @@
     usbutils
     wev
     xournalpp
+    yubikey-manager
     yubioath-flutter
   ];
 }

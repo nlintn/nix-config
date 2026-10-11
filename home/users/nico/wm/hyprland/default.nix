@@ -23,6 +23,16 @@
   ];
 
   programs = {
+    satty = {
+      enable = true;
+      settings.general = {
+        fullscreen = false;
+        resize.mode = "smart";
+        floating-hack = true;
+        copy-command = lib.getExe' pkgs.wl-clipboard "wl-copy";
+        output-filename = "${config.xdg.userDirs.pictures}/Screenshots/screen-%Y%m%d-%H%M%S.png";
+      };
+    };
     swappy = {
       enable = true;
       settings.Default = {
@@ -52,6 +62,15 @@
       variables = [ "--all" ];
     };
 
+    extraLuaFiles = {
+      functions = {
+        content = ./functions.lua;
+        autoLoad = false;
+      };
+      bindings = ''
+        functions = require("functions");
+      '';
+    };
     settings = import ./hypr-settings.nix args;
   };
 

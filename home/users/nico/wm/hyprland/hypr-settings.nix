@@ -12,28 +12,28 @@ let
 
   inherit (config.vars) launchPrefix;
 
-  brightnessctl = launchPrefix + "${lib.getExe' config.services.avizo.package "lightctl"} -e 2";
-  browser = launchPrefix + "${lib.getExe config.programs.firefox.finalPackage}";
-  filemanager = launchPrefix + "${lib.getExe config.programs.nautilus.package}";
-  hyprpicker = launchPrefix + "${lib.getExe pkgs.hyprpicker}";
-  hyprtabs = launchPrefix + "${lib.getExe (pkgs.callPackage ./scripts/hyprtabs.nix args)}";
-  hyreload = launchPrefix + "${pkgs.callPackage ./scripts/hyreload.nix args}";
-  lock-transparent =
-    launchPrefix + "${lib.getExe (pkgs.callPackage ./swaylock/lock-transparent.nix args)}";
-  playerctl = launchPrefix + "${lib.getExe config.services.playerctld.package}";
-  pwm = launchPrefix + "${lib.getExe config.programs.keepassxc.package}";
-  screenshot = launchPrefix + "${pkgs.callPackage ./scripts/screenshot.nix args}";
-  swaync-client = launchPrefix + "${lib.getExe' config.services.swaync.package "swaync-client"}";
-  term_tmux_scratchpad =
-    launchPrefix
-    + "${xdg-terminal-exec} -- ${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"";
-  term_tmux_sesh = launchPrefix + "${xdg-terminal-exec} -- ${config.vars.seshFzf}";
-  vicinae = launchPrefix + "${lib.getExe config.programs.vicinae.package}";
-  volumectl = launchPrefix + "${lib.getExe' config.services.avizo.package "volumectl"}";
-  xdg-terminal-exec = launchPrefix + "${lib.getExe config.xdg.terminal-exec.package}";
-
+  brightnessctl = "${lib.getExe' config.services.avizo.package "lightctl"} -e 2";
+  browser = lib.getExe config.programs.firefox.finalPackage;
+  filemanager = lib.getExe config.programs.nautilus.package;
+  grim = lib.getExe pkgs.grim;
+  hyprpicker = lib.getExe pkgs.hyprpicker;
+  hyreload = pkgs.callPackage ./scripts/hyreload.nix args;
+  lock-transparent = lib.getExe (pkgs.callPackage ./swaylock/lock-transparent.nix args);
+  playerctl = lib.getExe config.services.playerctld.package;
+  pwm = "${lib.getExe config.programs.keepassxc.package}";
+  satty = lib.getExe config.programs.satty.package;
+  slurp = lib.getExe pkgs.slurp;
+  swaync-client = lib.getExe' config.services.swaync.package "swaync-client";
+  term_tmux_scratchpad = "${xdg-terminal-exec} -- ${lib.getExe config.programs.sesh.package} connect \"scratchpad 󱞂 \"";
+  term_tmux_sesh = "${xdg-terminal-exec} -- ${config.vars.seshFzf}";
+  vicinae = lib.getExe config.programs.vicinae.package;
+  volumectl = lib.getExe' config.services.avizo.package "volumectl";
+  xdg-terminal-exec = lib.getExe config.xdg.terminal-exec.package;
 in
 with config.colorScheme.palette;
+let
+  slurpOpts = ''-F "${userSettings.default-font.name}" -c "#${base01}ff" -b "#${base05}33"'';
+in
 {
   monitor = [
     {
@@ -56,30 +56,47 @@ with config.colorScheme.palette;
   };
 
   bind =
-    mkBindsExec {
-      "SUPER + A" = "${screenshot} area";
-      "SUPER + SHIFT + A" = "${screenshot} output";
-      "SUPER + CTRL + A" = "${hyprpicker} -ar";
-      "SUPER + E" = filemanager;
-      "SUPER + W" = browser;
-      "SUPER + Q" = xdg-terminal-exec;
-      "SUPER + SHIFT + Q" = term_tmux_sesh;
-      "SUPER + SPACE" = "${vicinae} vicinae://toggle";
-      "SUPER + SHIFT + SPACE" = "${vicinae} vicinae://pop_to_root";
-      "SUPER + SHIFT + R" = hyreload;
-      "SUPER + PERIOD" = "${vicinae} vicinae://launch/core/search-emojis?toggle=true";
-      "SUPER + V" = "${vicinae} vicinae://launch/clipboard/history?toggle=true";
-      "SUPER + BACKSPACE" = config.vars.sessionLockCmd;
-      "SUPER + SHIFT + BACKSPACE" = lock-transparent;
-      "SUPER + RETURN" = "${vicinae} vicinae://launch/power?toggle=true";
-      "SUPER + PLUS" = "${swaync-client} --toggle-panel";
-      "SUPER + SHIFT + PLUS" = "${swaync-client} -C";
-      "SUPER + CTRL + PLUS" = "${swaync-client} --toggle-dnd";
-      "SUPER + G" = hyprtabs;
+    mkBindsExec (
+      lib.mapAttrs (_: v: launchPrefix + v) {
+        "SUPER + SHIFT + A" =
+          pkgs.writeShellScript "screenshot-output" "${slurp} ${slurpOpts} -or | ${grim} -g - - | ${satty} -f -";
+        "SUPER + CTRL + A" = "${hyprpicker} -ar";
+        "SUPER + E" = filemanager;
+        "SUPER + W" = browser;
+        "SUPER + Q" = xdg-terminal-exec;
+        "SUPER + SHIFT + Q" = term_tmux_sesh;
+        "SUPER + SPACE" = "${vicinae} vicinae://toggle";
+        "SUPER + SHIFT + SPACE" = "${vicinae} vicinae://pop_to_root";
+        "SUPER + SHIFT + R" = hyreload;
+        "SUPER + PERIOD" = "${vicinae} vicinae://launch/core/search-emojis?toggle=true";
+        "SUPER + V" = "${vicinae} vicinae://launch/clipboard/history?toggle=true";
+        "SUPER + BACKSPACE" = config.vars.sessionLockCmd;
+        "SUPER + SHIFT + BACKSPACE" = lock-transparent;
+        "SUPER + RETURN" = "${vicinae} vicinae://launch/power?toggle=true";
+        "SUPER + PLUS" = "${swaync-client} --toggle-panel";
+        "SUPER + SHIFT + PLUS" = "${swaync-client} -C";
+        "SUPER + CTRL + PLUS" = "${swaync-client} --toggle-dnd";
 
-      "ALT + TAB" = "${vicinae} vicinae://launch/wm/switch-windows?toggle=true";
-    }
+        "ALT + TAB" = "${vicinae} vicinae://launch/wm/switch-windows?toggle=true";
+      }
+    )
     ++ mkBinds [
+      # {
+      #   keys = "SUPER + A";
+      #   dispatcher = /* lua */ ''
+      #     function()
+      #       hl.dispatch(hl.dsp.exec_cmd("${pkgs.writeShellScript "screenshot-area" ''hyprland-dialog --text "$1"''} \"" .. functions.visible_window_rectangles() .. "\""))
+      #     end
+      #   '';
+      # }
+      {
+        keys = "SUPER + A";
+        dispatcher = /* lua */ ''
+          function()
+            hl.dispatch(hl.dsp.exec_cmd("${pkgs.writeShellScript "screenshot-area" ''([ $# -gt 0 ] && ${slurp} ${slurpOpts} -d <<< "$@" || ${slurp} ${slurpOpts} -d) | ${grim} -g - - | ${satty} -f -''} " .. functions.visible_window_rectangles()))
+          end
+        '';
+      }
       {
         keys = "SUPER + C";
         dispatcher = "hl.dsp.window.close()";
@@ -97,12 +114,12 @@ with config.colorScheme.palette;
         dispatcher = "hl.dsp.window.fullscreen({ mode = \"fullscreen\", action = \"toggle\" })";
       }
       {
-        keys = "SUPER + CTRL + SHIFT + Z";
-        dispatcher = "hl.dsp.exit()";
-      }
-      {
         keys = "SUPER + B";
         dispatcher = "hl.dsp.window.float({ action = \"toggle\" })";
+      }
+      {
+        keys = "SUPER + G";
+        dispatcher = "functions.toggle_group";
       }
       {
         keys = "SUPER + SHIFT + G";
@@ -111,6 +128,18 @@ with config.colorScheme.palette;
       {
         keys = "SUPER + CTRL + G";
         dispatcher = "hl.dsp.window.move({ out_of_group = true })";
+      }
+      {
+        keys = "SUPER + Z";
+        dispatcher = "function() functions.zoom(0.5) end";
+      }
+      {
+        keys = "SUPER + SHIFT + Z";
+        dispatcher = "function() functions.zoom(-0.5) end";
+      }
+      {
+        keys = "SUPER + CTRL + Z";
+        dispatcher = "function() functions.zoom(nil) end";
       }
       {
         keys = "SUPER + dead_circumflex";
@@ -244,22 +273,22 @@ with config.colorScheme.palette;
       }
       {
         keys = "SUPER + SHIFT + left";
-        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"l\" })";
+        dispatcher = "hl.dsp.window.move({ direction = \"l\" })";
         flags.repeating = true;
       }
       {
         keys = "SUPER + SHIFT + right";
-        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"r\" })";
+        dispatcher = "hl.dsp.window.move({ direction = \"r\" })";
         flags.repeating = true;
       }
       {
         keys = "SUPER + SHIFT + up";
-        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"u\" })";
+        dispatcher = "hl.dsp.window.move({ direction = \"u\" })";
         flags.repeating = true;
       }
       {
         keys = "SUPER + SHIFT + down";
-        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"d\" })";
+        dispatcher = "hl.dsp.window.move({ direction = \"d\" })";
         flags.repeating = true;
       }
       {
@@ -284,22 +313,22 @@ with config.colorScheme.palette;
       }
       {
         keys = "SUPER + SHIFT + h";
-        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"l\" })";
+        dispatcher = "hl.dsp.window.move({ direction = \"l\" })";
         flags.repeating = true;
       }
       {
         keys = "SUPER + SHIFT + l";
-        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"r\" })";
+        dispatcher = "hl.dsp.window.move({ direction = \"r\" })";
         flags.repeating = true;
       }
       {
         keys = "SUPER + SHIFT + k";
-        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"u\" })";
+        dispatcher = "hl.dsp.window.move({ direction = \"u\" })";
         flags.repeating = true;
       }
       {
         keys = "SUPER + SHIFT + j";
-        dispatcher = "hl.dsp.window.move({ into_or_create_group = \"d\" })";
+        dispatcher = "hl.dsp.window.move({ direction = \"d\" })";
         flags.repeating = true;
       }
       {
@@ -415,61 +444,61 @@ with config.colorScheme.palette;
 
       {
         keys = "XF86AudioMute";
-        dispatcher = "hl.dsp.exec_cmd(\"${volumectl} -p toggle-mute\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + volumectl} -p toggle-mute\")";
         flags.locked = true;
       }
       {
         keys = "XF86AudioMute";
-        dispatcher = "hl.dsp.exec_cmd(\"${volumectl} -p toggle-mute\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + volumectl} -p toggle-mute\")";
         flags.locked = true;
       }
       {
         keys = "XF86AudioMicMute";
-        dispatcher = "hl.dsp.exec_cmd(\"${volumectl} -m -p toggle-mute\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + volumectl} -m -p toggle-mute\")";
         flags.locked = true;
       }
       {
         keys = "XF86AudioNext";
-        dispatcher = "hl.dsp.exec_cmd(\"${playerctl} next\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + playerctl} next\")";
         flags.locked = true;
       }
       {
         keys = "XF86AudioPrev";
-        dispatcher = "hl.dsp.exec_cmd(\"${playerctl} previous\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + playerctl} previous\")";
         flags.locked = true;
       }
       {
         keys = "XF86AudioPlay";
-        dispatcher = "hl.dsp.exec_cmd(\"${playerctl} play-pause\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + playerctl} play-pause\")";
         flags.locked = true;
       }
       {
         keys = "XF86AudioPause";
-        dispatcher = "hl.dsp.exec_cmd(\"${playerctl} play-pause\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + playerctl} play-pause\")";
         flags.locked = true;
       }
 
       {
         keys = "XF86AudioRaiseVolume";
-        dispatcher = "hl.dsp.exec_cmd(\"${volumectl} -p up\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + volumectl} -p up\")";
         flags.locked = true;
         flags.repeating = true;
       }
       {
         keys = "XF86AudioLowerVolume";
-        dispatcher = "hl.dsp.exec_cmd(\"${volumectl} -p down\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + volumectl} -p down\")";
         flags.locked = true;
         flags.repeating = true;
       }
       {
         keys = "XF86MonBrightnessUp";
-        dispatcher = "hl.dsp.exec_cmd(\"${brightnessctl} up\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + brightnessctl} up\")";
         flags.locked = true;
         flags.repeating = true;
       }
       {
         keys = "XF86MonBrightnessDown";
-        dispatcher = "hl.dsp.exec_cmd(\"${brightnessctl} down\")";
+        dispatcher = "hl.dsp.exec_cmd(\"${launchPrefix + brightnessctl} down\")";
         flags.locked = true;
         flags.repeating = true;
       }
@@ -499,9 +528,13 @@ with config.colorScheme.palette;
         group = "set";
       }
       {
-        name = "round_float";
+        name = "deny_group_float";
         match.float = true;
         group = "deny";
+      }
+      {
+        name = "round_float";
+        match.float = true;
         rounding = 10;
       }
 
@@ -556,6 +589,7 @@ with config.colorScheme.palette;
           "Calendar Reminders"
           "Compact Folders"
           "Download Messages"
+          "Edit Calendar"
           "Edit Item"
           "Library"
           "OpenPGP Key Manager"
@@ -567,6 +601,13 @@ with config.colorScheme.palette;
         match.initial_class = "org\\.gnome\\.Nautilus";
         match.initial_title = lib.concatStringsSep "|" [
           "Open Directory"
+        ];
+      })
+      (floatPreset {
+        name = "float_share_popup";
+        match.initial_class = "";
+        match.initial_title = lib.concatStringsSep "|" [
+          "Select what to share"
         ];
       })
       (floatPreset {
@@ -617,6 +658,15 @@ with config.colorScheme.palette;
         match.initial_class = "xdg-desktop-portal-gnome";
         match.initial_title = lib.concatStringsSep "|" [
           "Open With"
+        ];
+      }
+      {
+        name = "pin_stay_focused_permission_request";
+        pin = true;
+        stay_focused = true;
+        match.initial_class = "";
+        match.initial_title = lib.concatStringsSep "|" [
+          "Permission request"
         ];
       }
 
@@ -698,6 +748,29 @@ with config.colorScheme.palette;
     }
   ];
 
+  permission = [
+    {
+      binary = grim;
+      type = "screencopy";
+      mode = "allow";
+    }
+    {
+      binary = hyprpicker;
+      type = "screencopy";
+      mode = "allow";
+    }
+    (lib.mkIf config.programs.swaylock.enable {
+      binary = lib.getExe config.programs.swaylock.package;
+      type = "screencopy";
+      mode = "allow";
+    })
+    {
+      binary = "${config.wayland.windowManager.hyprland.portalPackage}/libexec/.xdg-desktop-portal-hyprland-wrapped";
+      type = "screencopy";
+      mode = "allow";
+    }
+  ];
+
   config = {
     animations.enabled = false;
 
@@ -725,6 +798,7 @@ with config.colorScheme.palette;
     ecosystem = {
       no_update_news = true;
       no_donation_nag = true;
+      enforce_permissions = true;
     };
 
     general = {

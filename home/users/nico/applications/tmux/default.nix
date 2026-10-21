@@ -50,6 +50,7 @@ in
       set -g status-keys emacs
       set -g mode-keys vi
       set -g mouse on
+      set -g theme terminal
 
       set -g focus-events on
       set -g aggressive-resize off
@@ -58,6 +59,8 @@ in
       set -g history-limit 50000
       set -g detach-on-destroy off
       set -g copy-mode-line-numbers hybrid
+      set -g pane-scrollbars modal
+      set -g pane-scrollbars-position right
 
       set -g set-titles on
       set -g set-titles-string '#{pane_title}'
@@ -95,6 +98,14 @@ in
       set -g copy-mode-position-style bg=#${base0E},fg=#${base01},bold
       set -g copy-mode-selection-style bg=#${base06},fg=#${base01}
       set -g mode-style bg=#${base0E},fg=#${base01}
+      set -g pane-scrollbars-style bg=#${base03},fg=#${base04}
+      set -g popup-style none
+      set -g popup-border-style none,fg=#${base04}
+      set -g tree-mode-border-style none,fg=#${base05}
+      set -g clock-mode-color #${base0D}
+
+      unbind -n MouseDown3Pane
+      unbind -n C-MouseDrag1Pane
 
       # Set new panes to open in current directory
       bind -N "Create new window " c new-window -c "#{pane_current_path}"

@@ -36,6 +36,23 @@
       maintenance.auto = true;
       maintenance.strategy = "incremental";
     };
+    includes = [
+      {
+        condition = "gitdir:${config.xdg.userDirs.projects}/TUM/";
+        contents = {
+          user.email = "nico.lintner@tum.de";
+          commit.gpgsign = false;
+          tag.gpgsign = false;
+          push.gpgsign = false;
+        };
+      }
+      {
+        condition = "gitdir:${config.xdg.userDirs.projects}/FS/";
+        contents = {
+          user.email = "lintner@fs.tum.de";
+        };
+      }
+    ];
     lfs.enable = true;
   };
 }

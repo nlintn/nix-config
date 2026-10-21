@@ -17,7 +17,7 @@
       battery_id = "BAT1";
       clear_password = true;
       clock = "%a %Y/%m/%d %H:%M";
-      # ly_log = null; TODO: add after ly v1.5.0
+      # ly_log = null; TODO: add after NoSpaceLeft error fixed
       session_log = ".local/state/ly-session.log";
 
       animation = "colormix";

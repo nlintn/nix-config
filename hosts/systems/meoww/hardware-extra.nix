@@ -17,10 +17,6 @@
     powerOnBoot = true;
   };
   hardware.i2c.enable = true;
-  hardware.ipu6 = {
-    enable = true;
-    platform = "ipu6ep";
-  };
 
   nixpkgs.config.packageOverrides = pkgs: {
     intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };

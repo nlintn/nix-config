@@ -59,8 +59,8 @@
     settings = {
       auto-optimise-store = true;
       experimental-features = [
-        "nix-command"
         "flakes"
+        "nix-command"
         "pipe-operators"
       ];
       use-xdg-base-directories = true;
@@ -74,8 +74,8 @@
         && config.home-manager.useUserPackages or false
       )
       [
-        "/share/xdg-desktop-portal"
         "/share/applications"
+        "/share/xdg-desktop-portal"
       ]
     )
   ];

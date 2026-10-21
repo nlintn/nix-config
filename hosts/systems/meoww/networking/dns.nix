@@ -75,6 +75,7 @@ in
             firefox-portal-detection.com  $RESOLVCONF:${file}
             hotsplots.de                  $RESOLVCONF:${file}
             hotspot.vodafone.de           $RESOLVCONF:${file}
+            wifi.bahn.de                  $RESOLVCONF:${file}
             login.wifionice.de            $RESOLVCONF:${file}
             railnet.oebb.at               $RESOLVCONF:${file}
           ''

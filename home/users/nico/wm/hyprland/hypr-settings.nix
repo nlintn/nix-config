@@ -544,6 +544,15 @@ in
         no_screen_share = true;
       }
 
+      {
+        name = "wl-mirror";
+        match.initial_class = "at\\.yrlf\\.wl_mirror";
+        float = true;
+        fullscreen_state = "3";
+        pin = true;
+        no_follow_mouse = true;
+      }
+
       (floatPreset {
         name = "float_classes";
         match.initial_class = lib.concatStringsSep "|" [
@@ -766,6 +775,11 @@ in
     })
     {
       binary = "${config.wayland.windowManager.hyprland.portalPackage}/libexec/.xdg-desktop-portal-hyprland-wrapped";
+      type = "screencopy";
+      mode = "allow";
+    }
+    {
+      binary = lib.getExe pkgs.wl-mirror;
       type = "screencopy";
       mode = "allow";
     }

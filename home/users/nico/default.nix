@@ -26,6 +26,10 @@
 
   common.setNixRegistry = true;
 
+  age.identityPaths = [
+    "${config.home.homeDirectory}/.ssh/id_agenix"
+  ];
+
   systemd.user.tmpfiles.rules =
     let
       inherit (config.home.sessionVariables) NIX_CONFIG_DIR;

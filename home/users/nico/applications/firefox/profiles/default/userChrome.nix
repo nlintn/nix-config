@@ -135,6 +135,7 @@ in
       &[sidebar-ongoing-animations]:not([sidebar-launcher-expanded]) {
         background-color: #${base00} !important;
       }
+      background-color: transparent !important;
     }
   }
 

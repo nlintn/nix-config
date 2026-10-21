@@ -13,6 +13,7 @@
 
   imports = [
     ./applications
+    ./backup.nix
     ./fonts.nix
     ./locale.nix
     ./shell

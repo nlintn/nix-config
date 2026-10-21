@@ -1,20 +1,34 @@
 {
   config,
   lib,
+  osConfig ? null,
   ...
 }:
 
 {
-  systemd.user.services."backup-rclone-sync" = {
-    Service.ExecStart = ''
-      ${lib.getExe config.programs.rclone.package} sync "${config.xdg.userDirs.documents}" protondrive:backup/sync
-    '';
-  };
-
-  systemd.user.timers."backup-rclone-sync" = {
-    Timer = {
-      Unit = "backup-rclone-sync.service";
-      OnCalendar = "daily";
+  services.restic = {
+    enable = true;
+    backups.home = {
+      initialize = true;
+      dynamicFilesFrom = ''
+        find ${lib.escapeShellArg config.home.homeDirectory} -mindepth 1 -maxdepth 1 ! -name '.*'
+      '';
+      extraBackupArgs = [ "--one-file-system" ];
+      repository = "rclone:wolke:/.backup/${
+        osConfig.networking.hostName or "hm"
+      }-${config.home.username}/home";
+      passwordFile = config.age.secrets."restic-home".path;
+      pruneOpts = [
+        "--keep-hourly 24"
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 12"
+        "--keep-yearly 75"
+      ];
+      timerConfig = {
+        OnCalendar = "*-*-* 00/6:00:00";
+        Persistent = true;
+      };
     };
   };
 }

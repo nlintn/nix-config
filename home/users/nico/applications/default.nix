@@ -25,6 +25,7 @@
     ./less.nix
     ./nautilus.nix
     ./neovim.nix
+    ./nextcloud-sync.nix
     ./nix-search-tv.nix
     ./obs-studio.nix
     ./ssh.nix

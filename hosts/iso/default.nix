@@ -1,10 +1,10 @@
 {
   assets,
   config,
+  inputs,
   lib,
   modulesPath,
   pkgs,
-  self,
   systemConfiguration,
   ...
 }:
@@ -43,7 +43,7 @@
     ++ (lib.optionals (systemConfiguration != null) [
       (callPackage ./disko-dfm-system.nix {
         disko-config-path = builtins.path {
-          path = "${self.outPath}/hosts/systems/${systemConfiguration.name}/disko/disko-config.nix";
+          path = "${inputs.self.outPath}/hosts/systems/${systemConfiguration.name}/disko/disko-config.nix";
         };
       })
       (callPackage ./install-system-closure.nix {
@@ -57,7 +57,7 @@
   ];
 
   systemd.tmpfiles.rules = [
-    "C ${lib.escapeShellArg config.users.users.nixos.home}/flake - - - - ${lib.escapeShellArg self.outPath}"
+    "C ${lib.escapeShellArg config.users.users.nixos.home}/flake - - - - ${lib.escapeShellArg inputs.self.outPath}"
   ];
 
   nix.settings.flake-registry = "";

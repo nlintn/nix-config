@@ -1,6 +1,6 @@
 {
   config,
-  self,
+  inputs,
   ...
 }:
 
@@ -16,7 +16,7 @@
       "--option max-jobs 1"
       "--option cores 1"
     ];
-    flake = self.outPath;
+    flake = inputs.self.outPath;
   };
 
   nix = {

@@ -1,19 +1,17 @@
 {
-  agenix,
   config,
   hostSecrets,
+  inputs,
   lib,
-  nix-colors,
   nixSystemName,
   overlays,
-  self,
   ...
 }:
 
 {
   imports = [
-    agenix.nixosModules.default
-    nix-colors.homeManagerModules.default
+    inputs.agenix.nixosModules.default
+    inputs.nix-colors.homeManagerModules.default
 
     ./options.nix
   ];
@@ -51,7 +49,7 @@
           type = "path";
           path = v.outPath;
         };
-      }) (self.inputs // { inherit self; })
+      }) inputs
     );
     nixPath = lib.mapAttrsToList (n: v: "${n}=flake:${v.to.path or n}") config.nix.registry;
     channel.enable = false;
@@ -88,5 +86,5 @@
     NIXPKGS_ALLOW_UNFREE = lib.mkIf (config.nixpkgs.config.allowUnfree or false) (lib.mkDefault "1");
   };
 
-  system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+  system.configurationRevision = lib.mkIf (inputs.self ? rev) inputs.self.rev;
 }

@@ -1,13 +1,9 @@
 {
-  agenix,
   config,
   hmUsername,
   inputs,
   lib,
-  nix-colors,
-  nixpkgs-overlay,
   pkgs,
-  self,
   userSecrets,
   userSettings,
   ...
@@ -15,9 +11,9 @@
 
 {
   imports = [
-    agenix.homeManagerModules.default
-    nixpkgs-overlay.homeManagerModules.default
-    nix-colors.homeManagerModules.default
+    inputs.agenix.homeManagerModules.default
+    inputs.nixpkgs-overlay.homeManagerModules.default
+    inputs.nix-colors.homeManagerModules.default
 
     ./options.nix
   ];
@@ -55,7 +51,7 @@
           type = "path";
           path = v;
         };
-      }) (inputs // { inherit self; })
+      }) inputs
     );
     nixPath = lib.mapAttrsToList (n: v: "${n}=flake:${v.to.path or n}") config.nix.registry;
 

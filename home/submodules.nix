@@ -4,14 +4,14 @@ lib:
 |> lib.mapAttrs (
   n: _:
   {
-    home-manager,
+    inputs,
     specialArgs,
     ...
   }:
 
   {
     imports = [
-      home-manager.nixosModules.home-manager
+      inputs.home-manager.nixosModules.home-manager
     ];
 
     home-manager = {

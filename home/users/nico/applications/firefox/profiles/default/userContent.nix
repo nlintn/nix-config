@@ -1,8 +1,8 @@
 {
   assets,
   config,
+  inputs,
   lib,
-  nix-colors,
   ...
 }:
 
@@ -10,7 +10,7 @@ with config.colorScheme.palette;
 let
   toRGBA =
     RGBhex: alpha:
-    "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex},${lib.toString alpha})";
+    "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex},${lib.toString alpha})";
 in
 /* css */ ''
   @-moz-document url-prefix(about:blank), url-prefix(about:home), url-prefix(about:newtab) {

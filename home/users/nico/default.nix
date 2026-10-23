@@ -1,9 +1,8 @@
 {
   config,
+  inputs,
   lib,
-  nixpkgs,
   pkgs,
-  self,
   userSettings,
   ...
 }:
@@ -36,14 +35,14 @@
       inherit (lib) escapeShellArg;
     in
     [
-      "C ${escapeShellArg NIX_CONFIG_DIR} - - - - ${escapeShellArg self.outPath}"
+      "C ${escapeShellArg NIX_CONFIG_DIR} - - - - ${escapeShellArg inputs.self.outPath}"
     ];
 
   vars.launchPrefix = lib.optionalString config.systemd.user.enable "${lib.getExe pkgs.runapp} -- ";
 
   nix = {
     registry = {
-      "n".flake = nixpkgs;
+      "n".flake = inputs.nixpkgs-unstable-patched;
       "nu" = {
         to = {
           type = "github";

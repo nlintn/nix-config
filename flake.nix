@@ -104,7 +104,6 @@
             pkgs-stable = pkgs-stable system;
             pkgs-unstable = pkgs-unstable system;
           }
-          // inputs'
           // extraAttrs;
         in
         specialArgs;

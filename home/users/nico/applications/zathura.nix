@@ -1,14 +1,14 @@
 {
   config,
+  inputs,
   lib,
-  nix-colors,
   ...
 }:
 
 let
   toRGBA =
     RGBhex: alpha:
-    "rgba(${nix-colors.lib.conversions.hexToRGBString "," RGBhex},${lib.toString alpha})";
+    "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex},${lib.toString alpha})";
 in
 {
   programs.zathura = {

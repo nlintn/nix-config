@@ -6,7 +6,6 @@
   lib,
   nix-colors,
   nixpkgs-overlay,
-  osConfig ? null,
   pkgs,
   self,
   userSecrets,
@@ -26,10 +25,6 @@
   age = {
     secrets = userSecrets hmUsername;
     secretsDir = "${config.xdg.stateHome}/agenix"; # TODO: remove after https://github.com/ryantm/agenix/pull/420 is merged
-  };
-
-  nixpkgs.config = lib.mkIf (!(osConfig.home-manager.useGlobalPkgs or false)) {
-    allowUnfree = true;
   };
 
   home = {

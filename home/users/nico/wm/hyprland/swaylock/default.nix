@@ -38,7 +38,7 @@
         clock = true;
         datestr = "%a, %d/%m/%y";
         timestr = "%X";
-        font = userSettings.default-font.package;
+        font = userSettings.default-font.getPackage pkgs;
         hide-keyboard-layout = true;
         image = userSettings.lockscreen;
 

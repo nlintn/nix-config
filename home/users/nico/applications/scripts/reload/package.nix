@@ -13,7 +13,9 @@
 let
   configDirectory = lib.escapeShellArg config.home.sessionVariables.NIX_CONFIG_DIR;
   inputOverrides = lib.optionalString config.common.setNixRegistry "$(${lib.getExe git} diff --quiet ${configDirectory}/flake.lock \"$(self=\"$(${lib.getExe config.nix.package} registry resolve self)\" && builtin echo \"\${self#path:}\")\" && builtin echo ${
-    lib.mapAttrsToList (n: _: lib.optionalString (n != "self") "--override-input ${n} ${n}") inputs
+    lib.mapAttrsToList (
+      n: _: lib.optionalString (n != "self") "--override-input ${n} ${n}"
+    ) inputs.self.inputs
     |> lib.concatStringsSep " "
   })";
 in

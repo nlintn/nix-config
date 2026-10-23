@@ -1,8 +1,8 @@
 {
+  genSpecialArgs,
   home-manager,
   lib,
   pkgs,
-  specialArgs,
 }:
 
 (lib.readDir ./users)
@@ -14,7 +14,7 @@
       ./users/${n}
       ./common.nix
     ];
-    extraSpecialArgs = specialArgs // {
+    extraSpecialArgs = genSpecialArgs {
       hmUsername = n;
     };
   }

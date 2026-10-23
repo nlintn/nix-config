@@ -30,7 +30,7 @@
     };
 
     font = {
-      package = userSettings.default-font.package;
+      package = userSettings.default-font.getPackage pkgs;
       name = userSettings.default-font.name;
       size = 10;
     };

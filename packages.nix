@@ -6,7 +6,9 @@
 }:
 
 let
-  isoImages = lib.mapAttrs (_: v: v.config.system.build.isoImage) isos;
+  isoImages = lib.mapAttrs (_: v: v.config.system.build.isoImage) (
+    isos pkgs.stdenv.hostPlatform.system
+  );
 in
 isoImages
 // {

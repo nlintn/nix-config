@@ -11,66 +11,121 @@
       ...
     }@inputs:
     let
-      system = "x86_64-linux"; # default system
-      lib = nixpkgs.lib;
-      lib-stable = nixpkgs-stable.lib;
+      defaultSystem = "x86_64-linux";
+      lib = inputs.nixpkgs.lib;
       lib-custom = nixpkgs-overlay.lib;
       overlays = [
         agenix.overlays.default
         nixpkgs-overlay.overlays.default
       ];
-      pkgs-unstable = import nixpkgs {
-        inherit system overlays;
-        config.allowUnfree = true;
-      };
-      pkgs-stable = import nixpkgs-stable {
-        inherit system overlays;
-        config.allowUnfree = true;
-      };
-      pkgs = pkgs-unstable;
+
+      # Hopefully possible to do this a bit less cursed with Nix 2.35
+      patchFlake =
+        src: patches: system:
+        if patches == [ ] then
+          src
+        else
+          let
+            patchedSrc = (
+              src.legacyPackages.${system}.applyPatches {
+                name = "source";
+                inherit src patches;
+              }
+            );
+            self =
+              let
+                inputs = src.inputs;
+                outputs = (import "${patchedSrc.outPath}/flake.nix").outputs { inherit self; };
+                sourceInfo = src.sourceInfo // {
+                  inherit (patchedSrc) outPath;
+                };
+              in
+              inputs
+              // outputs
+              // sourceInfo
+              // {
+                inherit inputs outputs sourceInfo;
+                _type = "flake";
+              };
+          in
+          self;
+      importPkgs =
+        flake: system:
+        import (flake system) {
+          inherit system overlays;
+          config = {
+            allowUnfree = true;
+          };
+        };
+
+      patches-stable = [ ];
+      nixpkgs-stable-patched = patchFlake nixpkgs-stable patches-stable;
+      lib-stable = system: (nixpkgs-stable-patched system).lib;
+      pkgs-stable = importPkgs nixpkgs-stable-patched;
+
+      patches-unstable = [ ];
+      nixpkgs-unstable-patched = patchFlake nixpkgs patches-unstable;
+      lib-unstable = system: (nixpkgs-unstable-patched system).lib;
+      pkgs-unstable = importPkgs nixpkgs-unstable-patched;
+
       assets = lib.readDir ./assets |> lib.mapAttrs (n: _: builtins.path { path = "${./assets}/${n}"; });
       inherit (import ./secrets lib) hostSecrets userSecrets;
       userSettings = {
         colorScheme = nix-colors.colorSchemes.catppuccin-macchiato;
         default-font = {
           name = "JetBrainsMono Nerd Font";
-          package = pkgs.nerd-fonts.jetbrains-mono;
+          getPackage = pkgs: pkgs.nerd-fonts.jetbrains-mono;
         };
         lockscreen = assets."lockscreen.png";
         wallpaper = assets."wallpaper.jpg";
         rel-config-path = "nix-config";
         wm = "hyprland";
       };
-      specialArgs = {
-        inherit
-          inputs
-          overlays
-          lib-custom
-          assets
-          hostSecrets
-          userSecrets
-          userSettings
-          pkgs-unstable
-          pkgs-stable
-          ;
-        hmSubmodules = import ./home/submodules.nix lib;
-      }
-      // inputs;
+
+      genSpecialArgs =
+        system: extraAttrs:
+        let
+          inputs' = inputs // {
+            nixpkgs-stable-patched = nixpkgs-stable-patched system;
+            nixpkgs-unstable-patched = nixpkgs-unstable-patched system;
+          };
+          specialArgs = {
+            inherit
+              assets
+              hostSecrets
+              lib-custom
+              overlays
+              specialArgs
+              userSecrets
+              userSettings
+              ;
+            hmSubmodules = import ./home/submodules.nix lib;
+            inputs = inputs';
+            pkgs-stable = pkgs-stable system;
+            pkgs-unstable = pkgs-unstable system;
+          }
+          // inputs'
+          // extraAttrs;
+        in
+        specialArgs;
+
       hosts = import ./hosts {
         inherit
+          defaultSystem
+          genSpecialArgs
           lib
           lib-stable
-          system
-          specialArgs
+          lib-unstable
           ;
       };
+
       home = import ./home {
         inherit
           home-manager
           lib
-          pkgs
-          specialArgs
           ;
+        genSpecialArgs = genSpecialArgs defaultSystem;
+        pkgs = pkgs-unstable defaultSystem;
       };
     in
     {

@@ -1,16 +1,13 @@
 {
   config,
-  inputs,
-  lib,
+  lib-custom,
   ...
 }:
 
-with config.colorScheme.palette;
 let
-  toRGBA =
-    RGBhex: alpha:
-    "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex},${lib.toString alpha})";
+  inherit (lib-custom.conversions) hexAToRGBA;
 in
+with config.colorScheme.palette;
 /* css */ ''
   :root:not([chromehidden~="toolbar"]) {
     min-width: 20px !important;
@@ -40,8 +37,8 @@ in
       --toolbox-background-color: transparent !important;
       --toolbox-background-color-inactive: transparent !important;
       --toolbox-text-color: #${base05} !important;
-      --toolbox-text-color-inactive: ${toRGBA base05 0.8} !important;
-      --tabpanel-background-color: ${toRGBA base02 0.3} !important;
+      --toolbox-text-color-inactive: ${hexAToRGBA base05 0.8 |> toString} !important;
+      --tabpanel-background-color: ${hexAToRGBA base02 0.3 |> toString} !important;
 
       --panel-background-color: #${base00} !important;
       --panel-border-color: #${base03} !important;
@@ -61,7 +58,7 @@ in
       --toolbar-field-text-color: #${base05} !important;
       --toolbar-field-text-color-focus: #${base05} !important;
       --toolbar-field-background-color-focus: #${base00} !important;
-      --toolbar-field-border-color-focus: ${toRGBA base0E 0.8} !important;
+      --toolbar-field-border-color-focus: ${hexAToRGBA base0E 0.8 |> toString} !important;
       --urlbarview-background-color-selected: #${base0E} !important;
       --urlbarview-text-color-selected: #${base01} !important;
       --urlbarView-highlight-background: #${base02} !important;
@@ -71,26 +68,26 @@ in
       --in-content-page-color: #${base05} !important;
       --in-content-page-background: #${base00} !important;
       --in-content-primary-button-background: #${base0E} !important;
-      --in-content-primary-button-background-hover: ${toRGBA base0E 0.8} !important;
-      --in-content-primary-button-background-active: ${toRGBA base0E 0.6} !important;
+      --in-content-primary-button-background-hover: ${hexAToRGBA base0E 0.8 |> toString} !important;
+      --in-content-primary-button-background-active: ${hexAToRGBA base0E 0.6 |> toString} !important;
       --in-content-primary-button-text-color: #${base01} !important;
 
       --button-text-color: #${base05} !important;
       --button-text-color-primary: #${base01} !important;
 
-      --toolbar-background-color: ${toRGBA base02 0.5} !important;
+      --toolbar-background-color: ${hexAToRGBA base02 0.5 |> toString} !important;
       --toolbar-color: #${base05} !important;
       --toolbar-text-color: #${base05} !important;
 
-      --sidebar-background-color : ${toRGBA base00 0.5} !important;
-      --sidebar-border-color : ${toRGBA base03 0.5} !important;
+      --sidebar-background-color : ${hexAToRGBA base00 0.5 |> toString} !important;
+      --sidebar-border-color : ${hexAToRGBA base03 0.5 |> toString} !important;
       --sidebar-text-color : #${base05} !important;
 
       --color-accent-attention: #${base0E} !important;
       --color-accent-primary: #${base0E} !important;
       --color-accent-primary-selected: #${base0E} !important;
-      --color-accent-primary-hover: ${toRGBA base0E 0.8} !important;
-      --color-accent-primary-active: ${toRGBA base0E 0.6} !important;
+      --color-accent-primary-hover: ${hexAToRGBA base0E 0.8 |> toString} !important;
+      --color-accent-primary-active: ${hexAToRGBA base0E 0.6 |> toString} !important;
       --background-color-box: #${base00} !important;
       --background-color-canvas: #${base01} !important;
       --background-color-critical: #${base08} !important;
@@ -145,9 +142,9 @@ in
   }
 
   #input {
-    background: ${toRGBA base02 0.5} !important;
+    background: ${hexAToRGBA base02 0.5 |> toString} !important;
     color: #${base05} !important;
-    border-color: ${toRGBA base03 0.5} !important;
+    border-color: ${hexAToRGBA base03 0.5 |> toString} !important;
   }
 
   #PopupAutoComplete, menupopup, panel {
@@ -172,7 +169,7 @@ in
     color: #${base05} !important;
   }
   richlistitem[selected="true"] {
-    background-color: ${toRGBA base0E 0.8} !important;
+    background-color: ${hexAToRGBA base0E 0.8 |> toString} !important;
     color: #${base01} !important;
   }
   #statuspanel-label {

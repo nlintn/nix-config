@@ -1,15 +1,12 @@
 {
   config,
-  inputs,
-  lib,
+  lib-custom,
   userSettings,
   ...
 }:
 
 let
-  toRGBA =
-    RGBhex: alpha:
-    "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex},${lib.toString alpha})";
+  inherit (lib-custom.conversions) hexAToRGBA;
 in
 with config.colorScheme.palette;
 /* css */ ''
@@ -36,9 +33,9 @@ with config.colorScheme.palette;
   }
 
   .floating-notifications.background .notification-row .notification-background {
-    border: 1px solid ${toRGBA base03 0.8};
+    border: 1px solid ${hexAToRGBA base03 0.8 |> toString};
     margin: 18px;
-    background-color: ${toRGBA base00 0.5};
+    background-color: ${hexAToRGBA base00 0.5 |> toString};
     color: #${base05};
     padding: 0;
   }
@@ -94,24 +91,24 @@ with config.colorScheme.palette;
   .floating-notifications.background .notification-row .notification-background .close-button {
     margin: 7px;
     padding: 2px;
-    color: ${toRGBA base00 0.5};
+    color: ${hexAToRGBA base00 0.5 |> toString};
     background-color: #${base08};
   }
 
   .floating-notifications.background .notification-row .notification-background .close-button:hover {
     background-color: #${base08};
-    color: ${toRGBA base00 0.5};
+    color: ${hexAToRGBA base00 0.5 |> toString};
   }
 
   .floating-notifications.background .notification-row .notification-background .close-button:active {
     background-color: #${base08};
-    color: ${toRGBA base00 0.5};
+    color: ${hexAToRGBA base00 0.5 |> toString};
   }
 
   .control-center {
-    border: 1px solid ${toRGBA base03 0.8};
+    border: 1px solid ${hexAToRGBA base03 0.8 |> toString};
     margin: 18px;
-    background-color: ${toRGBA base00 0.5};
+    background-color: ${hexAToRGBA base00 0.5 |> toString};
     color: #${base05};
     padding: 14px;
   }
@@ -137,7 +134,7 @@ with config.colorScheme.palette;
   .control-center .widget-title button:active {
     box-shadow: inset 0 0 0 1px #${base03};
     background-color: #${base07};
-    color: ${toRGBA base00 0.5};
+    color: ${hexAToRGBA base00 0.5 |> toString};
   }
 
   .control-center .notification-row .notification-background {
@@ -197,18 +194,18 @@ with config.colorScheme.palette;
   .control-center .notification-row .notification-background .close-button {
     margin: 7px;
     padding: 2px;
-    color: ${toRGBA base00 0.5};
+    color: ${hexAToRGBA base00 0.5 |> toString};
     background-color: #${base08};
   }
 
   .control-center .notification-row .notification-background .close-button:hover {
     background-color: #${base08};
-    color: ${toRGBA base00 0.5};
+    color: ${hexAToRGBA base00 0.5 |> toString};
   }
 
   .control-center .notification-row .notification-background .close-button:active {
     background-color: #${base08};
-    color: ${toRGBA base00 0.5};
+    color: ${hexAToRGBA base00 0.5 |> toString};
   }
 
   .control-center .notification-row .notification-background:hover {
@@ -235,7 +232,7 @@ with config.colorScheme.palette;
   .control-center-dnd {
     margin-top: 5px;
     background: #${base02};
-    border: 1px solid ${toRGBA base03 0.5};
+    border: 1px solid ${hexAToRGBA base03 0.5 |> toString};
     box-shadow: none;
   }
 
@@ -255,7 +252,7 @@ with config.colorScheme.palette;
   .widget-dnd > switch {
     font-size: initial;
     background: #${base02};
-    border: 1px solid ${toRGBA base03 0.5};
+    border: 1px solid ${hexAToRGBA base03 0.5 |> toString};
     box-shadow: none;
   }
 
@@ -265,7 +262,7 @@ with config.colorScheme.palette;
 
   .widget-dnd > switch slider {
     background: #${base03};
-    border: 1px solid ${toRGBA base04 0.5};
+    border: 1px solid ${hexAToRGBA base04 0.5 |> toString};
   }
 
   .widget-mpris .widget-mpris-player {

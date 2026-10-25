@@ -1,17 +1,15 @@
 {
   assets,
   config,
-  inputs,
   lib,
+  lib-custom,
   ...
 }:
 
-with config.colorScheme.palette;
 let
-  toRGBA =
-    RGBhex: alpha:
-    "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex},${lib.toString alpha})";
+  inherit (lib-custom.conversions) hexAToRGBA;
 in
+with config.colorScheme.palette;
 /* css */ ''
   @-moz-document url-prefix(about:blank), url-prefix(about:home), url-prefix(about:newtab) {
     body, html {
@@ -21,7 +19,7 @@ in
       visibility: hidden !important;
     }
     .search-handoff-button {
-      background-color: ${toRGBA base02 0.5} !important;
+      background-color: ${hexAToRGBA base02 0.5 |> toString} !important;
       color: #${base05} !important;
     }
   }
@@ -56,14 +54,14 @@ in
       --input-bgcolor: #${base00} !important;
       --input-color: #${base05} !important;
 
-      --newtab-background-color: ${toRGBA base00 0.5} !important;
-      --newtab-background-color-secondary: ${toRGBA base02 0.5} !important;
+      --newtab-background-color: ${hexAToRGBA base00 0.5 |> toString} !important;
+      --newtab-background-color-secondary: ${hexAToRGBA base02 0.5 |> toString} !important;
       --newtab-primary-action-background: #${base0E} !important;
       --newtab-primary-action-background-dimmed: #${base0E} !important;
 
       --border-color-interactive: #${base03} !important;
 
-      --body-bg-color: ${toRGBA base00 0.5} !important;
+      --body-bg-color: ${hexAToRGBA base00 0.5 |> toString} !important;
       --button-hover-color: #${base03} !important;
       --dropdown-btn-bg-color: #${base02} !important;
       --field-color: #${base05} !important;
@@ -83,8 +81,8 @@ in
 
       --color-accent-primary: #${base0E} !important;
       --color-accent-primary-selected: #${base0E} !important;
-      --color-accent-primary-hover: ${toRGBA base0E 0.8} !important;
-      --color-accent-primary-active: ${toRGBA base0E 0.6} !important;
+      --color-accent-primary-hover: ${hexAToRGBA base0E 0.8 |> toString} !important;
+      --color-accent-primary-active: ${hexAToRGBA base0E 0.6 |> toString} !important;
       --focus-outline-color: #${base0E} !important;
 
       --in-content-table-background: #${base00} !important;
@@ -128,16 +126,16 @@ in
     --vimium-link-color: #${base0E} !important;
   }
   ::selection {
-    background-color: ${toRGBA base0E 0.35} !important;
+    background-color: ${hexAToRGBA base0E 0.35 |> toString} !important;
   }
   ::-moz-selection {
-    background-color: ${toRGBA base0E 0.35} !important;
+    background-color: ${hexAToRGBA base0E 0.35 |> toString} !important;
   }
   p::-moz-selection {
-    background-color: ${toRGBA base0E 0.35} !important;
+    background-color: ${hexAToRGBA base0E 0.35 |> toString} !important;
   }
   p::selection {
-    background-color: ${toRGBA base0E 0.35} !important;
+    background-color: ${hexAToRGBA base0E 0.35 |> toString} !important;
   }
 
   div > .vimiumHintMarker {

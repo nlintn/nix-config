@@ -1,14 +1,11 @@
 {
   config,
-  inputs,
-  lib,
+  lib-custom,
   ...
 }:
 
 let
-  toRGBA =
-    RGBhex: alpha:
-    "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex},${lib.toString alpha})";
+  inherit (lib-custom.conversions) hexAToRGBA;
 in
 {
   programs.zathura = {
@@ -28,7 +25,7 @@ in
       show-hidden = true;
 
       default-fg = "#${base05}";
-      default-bg = toRGBA base00 0.5;
+      default-bg = hexAToRGBA base00 0.5 |> toString;
 
       completion-bg = "#${base02}";
       completion-fg = "#${base05}";
@@ -56,14 +53,14 @@ in
       index-fg = "#${base05}";
       index-bg = "#${base00}";
       index-active-fg = "#${base05}";
-      index-active-bg = toRGBA base0E 0.5;
+      index-active-bg = hexAToRGBA base0E 0.5 |> toString;
 
-      render-loading-bg = toRGBA base00 0.5;
+      render-loading-bg = hexAToRGBA base00 0.5 |> toString;
       render-loading-fg = "#${base05}";
 
       highlight-fg = "#${base05}";
-      highlight-color = toRGBA base09 0.5;
-      highlight-active-color = toRGBA base08 0.5;
+      highlight-color = hexAToRGBA base09 0.5 |> toString;
+      highlight-active-color = hexAToRGBA base08 0.5 |> toString;
 
       show-signature-information = true;
       signature-error-color = "#${base08}";

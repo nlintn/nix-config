@@ -1,15 +1,12 @@
 {
   config,
-  inputs,
-  lib,
+  lib-custom,
   pkgs,
   ...
 }:
 
 let
-  toRGBA =
-    RGBhex: alpha:
-    "rgba(${inputs.nix-colors.lib.conversions.hexToRGBString "," RGBhex},${lib.toString alpha})";
+  inherit (lib-custom.conversions) hexAToRGBA;
 in
 {
   services.avizo = {
@@ -27,10 +24,10 @@ in
       fade-in = 0.1;
       fade-out = 0.2;
       image-opacity = 0.9;
-      border-color = toRGBA base03 0.8;
-      background = toRGBA base00 0.5;
-      bar-fg-color = toRGBA base05 0.9;
-      bar-bg-color = toRGBA base01 0.9;
+      border-color = hexAToRGBA base03 0.8 |> toString;
+      background = hexAToRGBA base00 0.5 |> toString;
+      bar-fg-color = hexAToRGBA base05 0.9 |> toString;
+      bar-bg-color = hexAToRGBA base01 0.9 |> toString;
     };
   };
 }

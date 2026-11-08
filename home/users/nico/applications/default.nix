@@ -28,6 +28,7 @@
     ./nextcloud-sync.nix
     ./nix-search-tv.nix
     ./obs-studio.nix
+    ./opencode
     ./ssh.nix
     ./swayimg.nix
     ./thunderbird.nix

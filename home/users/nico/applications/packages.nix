@@ -13,7 +13,6 @@
     cowsay
     cyberchef
     desmume
-    diebahn
     dnsutils
     dragon-drop
     eza

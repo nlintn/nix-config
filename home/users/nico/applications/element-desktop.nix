@@ -1,5 +1,6 @@
 {
   config,
+  jail,
   lib,
   pkgs,
   ...
@@ -14,16 +15,32 @@ in
 {
   programs.element-desktop = {
     enable = true;
-    package = lib.mkIf (config.services.gnome-keyring.enable || keepassxc_fdo) (
-      let
-        pkg = pkgs.element-desktop;
-      in
-      pkgs.symlinkJoin {
-        inherit (pkg) name meta;
-        paths = [ pkg ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = "wrapProgram $out/bin/element-desktop --add-flags --password-store=gnome-libsecret";
-      }
+    package = jail pkgs.element-desktop (
+      with jail.combinators;
+      [
+        (persist-home "element-desktop")
+        (shared-tmp "element-desktop")
+        gpu
+        gui-enhanced
+        network
+        notifications
+        open-urls-in-browser
+        secret-service
+        sys-tray
+
+        (dbus {
+          portalAppId = "element-desktop";
+          talk = [
+            "org.freedesktop.ScreenSaver"
+            "org.freedesktop.portal.Desktop"
+            "org.freedesktop.portal.Documents"
+          ];
+        })
+      ]
+      ++ (lib.optional keepassxc_fdo (set-argv [
+        "--password-store=gnome-libsecret"
+        (noescape "\"$@\"")
+      ]))
     );
   };
 }

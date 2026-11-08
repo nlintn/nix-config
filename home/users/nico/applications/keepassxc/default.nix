@@ -18,7 +18,6 @@ in
   programs.keepassxc = {
     enable = true;
     package = pkg_patched.override {
-      withKeePassKeeShare = false;
       withKeePassX11 = config.vars.x11Support or true;
     };
     # Available Settings: https://github.com/keepassxreboot/keepassxc/blob/647272e9c5542297d3fcf6502e6173c96f12a9a0/src/core/Config.cpp#L49-L223
@@ -63,6 +62,7 @@ in
         LockDatabaseScreenLock = true;
         NoConfirmMoveEntryToRecycleBin = true;
         PasswordEmptyPlaceholder = true;
+        QuickUnlock = true;
       };
     };
   };

@@ -78,6 +78,15 @@
     )
   ];
 
+  # Add keepassxc polkit action file
+  environment.systemPackages = (
+    lib.attrValues config.home-manager.users or { }
+    |> lib.filter (
+      v: v.programs.keepassxc.enable && v.programs.keepassxc.settings.Security.QuickUnlock or true
+    )
+    |> lib.map (v: v.programs.keepassxc.package)
+  );
+
   environment.sessionVariables = {
     NIXPKGS_ALLOW_BROKEN = lib.mkIf (config.nixpkgs.config.allowBroken or false) (lib.mkDefault "1");
     NIXPKGS_ALLOW_INSECURE = lib.mkIf (config.nixpkgs.config.allowInsecure or false) (

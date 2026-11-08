@@ -1,6 +1,8 @@
 {
   config,
+  jail,
   lib-custom,
+  pkgs,
   ...
 }:
 
@@ -10,6 +12,19 @@ in
 {
   programs.zathura = {
     enable = true;
+    package = jail pkgs.zathura (
+      with jail.combinators;
+      [
+        gui-enhanced
+        locale
+        open-urls-in-browser
+        printing
+
+        (readonly config.home.homeDirectory)
+        (readonly "${config.xdg.configHome}/zathura")
+        readonly-runtime-args
+      ]
+    );
     mappings = {
       "<Return>" = "navigate next";
       "<S-Return>" = "navigate previous";

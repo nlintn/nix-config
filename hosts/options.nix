@@ -22,7 +22,7 @@
     };
     common.setNixRegistry = lib.mkOption {
       default = false;
-      type = lib.types.bool;
+      type = lib.types.either lib.types.bool (lib.types.listOf lib.types.str);
     };
   };
 }

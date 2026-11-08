@@ -43,13 +43,20 @@
 
   nixpkgs.flake.source = lib.mkForce null;
   nix = {
-    registry = lib.mkIf config.common.setNixRegistry (
-      lib.mapAttrs (_: v: {
-        to = {
-          type = "path";
-          path = v.outPath;
-        };
-      }) inputs
+    registry = lib.mkIf (config.common.setNixRegistry != false) (
+      lib.mapAttrs
+        (_: v: {
+          to = {
+            type = "path";
+            path = v.outPath;
+          };
+        })
+        (
+          if lib.isList config.common.setNixRegistry then
+            lib.filterAttrs (n: _: lib.elem n config.common.setNixRegistry) inputs
+          else
+            inputs
+        )
     );
     nixPath = lib.mapAttrsToList (n: v: "${n}=flake:${v.to.path or n}") config.nix.registry;
     channel.enable = false;

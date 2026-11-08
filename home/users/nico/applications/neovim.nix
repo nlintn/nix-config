@@ -23,7 +23,7 @@ in
   home.packages = [ pkg ];
 
   programs.neovide = {
-    enable = true;
+    # enable = true; TODO: reenable after not broken anymore
     settings = {
       neovim-bin = bin;
     };

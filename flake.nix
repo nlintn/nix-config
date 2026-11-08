@@ -64,7 +64,9 @@
       lib-stable = system: (nixpkgs-stable-patched system).lib;
       pkgs-stable = importPkgs nixpkgs-stable-patched;
 
-      patches-unstable = [ ];
+      patches-unstable = [
+        ./patches/555876.patch
+      ];
       nixpkgs-unstable-patched = patchFlake nixpkgs patches-unstable;
       lib-unstable = system: (nixpkgs-unstable-patched system).lib;
       pkgs-unstable = importPkgs nixpkgs-unstable-patched;

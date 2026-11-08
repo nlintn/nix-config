@@ -1,0 +1,37 @@
+From cf953e17b08f37c5fa06ba9a57d4903c410a187a Mon Sep 17 00:00:00 2001
+From: Nico Lintner <git@nlintn.de>
+Date: Thu, 10 Sep 2026 18:52:02 +0200
+Subject: [PATCH] adjust default option values
+
+---
+ src/scripts/config/constants.js | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/scripts/config/constants.js b/src/scripts/config/constants.js
+index 4eb4905..13e4df2 100644
+--- a/src/scripts/config/constants.js
++++ b/src/scripts/config/constants.js
+@@ -12,7 +12,7 @@
+         languageFileExtension: '.txt',
+         defaultLanguage: 'en',
+         defaultHost: 'localhost',
+-        defaultSecureProtocol: 'https',
++        defaultSecureProtocol: 'wss',
+         defaultPathSeparator: '/',
+         httpRequestTimeout: 20000,
+         globalStatStorageCapacity: 120,
+@@ -32,9 +32,9 @@
+         browserNotificationFrequency: 'unlimited',
+         rpcAlias: '',
+         rpcHost: '',
+-        rpcPort: '6800',
++        rpcPort: '443',
+         rpcInterface: 'jsonrpc',
+-        protocol: 'http',
++        protocol: 'wss',
+         httpMethod: 'POST',
+         rpcRequestHeaders: '',
+         secret: '',
+-- 
+2.55.0
+

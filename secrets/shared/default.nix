@@ -1,5 +1,5 @@
 {
-  "chirrp_whirr-wg_psk.age" = {
+  "chirrp_whirr-wg_psk.key.age" = {
     hosts = [
       "chirrp"
       "whirr"

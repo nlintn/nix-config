@@ -1,4 +1,6 @@
 {
+  lib,
+  pkgs,
   ...
 }:
 
@@ -70,6 +72,31 @@
 
       swayimg.gallery.on_key("q", function()
         swayimg.exit()
+      end)
+
+
+      local function copy_image(image)
+        if not image then return end
+
+        local path = image.path
+        if not path then return end
+
+        -- Escape the path for shell usage
+        local quoted = "'" .. path:gsub("'", "'\\'''") .. "'"
+
+        os.execute(
+            "${lib.getExe' pkgs.wl-clipboard "wl-copy"} --type \"$(${lib.getExe pkgs.file} -b --mime-type -- " ..
+            quoted .. ")\" < " .. quoted
+        )
+      end
+      swayimg.viewer.on_key("Ctrl-c", function()
+        copy_image(swayimg.viewer.get_image())
+      end)
+      swayimg.slideshow.on_key("Ctrl-c", function()
+        copy_image(swayimg.slideshow.get_image())
+      end)
+      swayimg.gallery.on_key("Ctrl-c", function()
+        copy_image(swayimg.gallery.get_image())
       end)
     '';
   };

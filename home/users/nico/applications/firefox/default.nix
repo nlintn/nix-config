@@ -41,4 +41,6 @@
         |> lib.listToAttrs
       );
   };
+
+  home.sessionVariables.BROWSER = lib.getExe config.programs.firefox.package |> lib.baseNameOf;
 }

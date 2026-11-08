@@ -10,13 +10,14 @@ let
     base16-palette = config.colorScheme.palette;
   };
   bin = lib.getExe pkg;
+  name = lib.baseNameOf bin;
 in
 {
   vars.nvimPackage = pkg;
   home.sessionVariables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    MANPAGER = "${bin} +Man!";
+    EDITOR = name;
+    VISUAL = name;
+    MANPAGER = "${name} +Man!";
   };
   home.shellAliases.vimdiff = "${bin} -d";
   home.packages = [ pkg ];

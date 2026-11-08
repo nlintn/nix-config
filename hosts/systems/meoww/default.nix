@@ -35,8 +35,6 @@
     allowUnfree = true;
   };
 
-  common.setNixRegistry = true;
-
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
 

@@ -5,6 +5,8 @@
 }:
 
 {
+  common.setNixRegistry = true;
+
   system.autoUpgrade = {
     enable = true;
     dates = "daily";

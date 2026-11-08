@@ -46,7 +46,7 @@ in
     extraConfig = with config.colorScheme.palette; ''
       unbind C-b
       set -g prefix C-a
-      bind -n C-a send-prefix
+      bind C-a send-prefix
       set -g status-keys emacs
       set -g mode-keys vi
       set -g mouse on
@@ -102,7 +102,6 @@ in
       set -g popup-style none
       set -g popup-border-style none,fg=#${base04}
       set -g tree-mode-border-style none,fg=#${base05}
-      set -g clock-mode-color #${base0D}
 
       unbind -n MouseDown3Pane
       unbind -n C-MouseDrag1Pane

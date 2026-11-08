@@ -1,9 +1,9 @@
 {
-  lib,
-  inputs,
   config,
   git,
   home-manager,
+  inputs,
+  lib,
   nixos-rebuild-nom,
   osConfig ? null,
   writeShellScriptBin,

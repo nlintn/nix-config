@@ -37,7 +37,7 @@ in
       UpdateHostKeys = "ask";
       VerifyHostKeyDNS = "ask";
     };
-    includes = [ "hosts" ];
+    includes = [ "host-config" ];
   };
 
   services.ssh-agent.enable = true;

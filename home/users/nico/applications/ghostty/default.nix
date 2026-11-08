@@ -16,6 +16,7 @@
       app-notifications = false;
 
       adjust-cursor-thickness = "100%";
+      background-blur = true;
       background-opacity = 0.65;
       font-family = userSettings.default-font.name;
       font-feature = [

@@ -81,19 +81,11 @@ in
       }
     )
     ++ mkBinds [
-      # {
-      #   keys = "SUPER + A";
-      #   dispatcher = /* lua */ ''
-      #     function()
-      #       hl.dispatch(hl.dsp.exec_cmd("${pkgs.writeShellScript "screenshot-area" ''hyprland-dialog --text "$1"''} \"" .. functions.visible_window_rectangles() .. "\""))
-      #     end
-      #   '';
-      # }
       {
         keys = "SUPER + A";
         dispatcher = /* lua */ ''
           function()
-            hl.dispatch(hl.dsp.exec_cmd("${pkgs.writeShellScript "screenshot-area" ''([ $# -gt 0 ] && ${slurp} ${slurpOpts} -d <<< "$@" || ${slurp} ${slurpOpts} -d) | ${grim} -g - - | ${satty} -f -''} " .. functions.visible_window_rectangles()))
+            hl.dispatch(hl.dsp.exec_cmd("${pkgs.writeShellScript "screenshot-area" ''(if [ $# -gt 0 ]; then ${slurp} ${slurpOpts} -d <<< "$@"; else ${slurp} ${slurpOpts} -d; fi) | ${grim} -g - - | ${satty} -f -''} '" .. functions.visible_window_rectangles() .. "'"))
           end
         '';
       }
@@ -510,6 +502,13 @@ in
       direction = "horizontal";
       action = "workspace";
     }
+    {
+      fingers = 4;
+      direction = "pinch";
+      action = "cursor_zoom";
+      zoom_level = 1;
+      mode = "live";
+    }
   ];
 
   window_rule =
@@ -596,7 +595,7 @@ in
           "Alert"
           "Authentication Required - Mozilla (Firefox|Thunderbird)"
           "Calendar Reminders"
-          "Compact Folders"
+          "Compact folders"
           "Download Messages"
           "Edit Calendar"
           "Edit Item"
@@ -648,9 +647,8 @@ in
       }
 
       {
-        name = "pin_stay_focused_keepassxc_popups";
+        name = "pin_keepassxc_popups";
         pin = true;
-        stay_focused = true;
         match.initial_class = "keepassxc|org\\.keepassxc\\.KeePassXC";
         match.initial_title = lib.concatStringsSep "|" [
           "KeePassXC -  Access Request"
@@ -680,7 +678,8 @@ in
       }
 
       {
-        name = "stay_focused_classes";
+        name = "pin_stay_focused_classes";
+        pin = true;
         stay_focused = true;
         match.initial_class = lib.concatStringsSep "|" [
           "gcr-prompter"

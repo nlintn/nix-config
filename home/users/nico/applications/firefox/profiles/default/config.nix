@@ -45,7 +45,10 @@ let
     "extensions.update.enabled" = false;
 
     # memory
+    "browser.cache.disk.enable" = false;
+    "browser.cache.memory.enable" = true;
     "browser.low_commit_space_threshold_percent" = 50;
+    "browser.sessionstore.interval" = 60000;
     "browser.tabs.min_inactive_duration_before_unload" = 1800000;
     "browser.tabs.unloadOnLowMemory" = true;
 

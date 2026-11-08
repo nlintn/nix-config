@@ -53,6 +53,10 @@
         };
       }
     ];
+    ignores = [
+      ".cache/"
+      ".direnv/"
+    ];
     lfs.enable = true;
   };
 }

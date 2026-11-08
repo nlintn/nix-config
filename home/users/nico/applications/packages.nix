@@ -20,6 +20,7 @@
     file
     file-roller
     font-manager
+    git-crypt
     ghidra
     ghostscript
     gimp

@@ -1,0 +1,150 @@
+diff --git a/lib/combinators/dbus.nix b/lib/combinators/dbus.nix
+index 658c7d1..8fa4eef 100644
+--- a/lib/combinators/dbus.nix
++++ b/lib/combinators/dbus.nix
+@@ -55,6 +55,7 @@ in
+       see ? [ ],
+       call ? [ ],
+       broadcast ? [ ],
++      portalAppId ? null,
+     }:
+     compose [
+       # Just set the options on state so dbus can be called multiple times
+@@ -65,6 +66,7 @@ in
+           see
+           call
+           broadcast
++          portalAppId
+           ;
+       })
+       # Then add deferred runtime logic to spin up xdg-dbus-proxy:
+@@ -72,10 +74,52 @@ in
+         defer (
+           state:
+           let
+-            proxy = jail "xdg-dbus-proxy" pkgs.xdg-dbus-proxy [
+-              unsafe-dbus
+-              (readwrite (noescape "\"$PROXIED_DBUS_SOCKET_DIR\""))
+-            ];
++            portalAppIdForProxy = lib.findFirst (id: id != null) null (
++              map (p: p.portalAppId) state.dbusPermissions
++            );
++
++            proxy = jail "xdg-dbus-proxy" pkgs.xdg-dbus-proxy (
++              [
++                unsafe-dbus
++
++                (readwrite (noescape "\"$PROXIED_DBUS_SOCKET_DIR\""))
++              ]
++              ++ (lib.optionals (portalAppIdForProxy != null) [
++
++                (add-runtime ''
++                  portal_app_id=org.jailnix.${lib.escapeShellArg portalAppIdForProxy}
++                  portal_instance_id="$(cat /proc/sys/kernel/random/uuid)"
++                  portal_instance_dir="$XDG_RUNTIME_DIR/.flatpak/$portal_instance_id"
++
++                  mkdir -p -- "$portal_instance_dir"
++                  chmod 700 -- "$portal_instance_dir"
++                  umask 077
++
++                  cat > "$portal_instance_dir/flatpak-info" <<EOF
++                  [Application]
++                  name=$portal_app_id
++
++                  [Instance]
++                  instance-id=$portal_instance_id
++                  EOF
++
++                  exec {portal_info_fd}>"$portal_instance_dir/bwrapinfo.json"
++
++                  RUNTIME_ARGS+=(
++                    --ro-bind "$portal_instance_dir/flatpak-info" /.flatpak-info
++                    --info-fd "$portal_info_fd"
++                  )
++
++                  echo "jail.nix: portal metadata: $portal_instance_dir" >&2
++                '')
++
++                (add-cleanup ''
++                  if [ -n "''${portal_instance_dir:-}" ]; then
++                    rm -rf -- "$portal_instance_dir"
++                  fi
++                '')
++              ])
++            );
+
+             getFlags =
+               type:
+@@ -95,31 +139,48 @@ in
+             ++ getFlags "call"
+             ++ getFlags "broadcast";
+           in
+-          compose [
+-            (add-runtime ''
+-              PROXIED_DBUS_SOCKET_DIR=$(mktemp -d)
+-              export PROXIED_DBUS_SOCKET_DIR
+-              PROXIED_DBUS_SOCKET="$PROXIED_DBUS_SOCKET_DIR/socket"
+-              mkfifo "$PROXIED_DBUS_SOCKET_DIR/ready"
+-              exec {XDG_DBUS_PROXY_READY_FD}<>"$PROXIED_DBUS_SOCKET_DIR/ready"
+-              ${lib.getExe proxy} \
+-                "$DBUS_SESSION_BUS_ADDRESS" \
+-                "$PROXIED_DBUS_SOCKET" \
+-                --fd="$XDG_DBUS_PROXY_READY_FD" \
+-                ${lib.concatStringsSep " " args} \
+-                &
+-              PROXY_PID=$!
+-              IFS= read -rn1 -u "$XDG_DBUS_PROXY_READY_FD"
+-            '')
+-            (add-cleanup ''
+-              kill "$PROXY_PID"
+-              if [ -e "''${PROXIED_DBUS_SOCKET_DIR-}" ]; then
+-                rm -rf "$PROXIED_DBUS_SOCKET_DIR"
++          compose (
++            [
++              (add-runtime ''
++                PROXIED_DBUS_SOCKET_DIR=$(mktemp -d)
++                export PROXIED_DBUS_SOCKET_DIR
++                PROXIED_DBUS_SOCKET="$PROXIED_DBUS_SOCKET_DIR/socket"
++                mkfifo "$PROXIED_DBUS_SOCKET_DIR/ready"
++                exec {XDG_DBUS_PROXY_READY_FD}<>"$PROXIED_DBUS_SOCKET_DIR/ready"
++                ${lib.getExe proxy} \
++                  "$DBUS_SESSION_BUS_ADDRESS" \
++                  "$PROXIED_DBUS_SOCKET" \
++                  --fd="$XDG_DBUS_PROXY_READY_FD" \
++                  ${lib.concatStringsSep " " args} \
++                  &
++                PROXY_PID=$!
++                IFS= read -rn1 -u "$XDG_DBUS_PROXY_READY_FD"
++              '')
++              (add-cleanup ''
++                kill "$PROXY_PID"
++                if [ -e "''${PROXIED_DBUS_SOCKET_DIR-}" ]; then
++                  rm -rf "$PROXIED_DBUS_SOCKET_DIR"
++                fi
++              '')
++              (readwrite (noescape "\"$PROXIED_DBUS_SOCKET_DIR\""))
++              (set-env "DBUS_SESSION_BUS_ADDRESS" (noescape "\"unix:path=$PROXIED_DBUS_SOCKET\""))
++            ]
++            ++ (lib.optional (portalAppIdForProxy != null) (add-runtime ''
++              portal_docs="$XDG_RUNTIME_DIR/doc/by-app/org.jailnix."${lib.escapeShellArg portalAppIdForProxy}
++
++              if [ ! -d "$portal_docs" ]; then
++                echo "Element document-portal view is missing: $portal_docs" >&2
++                exit 1
+               fi
+-            '')
+-            (readwrite (noescape "\"$PROXIED_DBUS_SOCKET_DIR\""))
+-            (set-env "DBUS_SESSION_BUS_ADDRESS" (noescape "\"unix:path=$PROXIED_DBUS_SOCKET\""))
+-          ] state
++
++              RUNTIME_ARGS+=(--dir /run/flatpak)
++              RUNTIME_ARGS+=(--ro-bind "$portal_docs" /run/flatpak/doc)
++
++              # Make the canonical document-portal path resolve to
++              # Element's restricted document view.
++              RUNTIME_ARGS+=(--symlink ../../flatpak/doc "$XDG_RUNTIME_DIR/doc")
++            ''))
++          ) state
+         )
+       ))
+     ];

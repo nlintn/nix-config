@@ -3,6 +3,7 @@
     {
       agenix,
       home-manager,
+      jail-nix,
       nix-colors,
       nixpkgs,
       nixpkgs-overlay,
@@ -82,6 +83,8 @@
         wm = "hyprland";
       };
 
+      jail = import ./jail-nix jail-nix;
+
       genSpecialArgs =
         system: extraAttrs:
         let
@@ -103,6 +106,9 @@
             inputs = inputs';
             pkgs-stable = pkgs-stable system;
             pkgs-unstable = pkgs-unstable system;
+            jail-stable = jail specialArgs.pkgs-stable;
+            jail-unstable = jail specialArgs.pkgs-unstable;
+            jail = specialArgs.jail-unstable;
           }
           // extraAttrs;
         in
@@ -166,6 +172,8 @@
       url = "github:nix-community/home-manager/";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    jail-nix.url = "sourcehut:~alexdavid/jail.nix";
 
     nix-colors.url = "github:misterio77/nix-colors";
   };

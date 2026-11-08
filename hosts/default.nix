@@ -12,12 +12,12 @@ let
     n: _:
     let
       buildConfig = import ./systems/${n}/build-config.nix;
-      lib' =
-        (if buildConfig.use-nixpkgs-stable or false then lib-stable else lib-unstable)
-          buildConfig.system;
       system = buildConfig.system;
+      use-nixpkgs-stable = buildConfig.use-nixpkgs-stable or false;
+      lib' = (if use-nixpkgs-stable then lib-stable else lib-unstable) system;
       specialArgs = genSpecialArgs system {
         inherit module-common;
+        jail = if use-nixpkgs-stable then specialArgs.jail-stable else specialArgs.jail-unstable;
         nixSystemName = n;
       };
     in

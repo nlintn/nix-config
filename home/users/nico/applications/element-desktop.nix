@@ -17,25 +17,21 @@ in
     enable = true;
     package = jail pkgs.element-desktop (
       with jail.combinators;
+      let
+        id = "im.riot.Riot";
+      in
       [
-        (persist-home "element-desktop")
-        (shared-tmp "element-desktop")
+        (persist-home id)
+        (shared-tmp id)
         gpu
         gui-enhanced
+        inhibit-idle
         network
         notifications
         open-urls-in-browser
         secret-service
         sys-tray
-
-        (dbus {
-          portalAppId = "element-desktop";
-          talk = [
-            "org.freedesktop.ScreenSaver"
-            "org.freedesktop.portal.Desktop"
-            "org.freedesktop.portal.Documents"
-          ];
-        })
+        (desktop-portal id)
       ]
       ++ (lib.optional keepassxc_fdo (set-argv [
         "--password-store=gnome-libsecret"

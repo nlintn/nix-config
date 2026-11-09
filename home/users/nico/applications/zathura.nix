@@ -10,18 +10,19 @@ let
   inherit (lib-custom.conversions) hexAToRGBA;
 in
 {
+  xdg.configFile."zathura/zathurarc".enable = false;
   programs.zathura = {
     enable = true;
     package = jail pkgs.zathura (
       with jail.combinators;
       [
-        gui-enhanced
-        locale
-        open-urls-in-browser
-        printing
+        (readonly config.xdg.userDirs.documents)
+        (readwrite config.xdg.userDirs.download)
 
-        (readonly config.home.homeDirectory)
-        (readonly "${config.xdg.configHome}/zathura")
+        gui-enhanced
+        open-urls-in-browser
+        (desktop-portal "org.pwmt.zathura")
+        (mount-home-file config.xdg.configFile."zathura/zathurarc")
         readonly-runtime-args
       ]
     );

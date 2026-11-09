@@ -35,6 +35,18 @@ combinators: with combinators; rec {
       '')
     ];
 
+  desktop-portal =
+    portalAppId:
+    dbus {
+      inherit portalAppId;
+      talk = [
+        "org.freedesktop.portal.*"
+      ];
+      own = [
+        portalAppId
+      ];
+    };
+
   fwd-path = compose [
     (add-path "\"$(printf '%s\\n' \"$PATH\" | tr ':' '\\n' | while IFS= read -r dir; do realpath -m \"$dir\"; done | paste -sd: -)\"")
     (readonly-paths-from-var "PATH" ":")
@@ -74,6 +86,13 @@ combinators: with combinators; rec {
     (try-fwd-env "GTK_A11Y")
     locale
   ];
+
+  inhibit-idle = dbus {
+    talk = [
+      "org.freedesktop.ScreenSaver"
+    ];
+  };
+
   locale = compose (
     lib.map try-fwd-env [
       "LOCALE_ARCHIVE"
@@ -95,6 +114,9 @@ combinators: with combinators; rec {
       "LANG"
     ]
   );
+
+  mount-home-file = file-entry: ro-bind file-entry.source (noescape "~/${file-entry.target}");
+
   nix-daemon = compose [
     (add-pkg-deps [ pkgs.nix ])
     (readwrite "/nix/var/nix/daemon-socket")
@@ -105,13 +127,9 @@ combinators: with combinators; rec {
     (noescape "~/.config/nix/nix.conf" |> try-readonly |> defer)
     (noescape "~/.config/nix/registry.json" |> try-readonly |> defer)
   ];
-  printing = dbus {
-    talk = [
-      "org.freedesktop.portal.Print"
-      "org.freedesktop.portal.Desktop"
-    ];
-  };
+
   secret-service = dbus { talk = [ "org.freedesktop.secrets" ]; };
+
   shared-tmp =
     name:
     let
@@ -121,9 +139,17 @@ combinators: with combinators; rec {
       (add-runtime "mkdir -p ${path}")
       (rw-bind (noescape path) "/tmp")
     ];
+
   ssh-agent = compose [
     (fwd-env "SSH_AUTH_SOCK")
     (readwrite (noescape "\"$SSH_AUTH_SOCK\""))
   ];
-  sys-tray = dbus { talk = [ "org.kde.StatusNotifierWatcher" ]; };
+
+  sys-tray = dbus {
+    talk = [
+      "com.canonical.indicator.application"
+      "org.ayatana.indicator.application"
+      "org.kde.StatusNotifierWatcher"
+    ];
+  };
 }

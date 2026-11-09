@@ -745,14 +745,25 @@ in
     }
   ];
 
-  workspace_rule = [
+  workspace_programs._var = {
+    "special:dropterm" = term_tmux_scratchpad;
+    "special:pwm" = pwm;
+  };
+
+  on = [
     {
-      workspace = "special:dropterm";
-      on_created_empty = term_tmux_scratchpad;
-    }
-    {
-      workspace = "special:pwm";
-      on_created_empty = pwm;
+      _args = [
+        "workspace.created"
+        (lib.generators.mkLuaInline /* lua */ ''
+          function(ws)
+            local cmd = workspace_programs[ws.name]
+            if not ws.is_empty or not cmd then
+              return
+            end
+            hl.exec_cmd(cmd, { workspace = ws.addressable_name .. " silent" })
+          end
+        '')
+      ];
     }
   ];
 

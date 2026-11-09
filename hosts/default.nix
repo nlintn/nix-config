@@ -17,7 +17,6 @@ let
       lib' = (if use-nixpkgs-stable then lib-stable else lib-unstable) system;
       specialArgs = genSpecialArgs system {
         inherit module-common;
-        jail = if use-nixpkgs-stable then specialArgs.jail-stable else specialArgs.jail-unstable;
         nixSystemName = n;
       };
     in

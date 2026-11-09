@@ -1,6 +1,5 @@
 {
   config,
-  jail,
   lib-custom,
   pkgs,
   ...
@@ -13,8 +12,8 @@ in
   xdg.configFile."zathura/zathurarc".enable = false;
   programs.zathura = {
     enable = true;
-    package = jail pkgs.zathura (
-      with jail.combinators;
+    package = pkgs.jail pkgs.zathura (
+      with pkgs.jail.combinators;
       [
         (readonly config.xdg.userDirs.documents)
         (readwrite config.xdg.userDirs.download)

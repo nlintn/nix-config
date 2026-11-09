@@ -1,6 +1,5 @@
 {
   config,
-  jail,
   lib,
   pkgs,
   ...
@@ -15,8 +14,8 @@ in
 {
   programs.element-desktop = {
     enable = true;
-    package = jail pkgs.element-desktop (
-      with jail.combinators;
+    package = pkgs.jail pkgs.element-desktop (
+      with pkgs.jail.combinators;
       let
         id = "im.riot.Riot";
       in

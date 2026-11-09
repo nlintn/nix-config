@@ -13,7 +13,6 @@
     ./scripts
 
     ./bat.nix
-    ./diebahn.nix
     ./element-desktop.nix
     ./firefox
     ./fzf.nix

@@ -1,6 +1,5 @@
 {
   config,
-  jail,
   lib,
   pkgs,
   ...
@@ -41,8 +40,8 @@ in
 {
   programs.opencode = {
     enable = true;
-    package = jail pkgs.opencode (
-      with jail.combinators;
+    package = pkgs.jail pkgs.opencode (
+      with pkgs.jail.combinators;
       [
         (persist-home "opencode")
         fwd-path

@@ -16,6 +16,7 @@
       lib = inputs.nixpkgs.lib;
       lib-custom = nixpkgs-overlay.lib;
       overlays = [
+        (import ./jail-nix jail-nix)
         agenix.overlays.default
         nixpkgs-overlay.overlays.default
       ];
@@ -85,8 +86,6 @@
         wm = "hyprland";
       };
 
-      jail = import ./jail-nix jail-nix;
-
       genSpecialArgs =
         system: extraAttrs:
         let
@@ -108,9 +107,6 @@
             inputs = inputs';
             pkgs-stable = pkgs-stable system;
             pkgs-unstable = pkgs-unstable system;
-            jail-stable = jail specialArgs.pkgs-stable;
-            jail-unstable = jail specialArgs.pkgs-unstable;
-            jail = specialArgs.jail-unstable;
           }
           // extraAttrs;
         in

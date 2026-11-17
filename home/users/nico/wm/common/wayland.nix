@@ -14,6 +14,7 @@
     CLUTTER_BACKEND = "wayland";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     GDK_BACKEND = "wayland";
+    GDK_WAYLAND_DISABLE = "ext_background_effect_manager_v1";
     NIXOS_OZONE_WL = "1";
     SDL_VIDEODRIVER = "wayland";
     QT_QPA_PLATFORM = "wayland";

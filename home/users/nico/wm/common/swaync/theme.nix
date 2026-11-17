@@ -38,6 +38,7 @@ with config.colorScheme.palette;
     background-color: ${hexAToRGBA base00 0.5 |> toString};
     color: #${base05};
     padding: 0;
+    backdrop-filter: blur(20px);
   }
 
   .floating-notifications.background .notification-row .notification-background .notification {
@@ -111,6 +112,7 @@ with config.colorScheme.palette;
     background-color: ${hexAToRGBA base00 0.5 |> toString};
     color: #${base05};
     padding: 14px;
+    backdrop-filter: blur(20px);
   }
 
   .control-center .widget-title > label {

@@ -24,10 +24,11 @@ in
         AddKeysToAgent = "confirm 8h";
         Compression = "no";
         ForwardAgent = "no";
+        ServerAliveInterval = 20;
         UserKnownHostsFile = "~/.ssh/known_hosts";
 
         ControlMaster = "auto";
-        ControlPath = "\${XDG_RUNTIME_DIR}/ssh-mux-%C";
+        ControlPath = "\${XDG_RUNTIME_DIR}/ssh-mux-%h-%C";
         ControlPersist = "30s";
       };
     };

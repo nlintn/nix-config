@@ -22,6 +22,7 @@
         '';
       };
     config = {
+      binary = "as-text";
       italic-text = "always";
       paging = "always";
       theme = "base16";

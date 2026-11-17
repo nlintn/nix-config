@@ -12,7 +12,7 @@ This document provides instructions for agents on what guidelines and rules to f
   1. Find the package that provides the binary using `command-not-found <binary>`.
   2. Use `nix-shell -p <package>` to make it available in an ephemeral shell.
 
-## Script Execution Rules
+## Execution Rules
 
-- **Python**: General Python scripts should be run with `uv` instead of `python`.
+- **Python**: Python should be used via `uv` instead of `python`.
 - **JavaScript/TypeScript**: Scripts should be run with `bun` instead of `node`.

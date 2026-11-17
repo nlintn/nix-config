@@ -57,15 +57,17 @@ in
         client_side_decorations = {
           enabled = true;
           rounding = 10;
-          border_width = 2;
+          border_width = 1;
         };
         compact_mode.enabled = true;
+        floating_status_bar = true;
         layer_shell = {
           enabled = true;
           scope = "vicinae";
           keyboard_interactivity = "on_demand";
           layer = "top";
         };
+        material = "blur";
       };
       fallbacks = [
         "shortcuts:${webSearchSctId}"

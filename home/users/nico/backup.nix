@@ -26,7 +26,7 @@
         "--keep-yearly 75"
       ];
       timerConfig = {
-        OnCalendar = "*-*-* 00/6:00:00";
+        OnCalendar = "*-*-* 00/2:00:00";
         Persistent = true;
       };
     };

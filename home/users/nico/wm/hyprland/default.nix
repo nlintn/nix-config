@@ -33,13 +33,6 @@
         output-filename = "${config.xdg.userDirs.pictures}/Screenshots/screen-%Y%m%d-%H%M%S.png";
       };
     };
-    swappy = {
-      enable = true;
-      settings.Default = {
-        save_dir = "${config.home.homeDirectory}/Pictures/Screenshots";
-        save_filename_format = "screen-%Y%m%d-%H%M%S.png";
-      };
-    };
     swaybg = {
       enable = true;
       image.path = userSettings.wallpaper;
@@ -72,6 +65,12 @@
       '';
     };
     settings = import ./hypr-settings.nix args;
+
+    xdph.settings = {
+      screencopy = {
+        custom_picker_binary = lib.getExe pkgs.hyprland-preview-share-picker;
+      };
+    };
   };
 
   xdg.portal = {

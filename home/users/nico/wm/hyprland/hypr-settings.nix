@@ -558,6 +558,7 @@ in
           "\\.blueman-.*"
           "blueman-.*"
           "com\\.saivert\\.pwvucontrol"
+          "hyprland-share-picker"
           "io\\.github\\.finefindus\\.Hieroglyphic"
           "nm-applet"
           "nm-connection-editor"
@@ -609,13 +610,7 @@ in
         match.initial_class = "org\\.gnome\\.Nautilus";
         match.initial_title = lib.concatStringsSep "|" [
           "Open Directory"
-        ];
-      })
-      (floatPreset {
-        name = "float_share_popup";
-        match.initial_class = "";
-        match.initial_title = lib.concatStringsSep "|" [
-          "Select what to share"
+          "Select a directory"
         ];
       })
       (floatPreset {
@@ -626,14 +621,6 @@ in
           "Friends List"
         ];
       })
-
-      {
-        name = "no_border_classes";
-        border_size = 0;
-        match.initial_class = lib.concatStringsSep "|" [
-          "vicinae"
-        ];
-      }
 
       {
         name = "pin_classes";
@@ -728,7 +715,7 @@ in
   layer_rule = [
     {
       name = "blur_popup";
-      match.namespace = "avizo|vicinae|swaync-.*";
+      match.namespace = "avizo|";
       blur = true;
       ignore_alpha = 0;
       xray = false;

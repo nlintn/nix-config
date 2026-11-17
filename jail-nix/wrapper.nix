@@ -10,21 +10,14 @@ let
   lib = pkgs.lib;
   jail-unwrapped = jail-nix-patched.extend {
     inherit pkgs;
-    additionalCombinators = import ./combinators.nix { inherit lib pkgs; };
-    basePermissions =
-      combinators: with combinators; [
-        base
-        (add-pkg-deps (with pkgs; [ xdg-utils ]))
-        (readonly "/nix/store")
-        fake-passwd
-      ];
+    additionalCombinators = import ./combinators.nix pkgs;
+    basePermissions = import ./base-permissions.nix pkgs;
   };
 
   jail-wrapped = jail-unwrapped // {
     unwrapped = jail-unwrapped;
-    overlay = import ./overlay jail-wrapped;
     __functor =
-      self: pkg: jail-permissions:
+      self: pkg: permissions:
       let
         # Don't jail recursively
         unjailed = pkg.unjailed or pkg;
@@ -61,7 +54,7 @@ let
           // {
             # Pass the specific file so each wrapper runs its own executable
             # rather than the package's meta.mainProgram.
-            jailed = self.unwrapped entry.name entry.exe jail-permissions;
+            jailed = self.unwrapped entry.name entry.exe permissions;
           }
         ) exeEntries;
 
@@ -84,7 +77,7 @@ let
             {
               inherit (unjailed) meta outputs;
               passthru = unjailed.passthru // {
-                inherit jailed unjailed jail-permissions;
+                inherit jailed unjailed permissions;
               };
               # The result is only a tree of symlinks, so there is nothing to patch or strip.
               dontFixup = true;

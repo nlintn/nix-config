@@ -41,23 +41,22 @@ in
   programs.opencode = {
     enable = true;
     package = pkgs.jail pkgs.opencode (
-      with pkgs.jail.combinators;
-      [
-        (persist-home "opencode")
+      combinators: with combinators; [
+        (base-xdg "ai.opencode.opencode")
+        (add-pkg-deps [ command-not-found ])
+        (readonly "/etc/group")
+        (readonly "/etc/passwd")
+        (set-env "OPENCODE_DISABLE_FREE_MODELS" "true")
+        (set-env "OPENCODE_DISABLE_LSP_DOWNLOAD" "true")
         fwd-path
-        (add-pkg-deps [
-          command-not-found
-        ])
         locale
         network
         nix-daemon
         no-new-session
-        wayland
-        open-urls-in-browser
         time-zone
-        (set-env "OPENCODE_DISABLE_FREE_MODELS" "true")
-        (set-env "OPENCODE_DISABLE_LSP_DOWNLOAD" "true")
-        (readonly "${config.xdg.configHome}/opencode")
+        wayland
+        persist-base-dirs
+        (mount-home-dir config.xdg.configFile "opencode")
         (readonly deepseekApiKey)
         (readonly morpheusApiKey)
         mount-cwd

@@ -13,14 +13,11 @@ in
   programs.zathura = {
     enable = true;
     package = pkgs.jail pkgs.zathura (
-      with pkgs.jail.combinators;
-      [
-        (readonly config.xdg.userDirs.documents)
-        (readwrite config.xdg.userDirs.download)
-
+      combinators: with combinators; [
+        (base-xdg "org.pwmt.zathura")
         gui-enhanced
-        open-urls-in-browser
-        (desktop-portal "org.pwmt.zathura")
+        (readonly (xdg-user-dir "documents"))
+        (readonly (xdg-user-dir "download"))
         (mount-home-file config.xdg.configFile."zathura/zathurarc")
         readonly-runtime-args
       ]

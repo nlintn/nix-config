@@ -15,22 +15,19 @@ in
   programs.element-desktop = {
     enable = true;
     package = pkgs.jail pkgs.element-desktop (
-      with pkgs.jail.combinators;
-      let
-        id = "im.riot.Riot";
-      in
+      combinators:
+      with combinators;
       [
-        (persist-home id)
-        (shared-tmp id)
+        (base-xdg "im.riot.Riot")
         gpu
         gui-enhanced
         inhibit-idle
         network
         notifications
-        open-urls-in-browser
         secret-service
         sys-tray
-        (desktop-portal id)
+        persist-base-dirs
+        shared-tmp
       ]
       ++ (lib.optional keepassxc_fdo (set-argv [
         "--password-store=gnome-libsecret"

@@ -1,22 +1,26 @@
-combinators: pkgs:
+pkgs: combinators:
 
 with combinators; {
   diebahn = [
+    (base-xdg "de.schmidhuberj.DieBahn")
     gui-enhanced
     network
-    open-urls-in-browser
-    (desktop-portal "de.schmidhuberj.DieBahn")
   ];
-  telegram-desktop =
-    let
-      id = "org.telegram.desktop";
-    in
-    [
-      (persist-home id)
-      gui-enhanced
-      network
-      sys-tray
-      notifications
-      (desktop-portal id)
-    ];
+  telegram-desktop = [
+    (base-xdg "org.telegram.desktop")
+    persist-base-dirs
+    gui-enhanced
+    network
+    sys-tray
+    notifications
+    (readwrite (xdg-user-dir "download"))
+  ];
+  pdfarranger = [
+    (base-xdg "com.github.jeromerobert.pdfarranger")
+    shared-tmp
+    (readwrite (noescape "~"))
+    persist-base-dirs
+    gui-enhanced
+    readwrite-runtime-args
+  ];
 }
